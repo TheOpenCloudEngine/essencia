@@ -1,0 +1,34 @@
+<%
+	if(value){
+		var nameField = null;
+		var childrenField = null;
+		var childLoadMethod = null;	
+		
+		if(objectMetadata.nameFieldDescriptor)
+			nameField = fields[objectMetadata.nameFieldDescriptor.name];
+		
+		if(objectMetadata.childrenFieldDescriptor)
+			childrenField = fields[objectMetadata.childrenFieldDescriptor.name];
+%>
+
+<div class="item-fix">
+	<div class="item">
+		<span>x</span>
+		<div class="label-content">
+			<label style="display:inline-block; background-image: url(images/tree/icon/<%=objectTypeName%>.png)">
+				<u class="caption"><%=nameField.here()%></u>
+			</label>
+		</div>
+	</div>		
+</div>
+
+<%	
+		if(childrenField){
+%>
+	<u class="last root" style="display: block; height: auto; overflow: visible;">
+		<%=childrenField.here({ejsPath : 'dwr/metaworks/genericfaces/TreeNodeArrayFace.ejs'})%>
+	</u>
+<%	
+		}
+	}
+%>
