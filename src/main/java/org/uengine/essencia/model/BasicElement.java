@@ -11,6 +11,7 @@ import org.metaworks.annotation.Order;
 import org.uengine.contexts.TextContext;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
+import org.uengine.util.UEngineUtil;
 
 public abstract class BasicElement extends LanguageElement implements IElement {
 
@@ -138,33 +139,40 @@ public abstract class BasicElement extends LanguageElement implements IElement {
 
 	@Override
 	public ElementView createView() {
-		StringBuilder fullClassPath = new StringBuilder(getClass().getPackage().getName());
-		fullClassPath.append(".view.");
-		fullClassPath.append(getClass().getSimpleName());
-		fullClassPath.append("View");
+//		StringBuilder fullClassPath = new StringBuilder(getClass().getPackage().getName());
+//		fullClassPath.append(".view.");
+//		fullClassPath.append(getClass().getSimpleName());
+//		fullClassPath.append("View");
+//
+//		ElementView elementView = null;
+//		try {
+//			Constructor constructor = Thread.currentThread().getContextClassLoader().loadClass(fullClassPath.toString())
+//					.getConstructor(new Class[] { IElement.class });
+//			elementView = (ElementView) constructor.newInstance(this);
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (NoSuchMethodException e) {
+//			e.printStackTrace();
+//		} catch (SecurityException e) {
+//			e.printStackTrace();
+//		} catch (InstantiationException e) {
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		} catch (IllegalArgumentException e) {
+//			e.printStackTrace();
+//		} catch (InvocationTargetException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return elementView;
 
-		ElementView elementView = null;
-		try {
-			Constructor constructor = Thread.currentThread().getContextClassLoader().loadClass(fullClassPath.toString())
-					.getConstructor(new Class[] { IElement.class });
-			elementView = (ElementView) constructor.newInstance(this);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
+		ElementView elementView = (ElementView) UEngineUtil.getComponentByEscalation(getClass(), "view");
+		elementView.setElement(this);
 
 		return elementView;
+
+
 	}
 
 }

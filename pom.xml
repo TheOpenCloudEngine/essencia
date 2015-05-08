@@ -82,6 +82,11 @@
 			<artifactId>uengine-modeling</artifactId>
 			<version>4.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.uengine</groupId>
+			<artifactId>uengine-bpmn-modeler</artifactId>
+			<version>4.0-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.uengine</groupId>

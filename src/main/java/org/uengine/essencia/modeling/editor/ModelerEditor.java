@@ -5,10 +5,11 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.uengine.essencia.context.EssenciaContext;
-import org.uengine.essencia.modeling.modeler.EssenciaModeler;
+//import org.uengine.essencia.modeling.modeler.EssenciaModeler;
 import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.modeling.DefaultModeler;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.Modeler;
 
@@ -24,8 +25,8 @@ public abstract class ModelerEditor extends Editor {
 		this.modeler = modeler;
 	}
 
-	public EssenciaModeler getEssenciaModeler() {
-		return ((EssenciaModeler) modeler);
+	public DefaultModeler getEssenciaModeler() {
+		return ((DefaultModeler) modeler);
 	}
 
 	public IModelResource getModelResource() {

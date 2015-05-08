@@ -1,7 +1,7 @@
 package org.uengine.essencia.modeling.editor;
 
 import org.metaworks.annotation.Face;
-import org.uengine.essencia.modeling.modeler.ProcessModeler;
+import org.uengine.modeling.modeler.ProcessModeler;
 import org.uengine.modeling.IResource;
 
 @Face(displayName="ProcessModeler")

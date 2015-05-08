@@ -10,18 +10,13 @@ import org.uengine.essencia.model.Practice;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.canvas.PracticeCanvas;
 import org.uengine.essencia.modeling.palette.EssenciaPalette;
-import org.uengine.modeling.Canvas;
-import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IElement;
-import org.uengine.modeling.IModel;
-import org.uengine.modeling.Relation;
-import org.uengine.modeling.RelationView;
+import org.uengine.modeling.*;
 import org.uengine.util.ObjectUtil;
 
 /**
  * @author jyj
  */
-public class PracticeDefiner extends EssenciaModeler {
+public class PracticeDefiner extends DefaultModeler {
 	
 	public final static String SUFFIX = ".practice";
 
@@ -53,10 +48,14 @@ public class PracticeDefiner extends EssenciaModeler {
 	
 
 	@Override
-	public IModel createModel() throws Exception {
-		return makePracticeFromCanvas(getCanvas());
+	public IModel createModel() {
+		try{
+			return makePracticeFromCanvas(getCanvas());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
-		
+
 	public PracticeDefinition makePracticeFromCanvas(Canvas canvas) throws Exception{
 		PracticeDefinition practice = new PracticeDefinition();
 		
