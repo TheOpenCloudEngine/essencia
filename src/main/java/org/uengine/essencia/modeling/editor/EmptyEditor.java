@@ -1,6 +1,9 @@
 package org.uengine.essencia.modeling.editor;
 
+import org.metaworks.annotation.Face;
 
+
+@Face(ejsPath="dwr/metaworks/genericfaces/HiddenFace.ejs")
 public class EmptyEditor extends Editor {
 
 	@Override

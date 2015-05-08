@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.uengine.essence</groupId>
+	<groupId>org.uengine</groupId>
 	<artifactId>essencia</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<properties>
 		<basedir></basedir>
@@ -19,8 +19,8 @@
 
 	<repositories>
 		<repository>
-			<id>org.uengine</id>
-			<url>http://maven.opencloudengine.org/content/repositories/snapshots/</url>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -29,8 +29,8 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>oce-releases</id>
-			<url>http://maven.opencloudengine.org/content/repositories/releases/</url>
+			<id>oss-rh</id>
+			<url>https://oss.sonatype.org/content/groups/public</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -39,39 +39,82 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>oce-thirdparty</id>
-			<url>http://maven.opencloudengine.org/content/repositories/thirdparty</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<id>eclipse</id>
+			<name>Eclipse Repository</name>
+			<url>https://repo.eclipse.org/content/groups/eclipse/</url>
 		</repository>
 	</repositories>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.uengine</groupId>
-			<artifactId>omg-essence-model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.uengine.metaworks</groupId>
 			<artifactId>metaworks3</artifactId>
-			<version>1.0.9-SNAPSHOT</version>
+			<version>1.1-SNAPSHOT</version>
+
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jdbc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>springframework-ws-core</artifactId>
+					<groupId>org.springframework.ws</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.uengine</groupId>
 			<artifactId>uengine-modeling</artifactId>
-			<version>1.0.22-SNAPSHOT</version>
+			<version>4.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.uengine</groupId>
 			<artifactId>uengine-core</artifactId>
-			<version>1.0.22-SNAPSHOT</version>
+			<version>4.0-SNAPSHOT</version>
+
+			<exclusions>
+				<exclusion>
+					<groupId>org.uengine.metaworks</groupId>
+					<artifactId>metaworks3</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jdbc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>springframework-ws-core</artifactId>
+					<groupId>org.springframework.ws</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -79,11 +122,6 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.uengine.metaworks</groupId>
-			<artifactId>metaworks-dwr</artifactId>
-			<version>1.0.1</version>
 		</dependency>
 
 		<dependency>
@@ -133,7 +171,11 @@
 			<artifactId>jackson-core</artifactId>
 			<version>2.4.4</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.3.1</version>
+		</dependency>
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
@@ -142,17 +184,17 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>1.6.3</version>
+			<version>1.6.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.3</version>
+			<version>1.6.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
-			<version>1.6.3</version>
+			<version>1.6.12</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>

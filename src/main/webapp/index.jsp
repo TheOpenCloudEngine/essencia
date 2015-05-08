@@ -43,6 +43,7 @@
 		<link rel="stylesheet" type="text/css" href="lib/jquery-ui-1.11.0.custom/jquery-ui.min.css" />
 		
 		<script type="text/javascript" src="lib/jquery/jquery.contextMenu.js"></script>
+		<link rel="stylesheet" type="text/css" href="style/jquery.contextMenu.css" />
 		
 		<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1-SNAPSHOT.js"></script>
 		
@@ -51,8 +52,8 @@
 		<link rel="stylesheet" type="text/css" href="style/palette.css" />
 		<link rel="stylesheet" type="text/css" href="style/login.css" />
 				
-	    <script type="text/javascript" src="dwr/metaworks/org/uengine/modeling/ElementView.ejs.js"></script>
-	    <script type="text/javascript" src="dwr/metaworks/org/uengine/kernel/designer/ui/ActivityView.ejs.js"></script>
+	    <!-- <script type="text/javascript" src="dwr/metaworks/org/uengine/modeling/ElementView.ejs.js"></script>
+	    <script type="text/javascript" src="dwr/metaworks/org/uengine/kernel/designer/ui/ActivityView.ejs.js"></script> -->
 	    
 	     <!-- ##STYLE -->
 	    

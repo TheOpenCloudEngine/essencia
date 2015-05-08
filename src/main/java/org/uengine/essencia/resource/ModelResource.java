@@ -22,9 +22,12 @@ import org.metaworks.widget.Clipboard;
 import org.uengine.essencia.IUser;
 import org.uengine.essencia.Session;
 import org.uengine.essencia.common.*;
+import org.uengine.essencia.designer.Designer;
+import org.uengine.essencia.designer.EditorPanel;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.EditorTabs;
+import org.uengine.essencia.modeling.editor.EmptyEditor;
 import org.uengine.essencia.repository.ObjectRepository;
 import org.uengine.essencia.resource.element.CompetenciesResource;
 import org.uengine.essencia.resource.element.EssenciaResource;
@@ -33,9 +36,14 @@ import org.uengine.essencia.resource.element.ThingsToWorkResource;
 import org.uengine.modeling.IModel;
 import org.uengine.util.FileUtil;
 
+import com.sun.corba.se.spi.servicecontext.ServiceContexts;
+
 import javax.xml.bind.JAXBException;
 
 public class ModelResource extends Resource implements IModelResource, Lockable, Commitable {
+	
+	@AutowiredFromClient
+	public EditorPanel editorPanel;
 
 	@AutowiredFromClient
 	public Session session;
@@ -100,12 +108,12 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	@Order(6)
 	@Face(displayName = "open")
 	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
-	@ServiceMethod(callByContent = true, except = "children", eventBinding=EventContext.EVENT_DBLCLICK, inContextMenu = true, target = ServiceMethodContext.TARGET_APPEND)
-	public Object open() throws Exception {
+	@ServiceMethod(callByContent = true, except = "children", eventBinding=EventContext.EVENT_DBLCLICK, inContextMenu = true, target=ServiceMethodContext.TARGET_APPEND)
+	public Refresh open() throws Exception {
 		update();
+		editorPanel.setEditor(createEditor());
 		
-		return new ToAppend(new EditorTabs(), createEditor());
-
+		return new Refresh(editorPanel);
 	}
 
 	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
@@ -119,7 +127,7 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 		getChildList().add(activities);
 		getChildList().add(competencies);
 
-		return new Refresh(this, true, true);
+		return new Refresh(this, false, true);
 	}
 	
 	@Override

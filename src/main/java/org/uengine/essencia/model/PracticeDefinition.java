@@ -17,7 +17,6 @@ import org.uengine.kernel.GlobalContext;
 import org.uengine.kernel.HumanActivity;
 import org.uengine.kernel.Role;
 import org.uengine.kernel.StartActivity;
-import org.uengine.kernel.designer.ui.HumanActivityView;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.IModel;
@@ -276,9 +275,10 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 	private int prevActivitiesCntWithSameCompetency(List<ElementView> list, Competency c) {
 		int cnt = 1;
 		for (ElementView v : list) {
-			if (v instanceof HumanActivityView && ((HumanActivity) v.getElement()).getRole().getDisplayName().getText().equals(c.getName())) {
-				cnt++;
-			}
+			//TODO : view is gone..
+//			if (v instanceof HumanActivityView && ((HumanActivity) v.getElement()).getRole().getDisplayName().getText().equals(c.getName())) {
+//				cnt++;
+//			}
 		}
 		return cnt;
 	}

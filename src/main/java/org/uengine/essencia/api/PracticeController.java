@@ -1,15 +1,22 @@
 package org.uengine.essencia.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.uengine.essencia.Loader;
 import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.model.State;
 import org.uengine.essencia.repository.ObjectRepository;
+
 
 @Controller
 @RequestMapping("practice")
@@ -29,6 +36,21 @@ public class PracticeController {
 		Activity activity = pd.getElement(activityName, Activity.class);
 		return activity;
 	}
+	
+	/*@ResponseBody
+	@RequestMapping(value = "{objectTypeName}/{methodName}")
+	public Object callMetaworksService(@PathVariable String objectTypeName,@PathVariable String methodName,@RequestBody Object object) throws Exception {
+		Loader l = new Loader();
+		l.setUserId("");
+		Object obj = null;
+		Map<String, Object> map = new HashMap<>();
+		try {
+			obj = MetaworksRemoteService.getInstance().callMetaworksService(objectTypeName, l, methodName, map);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}*/
 	
 //	@ResponseBody
 //	@RequestMapping(value = "{practiceId}/activity/{activityName}/state")

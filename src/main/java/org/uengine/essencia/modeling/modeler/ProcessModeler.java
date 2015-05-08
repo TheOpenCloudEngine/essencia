@@ -5,12 +5,10 @@ import java.util.List;
 
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.modeling.canvas.ProcessCanvas;
-import org.uengine.essencia.modeling.palette.SimplePalette;
 import org.uengine.kernel.Activity;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.Role;
 import org.uengine.kernel.UEngineException;
-import org.uengine.kernel.designer.ui.TransitionView;
 import org.uengine.kernel.graph.Transition;
 import org.uengine.modeling.Canvas;
 import org.uengine.modeling.ElementView;
@@ -27,8 +25,8 @@ public class ProcessModeler extends EssenciaModeler {
 	public ProcessModeler() {
 		setType(SUFFIX);
 		this.setCanvas(new ProcessCanvas(getType()));
-		Palette palette = new SimplePalette(getType());
-		this.setPalette(palette);
+//		Palette palette = new SimplePalette(getType());
+//		this.setPalette(palette);
 	}
 	
 	@Override
@@ -49,10 +47,10 @@ public class ProcessModeler extends EssenciaModeler {
 		
 		for(IRelation relation : def.getTransitions()){
 			Transition transition = (Transition) relation;
-			TransitionView transitionView = (TransitionView)transition.getRelationView();
+//			TransitionView transitionView = (TransitionView)transition.getRelationView();
 			transition.setRelationView(null);
-			transitionView.setRelation(transition);
-			relationViewList.add(transitionView);
+//			transitionView.setRelation(transition);
+//			relationViewList.add(transitionView);
 		}
 		if(def.getRoles()!=null){
 			
@@ -124,7 +122,7 @@ public class ProcessModeler extends EssenciaModeler {
 		for(RelationView relationView : this.getCanvas().getRelationViewList()){
 			Transition transition = (Transition) relationView.getRelation();
 			relationView.setRelation(null);
-			transition.setRelationView((TransitionView)relationView);
+//			transition.setRelationView((TransitionView)relationView);
 			def.addTransition(transition);
 		}
 		def.setPools(null);

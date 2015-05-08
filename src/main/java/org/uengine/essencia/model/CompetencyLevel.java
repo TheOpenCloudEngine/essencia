@@ -115,4 +115,11 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 	public void beforeApply() {
 		setList(getListFace().createValue());
 	}
+
+	//TODO: modify IElement
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
