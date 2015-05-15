@@ -4,23 +4,27 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.metaworks.Refresh;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.ToAppend;
-import org.metaworks.annotation.Available;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Group;
-import org.metaworks.annotation.Order;
-import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.annotation.*;
 import org.uengine.essencia.context.EssenciaContext;
+import org.uengine.essencia.designer.Designer;
 import org.uengine.essencia.modeling.editor.EditorTabs;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
+import org.uengine.essencia.modeling.editor.PracticeDefinerEditor;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
+import org.uengine.essencia.modeling.modeler.PracticeDefiner;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.IResource;
 
 	
 public class MethodFolderResource extends ContainerResource {
-	
+
+	@AutowiredFromClient
+	public Designer designer;
+
+
 	public MethodFolderResource() {
 	}
 	
@@ -32,15 +36,22 @@ public class MethodFolderResource extends ContainerResource {
 	@Order(2)
 	@Face(displayName = "New Method")
 	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
-	@ServiceMethod(callByContent = true, inContextMenu = true, target = ServiceMethodContext.TARGET_APPEND)
-	public Object newComposer() throws Exception {
-		this.setChildren(null);
+	@ServiceMethod(callByContent = true, inContextMenu = true/*, target = ServiceMethodContext.TARGET_APPEND*/)
+	public Refresh newComposer() throws Exception {
+
+		//this.setChildren(null);
+//		Resource newChildResource = this.newChildResource(ModelResource.UNTITLED + MethodComposer.SUFFIX);
+
+
+		//this.setChildren(null);
+
+		Resource newChildResource = this.newChildResource(ModelResource.UNTITLED + MethodComposer.SUFFIX);
+		ContextUtil.setWhen(newChildResource, EssenciaContext.WHEN_NEW);
+		designer.getEditorPanel().setEditor(new MethodComposerEditor(newChildResource));
+		return new Refresh(designer);
+//		ContextUtil.setWhen((Resource)resource, EssenciaContext.WHEN_NEW);
 		
-		IResource resource = Resource.newInstance(getPath()+ File.separator + ModelResource.UNTITLED + MethodComposer.SUFFIX);
-		resource.setParent(this);
-		ContextUtil.setWhen((Resource)resource, EssenciaContext.WHEN_NEW);
-		
-		return new ToAppend(new EditorTabs(), new MethodComposerEditor(resource));
+		/*return new ToAppend(new EditorTabs(), new MethodComposerEditor(resource));*/
 	}
 	
 	@Override

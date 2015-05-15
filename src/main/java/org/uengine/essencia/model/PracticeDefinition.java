@@ -16,12 +16,7 @@ import org.uengine.kernel.EndActivity;
 import org.uengine.kernel.GlobalContext;
 import org.uengine.kernel.HumanActivity;
 import org.uengine.kernel.Role;
-import org.uengine.kernel.StartActivity;
-import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IElement;
-import org.uengine.modeling.IModel;
-import org.uengine.modeling.Relation;
-import org.uengine.util.ObjectUtil;
+import org.uengine.modeling.*;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
@@ -32,7 +27,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 	private TextContext name;
 	private String description;
 	private List<IElement> elementList;
-	private List<Relation> relationList;
+	private List<IRelation> relationList;
 
 	public PracticeDefinition() {
 		ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
@@ -98,22 +93,22 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 		this.getElementList().add(iElementList);
 	}
 
-	public List<Relation> getRelationList() {
+	public List<IRelation> getRelationList() {
 		if (this.relationList == null) {
-			this.setRelationList(new ArrayList<Relation>());
+			this.setRelationList(new ArrayList<IRelation>());
 		}
 		return relationList;
 	}
 
-	public void setRelationList(List<Relation> relationList) {
+	public void setRelationList(List<IRelation> relationList) {
 		this.relationList = relationList;
 	}
 
-	public void addRelationList(Relation relationList) {
+	public void addRelationList(IRelation relation) {
 		if (getRelationList() == null) {
-			setRelationList(new ArrayList<Relation>());
+			setRelationList(new ArrayList<IRelation>());
 		}
-		this.getRelationList().add(relationList);
+		this.getRelationList().add(relation);
 	}
 
 	public String getPracticeName() {
@@ -230,7 +225,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 				humanView.setElement(human);
 				elementViewList.add(humanView);
 
-				if (elementViewList.size() == 2) {
+				/*if (elementViewList.size() == 2) {
 					StartActivity s = new StartActivity();
 					s.setTracingTag("0");
 					ElementView view = s.createView();
@@ -244,7 +239,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 					view.setY(humanView.getY());
 					elementViewList.add(view);
 
-				}
+				}*/
 			}
 		}
 
@@ -364,9 +359,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 		return returnElementList;
 	}
 
-	public Relation findFromRelation(ElementView view) {
-		Relation returnRelation = null;
-		for (Relation relation : getRelationList()) {
+	public IRelation findFromRelation(ElementView view) {
+		IRelation returnRelation = null;
+		for (IRelation relation : getRelationList()) {
 			for (String edge : view.getFromEdge().split(",")) {
 				if (relation.getRelationView().getId().equals(edge)) {
 					returnRelation = relation;
@@ -376,11 +371,11 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 		return returnRelation;
 	}
 
-	public List<Relation> findFromRelations(ElementView view) {
-		List<Relation> returnRelations = new ArrayList<Relation>();
+	public List<IRelation> findFromRelations(ElementView view) {
+		List<IRelation> returnRelations = new ArrayList<IRelation>();
 		if (view.getFromEdge() != null) {
 			for (String edge : view.getFromEdge().split(",")) {
-				for (Relation relation : getRelationList()) {
+				for (IRelation relation : getRelationList()) {
 					if (relation.getRelationView().getId().equals(edge)) {
 						returnRelations.add(relation);
 					}
@@ -391,11 +386,11 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
 	}
 
-	public List<Relation> findToRelation(ElementView view) {
-		List<Relation> returnRelations = new ArrayList<Relation>();
+	public List<IRelation> findToRelation(ElementView view) {
+		List<IRelation> returnRelations = new ArrayList<IRelation>();
 		if (view.getToEdge() != null) {
 			for (String edge : view.getToEdge().split(",")) {
-				for (Relation relation : getRelationList()) {
+				for (IRelation relation : getRelationList()) {
 					if (relation.getRelationView().getId().equals(edge)) {
 						returnRelations.add(relation);
 					}
@@ -414,7 +409,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 					if (elementView.getFromEdge() != null) {
 						for (String fromEdge : elementView.getFromEdge().split(",")) {
 							if (edge.equals(fromEdge)) {
-								elementList.add(ObjectUtil.convertToElementHasView(elementView));
+								elementList.add(elementView.asElement());
 							}
 						}
 					}
@@ -428,7 +423,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 		if (target.getElementView().getToEdge() != null) {
 			String[] edges = target.getElementView().getToEdge().split(",");
 			for (String edge : edges) {
-				for (Relation relation : getRelationList()) {
+				for (IRelation relation : getRelationList()) {
 					if (relation.getRelationView().getId().equals(edge)) {
 
 						relation.getRelationView().setFromWithTerminal(newTarget.getId());

@@ -35,11 +35,7 @@ import org.uengine.essencia.model.XMIResourceElement;
 import org.uengine.essencia.resource.FolderResourceType;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.kernel.GlobalContext;
-import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IElement;
-import org.uengine.modeling.Relation;
-import org.uengine.modeling.RelationView;
-import org.uengine.modeling.Symbol;
+import org.uengine.modeling.*;
 import org.uengine.uml.model.CompositionRelation;
 import org.uengine.uml.ui.CompositionRelationView;
 import org.uengine.util.FileUtil;
@@ -286,7 +282,7 @@ public class EssenceXmiAPI {
 		return false;
 	}
 
-	private List<Relation> loadRelation(List<Relation> relationList, List<IElement> elementList) {
+	private List<IRelation> loadRelation(List<IRelation> relationList, List<IElement> elementList) {
 		for (int i = 0; i < relationList.size(); i++) {
 			IElement from = relationList.get(i).getSourceElement();
 			IElement to = relationList.get(i).getTargetElement();
@@ -331,7 +327,7 @@ public class EssenceXmiAPI {
 		}
 
 		tmpElementList = pd.getElementList();
-		List<Relation> relationList = loadRelation(pd.getRelationList(), tmpElementList);
+		List<IRelation> relationList = loadRelation(pd.getRelationList(), tmpElementList);
 
 		for (int j = 0; j < relationList.size(); ++i, j++) {
 			String id = String.format("OG_%04d_%04d", canvasId, i);
@@ -343,7 +339,7 @@ public class EssenceXmiAPI {
 			String toEdge = null;
 			IElement element = pd.getElementList().get(j);
 
-			for (Relation relation : relationList) {
+			for (IRelation relation : relationList) {
 				if (compareElements(element, relation.getTargetElement())) {
 					if (fromEdge == null)
 						fromEdge = relation.getRelationView().getId();

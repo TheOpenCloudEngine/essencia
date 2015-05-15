@@ -5,6 +5,7 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
+import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.essencia.repository.ObjectRepository;
@@ -13,7 +14,6 @@ import org.uengine.essencia.resource.element.EssenciaResource;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.RelationView;
 import org.uengine.modeling.Symbol;
-import org.uengine.util.ObjectUtil;
 
 public class PracticeCanvas extends EssenciaCanvas {
 
@@ -38,11 +38,17 @@ public class PracticeCanvas extends EssenciaCanvas {
 		
 		if(content instanceof EssenciaKernelSymbol){
 			elementView = makeElementViewFromEssenciaKernelSymbol((EssenciaKernelSymbol)content);
-			
-			if(validate(elementView)){
-				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
-			} 
-			
+
+			try{
+				if(validate(elementView)){
+					returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
+				}
+
+			} catch (RuntimeException e ){
+				e.printStackTrace();
+				throw e;
+			}
+
 			return returnArr;
 		}else if(content instanceof Symbol){
 			Symbol symbol = (Symbol)content;
@@ -79,7 +85,7 @@ public class PracticeCanvas extends EssenciaCanvas {
 		ElementView elementView = null;
 		try {
 			practice = (PracticeDefinition)ObjectRepository.getInstance().get(resource.getPath());
-			elementView = ObjectUtil.convertToViewHasElement(practice.getElementByName(resource.getDisplayName()));
+			elementView = ((BasicElement)practice.getElementByName(resource.getDisplayName())).asView();
 			elementView.setFromEdge("");
 			elementView.setToEdge("");
 			elementView.setX("");

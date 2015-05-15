@@ -21,7 +21,7 @@ public class PracticeDefinitionTest {
 //	@Ignore
 	@Test
 	public void testToXmi(){
-		File f = new File("C:/essencia/codebase/practices/untitled.practice");
+	/*	File f = new File("C:/essencia/codebase/practices/untitled.practice");
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(f);
@@ -34,7 +34,7 @@ public class PracticeDefinitionTest {
 		
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	@Ignore

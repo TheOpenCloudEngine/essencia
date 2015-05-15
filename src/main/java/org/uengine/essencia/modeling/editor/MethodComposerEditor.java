@@ -17,6 +17,6 @@ public class MethodComposerEditor extends EssenciaEditor {
 	@Override
 	public void createEditors(){
 		super.add(new ComposerEditor(getResource()));
-		super.add(new ProcessModelerEditor(((MethodResource)getResource()).getProcessResource()));
+		//super.add(new ProcessModelerEditor(((MethodResource)getResource()).getProcessResource()));
 	}
 }

@@ -7,16 +7,15 @@ import java.util.Random;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Id;
-import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.annotation.*;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.EssenciaElement;
 import org.uengine.essencia.model.FaceTransformer;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
+
+import static org.metaworks.MetaworksContext.*;
 
 @Face(ejsPath = "dwr/metaworks/org/uengine/essencia/model/ChildProperty.ejs")
 public abstract class ListFace<T> implements ContextAware {
@@ -60,6 +59,7 @@ public abstract class ListFace<T> implements ContextAware {
 		ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
 	}
 
+	@Hidden(when= EssenciaContext.WHEN_VIEW)
 	@Face(displayName = "add")
 	@ServiceMethod(callByContent = true)
 	public void add() {
@@ -86,6 +86,7 @@ public abstract class ListFace<T> implements ContextAware {
 		getEssenciaElementList().add(element);
 	}
 
+	@Hidden(when= EssenciaContext.WHEN_VIEW)
 	@Face(displayName = "remove")
 	@ServiceMethod(callByContent = true)
 	public void remove() {

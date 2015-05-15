@@ -79,7 +79,7 @@ public class ActivityView extends LanguageElementView {
 	    }
 	}
 
-	ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToIElementList(list));
+	ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
 	ContextUtil.setHow(panel, "dynamicSize");
 	return new ModalWindow(panel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() + "]");
     }

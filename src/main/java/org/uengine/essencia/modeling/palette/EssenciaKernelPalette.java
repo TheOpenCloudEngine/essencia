@@ -7,16 +7,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uengine.essencia.model.ActivitySpace;
-import org.uengine.essencia.model.Alpha;
-import org.uengine.essencia.model.Competency;
-import org.uengine.essencia.model.PracticeDefinition;
+import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.view.KernelLanguageViewable;
 import org.uengine.essencia.model.view.LanguageElementView;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.Palette;
-import org.uengine.util.ObjectUtil;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -79,7 +75,7 @@ public class EssenciaKernelPalette extends Palette{
 	
 	private EssenciaKernelSymbol fill(EssenciaKernelSymbol symbol, IElement element){
 		symbol.setName(element.getName());
-		symbol.setLanguageElementView((LanguageElementView)ObjectUtil.convertToViewHasElement(element));
+		symbol.setLanguageElementView( (LanguageElementView)((BasicElement)element).asView());
 		return symbol;
 	}
 

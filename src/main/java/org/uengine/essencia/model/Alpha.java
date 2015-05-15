@@ -25,120 +25,126 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     private transient StateListFace listFace;
 
     public Alpha() {
-	setConcernBox(new EssenciaConcernSelectBox());
+        setConcernBox(new EssenciaConcernSelectBox());
     }
 
     @Hidden
     public List<State> getList() {
-	return list;
+        return list;
     }
 
     public void setList(List<State> list) {
-	this.list = list;
+        this.list = list;
     }
 
     @Face(displayName = "State")
     public StateListFace getListFace() {
-	return listFace;
+        return listFace;
     }
 
     public void setListFace(StateListFace listFace) {
-	this.listFace = listFace;
+        this.listFace = listFace;
     }
 
     @Hidden
     public List<Alpha> getChildElements() {
-	if (childElements == null) {
-	    setChildElements(new ArrayList<Alpha>());
-	}
-	return childElements;
+        if (childElements == null) {
+            setChildElements(new ArrayList<Alpha>());
+        }
+        return childElements;
     }
 
     public void setChildElements(List<Alpha> childElements) {
-	this.childElements = childElements;
+        this.childElements = childElements;
     }
 
     @Hidden
     @Override
     public String getConcern() {
-	return concern;
+        return concern;
     }
 
     @Override
     public void setConcern(String concern) {
-	this.concern = concern;
+        this.concern = concern;
     }
 
-    @Face(displayName="Concern")
+    @Face(displayName = "Concern")
     @Order(4)
     @Override
     public SelectBox getConcernBox() {
-	return concernSelectBox;
+        return concernSelectBox;
     }
 
     @Override
     public void setConcernBox(SelectBox concern) {
-	this.concernSelectBox = concern;
+        this.concernSelectBox = concern;
     }
 
     @Override
     public Card createCardView() {
-	Card card = new AlphaCard(this);
-	return card;
+        Card card = new AlphaCard(this);
+        return card;
     }
 
     @Override
     public String getDescription() {
-	return description.getText();
+        return description.getText();
     }
 
     public String getName() {
-	return name.getText();
+        return name.getText();
     }
 
     public Alpha(String name) {
-	this();
-	setName(name);
+        this();
+        setName(name);
     }
 
     @Override
     public void transformContext() {
-	ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+        if (getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getOwner().getName())) {
+            ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
+            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_VIEW);
+        } else {
+            ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
+        }
     }
 
     @Override
     public Essence.Foundation.BasicElement toXmi() {
-	Essence.AlphaAndWorkProduct.Alpha alpha = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createAlpha();
-	alpha.setName(getName());
-	alpha.setDescription(getDescription());
-	alpha.setBriefDescription(getBriefDescription());
-	for (State s : getList()) {
-	    alpha.getStates().add(s.toXmi());
-	}
-	return alpha;
+        Essence.AlphaAndWorkProduct.Alpha alpha = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createAlpha();
+        alpha.setName(getName());
+        alpha.setDescription(getDescription());
+        alpha.setBriefDescription(getBriefDescription());
+        for (State s : getList()) {
+            alpha.getStates().add(s.toXmi());
+        }
+        return alpha;
     }
 
     @Override
     public void setUpElement() {
-	super.setUpElement();
-	setListFace(new StateListFace());
-	if (getList() != null) {
-	    getListFace().fillElements(getList());
-	    getList().clear();
-	}
+        super.setUpElement();
+        setListFace(new StateListFace());
+        if (getList() != null) {
+            getListFace().fillElements(getList());
+            getList().clear();
+        }
 
-	setConcernBox(new EssenciaConcernSelectBox());
-	getConcernBox().setSelected(getConcern());
-	setConcern("");
+        setConcernBox(new EssenciaConcernSelectBox());
+        getConcernBox().setSelected(getConcern());
+        setConcern("");
     }
 
     @Override
     public void beforeApply() {
-	super.beforeApply();
-	setList(getListFace().createValue());
+        super.beforeApply();
+        setList(getListFace().createValue());
 
-	setConcern(getConcernBox().getSelected());
-	setConcernBox(null);
+        setConcern(getConcernBox().getSelected());
+        setConcernBox(null);
     }
 
 }

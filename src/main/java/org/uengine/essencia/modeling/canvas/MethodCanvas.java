@@ -20,12 +20,7 @@ import org.uengine.essencia.resource.PracticeResource;
 import org.uengine.essencia.resource.element.EssenciaElementResource;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
-import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IElement;
-import org.uengine.modeling.Relation;
-import org.uengine.modeling.RelationView;
-import org.uengine.modeling.Symbol;
-import org.uengine.util.ObjectUtil;
+import org.uengine.modeling.*;
 
 public class MethodCanvas extends EssenciaCanvas {
 	
@@ -52,11 +47,17 @@ public class MethodCanvas extends EssenciaCanvas {
 		if(content instanceof EssenciaKernelSymbol){
 			
 			elementView = makeElementViewFromEssenciaKernelSymbol((EssenciaKernelSymbol)content);
-			
-			if(validate(elementView)){
-				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
-			} 
-			
+
+			try{
+				if(validate(elementView)){
+					returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
+				}
+
+			} catch (RuntimeException e ){
+				e.printStackTrace();
+				throw e;
+			}
+
 			return returnArr;
 		}else if(content instanceof Symbol){
 			Symbol symbol = (Symbol)content;
@@ -91,13 +92,13 @@ public class MethodCanvas extends EssenciaCanvas {
 				tempElementView = (ElementView)practice.getElementByName(resource.getDisplayName()).getElementView().clone();
 				
 				ElementView parentView = findDuplicatedParentElement(practice.findParentElements(tempElementView));
-				
-				Relation relation = practice.findFromRelation(tempElementView);
+
+				IRelation relation = practice.findFromRelation(tempElementView);
 				relation.getRelationView().setId(createId());
 					
 				
-				elementView = ObjectUtil.convertToViewHasElement(practice.getElementByName(resource.getDisplayName()));
-				relationView = ObjectUtil.convertToViewHasRelation(relation);
+				elementView = ((BasicElement)practice.getElementByName(resource.getDisplayName())).asView();
+				relationView = relation.asView();
 				
 				parentView.addToEdge(relationView.getId());
 				
@@ -281,22 +282,22 @@ public class MethodCanvas extends EssenciaCanvas {
 			
 			e.getElementView().setId(newId);
 			
-			List<Relation> fromRelations = p.findFromRelations(e.getElementView());
+			List<IRelation> fromRelations = p.findFromRelations(e.getElementView());
 			if(fromRelations != null){
-				for(Relation r : fromRelations){
+				for(IRelation r : fromRelations){
 					r.getRelationView().setTo(r.getRelationView().getTo().replace(oldId, newId));
 				}
 			}
 			
 			
-			List<Relation> toRelations = p.findToRelation(e.getElementView());
+			List<IRelation> toRelations = p.findToRelation(e.getElementView());
 			if(toRelations.size() > 0){
-				for(Relation r : toRelations){
+				for(IRelation r : toRelations){
 					r.getRelationView().setFrom(r.getRelationView().getFrom().replace(oldId, newId));
 				}
 			}
 		}
-		for(Relation r : p.getRelationList()){
+		for(IRelation r : p.getRelationList()){
 			oldId = r.getRelationView().getId();
 			newId = createId();
 			r.getRelationView().setId(newId);

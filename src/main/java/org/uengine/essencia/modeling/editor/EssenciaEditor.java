@@ -247,7 +247,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		
 		try {
 			PracticeDefinition practice = new PracticeDefinition();
-			practice.setElementList(ElementUtil.convertToIElementList(getEssenciaModelerEditor().obtainElementViewList()));
+			practice.setElementList(ElementUtil.convertToElementList(getEssenciaModelerEditor().obtainElementViewList()));
 			practice.setRelationList(ElementUtil.convertToRelationList(getEssenciaModelerEditor().obtainRelationViewList()));
 			
 			elementViewList = practice.converToProcessAsElementViewList(practice);

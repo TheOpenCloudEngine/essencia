@@ -93,7 +93,9 @@ public class ElementGroup extends LanguageElement {
 	}
 
 	public ElementGroup() {
-
+		name = new TextContext();
+		briefDescription = new TextContext();
+		description = new TextContext();
 	}
 
 }

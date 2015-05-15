@@ -16,6 +16,6 @@ public class ProcessModelerEditor extends ModelerEditor {
 	}
 	
 	public void createModeler() {
-		this.setModeler(new ProcessModeler());
+		//this.setModeler(new ProcessModeler());
 	}	
 }

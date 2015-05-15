@@ -5,10 +5,7 @@ import java.util.List;
 
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.LanguageElement;
-import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IElement;
-import org.uengine.modeling.Relation;
-import org.uengine.modeling.RelationView;
+import org.uengine.modeling.*;
 
 public class ElementUtil {
 	
@@ -17,17 +14,14 @@ public class ElementUtil {
 	 * @param elementViewList
 	 * @return
 	 */
-	public static List<LanguageElement> convertToLanguageElementList(List<ElementView> elementViewList){
+	/*public static List<LanguageElement> convertToLanguageElementList(List<ElementView> elementViewList){
 		List<LanguageElement> elementList = new ArrayList<LanguageElement>();
 			for(ElementView elementView : elementViewList){
-				BasicElement languageElement = (BasicElement)elementView.getElement();
-				elementView.setElement(null);
-				languageElement.setElementView(elementView);
-				elementList.add(languageElement);
+				elementList.add((LanguageElement)elementView.asElement());
 			}
 		return elementList;
-	}
-	
+	}*/
+
 	/**
 	 * List<IElement> convert to List<ElementView>
 	 * @param elementList
@@ -35,27 +29,21 @@ public class ElementUtil {
 	 */
 	public static List<ElementView> convertToElementViewList(List<IElement> elementList){
 		List<ElementView> list = new ArrayList<ElementView>();
-			for(IElement e : elementList){
-				ElementView view = e.getElementView();
-				e.setElementView(null);
-				view.setElement(e);
-				list.add(view);
+			for(IElement element : elementList){
+				list.add(((BasicElement)element).asView());
 			}
 		return list;
 	}
 	
 	/**
 	 * List<ElementView> convert to List<IElement>
-	 * @param elementList
+	 * @param elementViewList
 	 * @return
 	 */
-	public static List<IElement> convertToIElementList(List<ElementView> elementList){
+	public static List<IElement> convertToElementList(List<ElementView> elementViewList){
 		List<IElement> list = new ArrayList<IElement>();
-		for(ElementView view : elementList){
-			IElement e = view.getElement();
-			view.setElement(null);
-			e.setElementView(view);
-			list.add(e);
+		for(ElementView view : elementViewList){
+			list.add(view.asElement());
 		}
 		return list;
 	}
@@ -65,29 +53,23 @@ public class ElementUtil {
 	 * @param relationList
 	 * @return
 	 */
-	public static List<RelationView> convertToRelationViewList(List<Relation> relationList){
+	public static List<RelationView> convertToRelationViewList(List<IRelation> relationList){
 		List<RelationView> list = new ArrayList<RelationView>();
-		for(Relation r : relationList){
-			RelationView view = r.getRelationView();
-			r.setRelationView(null);
-			view.setRelation(r);
-			list.add(view);
+		for(IRelation relation : relationList){
+			list.add(relation.asView());
 		}
 		return list;
 	}
 	
 	/**
 	 * List<RelationView> conver to List<Relation>
-	 * @param relationList
+	 * @param relationViewList
 	 * @return
 	 */
-	public static List<Relation> convertToRelationList(List<RelationView> relationList){
-		List<Relation> list = new ArrayList<Relation>();
-		for(RelationView view : relationList){
-			Relation r = (Relation)view.getRelation();
-			view.setRelation(null);
-			r.setRelationView(view);
-			list.add(r);
+	public static List<IRelation> convertToRelationList(List<RelationView> relationViewList){
+		List<IRelation> list = new ArrayList<IRelation>();
+		for(RelationView view : relationViewList){
+			list.add((IRelation)view.asRelation());
 		}
 		return list;
 	}

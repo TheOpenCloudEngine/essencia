@@ -25,7 +25,7 @@ public class DefinerEditor extends EssenciaModelerEditor {
 	public String getAlias() throws Exception {
 		EssenciaModeler modeler = this.getEssenciaModeler();
 		
-		return modeler.getModel().getAlias();
+		return modeler.takeModel().getAlias();
 	}
 
 }

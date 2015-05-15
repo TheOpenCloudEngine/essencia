@@ -2,7 +2,6 @@ package org.uengine.essencia.model.card;
 
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.BasicElement;
-import org.uengine.kernel.graph.Transition;
 import org.uengine.modeling.Canvas;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
@@ -87,7 +86,8 @@ public abstract class BasicCard implements Card{
 	}
 	
 	protected void makeRelation(String prefix){
-		Transition transition = new Transition();
+		//TODO :
+		/*Transition transition = new Transition();
 		RelationView view = transition.createView();
 		setSymbol(view.createSymbol());
 		
@@ -98,7 +98,7 @@ public abstract class BasicCard implements Card{
 		view.setFrom(prefix + String.valueOf(trcTag - 1) + TERMINAL_IN_OUT);
 		view.setTo(prefix + String.valueOf(trcTag + 1) + TERMINAL_IN_OUT);
 		
-		getCanvas().getRelationViewList().add(view);
+		getCanvas().getRelationViewList().add(view);*/
 	}
 	
 	protected void makeUpView(IElement element){

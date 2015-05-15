@@ -9,8 +9,11 @@ import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Name;
 import org.metaworks.annotation.Order;
 import org.uengine.contexts.TextContext;
+import org.uengine.essencia.model.view.LanguageElementView;
+import org.uengine.essencia.repository.ObjectRepository;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
+import org.uengine.modeling.RelationView;
 import org.uengine.util.UEngineUtil;
 
 public abstract class BasicElement extends LanguageElement implements IElement {
@@ -139,33 +142,6 @@ public abstract class BasicElement extends LanguageElement implements IElement {
 
 	@Override
 	public ElementView createView() {
-//		StringBuilder fullClassPath = new StringBuilder(getClass().getPackage().getName());
-//		fullClassPath.append(".view.");
-//		fullClassPath.append(getClass().getSimpleName());
-//		fullClassPath.append("View");
-//
-//		ElementView elementView = null;
-//		try {
-//			Constructor constructor = Thread.currentThread().getContextClassLoader().loadClass(fullClassPath.toString())
-//					.getConstructor(new Class[] { IElement.class });
-//			elementView = (ElementView) constructor.newInstance(this);
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (NoSuchMethodException e) {
-//			e.printStackTrace();
-//		} catch (SecurityException e) {
-//			e.printStackTrace();
-//		} catch (InstantiationException e) {
-//			e.printStackTrace();
-//		} catch (IllegalAccessException e) {
-//			e.printStackTrace();
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//		} catch (InvocationTargetException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return elementView;
 
 		ElementView elementView = (ElementView) UEngineUtil.getComponentByEscalation(getClass(), "view");
 		elementView.setElement(this);
@@ -175,4 +151,45 @@ public abstract class BasicElement extends LanguageElement implements IElement {
 
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (obj == null) {
+			return false;
+		}
+
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+
+		return compareName(obj);
+	}
+
+	private boolean compareName(Object obj){
+		if(getName().equals(((BasicElement)obj).getName())){
+			return true;
+		} else  {
+			return false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().getSimpleName().hashCode() *  name.hashCode();
+	}
+
+	/**
+	 * convert main object from IElement to ElementView
+	 *
+	 * @return ElementView which have this class as element
+	 */
+	public ElementView asView() {
+		ElementView view = getElementView();
+		setElementView(null);
+		view.setElement(this);
+		return view;
+	}
 }

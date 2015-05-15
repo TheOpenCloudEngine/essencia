@@ -11,12 +11,11 @@ import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.canvas.PracticeCanvas;
 import org.uengine.essencia.modeling.palette.EssenciaPalette;
 import org.uengine.modeling.*;
-import org.uengine.util.ObjectUtil;
 
 /**
  * @author jyj
  */
-public class PracticeDefiner extends DefaultModeler {
+public class PracticeDefiner extends EssenciaModeler {
 	
 	public final static String SUFFIX = ".practice";
 
@@ -35,11 +34,12 @@ public class PracticeDefiner extends DefaultModeler {
 		practice.afterDeserialize();
 		
 		for(IElement element : practice.getElementList()){
-			elementViewList.add(ObjectUtil.convertToViewHasElement(element));
+			//TODO :
+			elementViewList.add(((BasicElement)element).asView());
 		}
 				
-		for(Relation relation : practice.getRelationList()){
-			relationViewList.add(ObjectUtil.convertToViewHasRelation(relation));
+		for(IRelation relation : practice.getRelationList()){
+			relationViewList.add(relation.asView());
 		}
 		
 		getCanvas().setElementViewList(elementViewList);
@@ -62,17 +62,29 @@ public class PracticeDefiner extends DefaultModeler {
 		TextContext practiceName = new TextContext();
 		
 		for(ElementView elementView : canvas.getElementViewList()){
-		    BasicElement element = (BasicElement)ObjectUtil.convertToElementHasView(elementView);
-			element.setName(elementView.getLabel());
-			if(element instanceof Practice){
-				practiceName.setText(element.getName());
+			//TODO:
+			//filtering removed elements
+			if(elementView.getElement() != null){
+
+				ElementView tempElementView = (ElementView)elementView.clone();
+				BasicElement element = (BasicElement)tempElementView.getElement();
+				tempElementView.setElement(null);
+				element.setElementView(tempElementView);
+
+				element.setName(elementView.getLabel());
+				if(element instanceof Practice){
+					practiceName.setText(element.getName());
+				}
+				practice.addElement(element);
 			}
-			practice.addElement(element);
 		}
 		
 		for(RelationView relationView : this.getCanvas().getRelationViewList()){
-			Relation relation = (Relation)ObjectUtil.convertToRelationHasView(relationView);
-			practice.addRelationList(relation);
+			if(relationView.getRelation() != null){
+
+				Relation relation = (Relation)relationView.asRelation();
+				practice.addRelationList(relation);
+			}
 		}
 		
 		practice.setName(practiceName);

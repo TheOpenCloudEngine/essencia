@@ -6,6 +6,7 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.uengine.essencia.context.EssenciaContext;
 //import org.uengine.essencia.modeling.modeler.EssenciaModeler;
+import org.uengine.essencia.modeling.modeler.EssenciaModeler;
 import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.essencia.util.ContextUtil;
@@ -25,8 +26,8 @@ public abstract class ModelerEditor extends Editor {
 		this.modeler = modeler;
 	}
 
-	public DefaultModeler getEssenciaModeler() {
-		return ((DefaultModeler) modeler);
+	public EssenciaModeler getEssenciaModeler() {
+		return ((EssenciaModeler) modeler);
 	}
 
 	public IModelResource getModelResource() {
@@ -62,7 +63,7 @@ public abstract class ModelerEditor extends Editor {
 
 	@Override
 	public void save() throws Exception {
-		IModel model = this.getModeler().getModel();
+		IModel model = ((EssenciaModeler)this.getModeler()).takeModel();
 		getModelResource().saveResource(model);
 
 		ContextUtil.setWhen((Resource) getResource(), EssenciaContext.WHEN_EDIT);

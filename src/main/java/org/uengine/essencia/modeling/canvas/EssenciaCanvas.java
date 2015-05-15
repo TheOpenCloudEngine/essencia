@@ -1,6 +1,7 @@
 package org.uengine.essencia.modeling.canvas;
 
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
@@ -8,7 +9,8 @@ import org.metaworks.Refresh;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.widget.Clipboard;
 import org.uengine.essencia.context.EssenciaContext;
-import org.uengine.essencia.model.Practice;
+import org.uengine.essencia.model.*;
+import org.uengine.essencia.model.view.ActivitySpaceView;
 import org.uengine.essencia.model.view.PracticeView;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.essencia.util.ContextUtil;
@@ -20,6 +22,8 @@ import org.uengine.modeling.IRelation;
 import org.uengine.modeling.RelationView;
 import org.uengine.modeling.Symbol;
 import org.uengine.modeling.SymbolFactory;
+
+import javax.annotation.processing.Completion;
 
 public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 
@@ -75,6 +79,26 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 				return false;
 			}
 		}
+
+		if(elementView instanceof ActivitySpaceView){
+			//if activitySpace's input alpha is not covered by the alphas in the canvas throw exception because it is essential condition.
+			ActivitySpace activitySpace = (ActivitySpace)elementView.getElement();
+			List<IElement> elementListFromCanvas = ElementUtil.convertToElementList(getElementViewList());
+			for(LanguageElement tmpElement : activitySpace.getInputList()){
+				if(!elementListFromCanvas.contains(tmpElement)){
+					throw new RuntimeException(((BasicElement)tmpElement).getName() + " is an essential condition for input alpha. please draw it first. ");
+				}
+			}
+
+			for(LanguageElement tempLanguageElement : activitySpace.getCompletionCriteria()){
+				CompletionCriterion criterion = (CompletionCriterion)tempLanguageElement;
+				if( criterion.getState() != null){
+					if(!elementListFromCanvas.contains(criterion.getState().getParentAlpha())){
+						throw new RuntimeException(criterion.getState().getParentAlpha().getName() + " is an essential condition for completion criterion. please draw it first. ");
+					}
+				}
+			}
+		}
 		return true;
 	}
 
@@ -87,7 +111,11 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 	}
 
 	protected ElementView makeElementViewFromEssenciaKernelSymbol(EssenciaKernelSymbol symbol) {
-		return symbol.getLanguageElementView();
+		ElementView view = symbol.getLanguageElementView();
+		ElementGroup group = new ElementGroup();
+		group.setName(EssenciaContext.ESSENCE_KERNEL);
+		((LanguageElement) view.getElement()).setOwner(group);
+		return view;
 	}
 
 	protected RelationView makeRelationViewFromSymbol(Symbol symbol) {
@@ -134,7 +162,7 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 	public abstract Object[] drop();
 
 	public List<IElement> takeElementList(){
-		return ElementUtil.convertToIElementList(getElementViewList());
+		return ElementUtil.convertToElementList(getElementViewList());
 	}
 
 }
