@@ -285,7 +285,13 @@
 		</dependency>
 		<!-- emf -->
 
-
+        <!-- garuda-api -->
+        <dependency>
+            <groupId>org.uengine.cloud.garuda</groupId>
+            <artifactId>garuda-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!-- garuda-api -->
 	</dependencies>
 
 	<build>
