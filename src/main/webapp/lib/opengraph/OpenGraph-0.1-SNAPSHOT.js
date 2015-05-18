@@ -1,4 +1,4 @@
-﻿﻿
+﻿
 // ┌────────────────────────────────────────────────────────────────────┐ \\
 // │ Raphaël 2.1.0 - JavaScript Vector Library                          │ \\
 // ├────────────────────────────────────────────────────────────────────┤ \\
@@ -11,8 +11,8 @@
 /* group 기능 추가 (by 이승백, 2012-04-17)
 @example
 var paper = new Raphael('canvas', 800, 600);
+ var ele1 = paper.circle(50, 50, 50);
 var group = paper.group();
-var ele1 = paper.circle(50, 50, 50);
 var ele2 = paper.rect(0, 0, 50, 50, 5);
 
 group.appendChild(ele1);
@@ -9928,6 +9928,7 @@ OG.shape.IShape.prototype = {
 };
 OG.shape.IShape.prototype.constructor = OG.shape.IShape;
 OG.IShape = OG.shape.IShape;
+
 /**
  * Shape 의 Edge 연결 포인트 정보
  *
@@ -11102,7 +11103,8 @@ OG.shape.essencia.Alpha.prototype.createShape = function () {
 	
 	this.geom.style = new OG.geometry.Style({
 		'r' : 20,
-		'label-position': 'center'
+		'label-position': 'center',
+        'stroke-width' : 2.5
 	});
 
 	return this.geom;
@@ -11167,7 +11169,7 @@ OG.shape.essencia.State.prototype.createShape = function () {
 	
 	this.geom.style = new OG.geometry.Style({
 		'label-position': 'center',
-		'stroke-width' : 2,
+		'stroke-width' : 2.5,
 		'r' : 8
 	});
 
@@ -11237,7 +11239,8 @@ OG.shape.essencia.LevelOfDetail.prototype.createShape = function () {
  	]);
 	
 	this.geom.style = new OG.geometry.Style({
-		'label-position': 'center'
+		'label-position': 'center',
+        'stroke-width': 2.5
 	});
 
 	return this.geom;
@@ -11312,7 +11315,8 @@ OG.shape.essencia.Competency.prototype.createShape = function () {
 	]);
 	
 	this.geom.style = new OG.geometry.Style({
-		'label-position': 'middle'
+		'label-position': 'middle',
+        'stroke-width': 2.5
 	});
 
 	return this.geom;
@@ -11383,7 +11387,8 @@ OG.shape.essencia.Practice.prototype.createShape = function () {
 	]);
 	
 	this.geom.style = new OG.geometry.Style({
-		'label-position': 'middle'
+		'label-position': 'middle',
+        'stroke-width' : 2.5
 	});
 
 	return this.geom;
@@ -11454,7 +11459,8 @@ OG.shape.essencia.ActivitySpace.prototype.createShape = function () {
 	
 	this.geom.style = new OG.geometry.Style({
 		'label-position': 'middle',
-		'stroke-dasharray': '-'
+		'stroke-dasharray': '-',
+        'stroke-width': 2.5
 	});
 
 	return this.geom;
@@ -11526,7 +11532,8 @@ OG.shape.essencia.Activity.prototype.createShape = function () {
 	]);
 	
 	this.geom.style = new OG.geometry.Style({
-		'label-position': 'middle'
+		'label-position': 'middle',
+        'stroke-width': 2.5
 	});
 
 	return this.geom;
@@ -11597,7 +11604,8 @@ OG.shape.essencia.WorkProduct.prototype.createShape = function () {
 	]);
 	
 	this.geom.style = new OG.geometry.Style({
-		'label-position': 'middle'
+		'label-position': 'middle',
+        'stroke-width': 2.5
 	});
 
 	return this.geom;
@@ -11665,7 +11673,7 @@ OG.shape.essencia.CompetencyLevel.prototype.createShape = function () {
 	
 	this.geom.style = new OG.geometry.Style({
 		'label-position': 'center',
-		'stroke-width' : 2
+        'stroke-width': 2.5
 	});
 	
 

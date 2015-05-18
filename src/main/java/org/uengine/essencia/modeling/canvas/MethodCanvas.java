@@ -248,7 +248,7 @@ public class MethodCanvas extends EssenciaCanvas {
 	
 	private String findCanvasId(){
 		String canvasId = "";
-		for(ElementView view : getElementViewList()){
+		for(ElementView view : getSafeElementViewList()){
 			if(view instanceof PracticeView){
 				canvasId = view.getId().split("_")[1];
 			}
@@ -258,12 +258,12 @@ public class MethodCanvas extends EssenciaCanvas {
 	
 	int highestId = 0;
 	private String findHighestElementId(){
-		for(ElementView view : getElementViewList()){
+		for(ElementView view : getSafeElementViewList()){
 			if(highestId < Integer.valueOf(view.getId().split("_")[2])){
 				highestId = Integer.valueOf(view.getId().split("_")[2]);
 			}
 		}
-		for(RelationView view : getRelationViewList()){
+		for(RelationView view : getSafeRelationViewList()){
 			if(highestId < Integer.valueOf(view.getId().split("_")[2])){
 				highestId = Integer.valueOf(view.getId().split("_")[2]);
 			}

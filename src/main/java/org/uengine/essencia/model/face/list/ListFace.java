@@ -59,7 +59,7 @@ public abstract class ListFace<T> implements ContextAware {
 		ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
 	}
 
-	@Hidden(when= EssenciaContext.WHEN_VIEW)
+//	@Hidden(when= EssenciaContext.WHEN_VIEW)
 	@Face(displayName = "add")
 	@ServiceMethod(callByContent = true)
 	public void add() {
@@ -86,7 +86,7 @@ public abstract class ListFace<T> implements ContextAware {
 		getEssenciaElementList().add(element);
 	}
 
-	@Hidden(when= EssenciaContext.WHEN_VIEW)
+//	@Hidden(when= EssenciaContext.WHEN_VIEW)
 	@Face(displayName = "remove")
 	@ServiceMethod(callByContent = true)
 	public void remove() {

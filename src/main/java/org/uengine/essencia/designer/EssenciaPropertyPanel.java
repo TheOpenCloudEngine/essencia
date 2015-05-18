@@ -76,7 +76,7 @@ public class EssenciaPropertyPanel implements ContextAware {
 
     }
 
-    @Hidden(when = EssenciaContext.WHEN_VIEW)
+//    @Hidden(when = EssenciaContext.WHEN_VIEW)
     @Order(1)
     @Face(displayName = "Apply")
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
@@ -89,7 +89,7 @@ public class EssenciaPropertyPanel implements ContextAware {
         return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(getElementView(), true)};
     }
 
-    @Hidden(when = EssenciaContext.WHEN_VIEW)
+//    @Hidden(when = EssenciaContext.WHEN_VIEW)
     @Order(2)
     @Face(displayName = "Cancel")
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
