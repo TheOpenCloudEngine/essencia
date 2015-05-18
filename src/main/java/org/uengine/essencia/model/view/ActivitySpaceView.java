@@ -54,7 +54,7 @@ public class ActivitySpaceView extends LanguageElementView implements KernelLang
 	@Override
 	public Object showProperty() throws Exception {
 		List<ElementView> list = new ArrayList<ElementView>();
-		for(ElementView e : essenciaCanvas.getElementViewList()){
+		for(ElementView e : essenciaCanvas.getSafeElementViewList()){
 			if(e instanceof AlphaView){
 				list.add(e);
 			}

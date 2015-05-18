@@ -53,7 +53,7 @@ public class ActivityView extends LanguageElementView {
     @Override
     public Object showProperty() throws Exception {
 	List<ElementView> list = new ArrayList<ElementView>();
-	for (ElementView e : essenciaCanvas.getElementViewList()) {
+	for (ElementView e : essenciaCanvas.getSafeElementViewList()) {
 	    if (e instanceof AlphaView) {
 		list.add(e);
 	    } else if (e instanceof WorkProductView) {

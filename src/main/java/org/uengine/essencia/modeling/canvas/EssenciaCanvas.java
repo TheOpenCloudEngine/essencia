@@ -1,7 +1,7 @@
 package org.uengine.essencia.modeling.canvas;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
@@ -22,8 +22,6 @@ import org.uengine.modeling.IRelation;
 import org.uengine.modeling.RelationView;
 import org.uengine.modeling.Symbol;
 import org.uengine.modeling.SymbolFactory;
-
-import javax.annotation.processing.Completion;
 
 public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 
@@ -74,7 +72,7 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 	}
 
 	protected boolean validate(ElementView elementView) {
-		for (ElementView view : getElementViewList()) {
+		for (ElementView view : getSafeElementViewList()) {
 			if (elementView.getClass() == view.getClass() && elementView.getLabel().equals(view.getLabel())) {
 				return false;
 			}
@@ -83,7 +81,7 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 		if(elementView instanceof ActivitySpaceView){
 			//if activitySpace's input alpha is not covered by the alphas in the canvas throw exception because it is essential condition.
 			ActivitySpace activitySpace = (ActivitySpace)elementView.getElement();
-			List<IElement> elementListFromCanvas = ElementUtil.convertToElementList(getElementViewList());
+			List<IElement> elementListFromCanvas = ElementUtil.convertToElementList(getSafeElementViewList());
 			for(LanguageElement tmpElement : activitySpace.getInputList()){
 				if(!elementListFromCanvas.contains(tmpElement)){
 					throw new RuntimeException(((BasicElement)tmpElement).getName() + " is an essential condition for input alpha. please draw it first. ");
@@ -162,7 +160,26 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 	public abstract Object[] drop();
 
 	public List<IElement> takeElementList(){
-		return ElementUtil.convertToElementList(getElementViewList());
+		return ElementUtil.convertToElementList(getSafeElementViewList());
 	}
 
+	public List<ElementView> getSafeElementViewList(){
+		List<ElementView> returnList = new ArrayList<ElementView>();
+		for(ElementView view : getElementViewList()){
+			if(view.getElement() != null){
+				returnList.add(view);
+			}
+		}
+		return returnList;
+	}
+
+	public List<RelationView> getSafeRelationViewList(){
+		List<RelationView> returnList = new ArrayList<RelationView>();
+		for(RelationView view : getRelationViewList()){
+			if(view.getRelation() != null){
+				returnList.add(view);
+			}
+		}
+		return returnList;
+	}
 }
