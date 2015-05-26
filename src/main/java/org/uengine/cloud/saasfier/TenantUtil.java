@@ -1,5 +1,7 @@
 package org.uengine.cloud.saasfier;
 
+import org.oce.garuda.multitenancy.TenantContext;
+
 import java.io.File;
 
 /**
@@ -12,3 +14,5 @@ public class TenantUtil {
         return tenantId + File.separator;
     }
 }
+
+

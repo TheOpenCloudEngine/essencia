@@ -25,7 +25,6 @@ import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.Clipboard;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.ConfirmPanel;
-import org.uengine.cloud.saasfier.TenantContext;
 import org.uengine.cloud.saasfier.TenantUtil;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.designer.ResourceNavigator;
