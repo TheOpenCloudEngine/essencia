@@ -130,7 +130,11 @@ public class ActivitySpace extends AbstractActivity implements Concernable {
 
 	@Override
 	public void transformContext() {
-		ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+		if (getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getOwner().getName())) {
+			ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
+		} else {
+			ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+		}
 	}
 
 	@Override

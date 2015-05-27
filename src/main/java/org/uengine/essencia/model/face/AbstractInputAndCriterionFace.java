@@ -53,10 +53,12 @@ public abstract class AbstractInputAndCriterionFace implements ContextAware {
 	ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
     }
 
+    @Hidden(when = MetaworksContext.WHEN_VIEW)
     @Face(displayName = "add")
     @ServiceMethod(callByContent = true)
     public abstract void add();
 
+    @Hidden(when = MetaworksContext.WHEN_VIEW)
     @Face(displayName = "remove")
     @ServiceMethod(callByContent = true)
     public void remove() {

@@ -119,7 +119,6 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 	//TODO: modify IElement
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

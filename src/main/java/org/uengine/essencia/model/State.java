@@ -27,103 +27,103 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
 
     @Hidden
     public List<CheckPoint> getList() {
-	return list;
+        return list;
     }
 
     public void setList(List<CheckPoint> list) {
-	this.list = list;
+        this.list = list;
     }
 
     @Face(displayName = "CheckPoint")
     public CheckPointListFace getListFace() {
-	return listFace;
+        return listFace;
     }
 
     public void setListFace(CheckPointListFace listFace) {
-	this.listFace = listFace;
+        this.listFace = listFace;
     }
 
     @Name
     @Order(1)
     @Id
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     @Order(2)
     public String getDescription() {
-	return description;
+        return description;
     }
 
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     @Hidden
     public Alpha getParentAlpha() {
-	return parentAlpha;
+        return parentAlpha;
     }
 
     public void setParentAlpha(Alpha parentAlpha) {
-	this.parentAlpha = parentAlpha;
+        this.parentAlpha = parentAlpha;
     }
 
     public State() {
-	setListFace(new CheckPointListFace());
+        setListFace(new CheckPointListFace());
     }
 
     public State(String name) {
-	this();
-	setName(name);
+        this();
+        setName(name);
     }
 
     public DetailCard createDetailCardView(Alpha parentElement) {
-	DetailCard card = new StateCard(this, parentElement);
-	return card;
+        DetailCard card = new StateCard(this, parentElement);
+        return card;
     }
 
     public Essence.AlphaAndWorkProduct.State toXmi() {
-	Essence.AlphaAndWorkProduct.State state = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createState();
-	state.setName(getName());
-	state.setDescription(getDescription());
-	for (CheckPoint c : getList()) {
-	    state.getCheckListItem().add(c.toXmi());
-	}
-	return state;
+        Essence.AlphaAndWorkProduct.State state = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createState();
+        state.setName(getName());
+        state.setDescription(getDescription());
+        for (CheckPoint c : getList()) {
+            state.getCheckListItem().add(c.toXmi());
+        }
+        return state;
     }
 
     @Hidden
     @Override
     public ElementView getElementView() {
-	return this.elementView;
+        return this.elementView;
     }
 
     @Override
     public void setElementView(ElementView elementView) {
-	this.elementView = elementView;
+        this.elementView = elementView;
     }
 
     @Override
     public void setUpElement() {
-	setListFace(new CheckPointListFace());
-	if (getList() != null) {
-	    getListFace().fillElements(getList());
-	    getList().clear();
-	}
+        setListFace(new CheckPointListFace());
+        if (getList() != null) {
+            getListFace().fillElements(getList());
+            getList().clear();
+        }
     }
 
     @Override
     public void beforeApply() {
-	setList(getListFace().createValue());
+        setList(getListFace().createValue());
     }
 
     @Override
     public ElementView createView() {
-	return new StateView(this);
+        return new StateView(this);
     }
 
 }

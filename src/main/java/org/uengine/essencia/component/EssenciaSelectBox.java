@@ -12,6 +12,9 @@ public class EssenciaSelectBox extends SelectBox {
     public void add(String name, String value) {
         defaultValueSetting();
         for (String registeredName : getOptionNames()) {
+            if(registeredName == null || "".equals(registeredName)){
+                break;
+            }
             if (registeredName.equals(name)) {
                 return;
             }

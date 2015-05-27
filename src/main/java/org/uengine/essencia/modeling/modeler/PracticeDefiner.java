@@ -35,7 +35,6 @@ public class PracticeDefiner extends EssenciaModeler {
         practice.afterDeserialize();
 
         for (IElement element : practice.getElementList()) {
-            //TODO :
             elementViewList.add(((BasicElement) element).asView());
         }
 

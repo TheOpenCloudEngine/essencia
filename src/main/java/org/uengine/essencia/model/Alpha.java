@@ -29,6 +29,11 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     }
 
     @Hidden
+    public List<State> getStates() {
+        return getList();
+    }
+
+    @Hidden
     public List<State> getList() {
         return list;
     }

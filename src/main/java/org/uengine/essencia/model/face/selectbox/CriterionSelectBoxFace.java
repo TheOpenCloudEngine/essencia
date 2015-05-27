@@ -20,11 +20,11 @@ public class CriterionSelectBoxFace extends AbstractSelectBoxFace {
     private transient SelectBox subSelectBox;
 
     public SelectBox getSubSelectBox() {
-	return subSelectBox;
+        return subSelectBox;
     }
 
     public void setSubSelectBox(SelectBox subSelectBox) {
-	this.subSelectBox = subSelectBox;
+        this.subSelectBox = subSelectBox;
     }
 
     public CriterionSelectBoxFace() {
@@ -33,13 +33,13 @@ public class CriterionSelectBoxFace extends AbstractSelectBoxFace {
     @Hidden
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_CHANGE, bindingFor = "mainSelectBox", bindingHidden = true, target = ServiceMethodContext.TARGET_SELF)
     public void selectBoxChanged() {
-	setSubSelectBox(new EssenciaSelectBox());
-	for (IElement e : essenciaCanvas.takeElementList()) {
-	    if (e instanceof Alpha && getMainSelectBox().getSelectedText().equals(((Alpha) e).getName())) {
-		for (State s : ((Alpha) e).getList()) {
-		    getSubSelectBox().add(s.getName(), s.getName());
-		}
-	    }
-	}
+        setSubSelectBox(new EssenciaSelectBox());
+        for (IElement e : essenciaCanvas.takeElementList()) {
+            if (e instanceof Alpha && getMainSelectBox().getSelectedText().equals(((Alpha) e).getName())) {
+                for (State s : ((Alpha) e).getList()) {
+                    getSubSelectBox().add(s.getName(), s.getName());
+                }
+            }
+        }
     }
 }

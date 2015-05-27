@@ -99,7 +99,7 @@ public class PracticeFolderResource extends ContainerResource {
 	@ServiceMethod(inContextMenu = true, target = ServiceMethodContext.TARGET_POPUP)
 	public ModalWindow viewDashboard() {
 
-		// TODO Project별 값이 채워진 Alphas는 어떻게 획득하나?
+		//  TODO Project별 값이 채워진 Alphas는 어떻게 획득하나?
 
 		// Dashboard db = new Dashboard();
 

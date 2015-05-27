@@ -12,21 +12,21 @@ import org.uengine.modeling.IElement;
 public abstract class CriterionFace extends AbstractInputAndCriterionFace {
 
     public CriterionFace() {
-	
-	setAbstractSelectBoxFaceList(new ArrayList<AbstractSelectBoxFace>());
+
+        setAbstractSelectBoxFaceList(new ArrayList<AbstractSelectBoxFace>());
     }
 
     @Override
     public void add() {
-	// activity entry
-	CriterionSelectBoxFace box = new CriterionSelectBoxFace();
-	for (IElement e : getElementListFromCanvas()) {
-	    if (e instanceof ActivitySpace) {
-		box.getMainSelectBox().addActivitySpaceForCompletion((ActivitySpace) e);
-	    }
-	}
-	ContextUtil.setWhen(box, EssenciaContext.WHEN_EDIT);
-	getAbstractSelectBoxFaceList().add(box);
+        // activity entry
+        CriterionSelectBoxFace box = new CriterionSelectBoxFace();
+        for (IElement e : getElementListFromCanvas()) {
+            if (e instanceof ActivitySpace) {
+                box.getMainSelectBox().addActivitySpaceForCompletion((ActivitySpace) e);
+            }
+        }
+        ContextUtil.setWhen(box, EssenciaContext.WHEN_EDIT);
+        getAbstractSelectBoxFaceList().add(box);
 
     }
 

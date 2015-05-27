@@ -23,7 +23,7 @@ public class DefinerEditor extends EssenciaModelerEditor {
 
 	@Override
 	public String getAlias() throws Exception {
-		EssenciaModeler modeler = this.getEssenciaModeler();
+		EssenciaModeler modeler = this.takeEssenciaModeler();
 		
 		return modeler.takeModel().getAlias();
 	}
