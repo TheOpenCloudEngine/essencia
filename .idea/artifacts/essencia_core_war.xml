@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="essencia-core:war">
-    <output-path>$PROJECT_DIR$/essencia-core/target</output-path>
-    <root id="archive" name="essencia-core-0.0.2-SNAPSHOT.war">
-      <element id="artifact" artifact-name="essencia-core:war exploded" />
-    </root>
-  </artifact>
-</component>
