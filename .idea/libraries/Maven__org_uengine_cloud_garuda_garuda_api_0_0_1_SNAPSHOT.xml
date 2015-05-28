@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.uengine.cloud.garuda:garuda-api:0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/uengine/cloud/garuda/garuda-api/0.0.1-SNAPSHOT/garuda-api-0.0.1-20150520.012925-3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/uengine/cloud/garuda/garuda-api/0.0.1-SNAPSHOT/garuda-api-0.0.1-20150520.012925-3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/uengine/cloud/garuda/garuda-api/0.0.1-SNAPSHOT/garuda-api-0.0.1-20150520.012925-3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

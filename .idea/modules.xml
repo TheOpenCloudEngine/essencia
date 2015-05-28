@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/essencia.iml" filepath="$PROJECT_DIR$/essencia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/essencia-core/essencia-core.iml" filepath="$PROJECT_DIR$/essencia-core/essencia-core.iml" />
+    </modules>
+  </component>
+</project>
