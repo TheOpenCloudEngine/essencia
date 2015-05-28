@@ -1,18 +1,26 @@
 package org.uengine.essencia.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 import org.metaworks.component.SelectBox;
+import org.metaworks.dwr.SerializationSensitive;
+import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.component.EssenciaConcernSelectBox;
 import org.uengine.essencia.context.EssenciaContext;
+import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.card.AlphaCard;
 import org.uengine.essencia.model.card.Card;
+import org.uengine.essencia.model.face.PropertyListFace;
 import org.uengine.essencia.model.face.list.StateListFace;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ProcessVariableValue;
 
 public class Alpha extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
 
@@ -145,6 +153,29 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
         setConcern(getConcernBox().getSelected());
         setConcernBox(null);
+    }
+
+    public AlphaInstance createInstance(String id) {
+
+        return new AlphaInstance(this, id);
+    }
+
+    @Override
+    public List<AlphaInstance> getInstances(ProcessInstance instance) {
+        return (List<AlphaInstance>) super.getInstances(instance);
+    }
+
+    public State findState(String stateName) {
+
+        if(stateName==null) throw new IllegalArgumentException("Finding state name is null");
+
+        for(State state : getList()){
+            if(stateName.equals(state.getName())){
+                return state;
+            }
+        }
+
+        throw new IllegalArgumentException("No such state named " + stateName);
     }
 
 }

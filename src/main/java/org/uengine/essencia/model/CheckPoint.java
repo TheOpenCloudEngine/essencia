@@ -1,10 +1,14 @@
 package org.uengine.essencia.model;
 
+import Essence.Foundation.Method;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Order;
+import org.uengine.kernel.ProcessInstance;
 
-public class CheckPoint extends LanguageElement implements FaceTransformer {
+import javax.persistence.Basic;
+
+public class CheckPoint extends BasicElement implements FaceTransformer {
 
     private String name;
     private String description;
@@ -22,20 +26,24 @@ public class CheckPoint extends LanguageElement implements FaceTransformer {
     public String getDescription() {
 	return description;
     }
-
     public void setDescription(String description) {
 	this.description = description;
     }
 
-    private boolean isCompleted = false;
-
-    @Hidden
-    public boolean isCompleted() {
-	return isCompleted;
+    public boolean isCompleted(ProcessInstance instance) {
+        try {
+            return (boolean) instance.getProperty(this.getName(), "isCompleted");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void setCompleted(boolean isCompleted) {
-	this.isCompleted = isCompleted;
+    public void setCompleted(ProcessInstance instance, boolean isCompleted) {
+        try {
+            instance.setProperty(this.getName(), "isCompleted", isCompleted);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public CheckPoint() {

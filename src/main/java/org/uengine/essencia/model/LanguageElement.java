@@ -1,15 +1,23 @@
 package org.uengine.essencia.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
+import org.uengine.essencia.enactment.AlphaInstance;
+import org.uengine.essencia.enactment.LanguageElementInstance;
+import org.uengine.essencia.model.face.PropertyListFace;
 import org.uengine.essencia.model.face.list.ResourceListFace;
 import org.uengine.essencia.model.face.list.TagListFace;
 import org.uengine.kernel.GlobalContext;
+import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ProcessVariableValue;
 
 @Face(ejsPath = "dwr/metaworks/genericfaces/ElementFace.ejs")
 public abstract class LanguageElement implements ContextAware, Serializable, FaceTransformer {
@@ -135,5 +143,7 @@ public abstract class LanguageElement implements ContextAware, Serializable, Fac
 		setResourceList(getResourceListFace().createValue());
 		setTagList(getTagListFace().createValue());
 	}
+
+
 
 }

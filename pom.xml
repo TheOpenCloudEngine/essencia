@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.uengine</groupId>
 	<artifactId>essencia</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>0.0.2-SNAPSHOT</version>
 
 	<properties>
@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>org.uengine.metaworks</groupId>
 			<artifactId>metaworks3</artifactId>
-			<version>1.1-SNAPSHOT</version>
+			<version>1.2-SNAPSHOT</version>
 
 			<exclusions>
 				<exclusion>
@@ -120,6 +120,12 @@
 					<groupId>org.springframework.ws</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.uengine</groupId>
+			<artifactId>uengine-default-company</artifactId>
+			<version>4.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -364,5 +370,16 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>

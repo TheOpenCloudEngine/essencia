@@ -7,8 +7,10 @@ import java.io.File;
  */
 public class TenantUtil {
     public static String getTenantPath(){
-        TenantContext tenantContext = TenantContext.getThreadLocalInstance();
-        String tenantId = tenantContext == null ? "default" : tenantContext.getTenantId();
-        return tenantId + File.separator;
+//        TenantContext tenantContext = TenantContext.getThreadLocalInstance();
+//        String tenantId = tenantContext == null ? "default" : tenantContext.getTenantId();
+//        return tenantId + File.separator;
+
+        return null;
     }
 }

@@ -2,21 +2,28 @@ package org.uengine.essencia.model;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.metaworks.MetaworksContext;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Id;
-import org.metaworks.annotation.Name;
-import org.metaworks.annotation.Order;
+import org.metaworks.annotation.*;
+import org.metaworks.dwr.SerializationSensitive;
 import org.uengine.contexts.TextContext;
+import org.uengine.essencia.enactment.AlphaInstance;
+import org.uengine.essencia.enactment.LanguageElementInstance;
+import org.uengine.essencia.model.face.PropertyListFace;
 import org.uengine.essencia.model.view.LanguageElementView;
 import org.uengine.essencia.repository.ObjectRepository;
+import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.RelationView;
 import org.uengine.util.UEngineUtil;
 
-public abstract class BasicElement extends LanguageElement implements IElement {
+public abstract class BasicElement extends LanguageElement implements IElement, SerializationSensitive {
 
 	protected TextContext name;
 	protected TextContext briefDescription;
@@ -191,5 +198,99 @@ public abstract class BasicElement extends LanguageElement implements IElement {
 		setElementView(null);
 		view.setElement(this);
 		return view;
+
 	}
+
+
+
+
+
+
+
+	////// advanced properties /////
+
+	transient Map<String, Property> properties = new HashMap<String, Property>();
+	public void addProperty(String id, Property property) {
+		properties.put(id, property);
+	}
+	public void addProperty(String id, Class type) {
+		Property property = new Property();
+		property.setKey(id);
+		property.setType(type.getName());
+
+		properties.put(id, property);
+	}
+
+	List<Property> propertyList = new ArrayList<Property>();
+	@Face(faceClass = PropertyListFace.class)
+	public List<Property> getPropertyList() {
+		return propertyList;
+	}
+	public void setPropertyList(List<Property> propertyList) {
+		this.propertyList = propertyList;
+	}
+
+
+	public Map<String, Property> getProperties(){
+		return properties;
+	}
+
+
+	public LanguageElementInstance createInstance(String id) {
+
+		return new LanguageElementInstance(this, id);
+	}
+
+
+	public List<? extends LanguageElementInstance> getInstances(ProcessInstance instance) {
+
+		try {
+			ProcessVariableValue pvv = instance.getMultiple("", getName());
+
+			pvv.beforeFirst();
+
+			List<LanguageElementInstance> elementInstanceList = new ArrayList<LanguageElementInstance>();
+
+			do{
+				LanguageElementInstance elementInstance = (LanguageElementInstance) pvv.getValue();
+				elementInstanceList.add(elementInstance);
+
+			}while(pvv.next());
+
+			return elementInstanceList;
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void afterDeserialization() {
+		properties = new HashMap<String, Property>();
+
+		for(Property property : getPropertyList()){
+			properties.put(property.getKey(), property);
+		}
+	}
+
+	@Override
+	public void beforeSerialization() {
+
+	}
+
+	public List<PropertyValue> createDefaultPropertyValues() {
+
+		List<PropertyValue> propertyValues = new ArrayList<PropertyValue>();
+
+		for(Property property : getPropertyList()){
+			PropertyValue propertyValue = new PropertyValue();
+			propertyValue.setKey(property.getKey());
+			propertyValue.setType(property.getType());
+
+			propertyValues.add(propertyValue);
+		}
+
+		return propertyValues;
+	}
+
 }

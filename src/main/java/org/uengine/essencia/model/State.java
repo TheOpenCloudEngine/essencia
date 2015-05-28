@@ -7,6 +7,7 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Name;
 import org.metaworks.annotation.Order;
+import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.model.card.DetailCard;
 import org.uengine.essencia.model.card.StateCard;
 import org.uengine.essencia.model.face.list.CheckPointListFace;
@@ -73,7 +74,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     }
 
     public State() {
-	setListFace(new CheckPointListFace());
+    	setListFace(new CheckPointListFace());
     }
 
     public State(String name) {
@@ -82,18 +83,18 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     }
 
     public DetailCard createDetailCardView(Alpha parentElement) {
-	DetailCard card = new StateCard(this, parentElement);
-	return card;
+        DetailCard card = new StateCard(this, parentElement);
+        return card;
     }
 
     public Essence.AlphaAndWorkProduct.State toXmi() {
-	Essence.AlphaAndWorkProduct.State state = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createState();
-	state.setName(getName());
-	state.setDescription(getDescription());
-	for (CheckPoint c : getList()) {
-	    state.getCheckListItem().add(c.toXmi());
-	}
-	return state;
+        Essence.AlphaAndWorkProduct.State state = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createState();
+        state.setName(getName());
+        state.setDescription(getDescription());
+        for (CheckPoint c : getList()) {
+            state.getCheckListItem().add(c.toXmi());
+        }
+        return state;
     }
 
     @Hidden
@@ -109,21 +110,40 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
 
     @Override
     public void setUpElement() {
-	setListFace(new CheckPointListFace());
-	if (getList() != null) {
-	    getListFace().fillElements(getList());
-	    getList().clear();
-	}
+        setListFace(new CheckPointListFace());
+        if (getList() != null) {
+            getListFace().fillElements(getList());
+            getList().clear();
+        }
     }
 
     @Override
     public void beforeApply() {
-	setList(getListFace().createValue());
+    	setList(getListFace().createValue());
     }
 
     @Override
     public ElementView createView() {
-	return new StateView(this);
+    	return new StateView(this);
     }
 
+    public CheckPoint findCheckpoint(String checkpointName) {
+        for(CheckPoint checkPoint : getList()){
+            if(checkpointName.equals(checkPoint.getName())){
+                return checkPoint;
+            }
+        }
+
+        throw new IllegalArgumentException("No such checkPoint named " + checkpointName +" in this state " + getName());
+    }
+
+    public boolean isAllChecked(AlphaInstance alphaInstance) {
+        for(CheckPoint checkPoint : getList()){
+            if(!alphaInstance.isChecked(checkPoint.getName())){
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
