@@ -8,10 +8,7 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.Refresh;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.ToEvent;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Order;
-import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.annotation.*;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.AbstractActivity;
@@ -21,6 +18,7 @@ import org.uengine.essencia.model.ContextTransformer;
 import org.uengine.essencia.model.FaceTransformer;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.card.Card;
+import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.ElementView;
 
 @Face(displayName = "Properties", ejsPath = "dwr/metaworks/genericfaces/CleanObjectFace.ejs")
@@ -67,16 +65,22 @@ public class EssenciaPropertyPanel implements ContextAware {
         setElement((BasicElement) elementView.getElement());
 
         if (getElement() instanceof FaceTransformer) {
-            ((FaceTransformer) getElement()).setUpElement();// TODO
+            ((FaceTransformer) getElement()).setUpElement();
         }
 
         if (getElement() instanceof ContextTransformer) {
             ((ContextTransformer) getElement()).transformContext();
         }
 
+        if (getElement().getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getElement().getOwner().getName())) {
+            ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
+        } else {
+            ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+        }
+
     }
 
-//    @Hidden(when = EssenciaContext.WHEN_VIEW)
+    @Hidden(when = EssenciaContext.WHEN_VIEW)
     @Order(1)
     @Face(displayName = "Apply")
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
@@ -89,7 +93,6 @@ public class EssenciaPropertyPanel implements ContextAware {
         return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(getElementView(), true)};
     }
 
-//    @Hidden(when = EssenciaContext.WHEN_VIEW)
     @Order(2)
     @Face(displayName = "Cancel")
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
@@ -99,7 +102,7 @@ public class EssenciaPropertyPanel implements ContextAware {
         return new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE);
     }
 
-    @Order(2)
+    @Order(3)
     @Face(displayName = "Card Preview")
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_POPUP_OVER_POPUP)
     public ModalWindow showCardView() {

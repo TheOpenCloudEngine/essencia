@@ -24,9 +24,8 @@ import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.Clipboard;
 import org.metaworks.widget.ModalWindow;
+import org.oce.garuda.multitenancy.TenantContext;
 import org.uengine.ConfirmPanel;
-//import org.uengine.cloud.saasfier.TenantContext;
-import org.uengine.cloud.saasfier.TenantUtil;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.designer.ResourceNavigator;
 import org.uengine.essencia.util.ContextUtil;
@@ -287,10 +286,12 @@ public class Resource implements IResource, Comparable<IResource> {
 	@Hidden
 	public static String getCodebase() {
         String os = System.getProperty("os.name");
+        String tenantId = TenantContext.getThreadLocalInstance().getTenantId();
+        String tenantPath = (tenantId == null ? "default" : tenantId) + File.separator;
         if(os.startsWith("Windows")){
-            return FileUtil.addLastFileSeparatorSuffix(GlobalContext.getPropertyString("essencia.windows.codebase", "codebase"))  + TenantUtil.getTenantPath();
+            return FileUtil.addLastFileSeparatorSuffix(GlobalContext.getPropertyString("essencia.windows.codebase", "codebase")) + tenantPath;
         }else{
-            return FileUtil.addLastFileSeparatorSuffix(GlobalContext.getPropertyString("essencia.linux.codebase", "codebase"))  + TenantUtil.getTenantPath();
+            return FileUtil.addLastFileSeparatorSuffix(GlobalContext.getPropertyString("essencia.linux.codebase", "codebase"))  + tenantPath;
         }
 	}
 

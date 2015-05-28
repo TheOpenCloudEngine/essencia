@@ -13,62 +13,73 @@ import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.DefaultModeler;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.Modeler;
+import org.uengine.modeling.modeler.ProcessModeler;
 
 public abstract class ModelerEditor extends Editor {
 
-	private Modeler modeler;
+    private Modeler modeler;
 
-	public Modeler getModeler() {
-		return modeler;
-	}
+    public Modeler getModeler() {
+        return modeler;
+    }
 
-	public void setModeler(Modeler modeler) {
-		this.modeler = modeler;
-	}
+    public void setModeler(Modeler modeler) {
+        this.modeler = modeler;
+    }
 
-	public EssenciaModeler getEssenciaModeler() {
-		return ((EssenciaModeler) modeler);
-	}
+    public EssenciaModeler takeEssenciaModeler() {
+        return ((EssenciaModeler) modeler);
+    }
 
-	public IModelResource getModelResource() {
-		return (IModelResource) getResource();
-	}
+    public IModelResource getModelResource() {
+        return (IModelResource) getResource();
+    }
 
-	@Hidden
-	@ServiceMethod(callByContent = true, childrenLoader=true, target=ServiceMethodContext.TARGET_SELF)
-	@Override
-	public void load() throws Exception {
-		createModeler();
+    @Hidden
+    @ServiceMethod(callByContent = true, childrenLoader = true, target = ServiceMethodContext.TARGET_SELF)
+    @Override
+    public void load() throws Exception {
+        createModeler();
 
-		ContextUtil.fillContext(getModeler(), this.getMetaworksContext());
+        ContextUtil.fillContext(getModeler(), this.getMetaworksContext());
 
-		if(!MetaworksContext.WHEN_NEW.equals(getResource().getMetaworksContext().getWhen())){
-			IModel model = ((IModelResource)getResource()).loadModel();
-			
-			this.getModeler().setModel(model);
-		}
-	}
-	
-	public IModel loadModel() throws Exception{
-		IModel model = getModelResource().loadModel();
-		return model;
-	}
-	
-	@Override
-	public boolean validate() throws Exception {
-		Resource.checkDuplicatedFile(getResource().getPath());
+        if (!MetaworksContext.WHEN_NEW.equals(getResource().getMetaworksContext().getWhen())) {
+            IModel model = ((IModelResource) getResource()).loadModel();
 
-		return true;
-	}
+            this.getModeler().setModel(model);
+        }
+    }
 
-	@Override
-	public void save() throws Exception {
-		IModel model = ((EssenciaModeler)this.getModeler()).takeModel();
-		getModelResource().saveResource(model);
+    public IModel loadModel() throws Exception {
+        IModel model = getModelResource().loadModel();
+        return model;
+    }
 
-		ContextUtil.setWhen((Resource) getResource(), EssenciaContext.WHEN_EDIT);
-	}
+    @Override
+    public boolean validate() throws Exception {
+        Resource.checkDuplicatedFile(getResource().getPath());
 
-	public abstract void createModeler();
+        return true;
+    }
+
+    @Override
+    public void save() throws Exception {
+        IModel model = null;
+        if (getModeler() instanceof EssenciaModeler) {
+            model = ((EssenciaModeler) this.getModeler()).takeModel();
+        } else {
+            ProcessModeler processModeler = (ProcessModeler) getModeler();
+            if(processModeler.getModel() == null){
+                model = processModeler.createModel();
+            } else {
+                model = processModeler.getModel();
+            }
+        }
+        getModelResource().saveResource(model);
+
+        ContextUtil.setWhen((Resource) getResource(), EssenciaContext.WHEN_EDIT);
+    }
+
+    public abstract void createModeler();
 
 }

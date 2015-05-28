@@ -10,11 +10,11 @@ public abstract class EssenciaModelerEditor extends ModelerEditor {
 	public abstract String getAlias() throws Exception;
 	
 	public List<ElementView> obtainElementViewList(){
-		return getEssenciaModeler().obtainElementViewList();
+		return takeEssenciaModeler().obtainElementViewList();
 	}
 	
 	public List<RelationView> obtainRelationViewList(){
-		return getEssenciaModeler().obtainRelationViewList();
+		return takeEssenciaModeler().obtainRelationViewList();
 	}
 	
 }

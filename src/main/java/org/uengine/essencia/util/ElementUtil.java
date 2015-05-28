@@ -10,19 +10,6 @@ import org.uengine.modeling.*;
 public class ElementUtil {
 	
 	/**
-	 * List<ElementView> convert to <LanguageElement>
-	 * @param elementViewList
-	 * @return
-	 */
-	/*public static List<LanguageElement> convertToLanguageElementList(List<ElementView> elementViewList){
-		List<LanguageElement> elementList = new ArrayList<LanguageElement>();
-			for(ElementView elementView : elementViewList){
-				elementList.add((LanguageElement)elementView.asElement());
-			}
-		return elementList;
-	}*/
-
-	/**
 	 * List<IElement> convert to List<ElementView>
 	 * @param elementList
 	 * @return
