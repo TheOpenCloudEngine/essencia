@@ -1,0 +1,24 @@
+<%
+	if (value){
+		for (var i=0; i<objectMetadata.fieldDescriptors.length; i++){						  
+			var fd = objectMetadata.fieldDescriptors[i];
+		  	
+		  	if(fd.attributes && (fd.attributes['hidden'] || fd.attributes['resource'])) continue;
+		  	if(fd.name == 'metaworksContext') continue;
+		  	
+		  	var fieldValue = value[fd.name];
+%>
+		<%=fields[fd.name] ? fields[fd.name].here() : "XXX"%>
+<%
+		}						   
+
+		if(objectMetadata.serviceMethodContexts){
+			for(var key in objectMetadata.serviceMethodContexts){
+   	   			var serviceMethod = objectMetadata.serviceMethodContexts[key];					   
+%>
+		<%=methods[serviceMethod.methodName].here()%>
+<%   			
+			}
+		}		
+	}
+%>

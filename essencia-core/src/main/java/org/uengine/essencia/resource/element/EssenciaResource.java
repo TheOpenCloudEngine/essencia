@@ -16,7 +16,6 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Name;
 import org.metaworks.annotation.ServiceMethod;
 import org.uengine.essencia.context.EssenciaContext;
-import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.Resource;

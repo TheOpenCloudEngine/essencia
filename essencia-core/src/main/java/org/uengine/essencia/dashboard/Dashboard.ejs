@@ -1,0 +1,344 @@
+<%
+debugger;
+%>
+
+
+<style>
+  .concern-cover-2 {
+    width: 290px;
+    height: 520px;
+    border: 2px solid #888;
+    border-radius: 10px;
+    margin-right: 5px;
+  }
+
+  .concern-cover-3 {
+    width: 380px;
+    height: 520px;
+    border: 2px solid #888;
+    border-radius: 10px;
+    margin-right: 5px;
+  }
+
+  .concern-header {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    border-bottom: 2px dotted #ccc;
+  }
+
+  .concern-body {
+    margin: auto;
+  }
+
+  .alpha-cover {
+    float: left;
+    padding: 10px;
+  }
+
+  .alpha-title {
+    text-align: center;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .alpha {
+    height: 435px;
+    padding-top: 45px;
+    padding-bottom: 45px;
+    background: url('/essencia/images/alpha-line.png') no-repeat top center;
+  }
+
+  .state {
+    background: #ddd;
+    font-size: 10px;
+    margin-bottom: 3px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    cursor: hand;
+  }
+
+  .plan-month {
+    border-bottom: 1px dashed red;
+    margin-top: 100px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 10px;
+  }
+
+  .plan-status {
+    border-bottom: 3px dashed blue;
+    margin-top: 180px;
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 10px;
+  }
+</style>
+
+<!--
+<script>
+//Alphas Slider Intialize
+$(function() {
+    $('.example-gaps').limitslider({
+        group :     $('alpha-id-1'),
+        values:     [$('alpha-id-1-state-1'), $('alpha-id-1-state-2'), $('alpha-id-1-state-3')],
+        gap:        1,
+        left:       0,
+        right:      100,
+        step:       1,
+        label:      true,
+        title:      function (value) {
+                        return 'Currently set to ' + value + '%';
+                    },
+        showRanges: true,
+        ranges:     [false, true, false, true]
+   });
+});
+</script>
+-->
+
+<div id="plan-month" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
+  <div class="plan-month"><span
+        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">July</span>
+  </div>
+  <div class="plan-month"><span
+        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">August</span>
+  </div>
+  <div class="plan-month"><span
+        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">September</span>
+  </div>
+  <div class="plan-month"><span
+        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">October</span>
+  </div>
+</div>
+
+<div id="plan-status" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
+  <div class="plan-status"><span
+        style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">Now</span>
+  </div>
+  <div class="plan-status"><span
+        style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">To-Do</span>
+  </div>
+</div>
+
+
+<div style="margin:auto;position:absolute;z-index:199;">
+  <table cellpadding="5">
+    <thead>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+
+        <div class="concern-cover-2">
+          <div class="concern-header">Customer</div>
+          <div class="concern-body">
+            <div class="alpha-cover">
+              <div class="alpha-title">Stakeholders</div>
+              <div id="alpha-1" class="alpha">
+                <div id="state-0"></div>
+                <% var stakeholder = value.alphas[0] %>
+                <% console.log(stakeholder.list); %>
+                <% for(idx in stakeholder.list){ %>
+                <div id="alpha-1-state-<%= idx %>" index="<%= idx %>" class="state" onclick="" data-toggle="tooltip"
+                     onmouseover="$(this).tooltip('show')"
+                     title="2015-01-21"><%= (stakeholder.list[idx].name) %></div>
+                <% } %>
+                <div id="state-7"></div>
+              </div>
+            </div>
+            <div class="alpha-cover">
+              <div class="alpha-title">Opportunity</div>
+              <div class="alpha">
+                <div id="state-0"></div>
+                <% var stakeholder = value.alphas[1] %>
+                <% console.log(stakeholder.list); %>
+                <% for(idx in stakeholder.list){ %>
+                <div id="alpha-2-state-<%= idx %>" index="<%= idx %>"
+                     class="state"><%= (stakeholder.list[idx].name) %></div>
+                <% } %>
+                <div id="state-7"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </td>
+      <td>
+
+        <div class="concern-cover-2">
+          <div class="concern-header">Solution</div>
+          <div class="concern-body">
+            <div class="alpha-cover">
+              <div class="alpha-title">Requirements</div>
+              <div class="alpha">
+                <div id="state-0"></div>
+                <% var stakeholder = value.alphas[2] %>
+                <% console.log(stakeholder.list); %>
+                <% for(idx in stakeholder.list){ %>
+                <div id="alpha-3-state-<%= idx %>" index="<%= idx %>"
+                     class="state"><%= (stakeholder.list[idx].name) %></div>
+                <% } %>
+                <div id="state-7"></div>
+              </div>
+            </div>
+            <div class="alpha-cover">
+              <div class="alpha-title">Software System</div>
+              <div class="alpha">
+                <div id="state-0"></div>
+                <% var stakeholder = value.alphas[3] %>
+                <% console.log(stakeholder.list); %>
+                <% for(idx in stakeholder.list){ %>
+                <div id="alpha-4-state-<%= idx %>" index="<%= idx %>"
+                     class="state"><%= (stakeholder.list[idx].name) %></div>
+                <% } %>
+                <div id="state-7"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </td>
+      <td>
+
+        <div class="concern-cover-3">
+          <div class="concern-header">Endeavour</div>
+          <div class="concern-body">
+            <div class="alpha-cover">
+              <div class="alpha-title">Work</div>
+              <div class="alpha">
+                <div id="state-0"></div>
+                <% var stakeholder = value.alphas[4] %>
+                <% console.log(stakeholder.list); %>
+                <% for(idx in stakeholder.list){ %>
+                <div id="alpha-5-state-<%= idx %>" index="<%= idx %>"
+                     class="state"><%= (stakeholder.list[idx].name) %></div>
+                <% } %>
+                <div id="state-7"></div>
+              </div>
+            </div>
+            <div class="alpha-cover">
+              <div class="alpha-title">Team</div>
+              <div class="alpha">
+                <div id="state-0"></div>
+                <% var stakeholder = value.alphas[5] %>
+                <% console.log(stakeholder.list); %>
+                <% for(idx in stakeholder.list){ %>
+                <div id="alpha-6-state-<%= idx %>" index="<%= idx %>"
+                     class="state"><%= (stakeholder.list[idx].name) %></div>
+                <% } %>
+                <div id="state-7"></div>
+              </div>
+            </div>
+            <div class="alpha-cover">
+              <div class="alpha-title">Way-of-Working</div>
+              <div class="alpha">
+                <div id="state-0"></div>
+                <% var stakeholder = value.alphas[6] %>
+                <% console.log(stakeholder.list); %>
+                <% for(idx in stakeholder.list){ %>
+                <div id="alpha-7-state-<%= idx %>" index="<%= idx %>"
+                     class="state"><%= (stakeholder.list[idx].name) %></div>
+                <% } %>
+                <div id="state-7"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<script>
+  $(function () {
+
+    for (var a = 1; a < 8; a++) {
+      for (var i = 1; i < 7; i++) {
+        $("#alpha-" + a + "-state-" + i).draggable({
+          containment: "parent",
+          start: function (event, ui) {
+            //포지션 검증
+            var index = parseInt($(this).attr('index'));
+
+            var top = $(this).offset().top;
+            var left = $(this).offset().left;
+            $(this).attr('orgTop', top);
+            $(this).attr('orgLeft', left);
+
+            //위/아래 오브젝트 포지션 체크
+            // console.log($(this).attr('index'));
+            $(this).css("z-index", "5");
+            // $(this).css( "border", "1px dotted red");
+
+
+          },
+          stop: function (event, ui) {
+
+
+            //포지션 검증
+            var index = parseInt($(this).attr('index'));
+
+            //변경된 날짜 팁 표시
+            $(this).attr('title', '2015-02-05');
+            $(this).tooltip('show');
+
+            var a;
+            var b;
+            var min_ele_top;
+            var max_ele_top;
+
+            a = "#state-" + (index - 1);
+            b = "#state-" + (index + 1);
+
+            // min_ele_top = $(a).offset().top;
+            // max_ele_top = $(b).offset().top;
+
+            // if((index+1) == 7){
+            // 	max_ele_top = 512;
+            // }
+
+            console.log("MIX:" + parseInt(min_ele_top));
+            console.log("NOW:" + parseInt(ui.offset.top));
+            console.log("MAX:" + parseInt(max_ele_top));
+
+            //검증
+            /*
+             if(parseInt(min_ele_top) >= parseInt(ui.offset.top) ||
+             parseInt(max_ele_top) <= parseInt(ui.offset.top)  ){
+             //$(this).revert();
+             console.log('valid.');
+             var top = $(this).attr('orgTop');
+             var left = $(this).attr('orgLeft');
+             $(this).offset({ top: top, left: left });
+             }
+             */
+            //
+            $(this).css("z-index", "0");
+            $(this).css("border", "1px solid black");
+
+          }
+        });
+
+
+      }
+    }
+
+  });
+</script>

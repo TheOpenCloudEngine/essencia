@@ -1,4 +1,4 @@
-﻿﻿<html class="sidebar-large">
+﻿<html class="sidebar-large">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Essencia Web UI</title>
