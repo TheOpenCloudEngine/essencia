@@ -5,7 +5,6 @@ import org.uengine.essencia.model.LevelOfDetail;
 import org.uengine.essencia.model.WorkProduct;
 import org.uengine.essencia.model.view.LevelOfDetailView;
 import org.uengine.modeling.ElementView;
-import org.uengine.modeling.SymbolFactory;
 
 public class WorkProductCard extends BasicCard {
 
@@ -33,7 +32,7 @@ public class WorkProductCard extends BasicCard {
 	String prefix = getName().replaceAll(" ", "");
 
 	for (LevelOfDetail levelOfDetail : ((WorkProduct) element).getListFace().createValue()) {
-	    setSymbol(SymbolFactory.create(LevelOfDetailView.class));
+	    setSymbol(new LevelOfDetailView().createSymbol());
 	    setView(levelOfDetail.createView());
 
 	    makeUpView(levelOfDetail);

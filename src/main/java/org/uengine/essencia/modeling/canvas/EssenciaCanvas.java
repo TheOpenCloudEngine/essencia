@@ -21,7 +21,6 @@ import org.uengine.modeling.IElement;
 import org.uengine.modeling.IRelation;
 import org.uengine.modeling.RelationView;
 import org.uengine.modeling.Symbol;
-import org.uengine.modeling.SymbolFactory;
 
 public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 
@@ -61,7 +60,7 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 		Practice practice = new Practice();
 		practice.setName("untitled");
 		ElementView view = practice.createView();
-		Symbol symbol = SymbolFactory.create(PracticeView.class);
+		Symbol symbol = (new PracticeView()).createSymbol();
 		view.fill(symbol);
 		view.setX("96");
 		view.setY("96");

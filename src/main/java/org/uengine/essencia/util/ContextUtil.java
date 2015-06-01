@@ -57,7 +57,7 @@ public class ContextUtil {
     }
 
     private static void checkMetaworksContext(ContextAware cls) {
-        if (Objects.isNull(cls.getMetaworksContext())) {
+        if (cls.getMetaworksContext()==null) {
             cls.setMetaworksContext(new EssenciaContext());
         }
     }

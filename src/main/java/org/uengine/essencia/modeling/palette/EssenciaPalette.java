@@ -9,11 +9,7 @@ public class EssenciaPalette extends CompositePalette {
 
     public EssenciaPalette() {
         setName("Essencia Palette");
-        initPallet();
-    }
 
-    @Override
-    protected void initPallet() {
         setChildPallet(new ArrayList<Palette>());
 
         Palette LanguagePallet = new EssenciaLanguagePalette();

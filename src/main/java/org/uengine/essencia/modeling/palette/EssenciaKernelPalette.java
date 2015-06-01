@@ -20,12 +20,6 @@ public class EssenciaKernelPalette extends Palette{
 		
 	public EssenciaKernelPalette(){
 		setName("Kernel Palette");
-		initPallet();
-	}
-
-	@Override
-	protected void initPallet() {
-		
 		PracticeDefinition practice = null;
 		URL url = getClass().getResource("../../model/kernel/kernel.practice");
 		try {
@@ -37,12 +31,12 @@ public class EssenciaKernelPalette extends Palette{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		List<EssenciaKernelSymbol> alphas = new ArrayList<EssenciaKernelSymbol>();
 		List<EssenciaKernelSymbol> activitySpaces = new ArrayList<EssenciaKernelSymbol>();
 		List<EssenciaKernelSymbol> competencies = new ArrayList<EssenciaKernelSymbol>();
-		
-		
+
+
 		for(IElement element : practice.getElementList()){
 			EssenciaKernelSymbol symbol = null;
 			KernelLanguageViewable view;
@@ -50,7 +44,7 @@ public class EssenciaKernelPalette extends Palette{
 				view = (KernelLanguageViewable)Thread.currentThread().getContextClassLoader().loadClass(element.getElementView().getClass().getName()).newInstance();
 				symbol = view.createKernelSymbol();
 				symbol = fill(symbol, element);
-				
+
 				if(element instanceof Alpha){
 					alphas.add(symbol);
 				}else if (element instanceof ActivitySpace){
@@ -58,7 +52,7 @@ public class EssenciaKernelPalette extends Palette{
 				}else if (element instanceof Competency){
 					competencies.add(symbol);
 				}
-				
+
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -70,9 +64,10 @@ public class EssenciaKernelPalette extends Palette{
 		getSymbolList().addAll(alphas);
 		getSymbolList().addAll(activitySpaces);
 		getSymbolList().addAll(competencies);
-		
+
+
 	}
-	
+
 	private EssenciaKernelSymbol fill(EssenciaKernelSymbol symbol, IElement element){
 		symbol.setName(element.getName());
 		symbol.setLanguageElementView( (LanguageElementView)((BasicElement)element).asView());

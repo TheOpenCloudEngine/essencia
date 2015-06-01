@@ -10,6 +10,7 @@ import org.uengine.kernel.bpmn.SubProcess;
 import org.uengine.kernel.test.UEngineTest;
 
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -187,8 +188,22 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
         processDefinition.setId("scrum process");
 
-        ProcessVariable pvAlphaBacklog = new ProcessVariable(new Object[]{"name", alphaBacklog.getName(), "type", AlphaInstance.class});
-        ProcessVariable pvSprint = new ProcessVariable(new Object[]{"name", sprint.getName(), "type", LanguageElementInstance.class});
+        LanguageElementInstance defaultSprint = sprint.createInstance("<id>");
+        defaultSprint.setProperty("iteration", new Integer(5));
+//        defaultSprint.put("duration", 14);
+
+        ProcessVariable pvAlphaBacklog = new ProcessVariable(new Object[]{
+                "name", alphaBacklog.getName(),
+                "type", AlphaInstance.class,
+        });
+
+        ProcessVariable pvSprint = new ProcessVariable(new Object[]{
+                "name", sprint.getName(),
+                "type", LanguageElementInstance.class,
+                "defaultValue", (Serializable)defaultSprint
+        });
+
+        pvSprint.setDefaultValue(defaultSprint);
 
         processDefinition.setProcessVariables(new ProcessVariable[]{
                 pvAlphaBacklog,
@@ -216,7 +231,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
             alphaBacklogMapping.setVariable(pvAlphaBacklog);
             alphaBacklogMapping.setDirection(ParameterContext.DIRECTION_IN);
-            alphaBacklogMapping.setSplit(true);
+            alphaBacklogMapping.setSplit(false);
 
 
             SubProcessParameterContext sprintVariableMapping = new SubProcessParameterContext();
@@ -325,26 +340,26 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         //where?
         //alphaBacklog.getStates();
 
-        AlphaInstance backlogInstance = alphaBacklog.createInstance("backlog1");
+        AlphaInstance backlogInstance = alphaBacklog.createInstance("backlog");
         {
-            backlogInstance.put("type", "Story");
+            backlogInstance.setProperty("type", "Backlog");
 
             try {
-                backlogInstance.put("undefinedField", "someValue");
+                backlogInstance.setProperty("undefinedField", "someValue");
 
                 fail("undefined property is accepted");
             } catch (Throwable t) {
             }
 
             try {
-                backlogInstance.put("type", new Boolean(true));
+                backlogInstance.setProperty("type", new Boolean(true));
 
                 fail("illegal value for property 'type' is accepted");
             } catch (Throwable t) {
             }
 
             try {
-                backlogInstance.put("id", "id");
+                backlogInstance.setProperty("id", "id");
 
                 fail("put('id', value) must be denied");
             } catch (Throwable t) {
@@ -352,24 +367,6 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
             pvv.setValue(backlogInstance);
             pvv.moveToAdd();
-        }
-
-        {
-            backlogInstance = alphaBacklog.createInstance("backlog2");
-            backlogInstance.put("type", "Epic");
-            backlogInstance.put("parent", "backlog1");
-
-            pvv.setValue(backlogInstance);
-            pvv.moveToAdd();
-        }
-
-
-        {
-            backlogInstance = alphaBacklog.createInstance("backlog3");
-            backlogInstance.put("type", "Task");
-            backlogInstance.put("parent", "backlog2");
-
-            pvv.setValue(backlogInstance);
         }
 
         instance.set(alphaBacklog.getName(), pvv);
@@ -383,17 +380,17 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         ProcessVariableValue pvvForSprints = new ProcessVariableValue();
         pvvForSprints.setName("sprint");
         LanguageElementInstance sprint1 = sprint.createInstance("sprint1");
-        sprint1.put("iteration", 1);
+        sprint1.setProperty("iteration", 1);
         pvvForSprints.setValue(sprint1);
 
         pvvForSprints.moveToAdd();
         LanguageElementInstance sprint2 = sprint.createInstance("sprint2");
-        sprint1.put("iteration", 2);
+        sprint1.setProperty("iteration", 2);
         pvvForSprints.setValue(sprint2);
 
         pvvForSprints.moveToAdd();
         LanguageElementInstance sprint3 = sprint.createInstance("sprint3");
-        sprint1.put("iteration", 3);
+        sprint1.setProperty("iteration", 3);
         pvvForSprints.setValue(sprint3);
 
 
@@ -433,7 +430,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         resultPayload = new ResultPayload();
 
         sprint1 = sprint.createInstance("sprint1");
-        sprint1.put("iteration", 1);
+        sprint1.setProperty("iteration", 1);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint1));
 
@@ -451,7 +448,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for(CheckPoint point : alphaBacklog.getList().get(0).getList()){
+            for(CheckPoint point : alphaBacklog.getList().get(1).getList()){
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);
@@ -461,7 +458,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         resultPayload = new ResultPayload();
 
         sprint2 = sprint.createInstance("sprint2");
-        sprint2.put("iteration", 2);
+        sprint2.setProperty("iteration", 2);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint2));
 
@@ -480,7 +477,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for (CheckPoint point : alphaBacklog.getList().get(0).getList()) {
+            for (CheckPoint point : alphaBacklog.getList().get(2).getList()) {
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);
@@ -490,7 +487,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         resultPayload = new ResultPayload();
 
         sprint3 = sprint.createInstance("sprint3");
-        sprint3.put("iteration", 3);
+        sprint3.setProperty("iteration", 3);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint3));
 
@@ -511,12 +508,13 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         List<? extends LanguageElementInstance> sprintInstances = sprint.getInstances(instance);
 
         for(LanguageElementInstance sprintInstance : sprintInstances){
-            System.out.println(sprintInstance.getId()+":  "+ sprintInstance.get("iteration"));
+            System.out.println(sprintInstance.getId()+":  "+ sprintInstance.getProperty("iteration"));
         }
 
 
 
         //TODO:  user interface generation for Parameter Values - that is LanguageElementInstance : may be ok.
+        //TODO:  Can this instance model generate all of the information on dashboard displays?
         //TODO:  sub in sub scoping :  main-sub-sub-sub scoping for execution scope system
         //TODO:  rolemapping is also needed to be scoped (in db persistence)
 

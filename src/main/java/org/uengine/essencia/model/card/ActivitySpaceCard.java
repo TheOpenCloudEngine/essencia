@@ -8,7 +8,6 @@ import org.uengine.essencia.model.Criterion;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.view.ActivityArrowView;
 import org.uengine.essencia.model.view.AlphaView;
-import org.uengine.modeling.SymbolFactory;
 
 public class ActivitySpaceCard extends BasicCard {
 
@@ -38,7 +37,7 @@ public class ActivitySpaceCard extends BasicCard {
 
 		for (LanguageElement e : ((ActivitySpace) element).getInputFace().createValue()) {
 		    	Alpha inputAlpha = (Alpha)e;
-			setSymbol(SymbolFactory.create(AlphaView.class));
+			setSymbol((new AlphaView().createSymbol()));
 			setView(inputAlpha.createView());
 
 			x = getXCoordinate(elementIndex);
@@ -77,7 +76,7 @@ public class ActivitySpaceCard extends BasicCard {
 		for (LanguageElement e : ((ActivitySpace) element).getCompletionCriterionFace().createValue()) {
 		    Criterion criterion = (Criterion)e;
 			description += "<li>" + criterion.getState().getParentAlpha().getName() + ": " + criterion.getState().getName() + "</li>";
-			setSymbol(SymbolFactory.create(AlphaView.class));
+			setSymbol((new AlphaView().createSymbol()));
 			setView(criterion.getState().getParentAlpha().createView());
 
 			x = getXCoordinate(elementIndex);

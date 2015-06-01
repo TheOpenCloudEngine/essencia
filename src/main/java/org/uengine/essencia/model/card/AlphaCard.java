@@ -5,7 +5,6 @@ import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.EssenciaElement;
 import org.uengine.essencia.model.State;
 import org.uengine.essencia.model.view.StateView;
-import org.uengine.modeling.SymbolFactory;
 
 public class AlphaCard extends BasicCard {
 
@@ -29,7 +28,7 @@ public class AlphaCard extends BasicCard {
 
 		for (EssenciaElement essenciaElement : ((Alpha) element).getListFace().getEssenciaElementList()) {
 			State state = (State) essenciaElement.getValue();
-			setSymbol(SymbolFactory.create(StateView.class));
+			setSymbol((new StateView().createSymbol()));
 			setView(state.createView());
 
 			makeUpView(state);

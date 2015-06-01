@@ -209,16 +209,23 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	////// advanced properties /////
 
-	transient Map<String, Property> properties = new HashMap<String, Property>();
-	public void addProperty(String id, Property property) {
-		properties.put(id, property);
+	//transient Map<String, Property> properties = new HashMap<String, Property>();
+	public void addProperty(String id, Property property)
+	{
+		propertyList.add(property);
 	}
 	public void addProperty(String id, Class type) {
+//		Property property = new Property();
+//		property.setKey(id);
+//		property.setType(type.getName());
+//
+//		properties.put(id, property);
+
 		Property property = new Property();
 		property.setKey(id);
 		property.setType(type.getName());
 
-		properties.put(id, property);
+		propertyList.add(property);
 	}
 
 	List<Property> propertyList = new ArrayList<Property>();
@@ -231,8 +238,14 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 	}
 
 
-	public Map<String, Property> getProperties(){
-		return properties;
+	public Map<String, Property> createPropertyMap(){
+		Map<String, Property> map = new HashMap<String, Property>();
+
+		for(Property property : propertyList){
+			map.put(property.getKey(), property);
+		}
+
+		return map;
 	}
 
 
@@ -266,11 +279,11 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	@Override
 	public void afterDeserialization() {
-		properties = new HashMap<String, Property>();
-
-		for(Property property : getPropertyList()){
-			properties.put(property.getKey(), property);
-		}
+//		properties = new HashMap<String, Property>();
+//
+//		for(Property property : getPropertyList()){
+//			properties.put(property.getKey(), property);
+//		}
 	}
 
 	@Override

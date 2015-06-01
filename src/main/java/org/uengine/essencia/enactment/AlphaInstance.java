@@ -1,10 +1,9 @@
 package org.uengine.essencia.enactment;
 
-import com.sun.tools.internal.xjc.Language;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.State;
+import org.uengine.kernel.ProcessInstance;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -43,6 +42,13 @@ public class AlphaInstance extends LanguageElementInstance {
         }
 
 
+    Map<String, Map<String, Object>> stateDetailsByStateName = new HashMap<String, Map<String, Object>>();
+//        public Map<String, Map<String, Object>> getStateDetails() {
+//            return stateDetails;
+//        }
+//        public void setStateDetails(Map<String, Map<String, Object>> stateDetails) {
+//            this.stateDetails = stateDetails;
+//        }
 
 
     public AlphaInstance(Alpha alpha, String id){
@@ -64,7 +70,7 @@ public class AlphaInstance extends LanguageElementInstance {
     }
 
 
-    public void advanceState(){
+    public void advanceState(ProcessInstance instance){
 
         if(!isCurrentStateCompletable()){
             throw new NotCompletableException("Not completable");
@@ -75,9 +81,50 @@ public class AlphaInstance extends LanguageElementInstance {
 
             if(currentStateIndex < getAlpha().getList().size() -1){
                 currentStateIndex ++;
-                setCurrentStateName(getAlpha().getList().get(currentStateIndex).getName());
+                State currentState = getAlpha().getList().get(currentStateIndex);
+                setCurrentStateName(currentState.getName());
             }
 
+            //TODO: affect to related alphas:
+            if(getCurrentState().getAggregationAlphaState()!=null){
+
+                String [] relatedAlphaAndStateName = getCurrentState().getAggregationAlphaState().split("\\.");
+
+                if(relatedAlphaAndStateName.length < 2){
+                    throw new RuntimeException("Association Alpha State is not properly referenced :" + getCurrentState().getAggregationAlphaState() + ". Must be [AlphaName].[StateName]");
+                }
+
+                String aggregationAlphaName = relatedAlphaAndStateName[0];
+                String aggregationStateName = relatedAlphaAndStateName[1];
+
+                AlphaInstance relatedAlphaInstance = null;
+                try {
+                    relatedAlphaInstance = (AlphaInstance) instance.get(aggregationAlphaName);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+                if(relatedAlphaInstance==null)
+                    throw new RuntimeException(getAlpha().getName() + " tries to affect state change to association Alpha [" + aggregationAlphaName + "]. There's no mapped alpha or alpha instance: " + aggregationAlphaName);
+
+                relatedAlphaInstance.advanceStateTo(aggregationStateName);
+            }
+
+        }
+
+    }
+
+    public void advanceStateTo(String stateName) {
+        //TODO: implements
+        setCurrentStateName(stateName);
+    }
+
+    public Object getStateDetails(String stateName, String propName) {
+
+        try {
+            return stateDetailsByStateName.get(stateName).get(propName);
+        }catch(NullPointerException npe){
+            return null;
         }
 
     }

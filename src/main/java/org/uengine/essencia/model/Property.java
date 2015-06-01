@@ -2,7 +2,12 @@ package org.uengine.essencia.model;
 
 import org.metaworks.annotation.Range;
 
-public class Property {
+import java.io.Serializable;
+
+public class Property implements Serializable{
+
+    public Property(){}
+
 
     String key;
         public String getKey() {

@@ -101,7 +101,7 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
             List<AlphaInstance> alphaInstances =  alpha.getInstances(instance);
 
             for(AlphaInstance alphaInstance : alphaInstances ){
-                alphaInstance.advanceState();
+                alphaInstance.advanceState(instance);
             }
         }
 
@@ -112,16 +112,16 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
     @Override
     public void beforeSerialization() {
-
-    }
-
-    @Override
-    public void afterDeserialization() {
         for(ParameterContext parameterContext : getParameters()){
             if(parameterContext.getVariable()!=null){
                 ProcessVariable realPV = getProcessDefinition().getProcessVariable(parameterContext.getVariable().getName());
                 parameterContext.setVariable(realPV);
             }
         }
+    }
+
+    @Override
+    public void afterDeserialization() {
+
     }
 }

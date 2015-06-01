@@ -4,7 +4,6 @@ import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.Competency;
 import org.uengine.essencia.model.CompetencyLevel;
 import org.uengine.essencia.model.view.CompetencyLevelView;
-import org.uengine.modeling.SymbolFactory;
 
 
 public class CompetencyCard extends BasicCard{
@@ -30,7 +29,7 @@ public class CompetencyCard extends BasicCard{
 		int addedWidth = 16;
 		
 		for(CompetencyLevel competencyLevel : ((Competency)element).getListFace().createValue()){
-			setSymbol(SymbolFactory.create(CompetencyLevelView.class));
+			setSymbol(new CompetencyLevelView().createSymbol());
 			setView(competencyLevel.createView());
 			
 			makeUpView(competencyLevel, 0);

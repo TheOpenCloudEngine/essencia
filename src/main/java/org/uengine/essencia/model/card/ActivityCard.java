@@ -10,7 +10,6 @@ import org.uengine.essencia.model.view.ActivityArrowView;
 import org.uengine.essencia.model.view.AlphaView;
 import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.WorkProductView;
-import org.uengine.modeling.SymbolFactory;
 
 public class ActivityCard extends BasicCard {
 
@@ -39,7 +38,7 @@ public class ActivityCard extends BasicCard {
 	y = -30;
 	for (LanguageElement e : ((Activity) element).getEntryCriteriaPanel().createValue()) {
 	    Criterion criterion = (Criterion) e;
-	    setSymbol(SymbolFactory.create(AlphaView.class));
+	    setSymbol((new AlphaView()).createSymbol());
 	    setView(criterion.getState().getParentAlpha().createView());
 
 	    x = getXCoordinate(elementIndex);
@@ -60,7 +59,7 @@ public class ActivityCard extends BasicCard {
 	// Competency View
 	y = y + Integer.valueOf(getView().getHeight()) + Y_INTERVAL;
 	String competencyName = ((Activity) element).getCompetency().getSelectedText();
-	setSymbol(SymbolFactory.create(CompetencyView.class));
+	setSymbol(new CompetencyView().createSymbol());
 	Competency competency = new Competency();
 	competency.setName(competencyName);
 	setView(competency.createView());
@@ -95,7 +94,7 @@ public class ActivityCard extends BasicCard {
 	    Criterion criterion = (Criterion) e;
 	    description += "<li>" + criterion.getState().getParentAlpha().getName() + ": "
 		    + criterion.getState().getParentAlpha().getName() + "</li>";
-	    setSymbol(SymbolFactory.create(AlphaView.class));
+	    setSymbol((new AlphaView().createSymbol()));
 	    setView(criterion.getState().getParentAlpha().createView());
 
 	    x = getXCoordinate(elementIndex);
@@ -118,7 +117,7 @@ public class ActivityCard extends BasicCard {
 	    Criterion criterion = (Criterion) e;
 	    description += "<li>" + criterion.getLevelOfDetail().getParentWorkProduct().getName() + ": " + criterion.getLevelOfDetail().getName()
 		    + "</li>";
-	    setSymbol(SymbolFactory.create(WorkProductView.class));
+	    setSymbol((new WorkProductView().createSymbol()));
 	    setView(new WorkProduct().createView());
 
 	    x = getXCoordinate(elementIndex);

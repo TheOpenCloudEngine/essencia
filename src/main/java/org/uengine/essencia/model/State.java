@@ -26,6 +26,18 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     private List<CheckPoint> list;
     private transient CheckPointListFace listFace;
 
+
+    private String aggregationAlphaState;
+        public String getAggregationAlphaState() {
+            return aggregationAlphaState;
+        }
+
+        public void setAggregationAlphaState(String aggregationAlphaState) {
+            this.aggregationAlphaState = aggregationAlphaState;
+        }
+
+
+
     @Hidden
     public List<CheckPoint> getList() {
 	return list;
@@ -134,7 +146,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
             }
         }
 
-        throw new IllegalArgumentException("No such checkPoint named " + checkpointName +" in this state " + getName());
+        throw new IllegalArgumentException("No such checkPoint named '" + checkpointName +"' in this state '" + getName() +"'");
     }
 
     public boolean isAllChecked(AlphaInstance alphaInstance) {
