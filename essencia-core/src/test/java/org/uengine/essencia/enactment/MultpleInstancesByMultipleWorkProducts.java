@@ -3,8 +3,8 @@ package org.uengine.essencia.enactment;
 import org.metaworks.component.SelectBox;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.*;
-import org.uengine.kernel.Activity;
 import org.uengine.kernel.*;
+import org.uengine.kernel.Activity;
 import org.uengine.kernel.bpmn.SequenceFlow;
 import org.uengine.kernel.bpmn.SubProcess;
 import org.uengine.kernel.test.UEngineTest;
@@ -255,7 +255,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
 
         for(int i=1; i<4; i++) {
-            Activity a1 = new DefaultActivity();
+            org.uengine.kernel.Activity a1 = new DefaultActivity();
 
             if(i==2){
 

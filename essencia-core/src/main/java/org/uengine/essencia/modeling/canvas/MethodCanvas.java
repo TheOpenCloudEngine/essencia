@@ -190,7 +190,7 @@ public class MethodCanvas extends EssenciaCanvas {
             if (elementVeiw instanceof PracticeView) {
                 elementVeiw.setX("96");
                 elementVeiw.setY("96");
-                if (Objects.nonNull(elementVeiw.getToEdge())) {
+                if (elementVeiw.getToEdge()!=null) {
                     String[] toEdges = elementVeiw.getToEdge().split(",");
                     firstLevel = Arrays.asList(toEdges);
                     autoRelocateByRelation(toEdges, list);
