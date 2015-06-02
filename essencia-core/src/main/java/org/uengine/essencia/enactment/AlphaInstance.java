@@ -1,13 +1,11 @@
 package org.uengine.essencia.enactment;
 
 import org.uengine.essencia.model.Alpha;
+import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.State;
 import org.uengine.kernel.ProcessInstance;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class AlphaInstance extends LanguageElementInstance {
 
@@ -85,30 +83,30 @@ public class AlphaInstance extends LanguageElementInstance {
                 setCurrentStateName(currentState.getName());
             }
 
-            //TODO: affect to related alphas:
-            if(getCurrentState().getAggregationAlphaState()!=null){
-
-                String [] relatedAlphaAndStateName = getCurrentState().getAggregationAlphaState().split("\\.");
-
-                if(relatedAlphaAndStateName.length < 2){
-                    throw new RuntimeException("Association reference expression is not properly defined: " + getCurrentState().getAggregationAlphaState() + ". [AlphaName].[StateName] is correnct.");
-                }
-
-                String relatedAlphaName = relatedAlphaAndStateName[0];
-                String relatedStateName = relatedAlphaAndStateName[1];//
-
-                AlphaInstance relatedAlphaInstance = null;
-                try {
-                    relatedAlphaInstance = (AlphaInstance) instance.get(relatedAlphaName);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-
-                if(relatedAlphaInstance==null)
-                    throw new RuntimeException(getAlpha().getName() + " tries to affect state change to related (parent) Alpha [" + relatedAlphaName + "]. There's no mapped alpha or alpha instance: " + relatedAlphaName);
-
-                relatedAlphaInstance.advanceStateTo(relatedStateName);
-            }
+//            //TODO: affect to related alphas:
+//            if(getCurrentState().getAggregationAlphaState()!=null){
+//
+//                String [] relatedAlphaAndStateName = getCurrentState().getAggregationAlphaState().split("\\.");
+//
+//                if(relatedAlphaAndStateName.length < 2){
+//                    throw new RuntimeException("Association reference expression is not properly defined: " + getCurrentState().getAggregationAlphaState() + ". [AlphaName].[StateName] is correnct.");
+//                }
+//
+//                String relatedAlphaName = relatedAlphaAndStateName[0];
+//                String relatedStateName = relatedAlphaAndStateName[1];//
+//
+//                AlphaInstance relatedAlphaInstance = null;
+//                try {
+//                    relatedAlphaInstance = (AlphaInstance) instance.get(relatedAlphaName);
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//
+//                if(relatedAlphaInstance==null)
+//                    throw new RuntimeException(getAlpha().getName() + " tries to affect state change to related (parent) Alpha [" + relatedAlphaName + "]. There's no mapped alpha or alpha instance: " + relatedAlphaName);
+//
+//                relatedAlphaInstance.advanceStateTo(relatedStateName);
+//            }
 
         }
 
@@ -128,4 +126,62 @@ public class AlphaInstance extends LanguageElementInstance {
         }
 
     }
+
+    public Object setStateDetails(String stateName, String propName, Object value) {
+
+        try {
+
+            if(!stateDetailsByStateName.containsKey(stateName))
+                stateDetailsByStateName.put(stateName, new HashMap<String, Object>());
+
+            return stateDetailsByStateName.get(stateName).put(propName, value);
+        }catch(NullPointerException npe){
+            return null;
+        }
+
+    }
+
+    public void aggregateStateDetails(ProcessInstance instance){
+       // Map<String, Integer> runningCntByState = new HashMap<String, Integer>();
+
+        int totalCount = 0;
+        for(LanguageElement element : getAlpha().getChildElements()){
+            if(element instanceof Alpha){
+                Alpha subAlpha = (Alpha)element;
+
+                List<AlphaInstance> subAlphaInstances = subAlpha.getInstances(instance);
+
+                totalCount += subAlphaInstances.size();
+
+                for(AlphaInstance subAlphaInstance : subAlphaInstances){
+
+                    String aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
+
+                    getAlpha().findState(aggregationAlphaStateName);
+
+
+                    int runningCntOfThisState = 0;
+                    Object wipCntObject = getStateDetails(aggregationAlphaStateName, "WIPCount"); //count of 'work in progress'
+
+                    if(wipCntObject!=null)
+                        runningCntOfThisState = (int)wipCntObject;
+
+                    setStateDetails(aggregationAlphaStateName, "WIPCount", runningCntOfThisState + 1);
+                }
+            }
+
+        }
+
+        setSubAlphaInstanceCount(totalCount);
+    }
+
+    int subAlphaInstanceCount;
+        public int getSubAlphaInstanceCount() {
+            return subAlphaInstanceCount;
+        }
+
+        public void setSubAlphaInstanceCount(int subAlphaInstanceCount) {
+            this.subAlphaInstanceCount = subAlphaInstanceCount;
+        }
+
 }
