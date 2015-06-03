@@ -26,11 +26,9 @@ public class AlphaInstance extends LanguageElementInstance {
         }
 
     Set<String> checkedCheckpointNames = new HashSet<String>();
-
         public boolean isChecked(String checkpointName){
             return checkedCheckpointNames.contains(checkpointName);
         }
-
         public void setChecked(String checkpointName){
 
             //try to find the checkpoint is in the current state to prevent illegal checking
@@ -40,12 +38,12 @@ public class AlphaInstance extends LanguageElementInstance {
         }
 
 
-    Map<String, Map<String, Object>> stateDetailsByStateName = new HashMap<String, Map<String, Object>>();
-//        public Map<String, Map<String, Object>> getStateDetails() {
-//            return stateDetails;
+    transient  Map<String, Map<String, Object>> stateDetailsByStateName = new HashMap<String, Map<String, Object>>();
+//        public Map<String, Map<String, Object>> getStateDetailsByStateName() {
+//            return stateDetailsByStateName;
 //        }
-//        public void setStateDetails(Map<String, Map<String, Object>> stateDetails) {
-//            this.stateDetails = stateDetails;
+//        public void setStateDetailsByStateName(Map<String, Map<String, Object>> stateDetailsByStateName) {
+//            this.stateDetailsByStateName = stateDetailsByStateName;
 //        }
 
 

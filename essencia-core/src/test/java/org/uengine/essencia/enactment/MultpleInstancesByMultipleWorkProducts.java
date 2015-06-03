@@ -192,10 +192,23 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         defaultSprint.setProperty("iteration", new Integer(5));
 //        defaultSprint.put("duration", 14);
 
+        ProcessVariableValue pvv = new ProcessVariableValue();
+        pvv.setName(alphaBacklog.getName());
+
+
+        //where?
+        //alphaBacklog.getStates();
+
+        AlphaInstance backlogInstance = alphaBacklog.createInstance("backlog");
+        backlogInstance.setProperty("type", "Backlog");
+
+
         ProcessVariable pvAlphaBacklog = new ProcessVariable(new Object[]{
                 "name", alphaBacklog.getName(),
                 "type", AlphaInstance.class,
         });
+
+        pvAlphaBacklog.setDefaultValue(backlogInstance);
 
         ProcessVariable pvSprint = new ProcessVariable(new Object[]{
                 "name", sprint.getName(),
@@ -333,43 +346,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         ProcessInstance instance = processDefinition.createInstance();
 
 
-        ProcessVariableValue pvv = new ProcessVariableValue();
-        pvv.setName(alphaBacklog.getName());
 
-
-        //where?
-        //alphaBacklog.getStates();
-
-        AlphaInstance backlogInstance = alphaBacklog.createInstance("backlog");
-        {
-            backlogInstance.setProperty("type", "Backlog");
-
-            try {
-                backlogInstance.setProperty("undefinedField", "someValue");
-
-                fail("undefined property is accepted");
-            } catch (Throwable t) {
-            }
-
-            try {
-                backlogInstance.setProperty("type", new Boolean(true));
-
-                fail("illegal value for property 'type' is accepted");
-            } catch (Throwable t) {
-            }
-
-            try {
-                backlogInstance.setProperty("id", "id");
-
-                fail("put('id', value) must be denied");
-            } catch (Throwable t) {
-            }
-
-            pvv.setValue(backlogInstance);
-            pvv.moveToAdd();
-        }
-
-        instance.set(alphaBacklog.getName(), pvv);
         instance.putRoleMapping(activityInEssenceDefinition.getCompetencyName(), "jane");
 
         instance.execute();
