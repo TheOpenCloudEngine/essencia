@@ -1,0 +1,87 @@
+
+<%
+    var alpha = value.alpha;
+
+     %><li> <%=alpha.name%><%
+
+
+    var alphaInstanceList = value.alphaInstances[alpha.name];
+
+
+
+    %>
+    <table border="1">
+        <tr>
+            <td>id</td>
+
+        <%
+
+         for(var i in alpha.list){
+            var state = alpha.list[i];
+
+             %><td><%=state.name%></td><%
+
+         }
+ %>
+
+        </tr>
+
+
+        <%
+
+        for(var i in alphaInstanceList){
+            var alphaInstance = alphaInstanceList[i];
+
+            %><tr><td><%=alphaInstance.id%></td><%
+
+            for(var j in alpha.list){
+
+                var state = alpha.list[j];
+
+                if(alphaInstance.currentStateName == state.name){
+                    %><td>X<%
+                }else{
+                    %><td><%
+                }
+
+                if(alphaInstance.subAlphaInstanceCount>1){
+                    var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
+                    if(stateDetails){
+
+                        %>(<%=stateDetails['WIPCount']%>/<%=alphaInstance.subAlphaInstanceCount%>)<%
+                    }
+                }
+
+                %></td><%
+            }
+
+            %></tr><%
+        }
+        %>
+    </table>
+
+
+    <%
+
+    if(alpha.childElements){
+
+    %><ul><%
+        for(var i in alpha.childElements){
+            var childAlpha = alpha.childElements[i];
+
+            var childGameBoard = {
+                __className: "org.uengine.essencia.enactment.AlphaGameBoard",
+                alphaInstances:  value.alphaInstances,
+                alpha: childAlpha
+            };
+
+            %><%=mw3.locateObject(childGameBoard)%><%
+
+        }
+
+
+        %></ul><%
+    }
+
+%>
+

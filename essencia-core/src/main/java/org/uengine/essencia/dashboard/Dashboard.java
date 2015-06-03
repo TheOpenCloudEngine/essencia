@@ -16,7 +16,6 @@ import org.uengine.essencia.model.State;
  * @author lenovo
  *
  */
-@Face(ejsPath = "org/uengine/essencia/dashboard/Dashboard.ejs")
 public class Dashboard implements ContextAware {
 
     public Dashboard(PracticeDefinition practiceDefinition) {

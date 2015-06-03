@@ -8,7 +8,6 @@ import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.model.State;
 import org.uengine.kernel.*;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,10 @@ public class StandaloneDashboard {
 	}
 
 	private AlphaInstance generateAlphaInstance() throws Exception {
+		return new ExampleAlphaInstance().getAlphaInstance();
+	}
+
+	private AlphaInstance ExampleAlphaInstance() throws Exception {
 		Alpha workAlpha = new Alpha();
 		workAlpha.setName("Work");
 
@@ -99,7 +102,7 @@ public class StandaloneDashboard {
 		ProcessVariable pvAlphaWork = new ProcessVariable(new Object[]{
 				"name", workAlpha.getName(),
 				"type", AlphaInstance.class,
-				"defaultValue", (Serializable)defaultWorkAlphaInstance
+//				"defaultValue", (Serializable)defaultWorkAlphaInstance
 		});
 
 		pvAlphaWork.setDefaultValue(defaultWorkAlphaInstance);
@@ -189,6 +192,5 @@ public class StandaloneDashboard {
 		public void setDashboard(Dashboard dashboard) {
 			this.dashboard = dashboard;
 		}
-
 
 }
