@@ -9,13 +9,15 @@ import java.util.List;
 
 public class EssenceActivity extends HumanActivity implements NeedArrangementToSerialize {
 
-    org.uengine.essencia.model.Activity activityInEssenceDefinition;
+    private org.uengine.essencia.model.Activity activityInEssenceDefinition;
         public Activity getActivityInEssenceDefinition() {
             return activityInEssenceDefinition;
         }
         public void setActivityInEssenceDefinition(Activity activityInEssenceDefinition) {
             this.activityInEssenceDefinition = activityInEssenceDefinition;
         }
+
+    public EssenceActivity(){}
 
 
     public EssenceActivity(org.uengine.essencia.model.Activity activityInEssenceDefinition){
@@ -35,19 +37,19 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
             int i = 0;
 
-            for(LanguageElement workProduct_ : getActivityInEssenceDefinition().getWorkProductList()){
+            for(LanguageElement workProductCriterion_ : getActivityInEssenceDefinition().getWorkProductList()){
 
-                WorkProduct workProduct = (WorkProduct) workProduct_;
+                Criterion workProduct = (Criterion) workProductCriterion_;
 
                 parameterContexts[i] = new ParameterContext();
                 parameterContexts[i].setDirection(ParameterContext.DIRECTION_INOUT);
 
                 TextContext textContext = TextContext.createInstance();
-                textContext.setText(workProduct.getName());
+                textContext.setText(workProduct.getLevelOfDetail().getParentWorkProduct().getName());
                 parameterContexts[i].setArgument(textContext);
 
                 //workProducts should be accessed by global naming
-                parameterContexts[i].setVariable(ProcessVariable.forName(workProduct.getName()));
+                parameterContexts[i].setVariable(ProcessVariable.forName(workProduct.getLevelOfDetail().getParentWorkProduct().getName()));
 
                 i++;
 
@@ -112,12 +114,13 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
     @Override
     public void beforeSerialization() {
-        for(ParameterContext parameterContext : getParameters()){
-            if(parameterContext.getVariable()!=null){
-                ProcessVariable realPV = getProcessDefinition().getProcessVariable(parameterContext.getVariable().getName());
-                parameterContext.setVariable(realPV);
-            }
-        }
+        // already the parameters are real
+//        for(ParameterContext parameterContext : getParameters()){
+//            if(parameterContext.getVariable()!=null){
+//                ProcessVariable realPV = getProcessDefinition().getProcessVariable(parameterContext.getVariable().getName());
+//                parameterContext.setVariable(realPV);
+//            }
+//        }
     }
 
     @Override

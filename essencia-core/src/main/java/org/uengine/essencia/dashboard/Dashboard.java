@@ -1,10 +1,12 @@
 package org.uengine.essencia.dashboard;
 
 import java.util.List;
+import java.util.Map;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.ServiceMethod;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -16,8 +18,11 @@ import org.uengine.essencia.model.State;
  * @author lenovo
  *
  */
-@Face(ejsPath = "org/uengine/essencia/dashboard/Dashboard.ejs")
 public class Dashboard implements ContextAware {
+
+	public Dashboard(){
+
+	}
 
     public Dashboard(PracticeDefinition practiceDefinition) {
 		metaworksContext = new MetaworksContext();
@@ -65,12 +70,19 @@ public class Dashboard implements ContextAware {
 		this.alphas = alphas;
 		}
 
-	private AlphaInstance[] alphaInstances;
-		public AlphaInstance[] getAlphaInstances() {
-			return alphaInstances;
+
+	private Map<String, List<AlphaInstance>> alphaInstanceMap;
+		public Map<String, List<AlphaInstance>> getAlphaInstanceMap() {
+			return alphaInstanceMap;
 		}
-		public void setAlphaInstances(AlphaInstance[] alphaInstances) {
-			this.alphaInstances = alphaInstances;
+		public void setAlphaInstanceMap(Map<String, List<AlphaInstance>> alphaInstanceMap) {
+			this.alphaInstanceMap = alphaInstanceMap;
 		}
 
+
+	@ServiceMethod(callByContent = true)
+	public void savePlan(){
+		System.out.println(getAlphaInstanceMap());
+
+	}
 }

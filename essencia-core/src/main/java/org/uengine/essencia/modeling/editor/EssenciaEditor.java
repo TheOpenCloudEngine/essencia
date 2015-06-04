@@ -25,12 +25,15 @@ import org.uengine.essencia.common.Lockable;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.context.EssenciaEventContext;
 import org.uengine.essencia.model.PracticeDefinition;
+import org.uengine.essencia.modeling.modeler.MethodComposer;
 import org.uengine.essencia.resource.ExportResource;
 import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.LockResource;
 import org.uengine.essencia.util.ElementUtil;
+import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.UEngineException;
 import org.uengine.modeling.ElementView;
+import org.uengine.modeling.IModel;
 import org.uengine.modeling.IResource;
 
 public abstract class EssenciaEditor extends CompositeEditor {
@@ -206,7 +209,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		try {
 			getResource().rename(getEssenciaModelerEditor().getAlias());
 		} catch (Exception e) {
-			throw new Exception("Practice is enough to read the information failed.", e);
+			throw new Exception("rename failed.", e);
 		}
 	}
 
@@ -246,13 +249,10 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		List<ElementView> elementViewList = null;
 		
 		try {
-			PracticeDefinition practice = new PracticeDefinition();
-			practice.setElementList(ElementUtil.convertToElementList(getEssenciaModelerEditor().obtainElementViewList()));
-			practice.setRelationList(ElementUtil.convertToRelationList(getEssenciaModelerEditor().obtainRelationViewList()));
-			
-			elementViewList = practice.converToProcessAsElementViewList(practice);
-			
-			this.getProcessModelerEditor().getModeler().getCanvas().setElementViewList(elementViewList);;
+			PracticeDefinition practiceDefinition = ( (MethodComposer)getEssenciaModelerEditor().getModeler() ).createPracticeDefinition();
+
+			ProcessDefinition processDefinition = practiceDefinition.toProcessDefinition();
+			getProcessModelerEditor().getModeler().setModel(processDefinition);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

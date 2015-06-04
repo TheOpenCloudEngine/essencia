@@ -40,19 +40,18 @@
               <isSuppressable>true</isSuppressable>
               <name>All the different groups of stakeholders that are, or will be, affected by the development and operation of the software system are identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+               
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>There is agreement on the stakeholder groups to be represented. At a minimum, the stakeholders groups that fund, use, support, and maintain the system have been considered.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+               
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The responsibilities of the stakeholder representatives have been defined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -65,25 +64,21 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives have agreed to take on their responsibilities.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives are authorized to carry out their responsibilities.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The collaboration approach among the stakeholder representatives has been agreed.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives support and respect the team&apos;s way of working.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -96,19 +91,16 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives assist the team in accordance with their responsibilities.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives provide feedback and take part in decision making in a timely manner.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives promptly communicate changes that are relevant for their stakeholder groups.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -121,31 +113,26 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives have agreed upon their minimal expectations for the next deployment of the new system.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives are happy with their involvement in the work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives agree that their input is valued by the team and treated with respect.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team members agree that their input is valued by the stakeholder representatives and treated with respect.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives agree with how their different priorities and perspectives are being balanced to provide a clear direction for the team.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -158,13 +145,11 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives provide feedback on the system from their stakeholder group perspective.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives confirm that they agree that the system is ready for deployment.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -177,13 +162,11 @@
               <isSuppressable>true</isSuppressable>
               <name>Stakeholders are using the new system and providing feedback on their experiences.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders confirm that the new system meets their expectations.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -226,25 +209,25 @@
               <isSuppressable>true</isSuppressable>
               <name>The initial set of stakeholders agrees that a system is to be produced.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders that will use the new system are identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders that will fund the initial work on the new system are identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>There is a clear opportunity for the new system to address.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -257,55 +240,55 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders involved in developing the new system are identified</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders agree on the purpose of the new system.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>It is clear what success is for the new system.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders have a shared understanding of the extent of the proposed solution.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The way the requirements will be described is agreed upon.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The mechanisms for managing the requirements are in place.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The prioritization scheme is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Constraints are identified and considered.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Assumptions are clearly stated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -318,55 +301,55 @@
               <isSuppressable>true</isSuppressable>
               <name>The requirements are captured and shared with the team and the stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The origin of the requirements is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The rationale behind the requirements is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Conflicting requirements are identified and attended to.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The requirements communicate the essential characteristics of the system to be delivered.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The most important usage scenarios for the system can be explained.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The priority of the requirements is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The impact of implementing the requirements is understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team understands what has to be delivered and agrees to deliver it.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -379,31 +362,31 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders accept that the requirements describe an acceptable solution.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The rate of change to the agreed requirements is relatively low and under control.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The value provided by implementing the requirements is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The parts of the opportunity satisfied by the requirements are clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The requirements are testable.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -416,25 +399,25 @@
               <isSuppressable>true</isSuppressable>
               <name>Enough of the requirements are addressed for the resulting system to be acceptable to the stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders accept the requirements as accurately reflecting what the system does and does not do.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The set of requirement items implemented provide clear value to the stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The system implementing the requirements is accepted by the stakeholders as worth making op</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -447,19 +430,19 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders accept the requirements as accurately capturing what they require to fully satisfy the need for a new system.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>There are no outstanding requirement items preventing the system from being accepted as fully satisfying the requirements.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The system is accepted by the stakeholders as fully satisfying the requirements.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -502,19 +485,19 @@
               <isSuppressable>true</isSuppressable>
               <name>An idea for a way of improving current ways of working, increasing market share or applying a new or innovative software system has been identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>At least one of the stakeholders wishes to make an investment in better understanding the opportunity and the value associated with addressing it.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The other stakeholders who share the opportunity have been identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -527,31 +510,31 @@
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders in the opportunity and the proposed solution have been identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders&apos; needs that generate the opportunity have been established.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Any underlying problems and their root causes have been identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>It has been confirmed that a software-based solution is needed.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>At least one software-based solution has been proposed.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -564,31 +547,31 @@
               <isSuppressable>true</isSuppressable>
               <name>The value of addressing the opportunity has been quantified either in absolute terms or in returns or savings per time period (e.g. per annum).</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The impact of the solution on the stakeholders is understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The value that the software system offers to the stakeholders that fund and use the software system is understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The success criteria by which the deployment of the software system is to be judged are clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The desired outcomes required of the solution are clear and quantified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -601,37 +584,37 @@
               <isSuppressable>true</isSuppressable>
               <name>A solution has been outlined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The indications are that the solution can be developed and deployed within constraints.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The risks associated with the solution are acceptable and manag</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The indicative (ball-park) costs of the solution are less than the anticipated value of the opportunity.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The reasons for the development of a software-based solution are understood by all members of the team.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>It is clear that the pursuit of the opportunity is viable.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -644,19 +627,19 @@
               <isSuppressable>true</isSuppressable>
               <name>A usable system that demonstrably addresses the opportunity is available.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders agree that the available solution is worth deploying.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders are satisfied that the solution produced addresses the opportunity.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -669,13 +652,13 @@
               <isSuppressable>true</isSuppressable>
               <name>The solution has started to accrue benefits for the stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The return-on-investment profile is at least as good as anticipated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -718,43 +701,43 @@
               <isSuppressable>true</isSuppressable>
               <name>The criteria to be used when selecting the architecture have been agreed on.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Hardware platforms have been identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Programming languages and technologies to be used have been selected.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>System boundary is known.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Significant decisions about the organization of the system have been made.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Buy, build and reuse decisions have been made.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Key technical risks agreed to.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -767,37 +750,37 @@
               <isSuppressable>true</isSuppressable>
               <name>Key architectural characteristics have been demonstrated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The system can be exercised and its performance can be measured.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Critical hardware configurations have been demonstrated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Critical interfaces have been demonstrated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The integration with other existing systems has been demonstrated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The relevant stakeholders agree that the demonstrated architecture is appropriate.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -810,43 +793,43 @@
               <isSuppressable>true</isSuppressable>
               <name>The system can be operated by stakeholders who use it.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The functionality provided by the system has been tested.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The performance of the system is acceptable to the stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Defect levels are acceptable to the stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The system is fully documented</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Release content is known.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The added value provided by the system is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -859,25 +842,25 @@
               <isSuppressable>true</isSuppressable>
               <name>Installation and other user documentation are available.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives accept the system as fit-for-purpose.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder representatives want to make the system operational.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Operational support is in place.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -890,19 +873,19 @@
               <isSuppressable>true</isSuppressable>
               <name>The system has been made available to the stakeholders intended to use it.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>At least one example of the system is fully operational.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The system is fully supported to the agreed service levels.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -915,25 +898,25 @@
               <isSuppressable>true</isSuppressable>
               <name>The system has been replaced or discontinued.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The system is no longer supported.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>There are no “official” stakeholders who still use the system.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Updates to the system will no longer be produced.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -976,67 +959,67 @@
               <isSuppressable>true</isSuppressable>
               <name>The team mission has been defined in terms of the opportunities and outcomes.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Constraints on the team&apos;s operation are known.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Mechanisms to grow the team are in place.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The composition of the team is defined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Any constraints on where and how the work is carried out are defined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team&apos;s responsibilities are outlined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The level of team commitment is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Required competencies are identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team size is determined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Governance rules are defined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Leadership model is selected.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1049,61 +1032,61 @@
               <isSuppressable>true</isSuppressable>
               <name>Individual responsibilities are understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Enough team members have been recruited to enable the work to progress.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Every team member understands how the team is organized and what their individual role is.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>All team members understand how to perform their work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team members have met (perhaps virtually) and are beginning to get to know each other.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team members understand their responsibilities and how they align with their competencies.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Team members are accepting work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Any external collaborators (organizations, teams and individuals) are identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Team communication mechanisms have been defined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Each team member commits to working on the team as defined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1116,25 +1099,25 @@
               <isSuppressable>true</isSuppressable>
               <name>The team is working as one cohesive unit.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Communication within the team is open and honest.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team is focused on achieving the team mission.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team members know each other.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1147,31 +1130,31 @@
               <isSuppressable>true</isSuppressable>
               <name>The team consistently meets its commitments.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team continuously adapts to the changing context.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team identifies and addresses problems without outside help.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Effective progress is being achieved with minimal avoidable backtracking and reworking.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Wasted work, and the potential for wasted work are continuously eliminated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1184,19 +1167,19 @@
               <isSuppressable>true</isSuppressable>
               <name>The team responsibilities have been handed over or fulfilled.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team members are available for assignment to other teams.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>No further effort is being put in by the team to complete the mission.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1239,43 +1222,43 @@
               <isSuppressable>true</isSuppressable>
               <name>The result required of the work being initiated is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Any constraints on the work's performance are clearly identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders that will fund the work are known.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The initiator of the work is clearly identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholders that will accept the results are known.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The source of funding is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The priority of the work is clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1288,73 +1271,73 @@
               <isSuppressable>true</isSuppressable>
               <name>Commitment is made.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Cost and effort of the work are estimated.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Resource availability is understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Governance policies and procedures are clear.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Risk exposure is understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Acceptance criteria are defined and agreed with client.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The work is broken down sufficiently for productive work to start.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Tasks have been identified and prioritized by the team and stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>A credible plan is in place.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Funding to start the work is in place.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team or at least some of the team members are ready to start the work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Integration and delivery points are defined.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1367,25 +1350,25 @@
               <isSuppressable>true</isSuppressable>
               <name>Development work has been started.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Work progress is monitored.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The work is being broken down into actionable work items with clear definitions of done.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Team members are accepting and progressing tasks.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1398,43 +1381,43 @@
               <isSuppressable>true</isSuppressable>
               <name>Tasks are being completed.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Unplanned work is under control.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Risks are under control as the impact if they occur and the likelihood of them occurring have been reduced to acceptable levels.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Estimates are revised to reflect the team's performance.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Measures are available to show progress and velocity.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Re-work is under control.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Tasks are consistently completed on time and within their estimates.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1447,19 +1430,19 @@
               <isSuppressable>true</isSuppressable>
               <name>All outstanding tasks are administrative housekeeping or related to preparing the next piece of work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Work results have been achieved.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The stakeholder(s) has accepted the resulting software system.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1472,37 +1455,37 @@
               <isSuppressable>true</isSuppressable>
               <name>Lessons learned have been itemized, recorded and discussed.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Metrics have been made available.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Everything has been archived.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The budget has been reconciled and closed.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team has been released.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>There are no outstanding, uncompleted tasks.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1545,37 +1528,37 @@
               <isSuppressable>true</isSuppressable>
               <name>Principles and constraints are committed to by the team.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Principles and constraints are agreed to by the stakeholders.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The tool needs of the work and its stakeholders are agreed.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>A recommendation for the approach to be taken is available.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The context within which the team will operate is understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The constraints that apply to the selection, acquisition and use of practices and tools are known.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1588,37 +1571,37 @@
               <isSuppressable>true</isSuppressable>
               <name>The key practices and tools that form the foundation of the way-of-working are selected.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Enough practices for work to start are agreed to by the team.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>All non-negotiable practices and tools have been identified.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The gaps that exist between the practices and tools that are needed and the practices and tools that are available have been analyzed and understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The capability gaps that exist between what is needed to execute the desired way of working and the capability levels of the team have been analyzed and understood.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The selected practices and tools have been integrated to form a usable way-of-working.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1631,37 +1614,37 @@
               <isSuppressable>true</isSuppressable>
               <name>The practices and tools are being used to do real work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The use of the practices and tools selected are regularly inspected.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The practices and tools are being adapted to the team's context.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The use of the practices and tools is supported by the team.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Procedures are in place to handle feedback on the team's way of working.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The practices and tools support team communication and collaboration.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1674,19 +1657,19 @@
               <isSuppressable>true</isSuppressable>
               <name>The practices and tools are being used by the whole team to perform their work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>All team members have access to the practices and tools required to do their work.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The whole team is involved in the inspection and adaptation of the way-of-working.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1699,25 +1682,25 @@
               <isSuppressable>true</isSuppressable>
               <name>Team members are making progress as planned by using and adapting the way-ofworking to suit their current context.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team naturally applies the practices without thinking about them.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The tools naturally support the way that the team works.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>The team continually tunes their use of the practices and tools.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
@@ -1730,13 +1713,13 @@
               <isSuppressable>true</isSuppressable>
               <name>The team&apos;s way of working is no longer being used.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
             <org.uengine.essencia.model.CheckPoint>
               <isSuppressable>true</isSuppressable>
               <name>Lessons learned are shared for future use.</name>
               <description></description>
-              <isCompleted>false</isCompleted>
+              
             </org.uengine.essencia.model.CheckPoint>
           </list>
         </org.uengine.essencia.model.State>
