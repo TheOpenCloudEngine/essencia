@@ -16,7 +16,7 @@
         <basedir></basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compiler.plugin.version>1.0.0</compiler.plugin.version>
-        <spring.version>4.0.1.RELEASE</spring.version>
+        <spring.version>4.1.4.RELEASE</spring.version>
         <spring.security.version>3.2.0.RELEASE</spring.security.version>
         <aopalliance.version>1.0</aopalliance.version>
         <cglib.version>2.2</cglib.version>
@@ -150,22 +150,22 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.0.1.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>4.0.1.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.0.1.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.0.1.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
