@@ -1,22 +1,43 @@
 package org.uengine.essencia.model;
 
+import java.io.File;
 import java.io.Serializable;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.context.EssenciaContext;
+import org.uengine.essencia.enactment.AlphaInstance;
+import org.uengine.essencia.enactment.EssenceActivity;
+import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
-import org.uengine.kernel.EndActivity;
-import org.uengine.kernel.GlobalContext;
-import org.uengine.kernel.HumanActivity;
-import org.uengine.kernel.Role;
+import org.uengine.kernel.*;
 import org.uengine.kernel.bpmn.StartEventActivity;
+import org.uengine.kernel.bpmn.view.EndActivityView;
+import org.uengine.kernel.view.HumanActivityView;
+import org.uengine.kernel.view.StartActivityView;
 import org.uengine.modeling.*;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware {
@@ -56,7 +77,6 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         if (this.getName() == null) {
             return null;
         }
-
         return this.getName().getText();
     }
 
@@ -122,155 +142,198 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return practiceName;
     }
 
-    public IElement findCompetencyByName(String name) {
-        Competency competency = new Competency();
-        competency.setName(name);
-
-        int pos = this.getElementList().indexOf(name);
-        if (pos > -1) {
-            return this.getElementList().get(pos);
-        }
-        return competency;
-    }
-
-    public List<Activity> findSameCompetencyActivities(String competencyName) {
-        List<Activity> list = new ArrayList<Activity>();
+    public int cntSameRoleActivities(String competencyName) {
+        int result = 0;
 
         for (IElement element : this.getElementList()) {
             if (element instanceof Activity && competencyName.equals(((Activity) element).getCompetencyName())) {
-                list.add((Activity) element);
+                result++;
             }
         }
 
-        return list;
+        return result;
     }
 
-    public List<ElementView> converToProcessAsElementViewList(PracticeDefinition practice) throws Exception {
-        List<ElementView> returnElementViewList = new ArrayList<ElementView>();
-        ElementView laneView = null;
+    /**
+     * this method make this practice definition convert to uEngine's Process Definition
+     *
+     * @return ProcessDefinition ( from uengine-core module )
+     * @throws Exception
+     */
+    public ProcessDefinition toProcessDefinition() {
+        ProcessDefinition returnProcessDefinition = new ProcessDefinition();
+        returnProcessDefinition.setName(getName());
+        List<Role> roleList = new ArrayList<>();
+        List<ProcessVariable> pvList = new ArrayList<>();
+
+        Role role = null;
+        ElementView roleView = null;
         int laneCnt = 0;
         ElementView humanView = null;
-        for (IElement element : practice.getElementList()) {
-            if (element instanceof org.uengine.essencia.model.Activity) {
-                String roleName = ((Activity)element).getCompetencyName();
+        for (IElement element : getElements(Activity.class)) {
 
-                Competency competency = (Competency) practice.findCompetencyByName(roleName);
+            Competency competency = getElement(((Activity) element).getCompetencyName(), Competency.class);
 
-                int pos = returnElementViewList.indexOf(competency);
-                if (pos > -1) {
-                    laneView = returnElementViewList.get(pos);
+            if (!roleList.contains(competency)) {
+                role = Role.forName(competency.getName());
+                role.setDisplayName(role.getName());
+                roleView = role.createView();
 
-                } else {
+                roleView.setWidth(calculateLaneWidth(competency.getName()) + 40 + 192);
+                roleView.setHeight("128");
+                roleView.setX(48 + Integer.valueOf(roleView.getWidth()) / 2);
+                roleView.setY(40 + Integer.valueOf(roleView.getHeight()) / 2 + laneCnt * Integer.valueOf(roleView.getHeight()));
+                roleView.setShapeId("OG.shape.HorizontalLaneShape");
+                roleView.setLabel(role.getName());
 
-                    List<org.uengine.essencia.model.Activity> lists = practice.findSameCompetencyActivities(roleName);
+                role.setElementView(roleView);
+                roleList.add(role);
 
-                    Role role = new Role(roleName);
-                    role.setDisplayName(role.getName());
-                    laneView = role.createView();
-
-                    laneView.setWidth(calculateLaneWidth(lists) + 40 + 192);
-                    laneView.setHeight("128");
-                    laneView.setX(48 + Integer.valueOf(laneView.getWidth()) / 2);
-                    laneView.setY(40 + Integer.valueOf(laneView.getHeight()) / 2 + laneCnt * Integer.valueOf(laneView.getHeight()));
-                    laneView.setShapeId("OG.shape.HorizontalLaneShape");
-                    laneView.setLabel(role.getName());
-
-                    laneView.setElement(role);
-
-                    returnElementViewList.add(laneView);
-
-                    laneCnt++;
-                }
-
-                HumanActivity human = new HumanActivity();
-                humanView = human.createView();
-
-                String activityName = element.getName();
-
-                human.setRole(new Role(roleName));
-                human.getRole().setDisplayName(roleName);
-                human.setName(activityName);
-
-                humanView.setLabel(activityName);
-                humanView.setShapeId("OG.shape.bpmn.A_HumanTask");
-                humanView.setHeight("96");
-                humanView.setWidth("96");
-
-                int laneX = Integer.valueOf(laneView.getX());
-                int laneHalfWidth = Integer.valueOf(laneView.getWidth()) / 2;
-                int prevActivitiesCnt = prevActivitiesCntWithSameCompetency(returnElementViewList, competency);
-                int humanX = Integer.valueOf(humanView.getWidth()) * prevActivitiesCnt;
-
-                int rst = laneX - laneHalfWidth + humanX;
-                rst = rst + 64 * prevActivitiesCnt;
-
-                humanView.setX(rst);
-                humanView.setY(laneView.getY());
-
-                // setTool
-                // http://localhost:8080/essencia/CardService.jsp?className=org.uengine.essencia.CardTest&practiceName=ScrumUPMethod&elementName=Design_the_program&type=method
-                StringBuilder url = new StringBuilder("http://");
-                url.append(InetAddress.getLocalHost().getHostAddress());
-                url.append(":");
-                url.append(GlobalContext.getPropertyString("port", "9999"));
-                url.append("/essencia/CardService.jsp?className=org.uengine.essencia.Activity");
-                url.append("&practiceName=" + getPracticeName());
-                url.append("&elementName=" + activityName);
-                url.append("&type=" + "method");
-                human.setTool(url.toString());
-
-                humanView.setElement(human);
-                returnElementViewList.add(humanView);
-
-				if (returnElementViewList.size() == 2) {
-                    StartEventActivity s = new StartEventActivity();
-					s.setTracingTag("0");
-					ElementView view = s.createView();
-					view.setElement(s);
-					view.setShapeId("OG.shape.bpmn.E_Start");
-					view.setHeight("32");
-					view.setWidth("32");
-					int temp = Integer.valueOf(humanView.getX()) - 83;
-
-					view.setX(temp);
-					view.setY(humanView.getY());
-                    returnElementViewList.add(view);
-
-				}
+                laneCnt++;
             }
+
+//            if (returnProcessDefinition.getChildActivities().size() == 0) {
+//                StartEventActivity s = new StartEventActivity();
+//                s.setTracingTag("0");
+//                ElementView view = s.createView();
+//                view.setShapeId(StartActivityView.SHAPE_ID);
+//                view.setHeight("32");
+//                view.setWidth("32");
+//                int temp = Integer.valueOf(roleView.getX()) - 83;
+//
+//                view.setX(temp);
+//                view.setY(roleView.getY());
+//                s.setElementView(view);
+//                returnProcessDefinition.getChildActivities().add(s);
+//
+//            }
+
+            EssenceActivity essenceActivity = new EssenceActivity((Activity) element);
+            humanView = essenceActivity.createView();
+
+            essenceActivity.setName(element.getName());
+
+            humanView.setLabel(element.getName());
+            humanView.setShapeId(HumanActivityView.SHAPE_ID_BPMN);
+            humanView.setHeight("96");
+            humanView.setWidth("96");
+
+            int laneX = Integer.valueOf(roleView.getX());
+            int laneHalfWidth = Integer.valueOf(roleView.getWidth()) / 2;
+            int prevActivitiesCnt = prevActivitiesCntWithSameCompetency(returnProcessDefinition.getChildActivities(), competency);
+            int humanX = Integer.valueOf(humanView.getWidth()) * prevActivitiesCnt;
+
+            int rst = laneX - laneHalfWidth + humanX;
+            rst = rst + 64 * prevActivitiesCnt;
+
+            humanView.setX(rst);
+            humanView.setY(roleView.getY());
+
+            // setTool
+            // http://localhost:8080/essencia/CardService.jsp?className=org.uengine.essencia.CardTest&practiceName=ScrumUPMethod&elementName=Design_the_program&type=method
+            StringBuilder url = new StringBuilder("http://");
+            try {
+                url.append(InetAddress.getLocalHost().getHostAddress());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            url.append(":");
+            url.append(GlobalContext.getPropertyString("port", "9999"));
+            url.append("/essencia/CardService.jsp?className=org.uengine.essencia.Activity");
+            url.append("&practiceName=" + getPracticeName());
+            url.append("&elementName=" + element.getName());
+            url.append("&type=" + "method");
+            essenceActivity.setTool(url.toString());
+
+            essenceActivity.setElementView(humanView);
+            returnProcessDefinition.addChildActivity(essenceActivity);
+
         }
 
-        if (returnElementViewList.size() != 0) {
-            EndActivity e = new EndActivity();
-            e.setTracingTag("99");
-            ElementView view = e.createView();
-            view.setElement(e);
-            view.setShapeId("OG.shape.bpmn.E_End");
-            view.setHeight("32");
-            view.setWidth("32");
-            int temp = Integer.valueOf(humanView.getX()) + 83;
+//        if (returnProcessDefinition.getChildActivities().size() != 0) {
+//            EndActivity e = new EndActivity();
+//            e.setTracingTag("99");
+//            ElementView view = e.createView();
+//            view.setShapeId(EndActivityView.SHAPE_ID);
+//            view.setHeight("32");
+//            view.setWidth("32");
+//            int temp = Integer.valueOf(humanView.getX()) + 83;
+//
+//            view.setX(temp);
+//            view.setY(humanView.getY());
+//            e.setElementView(view);
+//            returnProcessDefinition.getChildActivities().add(e);
+//        }
 
-            view.setX(temp);
-            view.setY(humanView.getY());
-            returnElementViewList.add(view);
-        } else {
-            throw new Exception("There is no activity.");
-        }
+        Role[] roleArray = {};
+        roleArray = roleList.toArray(roleArray);
+        returnProcessDefinition.setRoles(roleArray);
 
-        return returnElementViewList;
+
+        // these are make the recursive error in dwr
+//        for (Alpha alpha : getElements(Alpha.class)) {
+//            ProcessVariable pv = new ProcessVariable(new Object[]{
+//                    "name", alpha.getName(),
+//                    "type", AlphaInstance.class
+//            });
+//            pvList.add(pv);
+//        }
+
+//        for (WorkProduct workProduct : getElements(WorkProduct.class)) {
+//            LanguageElementInstance defaultWorkProduct = workProduct.createInstance("<id>");
+//            ProcessVariable pv = new ProcessVariable(new Object[]{
+//                    "name", workProduct.getName(),
+//                    "type", LanguageElementInstance.class,
+//                    //"defaultValue", (Serializable) defaultWorkProduct
+//            });
+//            //  pv.setDefaultValue(defaultWorkProduct);
+//            pvList.add(pv);
+//        }
+
+//        ProcessVariable[] pvArray = {};
+//        pvArray = pvList.toArray(pvArray);
+//        returnProcessDefinition.setProcessVariables(pvArray);
+
+
+        return returnProcessDefinition;
     }
 
-    private int calculateLaneWidth(List<org.uengine.essencia.model.Activity> list) {
-        return list.size() * 96;
+//    private void deployProcessDefinition() throws Exception {
+//        final String  url = "/app/essencia/tenant/uengine/upload";
+//        File file = null;
+//        try {
+//            CloseableHttpClient httpclient = HttpClients.createDefault();
+//            HttpPost post = new HttpPost(url);
+//            FileBody fileBody = new FileBody(file);
+////            String message = "file";
+//
+//            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+//            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+//            builder.addPart("upfile", fileBody);
+////            builder.addTextBody("text", message, ContentType.TEXT_PLAIN);
+//
+//            HttpEntity entity = builder.build();
+//            post.setEntity(entity);
+//            HttpResponse response = httpclient.execute(post);
+//            if (response != null) {
+//                System.out.println(response.getStatusLine().getStatusCode());
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+
+    private int calculateLaneWidth(String roleName) {
+        int cntSameRoleActivities = cntSameRoleActivities(roleName);
+        return cntSameRoleActivities * 96;
     }
 
-    private int prevActivitiesCntWithSameCompetency(List<ElementView> list, Competency c) {
+    private int prevActivitiesCntWithSameCompetency(List<org.uengine.kernel.Activity> list, Competency c) {
         int cnt = 1;
-        for (ElementView v : list) {
-            //TODO : view is gone..
-//			if (v instanceof HumanActivityView && ((HumanActivity) v.getElement()).getRole().getDisplayName().getText().equals(c.getName())) {
-//				cnt++;
-//			}
+        for (org.uengine.kernel.Activity activity : list) {
+            if (activity instanceof EssenceActivity && ((EssenceActivity) activity).getActivityInEssenceDefinition().getCompetencyName().equals(c.getName())) {
+                cnt++;
+            }
         }
         return cnt;
     }
@@ -438,7 +501,6 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
     public void afterDeserialize() {
         addActivityToActivitySpace();
-
         addCheckpointToState();
     }
 

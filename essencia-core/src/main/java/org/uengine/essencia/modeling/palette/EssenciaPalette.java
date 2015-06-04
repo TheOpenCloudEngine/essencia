@@ -8,9 +8,8 @@ import org.uengine.modeling.Palette;
 public class EssenciaPalette extends CompositePalette {
 
     public EssenciaPalette() {
+        super();
         setName("Essencia Palette");
-
-        setChildPallet(new ArrayList<Palette>());
 
         Palette LanguagePallet = new EssenciaLanguagePalette();
         Palette kernelPallet = new EssenciaKernelPalette();

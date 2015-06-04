@@ -12,6 +12,7 @@ import org.uengine.modeling.Palette;
 public class EssenciaLanguagePalette extends Palette{
 		
 	public EssenciaLanguagePalette(){
+		super();
 		setName("Essence Language");
 
 		addSymbol(PracticeView.class);

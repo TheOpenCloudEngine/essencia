@@ -12,18 +12,19 @@ public class CheckPoint extends BasicElement implements FaceTransformer {
     @Order(1)
     @Id
     public String getName() {
-	return name;
+        return name;
     }
 
     public void setName(String name) {
-	this.name = name;
+        this.name = name;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
+
     public void setDescription(String description) {
-	this.description = description;
+        this.description = description;
     }
 
     public boolean isCompleted(ProcessInstance instance) {
@@ -46,10 +47,10 @@ public class CheckPoint extends BasicElement implements FaceTransformer {
     }
 
     public Essence.Foundation.Checkpoint toXmi() {
-	Essence.Foundation.Checkpoint checkPoint = Essence.Foundation.FoundationFactory.eINSTANCE.createCheckpoint();
-	checkPoint.setName(getName());
-	checkPoint.setDescription(getDescription());
-	return checkPoint;
+        Essence.Foundation.Checkpoint checkPoint = Essence.Foundation.FoundationFactory.eINSTANCE.createCheckpoint();
+        checkPoint.setName(getName());
+        checkPoint.setDescription(getDescription());
+        return checkPoint;
     }
 
     @Override

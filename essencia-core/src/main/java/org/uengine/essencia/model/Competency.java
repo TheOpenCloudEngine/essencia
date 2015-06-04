@@ -12,6 +12,8 @@ import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.model.card.CompetencyCard;
 import org.uengine.essencia.model.face.list.CompetencyLevelListFace;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.kernel.Role;
+import org.uengine.kernel.view.RoleView;
 
 public class Competency extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
 
@@ -71,11 +73,13 @@ public class Competency extends BasicElement implements Concernable, ContextTran
 
     @Override
     public boolean equals(Object obj) {
-        //TODO RoleView is gone...
-//	if (obj instanceof RoleView) {
-//	    RoleView view = (RoleView) obj;
-//	    return getName().equals(view.getLabel());
-//	}
+        if( obj == null){
+            return false;
+        }
+        if (obj instanceof Role) {
+            Role role = (Role) obj;
+            return getName().equals(role.getName());
+        }
         return false;
     }
 

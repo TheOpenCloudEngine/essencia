@@ -12,81 +12,85 @@ import org.uengine.essencia.util.ContextUtil;
 
 public class WorkProduct extends BasicElement implements ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
 
-	private List<LevelOfDetail> list;
-	private transient LevelOfDetailListFace listFace;
+    private List<LevelOfDetail> list;
+    private transient LevelOfDetailListFace listFace;
 
-	@Hidden
-	public List<LevelOfDetail> getList() {
-		return list;
-	}
+    public List<LevelOfDetail> getLevelOfDetails() {
+        return getList();
+    }
 
-	public void setList(List<LevelOfDetail> list) {
-		this.list = list;
-	}
+    @Hidden
+    public List<LevelOfDetail> getList() {
+        return list;
+    }
 
-	@Face(displayName = "LevelOfDetail")
-	public LevelOfDetailListFace getListFace() {
-		return listFace;
-	}
+    public void setList(List<LevelOfDetail> list) {
+        this.list = list;
+    }
 
-	public void setListFace(LevelOfDetailListFace listFace) {
-		this.listFace = listFace;
-	}
+    @Face(displayName = "LevelOfDetail")
+    public LevelOfDetailListFace getListFace() {
+        return listFace;
+    }
 
-	public WorkProduct() {
-		setListFace(new LevelOfDetailListFace());
-	}
+    public void setListFace(LevelOfDetailListFace listFace) {
+        this.listFace = listFace;
+    }
 
-	public WorkProduct(String name) {
-		this();
-		setName(name);
-	}
+    public WorkProduct() {
+        setListFace(new LevelOfDetailListFace());
+    }
 
-	@Override
-	public Card createCardView() {
-		Card card = new WorkProductCard(this);
-		return card;
-	}
+    public WorkProduct(String name) {
+        this();
+        setName(name);
+    }
 
-	@Hidden(how = { EssenciaContext.HOW_IN_LIST })
-	@Override
-	public String getDescription() {
-		return description.getText();
-	}
+    @Override
+    public Card createCardView() {
+        Card card = new WorkProductCard(this);
+        return card;
+    }
 
-	@Override
-	public void transformContext() {
-		ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
-	}
+    //@Hidden(how = {EssenciaContext.HOW_IN_LIST})
+    @Override
+    public String getDescription() {
+        return description.getText();
+    }
 
-	@Override
-	public Essence.Foundation.BasicElement toXmi() {
-		Essence.AlphaAndWorkProduct.WorkProduct workProduct = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createWorkProduct();
+    @Override
+    public void transformContext() {
+        ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+    }
 
-		// set alpha
-		workProduct.setName(getName());
-		workProduct.setDescription(getDescription());
-		for (LevelOfDetail levelOfDetail : getList()) {
-			workProduct.getLevelOfDetail().add(levelOfDetail.toXmi());
-		}
+    @Override
+    public Essence.Foundation.BasicElement toXmi() {
+        Essence.AlphaAndWorkProduct.WorkProduct workProduct = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createWorkProduct();
 
-		return workProduct;
-	}
+        // set alpha
+        workProduct.setName(getName());
+        workProduct.setDescription(getDescription());
+        for (LevelOfDetail levelOfDetail : getList()) {
+            workProduct.getLevelOfDetail().add(levelOfDetail.toXmi());
+        }
 
-	@Override
-	public void setUpElement() {
-		super.setUpElement();
-		setListFace(new LevelOfDetailListFace());
-		if (getList() != null) {
-			getListFace().fillElements(getList());
-			getList().clear();
-		}
-	}
+        return workProduct;
+    }
 
-	@Override
-	public void beforeApply() {
-		super.beforeApply();
-		setList(getListFace().createValue());
-	}
+    @Override
+    public void setUpElement() {
+        super.setUpElement();
+        setListFace(new LevelOfDetailListFace());
+        if (getList() != null) {
+            getListFace().fillElements(getList());
+            getList().clear();
+        }
+    }
+
+    @Override
+    public void beforeApply() {
+        super.beforeApply();
+        setList(getListFace().createValue());
+    }
 
 }

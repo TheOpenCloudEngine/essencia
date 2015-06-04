@@ -204,6 +204,7 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 	////// advanced properties /////
 
 	//transient Map<String, Property> properties = new HashMap<String, Property>();
+
 	public void addProperty(String id, Property property)
 	{
 		propertyList.add(property);
