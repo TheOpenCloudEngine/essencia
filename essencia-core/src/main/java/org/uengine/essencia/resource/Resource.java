@@ -119,11 +119,11 @@ public class Resource implements IResource, Comparable<IResource> {
 	@Face(displayName = "name")
 	public String getDisplayName() {
 		int index = this.path.lastIndexOf(File.separatorChar) + 1;
-		int pos = this.path.indexOf(".");
+		int pos = this.path.substring(index).indexOf(".");
 		if (pos == -1) {
 			return this.path.substring(index);
 		} else {
-			return this.path.substring(index, pos);
+			return this.path.substring(index, index + pos);
 		}
 	}
 
@@ -131,10 +131,10 @@ public class Resource implements IResource, Comparable<IResource> {
 		if(this.path != null){
 			StringBuffer sb = new StringBuffer();
 			int index = this.path.lastIndexOf(File.separatorChar) + 1;
-			int pos = this.path.indexOf(".");
+			int pos = this.path.substring(index).indexOf(".");
 			sb.append(this.path.substring(0, index) + displayName);
 			if (pos != -1) {
-				sb.append(this.path.substring(pos));
+				sb.append(this.path.substring(index + pos));
 			}
 			setPath(sb.toString());
 		}
