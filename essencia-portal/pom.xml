@@ -29,7 +29,7 @@
             <groupId>org.uengine</groupId>
             <artifactId>processcodi</artifactId>
             <type>war</type>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>1.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
