@@ -9,6 +9,8 @@ import java.util.*;
 
 public class AlphaInstance extends LanguageElementInstance {
 
+    public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
+
     public Alpha getAlpha() {
         return (Alpha)getLanguageElement();
     }
@@ -38,13 +40,13 @@ public class AlphaInstance extends LanguageElementInstance {
         }
 
 
-    transient  Map<String, Map<String, Object>> stateDetailsByStateName = new HashMap<String, Map<String, Object>>();
-//        public Map<String, Map<String, Object>> getStateDetailsByStateName() {
-//            return stateDetailsByStateName;
-//        }
-//        public void setStateDetailsByStateName(Map<String, Map<String, Object>> stateDetailsByStateName) {
-//            this.stateDetailsByStateName = stateDetailsByStateName;
-//        }
+    Map<String, Map<String, Object>> stateDetailsByStateName = new HashMap<String, Map<String, Object>>();
+        public Map<String, Map<String, Object>> getStateDetailsByStateName() {
+            return stateDetailsByStateName;
+        }
+        public void setStateDetailsByStateName(Map<String, Map<String, Object>> stateDetailsByStateName) {
+            this.stateDetailsByStateName = stateDetailsByStateName;
+        }
 
 
     public AlphaInstance(Alpha alpha, String id){
@@ -159,12 +161,12 @@ public class AlphaInstance extends LanguageElementInstance {
 
 
                     int runningCntOfThisState = 0;
-                    Object wipCntObject = getStateDetails(aggregationAlphaStateName, "WIPCount"); //count of 'work in progress'
+                    Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
 
                     if(wipCntObject!=null)
                         runningCntOfThisState = (int)wipCntObject;
 
-                    setStateDetails(aggregationAlphaStateName, "WIPCount", runningCntOfThisState + 1);
+                    setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
                 }
             }
 

@@ -1,78 +1,46 @@
-package org.uengine.essencia.enactment;
+package org.uengine.essencia.dashboard;
 
-import org.metaworks.component.SelectBox;
-import org.uengine.contexts.TextContext;
-import org.uengine.essencia.model.*;
-import org.uengine.kernel.Activity;
+
+import org.uengine.essencia.enactment.AlphaInstance;
+import org.uengine.essencia.enactment.LanguageElementInstance;
+import org.uengine.essencia.model.Alpha;
+import org.uengine.essencia.model.CheckPoint;
+import org.uengine.essencia.model.State;
 import org.uengine.kernel.*;
-import org.uengine.kernel.bpmn.SequenceFlow;
-import org.uengine.kernel.bpmn.SubProcess;
-import org.uengine.kernel.test.UEngineTest;
 
-import java.io.FileOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class AlphaProgressAggregationTest extends UEngineTest{
+public class ExampleAlphaInstance {
 
-   /**
-    * build a practice as follows:
-    *
-    *           Work
-    *              |
-    *              +-- Sprint
-    *
-    *
-    *  * State mappings are as follows:
-    *
-    *       Work::a == Sprint::x  (overrided by next)
-    *       Work::b == Sprint::x
-    *       Work::c == Sprint::y  (overrided by next)
-    *       Work::d == Sprint::y
-    *       Work::e == Sprint::z
-    *
-    *
-    *   ** Work is a kernel alpha
-    *
-    *
-    *  Assume there are multiple Sprint instances:
-    *
-    *       sprint1 (in state: y)
-    *       sprint2 (in state: y)
-    *       sprint3 (in state: z)
-    *
-    *  Then, The aggregated kernel alpha view is expected as follows:
-    *
-    *       Work
-    *         |
-    *         a   ---  (0/3)
-    *         |
-    *         b   ---  (0/3)
-    *         |
-    *         c   ---  (0/3)   <=== not 2/3 must be 0/3. since the sum of currently working states should be same as the total number of instances
-    *         |
-    *         d   ---  (2/3)
-    *         |
-    *         e   ---  (1/3)
-    *
-    *
-    *
-    * @throws Exception
-    */
+    AlphaInstance alphaInstance;
 
-    public void testCase1() throws Exception {
+        public AlphaInstance getAlphaInstance() {
+            return alphaInstance;
+        }
+
+        public void setAlphaInstance(AlphaInstance alphaInstance) {
+            this.alphaInstance = alphaInstance;
+        }
+
+    ProcessInstance processInstance;
+        public ProcessInstance getProcessInstance() {
+            return processInstance;
+        }
+
+        public void setProcessInstance(ProcessInstance processInstance) {
+            this.processInstance = processInstance;
+        }
 
 
+    public ExampleAlphaInstance() throws Exception {
         Alpha workAlpha = new Alpha();
         workAlpha.setName("Work");
 
 
         List<State> statesOfWork = new ArrayList<State>();
 
-        for(String stateName : new String[]{"Initiated", "Prepared", "Started", "UnderControl", "Concluded",  "Closed"})
+        for(String stateName : new String[]{"a", "b", "c", "d", "e"})
         {
             State state = new State();
             statesOfWork.add(state);
@@ -95,11 +63,11 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         workAlpha.setList(statesOfWork);
 
         Alpha sprintAlpha = new Alpha();
-        sprintAlpha.setName("Sprint");
+        sprintAlpha.setName("sprint");
 
         List<State> statesOfSprint = new ArrayList<State>();
 
-        for(String stateName : new String[]{"open", "doing", "done"})
+        for(String stateName : new String[]{"x", "y", "z"})
         {
             State state = new State();
             statesOfSprint.add(state);
@@ -125,9 +93,9 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         sprintAlpha.setList(statesOfSprint);
 
 
-        sprintAlpha.getList().get(0).setAggregationAlphaState("Prepared");
-        sprintAlpha.getList().get(1).setAggregationAlphaState("UnderControl");
-        sprintAlpha.getList().get(2).setAggregationAlphaState("Closed");
+        sprintAlpha.getList().get(0).setAggregationAlphaState("b");
+        sprintAlpha.getList().get(1).setAggregationAlphaState("d");
+        sprintAlpha.getList().get(2).setAggregationAlphaState("e");
 
 
         ProcessDefinition processDefinition = new ProcessDefinition();
@@ -136,7 +104,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         ProcessVariable pvAlphaWork = new ProcessVariable(new Object[]{
                 "name", workAlpha.getName(),
                 "type", AlphaInstance.class,
-                "defaultValue", (Serializable)defaultWorkAlphaInstance
+                //				"defaultValue", (Serializable)defaultWorkAlphaInstance
         });
 
         pvAlphaWork.setDefaultValue(defaultWorkAlphaInstance);
@@ -152,7 +120,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
 
 
         ProcessInstance.USE_CLASS = DefaultProcessInstance.class;
-        ProcessInstance instance = processDefinition.createInstance();
+        processInstance = processDefinition.createInstance();
 
         ProcessVariableValue pvvForSprint = new ProcessVariableValue();
         pvvForSprint.setName(pvSprint.getName());
@@ -170,48 +138,40 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         pvvForSprint.setValue(sprint3);
         pvvForSprint.moveToAdd();
 
-        instance.set("", pvvForSprint);
+        processInstance.set("", pvvForSprint);
 
 
         //advancing state to "y" (completing checkpoints for state "x") for sprint 1,2,3 (all sprints)
         {
-            for(CheckPoint point : sprintAlpha.findState("open").getList()){
+            for(CheckPoint point : sprintAlpha.findState("x").getList()){
                 sprint1.setChecked(point.getName());
                 sprint2.setChecked(point.getName());
                 sprint3.setChecked(point.getName());
             }
 
-            sprint1.advanceState(instance);
-            sprint2.advanceState(instance);
-            sprint3.advanceState(instance);
+            sprint1.advanceState(processInstance);
+            sprint2.advanceState(processInstance);
+            sprint3.advanceState(processInstance);
         }
 
         //advancing state to "z" for sprint 3 only
         {
-            for(CheckPoint point : sprintAlpha.findState("doing").getList()){
+            for(CheckPoint point : sprintAlpha.findState("y").getList()){
                 sprint3.setChecked(point.getName());
             }
 
-            sprint3.advanceState(instance);
+            sprint3.advanceState(processInstance);
         }
 
 
         //now get the workAlpha and investigate how it is effected by sprint alpha.
-        List<AlphaInstance> workAlphaInstances = workAlpha.getInstances(instance);
+        List<AlphaInstance> workAlphaInstances = workAlpha.getInstances(processInstance);
         AlphaInstance workAlphaInstance = workAlphaInstances.get(0);
 
 
         ArrayList<Integer> runningCountsByState = new ArrayList<Integer>();
-        ArrayList<Integer> expected = new ArrayList<Integer>();
-        expected.add(0);
-        expected.add(0);
-        expected.add(0);
-        expected.add(2);
-        expected.add(0);
-        expected.add(1);
 
-
-        workAlphaInstance.aggregateStateDetails(instance);
+        workAlphaInstance.aggregateStateDetails(processInstance);
 
         for(State state : workAlpha.getStates()){
             Integer currentCount = (Integer) workAlphaInstance.getStateDetails(state.getName(), "WIPCount");
@@ -224,7 +184,8 @@ public class AlphaProgressAggregationTest extends UEngineTest{
             runningCountsByState.add(currentCount);
         }
 
-        assertEquals(expected, runningCountsByState);
+        setAlphaInstance(workAlphaInstance);
+
 
     }
 }
