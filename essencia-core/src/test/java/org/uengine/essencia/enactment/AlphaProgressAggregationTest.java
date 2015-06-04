@@ -12,6 +12,7 @@ import org.uengine.kernel.test.UEngineTest;
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,6 +93,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         Alpha workAlpha = new Alpha();
         workAlpha.setName("Work");
 
+
         List<State> statesOfWork = new ArrayList<State>();
 
         for(String stateName : new String[]{"a", "b", "c", "d", "e"})
@@ -141,12 +143,15 @@ public class AlphaProgressAggregationTest extends UEngineTest{
             state.setParentAlpha(sprintAlpha); //TODO: should be removed. alpha.setList should do this.
         }
 
+        workAlpha.setChildElements(new ArrayList<Alpha>());
+        workAlpha.getChildElements().add(sprintAlpha);
+
         sprintAlpha.setList(statesOfSprint);
 
 
-        sprintAlpha.getList().get(0).setAggregationAlphaState(workAlpha.getName() + ".b");
-        sprintAlpha.getList().get(1).setAggregationAlphaState(workAlpha.getName() + ".d");
-        sprintAlpha.getList().get(2).setAggregationAlphaState(workAlpha.getName() + ".e");
+        sprintAlpha.getList().get(0).setAggregationAlphaState("b");
+        sprintAlpha.getList().get(1).setAggregationAlphaState("d");
+        sprintAlpha.getList().get(2).setAggregationAlphaState("e");
 
 
         ProcessDefinition processDefinition = new ProcessDefinition();
@@ -228,17 +233,21 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         expected.add(2);
         expected.add(1);
 
-        int totalCount = sprintAlpha.getInstances(instance).size();
-        for(State state : workAlpha.getStates()){
-            Integer currentCount = (Integer) workAlphaInstance.getStateDetails(state.getName(), "currentCount");
 
-            System.out.println(state.getName() + " (" + currentCount + "/" + totalCount + ")");
+        workAlphaInstance.aggregateStateDetails(instance);
+
+        for(State state : workAlpha.getStates()){
+            Integer currentCount = (Integer) workAlphaInstance.getStateDetails(state.getName(), "WIPCount");
+
+            if(currentCount==null)
+                currentCount = 0;
+
+            System.out.println(state.getName() + " (" + currentCount + "/" + workAlphaInstance.getSubAlphaInstanceCount() + ")");
 
             runningCountsByState.add(currentCount);
-
         }
 
-       // assertEquals(expected, runningCountsByState);
+        assertEquals(expected, runningCountsByState);
 
     }
 }

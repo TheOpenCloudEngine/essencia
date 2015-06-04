@@ -34,8 +34,8 @@
         </dependency>
         <dependency>
             <groupId>org.uengine</groupId>
-            <artifactId>essencia</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <artifactId>essencia-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -56,4 +56,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
