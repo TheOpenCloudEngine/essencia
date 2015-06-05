@@ -130,7 +130,9 @@ public class Resource implements IResource, Comparable<IResource> {
 	public void setDisplayName(String displayName) {
 		if(this.path != null){
 			StringBuffer sb = new StringBuffer();
+			// File.separatorChar로 파일경로에서의 마지막 파일이나 폴더의 경로에서의 위치를 가져온다.
 			int index = this.path.lastIndexOf(File.separatorChar) + 1;
+			// 경로에서 마지막 파일이나 폴더의 포인트 위치를 가져온다.
 			int pos = this.path.substring(index).indexOf(".");
 			sb.append(this.path.substring(0, index) + displayName);
 			if (pos != -1) {
