@@ -17,21 +17,21 @@ public abstract class AbstractActivity extends BasicElement implements ContextTr
 
     @Hidden
     public List<LanguageElement> getCompletionCriteria() {
-	return completionCriteria;
+        return completionCriteria;
     }
 
     public void setCompletionCriteria(List<LanguageElement> completionCriteria) {
-	this.completionCriteria = completionCriteria;
+        this.completionCriteria = completionCriteria;
     }
 
     @Order(6)
     @Face(displayName = "CompletionCriterion")
     public CriterionFace getCompletionCriterionFace() {
-	return completionCriterionFace;
+        return completionCriterionFace;
     }
 
     public void setCompletionCriterionFace(CriterionFace completionCriterionFace) {
-	this.completionCriterionFace = completionCriterionFace;
+        this.completionCriterionFace = completionCriterionFace;
     }
 
     public abstract void setUpElement(List<IElement> elementList);

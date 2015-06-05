@@ -5,6 +5,7 @@ import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.Activity;
 import org.uengine.kernel.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class EssenceActivity extends HumanActivity implements NeedArrangementToSerialize {
@@ -49,7 +50,11 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
                 parameterContexts[i].setArgument(textContext);
 
                 //workProducts should be accessed by global naming
-                parameterContexts[i].setVariable(ProcessVariable.forName(workProduct.getLevelOfDetail().getParentWorkProduct().getName()));
+                ProcessVariable pv = new ProcessVariable(new Object[]{
+                        "name", workProduct.getLevelOfDetail().getParentWorkProduct().getName(),
+                        "type", LanguageElementInstance.class
+                });
+                parameterContexts[i].setVariable(pv);
 
                 i++;
 
