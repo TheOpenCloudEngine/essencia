@@ -118,23 +118,27 @@ public class Resource implements IResource, Comparable<IResource> {
 	@Name
 	@Face(displayName = "name")
 	public String getDisplayName() {
+		// File.separatorChar로 파일경로에서의 마지막 파일이나 폴더의 경로에서의 위치를 가져온다.
 		int index = this.path.lastIndexOf(File.separatorChar) + 1;
-		int pos = this.path.indexOf(".");
+		// 경로에서 마지막 파일이나 폴더의 포인트 위치를 가져온다.
+		int pos = this.path.substring(index).indexOf(".");
 		if (pos == -1) {
 			return this.path.substring(index);
 		} else {
-			return this.path.substring(index, pos);
+			return this.path.substring(index, index + pos);
 		}
 	}
 
 	public void setDisplayName(String displayName) {
 		if(this.path != null){
 			StringBuffer sb = new StringBuffer();
+			// File.separatorChar로 파일경로에서의 마지막 파일이나 폴더의 경로에서의 위치를 가져온다.
 			int index = this.path.lastIndexOf(File.separatorChar) + 1;
-			int pos = this.path.indexOf(".");
+			// 경로에서 마지막 파일이나 폴더의 포인트 위치를 가져온다.
+			int pos = this.path.substring(index).indexOf(".");
 			sb.append(this.path.substring(0, index) + displayName);
 			if (pos != -1) {
-				sb.append(this.path.substring(pos));
+				sb.append(this.path.substring(index + pos));
 			}
 			setPath(sb.toString());
 		}

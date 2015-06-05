@@ -28,8 +28,15 @@
         <dependency>
             <groupId>org.uengine</groupId>
             <artifactId>processcodi</artifactId>
-            <type>war</type>
+            <classifier>classes</classifier>
             <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.uengine</groupId>
+            <artifactId>processcodi</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
             <scope>runtime</scope>
         </dependency>
         <dependency>
