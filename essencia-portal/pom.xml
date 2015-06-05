@@ -30,7 +30,7 @@
             <artifactId>processcodi</artifactId>
             <type>war</type>
             <version>1.0-SNAPSHOT</version>
-            <scope>runtime</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.uengine</groupId>

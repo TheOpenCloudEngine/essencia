@@ -21,7 +21,6 @@ import org.uengine.modeling.IElement;
 
 public class Activity extends AbstractActivity {
 
-	private List<LanguageElement> entryCriteria;
 	private transient CriterionFace entryCriteriaPanel;
 
 	private List<LanguageElement> workProductList;
@@ -34,14 +33,14 @@ public class Activity extends AbstractActivity {
 	private ApproachListFace approachPanel;
 	private ActionListFace actionPanel;
 
-	@Hidden
-	public List<LanguageElement> getEntryCriteria() {
-		return entryCriteria;
-	}
-
-	public void setEntryCriteria(List<LanguageElement> entryCriteria) {
-		this.entryCriteria = entryCriteria;
-	}
+	private List<LanguageElement> entryCriteria;
+		@Hidden
+		public List<LanguageElement> getEntryCriteria() {
+			return entryCriteria;
+		}
+		public void setEntryCriteria(List<LanguageElement> entryCriteria) {
+			this.entryCriteria = entryCriteria;
+		}
 
 	@Order(7)
 	@Hidden

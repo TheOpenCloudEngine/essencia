@@ -4,7 +4,9 @@ import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.Activity;
 import org.uengine.kernel.*;
+import org.uengine.util.UEngineUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EssenceActivity extends HumanActivity implements NeedArrangementToSerialize {
@@ -27,38 +29,63 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
         setInputOutputParameters();
 
-//        setMessage(essenceActivity.getName());
+        setTool("mw3." + UEngineUtil.getComponentClassName(getClass(),  "handler"));
+
     }
 
     private void setInputOutputParameters() {
 
-        if(getActivityInEssenceDefinition().getWorkProductList()!=null && getActivityInEssenceDefinition().getWorkProductList().size() > 0){
-            ParameterContext[] parameterContexts = new ParameterContext[getActivityInEssenceDefinition().getWorkProductList().size()];
+        List<ParameterContext> parameterContexts = new ArrayList<ParameterContext>();
 
-            int i = 0;
 
-            for(LanguageElement workProductCriterion_ : getActivityInEssenceDefinition().getWorkProductList()){
+        if(getActivityInEssenceDefinition().getCompletionCriteria()!=null && getActivityInEssenceDefinition().getCompletionCriteria().size() > 0) {
 
-                Criterion workProduct = (Criterion) workProductCriterion_;
+            for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getCompletionCriteria()) {
 
-                parameterContexts[i] = new ParameterContext();
-                parameterContexts[i].setDirection(ParameterContext.DIRECTION_INOUT);
+                ParameterContext parameterContext = createParameterContextFromCriterion((Criterion) completionCriterion_);
+                parameterContext.setDirection(ParameterContext.DIRECTION_INOUT);
+                parameterContexts.add(parameterContext);
+            }
+        }
 
-                TextContext textContext = TextContext.createInstance();
-                textContext.setText(workProduct.getLevelOfDetail().getParentWorkProduct().getName());
-                parameterContexts[i].setArgument(textContext);
+        if(getActivityInEssenceDefinition().getEntryCriteria()!=null && getActivityInEssenceDefinition().getEntryCriteria().size() > 0) {
 
-                //workProducts should be accessed by global naming
-                parameterContexts[i].setVariable(ProcessVariable.forName(workProduct.getLevelOfDetail().getParentWorkProduct().getName()));
+            for(LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getEntryCriteria()){
 
-                i++;
-
+                ParameterContext parameterContext = createParameterContextFromCriterion((Criterion) completionCriterion_);
+                parameterContext.setDirection(ParameterContext.DIRECTION_IN);
+                parameterContexts.add(parameterContext);
             }
 
-            setParameters(parameterContexts);
 
         }
 
+        ParameterContext [] parameterContextsInArray = new ParameterContext[parameterContexts.size()];
+        parameterContexts.toArray(parameterContextsInArray);
+
+        setParameters(parameterContextsInArray);
+
+
+    }
+
+    private ParameterContext createParameterContextFromCriterion(Criterion completionCriterion_) {
+        ParameterContext parameterContext = new ParameterContext();
+
+        Criterion completionCriterion = completionCriterion_;
+
+        parameterContext = new ParameterContext();
+
+        TextContext textContext = TextContext.createInstance();
+
+        textContext.setText(completionCriterion.getElement().getName());
+
+        parameterContext.setArgument(textContext);
+
+        //workProducts should be accessed by global naming
+        parameterContext.setVariable(ProcessVariable.forName(parameterContext.getArgument().getText()));
+
+
+        return parameterContext;
 
     }
 
@@ -98,29 +125,25 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
         for(LanguageElement criterion1 : getActivityInEssenceDefinition().getCompletionCriteria()){
             Criterion criterion = (Criterion)criterion1;   //TODO: why entrycriteria is not named as criterion and Criterion class.
 
-            Alpha alpha = criterion.getState().getParentAlpha();
+            ValidationContext validationContext = criterion.investigateCompletable(instance);
 
-            List<AlphaInstance> alphaInstances =  alpha.getInstances(instance);
-
-            for(AlphaInstance alphaInstance : alphaInstances ){
-                alphaInstance.advanceState(instance);
+            if(validationContext!=null && validationContext.size() > 0){
+                throw new NotCompletableException(validationContext);
             }
+
         }
-
-
 
         super.fireComplete(instance);
     }
 
     @Override
     public void beforeSerialization() {
-        // already the parameters are real
-//        for(ParameterContext parameterContext : getParameters()){
-//            if(parameterContext.getVariable()!=null){
-//                ProcessVariable realPV = getProcessDefinition().getProcessVariable(parameterContext.getVariable().getName());
-//                parameterContext.setVariable(realPV);
-//            }
-//        }
+        for(ParameterContext parameterContext : getParameters()){
+            if(parameterContext.getVariable()!=null){
+                ProcessVariable realPV = getProcessDefinition().getProcessVariable(parameterContext.getVariable().getName());
+                parameterContext.setVariable(realPV);
+            }
+        }
     }
 
     @Override

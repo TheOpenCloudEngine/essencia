@@ -1,5 +1,14 @@
 package org.uengine.essencia.model;
 
+import org.uengine.essencia.enactment.AlphaInstance;
+import org.uengine.essencia.enactment.LanguageElementInstance;
+import org.uengine.essencia.enactment.NotCompletableException;
+import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ValidationContext;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Criterion extends LanguageElement {
 
     private String description;
@@ -44,4 +53,45 @@ public class Criterion extends LanguageElement {
 	setLevelOfDetail(tempLevelOfDetail);
     }
 
+    //// TODO: later should be done by polymorphism not by if ~ then ~ else.
+    public BasicElement getElement(){
+        if(getState()!=null){
+            return getState().getParentAlpha();
+        }else if(getLevelOfDetail()!=null){
+            return getLevelOfDetail().getParentWorkProduct();
+        }
+
+        return null;
+    }
+
+    public ValidationContext investigateCompletable(ProcessInstance instance) {
+
+        ValidationContext validationContext = new ValidationContext();
+
+        if(getState()!=null){ //means Alpha
+
+            Alpha alpha = getState().getParentAlpha();
+
+            List<AlphaInstance> alphaInstances =  alpha.getInstances(instance);
+
+            try {
+                for (AlphaInstance alphaInstance : alphaInstances) {
+                    alphaInstance.advanceState(instance);
+                }
+            }catch(NotCompletableException nce){
+                validationContext.add(nce.getMessage());
+            }
+
+        }else if(getLevelOfDetail()!=null){ //means WorkProduct
+
+            WorkProduct workProduct = getLevelOfDetail().getParentWorkProduct();
+
+
+
+///
+        }
+
+
+        return validationContext;
+    }
 }
