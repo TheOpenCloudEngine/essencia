@@ -1,0 +1,29 @@
+<%
+	if(value){
+%>
+		<div>
+			<ul class="process_map2 allApp">
+				<li onClick="<%=methods.goSNS.caller()%>">
+                    <img src="images/waveStyle/app_social.png">
+                    <div style="text-align:center">War-room</div>
+                </li>
+                <li onClick="<%=methods.goEssencia.caller()%>">
+                    <img src="images/waveStyle/app_essencia.png">
+                    <div style="text-align:center">Practice Definer/Method composer</div>
+                </li>
+				<li onClick="<%=methods.goBaidu.caller()%>">
+					<img src="images/waveStyle/app_essencia.png">
+					<div style="text-align:center">Baidu</div>
+				</li>
+			</ul>
+		</div>
+
+		<div style="border-bottom: 1px solid #ededed; margin: 0 20px;"></div>
+		<div>
+			<ul class="process_map2 allApp">
+				<%=fields.myAppsList.here()%>
+			</ul>
+		</div>
+<%
+	}
+%>

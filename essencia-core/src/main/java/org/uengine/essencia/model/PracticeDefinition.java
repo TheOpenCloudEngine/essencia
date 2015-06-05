@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
@@ -111,16 +112,28 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         this.getRelationList().add(relation);
     }
 
+    /**
+     * get practice definition name from practice element
+     *
+     * @return practice element's name
+     */
     public String getPracticeName() {
         String practiceName = "";
         for (IElement e : getElementList()) {
             if (e instanceof Practice) {
                 practiceName = e.getName();
+                break;
             }
         }
         return practiceName;
     }
 
+    /**
+     * count activities which has same competency
+     *
+     * @param competencyName
+     * @return count of result
+     */
     public int cntSameRoleActivities(String competencyName) {
         int result = 0;
 
@@ -171,22 +184,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
                 laneCnt++;
             }
 
-//            if (returnProcessDefinition.getChildActivities().size() == 0) {
-//                StartEventActivity s = new StartEventActivity();
-//                s.setTracingTag("0");
-//                ElementView view = s.createView();
-//                view.setShapeId(StartActivityView.SHAPE_ID);
-//                view.setHeight("32");
-//                view.setWidth("32");
-//                int temp = Integer.valueOf(roleView.getX()) - 83;
-//
-//                view.setX(temp);
-//                view.setY(roleView.getY());
-//                s.setElementView(view);
-//                returnProcessDefinition.getChildActivities().add(s);
-//
-//            }
-
+            //make essence activity
             EssenceActivity essenceActivity = new EssenceActivity((Activity) element);
             humanView = essenceActivity.createView();
 
@@ -208,41 +206,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             humanView.setX(rst);
             humanView.setY(roleView.getY());
 
-            // setTool
-            // http://localhost:8080/essencia/CardService.jsp?className=org.uengine.essencia.CardTest&practiceName=ScrumUPMethod&elementName=Design_the_program&type=method
-            StringBuilder url = new StringBuilder("http://");
-            try {
-                url.append(InetAddress.getLocalHost().getHostAddress());
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-            url.append(":");
-            url.append(GlobalContext.getPropertyString("port", "9999"));
-            url.append("/essencia/CardService.jsp?className=org.uengine.essencia.Activity");
-            url.append("&practiceName=" + getPracticeName());
-            url.append("&elementName=" + element.getName());
-            url.append("&type=" + "method");
-            essenceActivity.setTool(url.toString());
+            essenceActivity.setTool(makeTool(element));
 
             essenceActivity.setElementView(humanView);
+
             returnProcessDefinition.addChildActivity(essenceActivity);
 
         }
-
-//        if (returnProcessDefinition.getChildActivities().size() != 0) {
-//            EndActivity e = new EndActivity();
-//            e.setTracingTag("99");
-//            ElementView view = e.createView();
-//            view.setShapeId(EndActivityView.SHAPE_ID);
-//            view.setHeight("32");
-//            view.setWidth("32");
-//            int temp = Integer.valueOf(humanView.getX()) + 83;
-//
-//            view.setX(temp);
-//            view.setY(humanView.getY());
-//            e.setElementView(view);
-//            returnProcessDefinition.getChildActivities().add(e);
-//        }
 
         Role[] roleArray = {};
         roleArray = roleList.toArray(roleArray);
@@ -250,28 +220,29 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
 
         // these are make the recursive error in dwr
-//        for (Alpha alpha : getElements(Alpha.class)) {
-//            ProcessVariable pv = new ProcessVariable(new Object[]{
-//                    "name", alpha.getName(),
-//                    "type", AlphaInstance.class
-//            });
-//            pvList.add(pv);
-//        }
+        ProcessVariable pv = null;
+        for (Alpha alpha : getElements(Alpha.class)) {
+            pv = new ProcessVariable(new Object[]{
+                    "name", alpha.getName(),
+                    "type", AlphaInstance.class
+            });
+            pvList.add(pv);
+        }
 
-//        for (WorkProduct workProduct : getElements(WorkProduct.class)) {
+        for (WorkProduct workProduct : getElements(WorkProduct.class)) {
 //            LanguageElementInstance defaultWorkProduct = workProduct.createInstance("<id>");
-//            ProcessVariable pv = new ProcessVariable(new Object[]{
-//                    "name", workProduct.getName(),
-//                    "type", LanguageElementInstance.class,
-//                    //"defaultValue", (Serializable) defaultWorkProduct
-//            });
-//            //  pv.setDefaultValue(defaultWorkProduct);
-//            pvList.add(pv);
-//        }
+            pv = new ProcessVariable(new Object[]{
+                    "name", workProduct.getName(),
+                    "type", LanguageElementInstance.class
+//                    ,"defaultValue", (Serializable)defaultWorkProduct
+            });
+//              pv.setDefaultValue(defaultWorkProduct);
+            pvList.add(pv);
+        }
 
-//        ProcessVariable[] pvArray = {};
-//        pvArray = pvList.toArray(pvArray);
-//        returnProcessDefinition.setProcessVariables(pvArray);
+        ProcessVariable[] pvArray = {};
+        pvArray = pvList.toArray(pvArray);
+        returnProcessDefinition.setProcessVariables(pvArray);
 
 
         return returnProcessDefinition;
@@ -302,6 +273,36 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 //        }
 //    }
 
+
+    /**
+     * make url for restful service
+     * ex ) http://localhost:8080/essencia/CardService.jsp?className=org.uengine.essencia.CardTest&practiceName=ScrumUPMethod&elementName=Design_the_program&type=method
+     *
+     * @param element
+     * @return url
+     */
+    private String makeTool(IElement element) {
+        StringBuilder url = new StringBuilder("http://");
+        try {
+            url.append(InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        url.append(":");
+        url.append(GlobalContext.getPropertyString("port", "9999"));
+        url.append("/essencia/CardService.jsp?className=org.uengine.essencia.Activity");
+        url.append("&practiceName=" + getPracticeName());
+        url.append("&elementName=" + element.getName());
+        url.append("&type=" + "method");
+        return url.toString();
+    }
+
+    /**
+     * calculate the lane width with count of activities which have same role
+     *
+     * @param roleName
+     * @return default width
+     */
     private int calculateLaneWidth(String roleName) {
         int cntSameRoleActivities = cntSameRoleActivities(roleName);
         return cntSameRoleActivities * 96;
@@ -317,7 +318,17 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return cnt;
     }
 
+    /**
+     * find element by name
+     * condition : every element has unique name
+     *
+     * @param name
+     * @return element
+     */
     public IElement getElementByName(String name) {
+        if ("".equals(name)) {
+            throw new NullPointerException();
+        }
         IElement languageElement = null;
         for (IElement e : getElementList()) {
             if (name.equals(e.getName())) {
@@ -328,10 +339,28 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return languageElement;
     }
 
-    public <T extends LanguageElement> T getElement(String elementName, Class<T> clazz) {
-        IElement languageElement = this.getElementByName(elementName);
-        if (clazz.isInstance(languageElement)) {
-            return (T) languageElement;
+    /**
+     * 1. find clazz
+     * 2. find elementName
+     * even if, some elements have same name with different type these algorithm is safe
+     *
+     * @param elementName
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public <T extends IElement> T getElement(String elementName, Class<T> clazz) {
+        if (elementName == null || "".equals(elementName.trim())) {
+            throw new IllegalArgumentException("elementName argument is not fit");
+        }
+        if (clazz == null) {
+            throw new IllegalArgumentException("clazz argument can not be null");
+        }
+        List<T> clazzList = getElements(clazz);
+        for (T t : clazzList) {
+            if (elementName.equals(t.getName())) {
+                return (T) t;
+            }
         }
         return null;
     }
@@ -351,7 +380,17 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return element;
     }
 
+    /**
+     * return the clazz type elements
+     *
+     * @param clazz
+     * @param <T>
+     * @return
+     */
     public <T> List<T> getElements(Class<T> clazz) {
+        if (clazz == null) {
+            throw new IllegalArgumentException("clazz argument can not be null");
+        }
         List<T> elementList = new ArrayList<T>();
         for (IElement e : getElementList()) {
             if (clazz.isInstance(e)) {
@@ -361,6 +400,11 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return elementList;
     }
 
+    /**
+     * get element by element view's id ( opengraph id )
+     * @param id
+     * @return
+     */
     public IElement pickElementByViewId(String id) {
         IElement element = null;
         for (IElement e : getElementList()) {
@@ -374,9 +418,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return element;
     }
 
-    private transient List<BasicElement> returnElementList = new ArrayList<BasicElement>();
 
     public List<BasicElement> findParentElements(ElementView view) {
+        List<BasicElement> returnElementList = new ArrayList<BasicElement>();
 
         if (view.getFromEdge() != null) {
             String[] fromEdges = view.getFromEdge().split(",");

@@ -27,9 +27,11 @@
         <convert converter="metaworks" match="java.lang.Object"/>
 
 <!--essencia-->
-      <convert converter="metaworks" match="java.io.Serializable"/>
-      <convert converter="metaworks" match="org.uengine.essencia.enactment.*"/>
-      <convert converter="metaworks" match="org.uengine.essencia.model.*"/>
+        <convert converter="metaworks" match="java.io.Serializable"/>
+        <convert converter="metaworks" match="org.uengine.essencia.enactment.*"/>
+        <convert converter="metaworks" match="org.uengine.essencia.model.*"/>
+        <convert converter="metaworks" match="org.uengine.essencia.*"/>
+        <convert converter="metaworks" match="org.uengine.modeling.*"/>
 <!--end-->
 
       <convert converter="metaworks" match="org.uengine.codi.mw3.*"/>
