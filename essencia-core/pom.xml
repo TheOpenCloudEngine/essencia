@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>essencia-core</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <basedir></basedir>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>org.uengine.metaworks</groupId>
             <artifactId>metaworks-dwr</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -190,7 +190,7 @@
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
-            <version>1.4.8</version>
+            <version>1.3.1</version>
         </dependency>
 
         <dependency>
