@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,17 +12,12 @@ import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.context.EssenciaContext;
-import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.EssenceActivity;
-import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.*;
-import org.uengine.kernel.bpmn.StartEventActivity;
-import org.uengine.kernel.bpmn.view.EndActivityView;
 import org.uengine.kernel.view.HumanActivityView;
-import org.uengine.kernel.view.StartActivityView;
 import org.uengine.modeling.*;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware {
