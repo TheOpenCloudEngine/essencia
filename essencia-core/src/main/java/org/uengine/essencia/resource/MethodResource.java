@@ -41,7 +41,7 @@ public class MethodResource extends ModelResource {
 	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
 	@ServiceMethod(callByContent = true, inContextMenu = true, target = ServiceMethodContext.TARGET_APPEND)
 	public ModalWindow deploy() throws Exception {
-		DeployPanel deployPanel = new DeployPanel(this.getName());
+		DeployPanel deployPanel = new DeployPanel(this);
 		ModalWindow modalWindow = new ModalWindow();
 		deployPanel.setMetaworksContext(new MetaworksContext());
 		deployPanel.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);

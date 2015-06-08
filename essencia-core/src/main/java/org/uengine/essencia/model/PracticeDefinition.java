@@ -232,13 +232,12 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         }
 
         for (WorkProduct workProduct : getElements(WorkProduct.class)) {
-//            LanguageElementInstance defaultWorkProduct = workProduct.createInstance("<id>");
+            LanguageElementInstance defaultWorkProduct = workProduct.createInstance("<id>");
             pv = new ProcessVariable(new Object[]{
                     "name", workProduct.getName(),
                     "type", LanguageElementInstance.class
-//                    ,"defaultValue", (Serializable)defaultWorkProduct
             });
-//              pv.setDefaultValue(defaultWorkProduct);
+            pv.setDefaultValue(defaultWorkProduct);
             pvList.add(pv);
         }
 
@@ -404,6 +403,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
     /**
      * get element by element view's id ( opengraph id )
+     *
      * @param id
      * @return
      */
@@ -541,10 +541,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             if (activity.getCompletionCriteria() != null) {
                 for (LanguageElement e : activity.getCompletionCriteria()) {
                     Criterion criterion = (Criterion) e;
-                    State state = criterion.getState();
-                    State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
-                    if (fullState != null) {
-                        state.setListFace(fullState.getListFace());
+                    if (criterion.getState() != null) {
+                        State state = criterion.getState();
+                        State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
+                        if (fullState != null) {
+                            state.setList(fullState.getList());
+                        }
+
                     }
                 }
             }

@@ -470,7 +470,6 @@ public class EssenceXmiAPI {
 			Activity activity = new Activity();
 			activity.setEntryCriteria(new ArrayList<LanguageElement>());
 			activity.setCompletionCriteria(new ArrayList<LanguageElement>());
-			activity.setWorkProductList(new ArrayList<LanguageElement>());
 			activity.setRequiredCompetencyLevel(new ArrayList<LanguageElement>());
 			activity.setName(((Essence.ActivitySpaceAndActivity.Activity) essenceElement).getName());
 			activity.setDescription(((Essence.ActivitySpaceAndActivity.Activity) essenceElement).getDescription());
@@ -498,7 +497,7 @@ public class EssenceXmiAPI {
 					essenciaCriterion.getLevelOfDetail().setDescription(criterion.getLevelOfDetail().getDescription());
 					essenciaCriterion.getLevelOfDetail().getParentWorkProduct()
 							.setDescription(criterion.getLevelOfDetail().getWorkProduct().getDescription());
-					activity.getWorkProductList().add(essenciaCriterion);
+					activity.getCompletionCriteria().add(essenciaCriterion);
 				}
 			}
 			for (Essence.Competency.CompetencyLevel competencyLevel : ((Essence.ActivitySpaceAndActivity.Activity) essenceElement)

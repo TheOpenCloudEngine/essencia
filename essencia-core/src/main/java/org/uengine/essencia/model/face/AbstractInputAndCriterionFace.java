@@ -24,33 +24,33 @@ public abstract class AbstractInputAndCriterionFace implements ContextAware {
 
     @Override
     public MetaworksContext getMetaworksContext() {
-	return metaworksContext;
+        return metaworksContext;
     }
 
     @Override
     public void setMetaworksContext(MetaworksContext context) {
-	this.metaworksContext = context;
+        this.metaworksContext = context;
     }
 
     public List<AbstractSelectBoxFace> getAbstractSelectBoxFaceList() {
-	return abstractSelectBoxFaceList;
+        return abstractSelectBoxFaceList;
     }
 
     public void setAbstractSelectBoxFaceList(List<AbstractSelectBoxFace> abstractSelectBoxFaceList) {
-	this.abstractSelectBoxFaceList = abstractSelectBoxFaceList;
+        this.abstractSelectBoxFaceList = abstractSelectBoxFaceList;
     }
 
     @Hidden
     public List<IElement> getElementListFromCanvas() {
-	return elementListFromCanvas;
+        return elementListFromCanvas;
     }
 
     public void setElementListFromCanvas(List<IElement> elementListFromCanvas) {
-	this.elementListFromCanvas = elementListFromCanvas;
+        this.elementListFromCanvas = elementListFromCanvas;
     }
 
     public AbstractInputAndCriterionFace() {
-	ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+        ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
     }
 
     @Hidden(when = MetaworksContext.WHEN_VIEW)
@@ -62,18 +62,18 @@ public abstract class AbstractInputAndCriterionFace implements ContextAware {
     @Face(displayName = "remove")
     @ServiceMethod(callByContent = true)
     public void remove() {
-	for (int i = 0; i < getAbstractSelectBoxFaceList().size(); i++) {
-	    if (!getAbstractSelectBoxFaceList().get(i).getCheckBox().getSelected().equals("")) {
-		getAbstractSelectBoxFaceList().set(i, null);
-	    }
-	}
-	setAbstractSelectBoxFaceList(ElementUtil.syncList(getAbstractSelectBoxFaceList()));
+        for (int i = 0; i < getAbstractSelectBoxFaceList().size(); i++) {
+            if (!getAbstractSelectBoxFaceList().get(i).getCheckBox().getSelected().equals("")) {
+                getAbstractSelectBoxFaceList().set(i, null);
+            }
+        }
+        setAbstractSelectBoxFaceList(ElementUtil.syncList(getAbstractSelectBoxFaceList()));
     }
 
     public void fill(List<IElement> list) {
-	setElementListFromCanvas(list);
+        setElementListFromCanvas(list);
     }
-    
+
     public abstract List<LanguageElement> createValue();
 
     public abstract void fillElements(List<LanguageElement> list);

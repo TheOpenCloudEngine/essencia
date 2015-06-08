@@ -12,6 +12,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.metaworks.MetaworksContext;
+import org.uengine.essencia.model.PracticeDefinition;
+import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.modeling.IResource;
 
@@ -23,7 +26,7 @@ public class CompositeEditorTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		/*IResource r = Resource.newInstance("junittets"+File.separator+"test.practice");
+		IResource r = Resource.newInstance("junittets"+File.separator+"test.practice");
 		PracticeDefinition temp = new PracticeDefinition();
 		((IModelResource)r).saveResource(temp);
 		PracticeDefinerEditor practiceEditor = new PracticeDefinerEditor();
@@ -37,7 +40,7 @@ public class CompositeEditorTest {
 		((IModelResource)r1).saveResource(temp1);
 		MethodComposerEditor methodEditor = new MethodComposerEditor();
 		methodEditor.loadNewEditor(r1);
-		editorList.add(methodEditor);*/
+		editorList.add(methodEditor);
 	}
 
 	@AfterClass

@@ -1,10 +1,6 @@
 package org.uengine.essencia.common;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,23 +10,40 @@ import java.util.List;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.SelectBox;
+import org.uengine.essencia.repository.ObjectRepository;
+import org.uengine.essencia.resource.MethodResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
+import org.uengine.essencia.resource.Resource;
 import org.uengine.kernel.GlobalContext;
+import org.uengine.kernel.ProcessDefinition;
+import org.uengine.processmanager.ProcessManagerRemote;
 
 @Face(ejsPath="dwr/metaworks/genericfaces/FormFace.ejs")
 public class DeployPanel {
 
-	SelectBox selectBox;
-	MetaworksContext metaworksContext;
-	
+	private SelectBox selectBox;
+	private MetaworksContext metaworksContext;
+	private MethodResource resource;
+
+	@Hidden
+	public MethodResource getResource() {
+		return resource;
+	}
+
+	public void setResource(MethodResource resource) {
+		this.resource = resource;
+	}
+
 	public DeployPanel() {
 	}
 	
-	public DeployPanel(String filename) {
+	public DeployPanel(Resource resource) {
+		setResource((MethodResource)resource);
 		selectBox = new SelectBox();
-		List<CommitRecord> records = CommitUtils.getRecordsByFilename(filename);
+		List<CommitRecord> records = CommitUtils.getRecordsByFilename(resource.getName());
 		String name = "";
 		Iterator<CommitRecord> iterator = records.iterator();
 		SimpleDateFormat df = new SimpleDateFormat("yy.MM.dd. a hh:mm");
@@ -56,7 +69,7 @@ public class DeployPanel {
 	public void setMetaworksContext(MetaworksContext metaworksContext) {
 		this.metaworksContext = metaworksContext;
 	}
-	
+
 	@ServiceMethod(callByContent=true)
 	public void deploy(){
 		System.out.println();
