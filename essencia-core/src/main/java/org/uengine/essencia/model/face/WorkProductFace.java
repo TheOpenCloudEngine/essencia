@@ -21,48 +21,48 @@ public class WorkProductFace extends CriterionFace {
 
     @Override
     public void add() {
-	WorkProductSelectBoxFace box = new WorkProductSelectBoxFace();
-	for (IElement e : getElementListFromCanvas()) {
-	    if (e instanceof WorkProduct && !"".equals(((WorkProduct) e).getName())) {
-		box.getMainSelectBox().add(((WorkProduct) e).getName(), ((WorkProduct) e).getName());
-	    }
-	}
-	ContextUtil.setWhen(box, EssenciaContext.WHEN_EDIT);
-	setAbstractSelectBoxFaceList(ElementUtil.syncList(getAbstractSelectBoxFaceList()));
-	getAbstractSelectBoxFaceList().add(box);
+        WorkProductSelectBoxFace box = new WorkProductSelectBoxFace();
+        for (IElement e : getElementListFromCanvas()) {
+            if (e instanceof WorkProduct && !"".equals(((WorkProduct) e).getName())) {
+                box.getMainSelectBox().add(((WorkProduct) e).getName(), ((WorkProduct) e).getName());
+            }
+        }
+        ContextUtil.setWhen(box, EssenciaContext.WHEN_EDIT);
+        setAbstractSelectBoxFaceList(ElementUtil.syncList(getAbstractSelectBoxFaceList()));
+        getAbstractSelectBoxFaceList().add(box);
     }
 
     @Override
     public List<LanguageElement> createValue() {
-	List<LanguageElement> returnList = new ArrayList<LanguageElement>();
-	for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
-	    Criterion criterion = new CompletionCriterion();
-	    criterion.setUpLevelOfDetail(((CriterionSelectBoxFace) box).getSubSelectBox().getSelectedText(), box.getMainSelectBox()
-		    .getSelectedText());
-	    returnList.add(criterion);
-	}
-	getAbstractSelectBoxFaceList().clear();
-	return returnList;
+        List<LanguageElement> returnList = new ArrayList<LanguageElement>();
+        for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
+            Criterion criterion = new CompletionCriterion();
+            criterion.setUpLevelOfDetail(((CriterionSelectBoxFace) box).getSubSelectBox().getSelectedText(), box.getMainSelectBox()
+                    .getSelectedText());
+            returnList.add(criterion);
+        }
+        getAbstractSelectBoxFaceList().clear();
+        return returnList;
     }
 
     @Override
     public void fillElements(List<LanguageElement> list) {
-	for (int i = 0; i < list.size(); i++) {
-	    add();
-	    getAbstractSelectBoxFaceList().get(i).getMainSelectBox()
-		    .setSelected(((Criterion) list.get(i)).getLevelOfDetail().getParentWorkProduct().getName());
-	    ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).setSubSelectBox(new EssenciaSelectBox());
-	    for (IElement e : getElementListFromCanvas()) {
-		if (e instanceof WorkProduct
-			&& ((Criterion) list.get(i)).getLevelOfDetail().getParentWorkProduct().getName().equals(((WorkProduct) e).getName())) {
-		    for (LevelOfDetail l : ((WorkProduct) e).getList()) {
-			((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().add(l.getName(), l.getName());
-		    }
-		}
-	    }
-	    ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().setSelected(
-		    ((Criterion) list.get(i)).getLevelOfDetail().getName());
-	}
+        for (int i = 0; i < list.size(); i++) {
+            add();
+            getAbstractSelectBoxFaceList().get(i).getMainSelectBox()
+                    .setSelected(((Criterion) list.get(i)).getLevelOfDetail().getParentWorkProduct().getName());
+            ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).setSubSelectBox(new EssenciaSelectBox());
+            for (IElement e : getElementListFromCanvas()) {
+                if (e instanceof WorkProduct
+                        && ((Criterion) list.get(i)).getLevelOfDetail().getParentWorkProduct().getName().equals(((WorkProduct) e).getName())) {
+                    for (LevelOfDetail l : ((WorkProduct) e).getList()) {
+                        ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().add(l.getName(), l.getName());
+                    }
+                }
+            }
+            ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().setSelected(
+                    ((Criterion) list.get(i)).getLevelOfDetail().getName());
+        }
 
     }
 }

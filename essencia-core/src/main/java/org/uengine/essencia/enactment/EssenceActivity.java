@@ -33,12 +33,12 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
     private void setInputOutputParameters() {
 
-        if(getActivityInEssenceDefinition().getWorkProductList()!=null && getActivityInEssenceDefinition().getWorkProductList().size() > 0){
-            ParameterContext[] parameterContexts = new ParameterContext[getActivityInEssenceDefinition().getWorkProductList().size()];
+        if(getActivityInEssenceDefinition().getCompletionCriteria()!=null && getActivityInEssenceDefinition().getCompletionCriteria().size() > 0){
+            ParameterContext[] parameterContexts = new ParameterContext[getActivityInEssenceDefinition().getCompletionCriteria().size()];
 
             int i = 0;
 
-            for(LanguageElement workProductCriterion_ : getActivityInEssenceDefinition().getWorkProductList()){
+            for(LanguageElement workProductCriterion_ : getActivityInEssenceDefinition().getCompletionCriteria()){
 
                 Criterion workProduct = (Criterion) workProductCriterion_;
 

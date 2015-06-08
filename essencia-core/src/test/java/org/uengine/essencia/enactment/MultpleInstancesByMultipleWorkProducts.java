@@ -143,7 +143,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             List<LanguageElement> workProducts = new ArrayList<LanguageElement>();
             workProducts.add(sprint);
 
-            sprintPlanningInEssenceDefinition.setWorkProductList(workProducts);
+//            sprintPlanningInEssenceDefinition.setWorkProductList(workProducts);
 
         }
 
@@ -178,7 +178,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             List<LanguageElement> workProducts = new ArrayList<LanguageElement>();
             workProducts.add(sprint);
 
-            activityInEssenceDefinition.setWorkProductList(workProducts);
+//            activityInEssenceDefinition.setWorkProductList(workProducts);
         }
 
         /////// building process definition :  later it should be generated from PracticeDefinition by default

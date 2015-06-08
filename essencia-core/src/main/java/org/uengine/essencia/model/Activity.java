@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.metaworks.annotation.Face;
@@ -24,7 +25,7 @@ public class Activity extends AbstractActivity {
     private List<LanguageElement> entryCriteria;
     private transient CriterionFace entryCriteriaPanel;
 
-    private List<LanguageElement> workProductList;
+//    private List<LanguageElement> workProductList;
     private transient WorkProductFace workProductFace;
 
     private SelectBox competency;
@@ -43,15 +44,15 @@ public class Activity extends AbstractActivity {
         this.entryCriteria = entryCriteria;
     }
 
-    @Order(7)
-    @Hidden
-    public List<LanguageElement> getWorkProductList() {
-        return workProductList;
-    }
-
-    public void setWorkProductList(List<LanguageElement> workProductList) {
-        this.workProductList = workProductList;
-    }
+//    @Order(7)
+//    @Hidden
+//    public List<LanguageElement> getWorkProductList() {
+//        return workProductList;
+//    }
+//
+//    public void setWorkProductList(List<LanguageElement> workProductList) {
+//        this.workProductList = workProductList;
+//    }
 
     @Order(5)
     @Face(displayName = "EntryCriterion")
@@ -191,12 +192,20 @@ public class Activity extends AbstractActivity {
             getEntryCriteria().clear();
         }
         if (getCompletionCriteria() != null) {
-            getCompletionCriterionFace().fillElements(getCompletionCriteria());
+            List<LanguageElement> stateCriteria = new ArrayList<>();
+            List<LanguageElement> levelOfDetailCriteria = new ArrayList<>();
+
+            for( LanguageElement l : getCompletionCriteria()){
+                Criterion c = (Criterion)l;
+                if ( c.getLevelOfDetail() == null ){
+                    stateCriteria.add(l);
+                } else {
+                    levelOfDetailCriteria.add(l);
+                }
+            }
+            getCompletionCriterionFace().fillElements(stateCriteria);
+            getWorkProductFace().fillElements(levelOfDetailCriteria);
             getCompletionCriteria().clear();
-        }
-        if (getWorkProductList() != null) {
-            getWorkProductFace().fillElements(getWorkProductList());
-            getWorkProductList().clear();
         }
     }
 
@@ -207,7 +216,7 @@ public class Activity extends AbstractActivity {
         setRequiredCompetencyLevel(getRequiredCompetencyLevelFace().createValue());
         setEntryCriteria(getEntryCriteriaPanel().createValue());
         setCompletionCriteria(getCompletionCriterionFace().createValue());
-        setWorkProductList(getWorkProductFace().createValue());
+        getCompletionCriteria().addAll(getWorkProductFace().createValue());
     }
 
     @Override
@@ -273,7 +282,8 @@ public class Activity extends AbstractActivity {
 
             activity.getCriterion().add(completionCriterion);
         }
-        for (LanguageElement e : getWorkProductList()) {
+
+        for (LanguageElement e : getCompletionCriteria()) {
             Criterion criterion = (Criterion) e;
             Essence.ActivitySpaceAndActivity.Criterion output = Essence.ActivitySpaceAndActivity.ActivitySpaceAndActivityFactory.eINSTANCE
                     .createCompletionCriterion();
