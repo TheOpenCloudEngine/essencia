@@ -1,0 +1,18 @@
+<%
+	if(jQuery.browser.mobile){
+%>
+	<div class="ui-layout-center">
+		<%=fields.items.here()%>
+	</div>
+<%
+	}else{
+%>
+	<div class="ui-layout-north">
+		<%=fields.menu.here()%>
+	</div>
+	<div class="ui-layout-center">
+		<%=fields.items.here()%>
+	</div>
+<%
+	}
+%>
