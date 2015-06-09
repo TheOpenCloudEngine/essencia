@@ -35,7 +35,7 @@ public class EssenceActivityHandler implements ITool{
 
         //org.metaworks.dao.TransactionContext.getThreadLocalInstance().getSharedContext("processManager");
 
-        for(LanguageElement workProduct_ : getEssenceActivity().getActivityInEssenceDefinition().getWorkProductList()){
+        for(LanguageElement workProduct_ : getEssenceActivity().getActivityInEssenceDefinition().getCompletionCriteria()){
             WorkProduct workProduct = (WorkProduct) workProduct_; //TODO: why need we casting?
 
             setPropertyValueList(workProduct.createDefaultPropertyValues());

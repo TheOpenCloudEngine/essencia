@@ -40,11 +40,6 @@ public class MethodComposer extends PracticeDefiner {
             for (LanguageElement e : activity.getCompletionCriteria()) {
                 createFullCriterion(pd, (Criterion) e);
             }
-
-            for (LanguageElement e : activity.getWorkProductList()) {
-                createFullWorkProductCriterion(pd, (Criterion) e);
-            }
-
         }
         return pd;
     }
@@ -55,34 +50,31 @@ public class MethodComposer extends PracticeDefiner {
      * @param criterion
      */
     private void createFullCriterion(PracticeDefinition pd, Criterion criterion) {
-        Alpha fullParentAlpha = pd.getElement(criterion.getState().getParentAlpha().getName(), Alpha.class);
-        for (State state : fullParentAlpha.getStates()) {
-            if (criterion.getState().getName().equals(state.getName())) {
-                criterion.setState(state);
-                break;
+        if( criterion.getLevelOfDetail() == null ){
+            Alpha fullParentAlpha = pd.getElement(criterion.getState().getParentAlpha().getName(), Alpha.class);
+            for (State state : fullParentAlpha.getStates()) {
+                if (criterion.getState().getName().equals(state.getName())) {
+                    criterion.setState(state);
+                    break;
+                }
+
             }
 
-        }
+            criterion.getState().setParentAlpha(fullParentAlpha);
+        } else {
+            WorkProduct fullWorkProduct = pd.getElement(criterion.getLevelOfDetail().getParentWorkProduct().getName(), WorkProduct.class);
+            for (LevelOfDetail levelOfDetail : fullWorkProduct.getLevelOfDetails()) {
+                if (criterion.getLevelOfDetail().getName().equals(levelOfDetail.getName())) {
+                    criterion.setLevelOfDetail(levelOfDetail);
+                    break;
+                }
 
-        criterion.getState().setParentAlpha(fullParentAlpha);
-    }
-
-    /**
-     * make work product criteria completely
-     * @param pd
-     * @param criterion
-     */
-    private void createFullWorkProductCriterion(PracticeDefinition pd, Criterion criterion) {
-        WorkProduct fullWorkProduct = pd.getElement(criterion.getLevelOfDetail().getParentWorkProduct().getName(), WorkProduct.class);
-        for (LevelOfDetail levelOfDetail : fullWorkProduct.getLevelOfDetails()) {
-            if (criterion.getLevelOfDetail().getName().equals(levelOfDetail.getName())) {
-                criterion.setLevelOfDetail(levelOfDetail);
-                break;
             }
 
+            criterion.getLevelOfDetail().setParentWorkProduct(fullWorkProduct);
         }
 
-        criterion.getLevelOfDetail().setParentWorkProduct(fullWorkProduct);
     }
+
 
 }

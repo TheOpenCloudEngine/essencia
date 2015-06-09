@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,10 +19,7 @@ import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.*;
-import org.uengine.kernel.bpmn.StartEventActivity;
-import org.uengine.kernel.bpmn.view.EndActivityView;
 import org.uengine.kernel.view.HumanActivityView;
-import org.uengine.kernel.view.StartActivityView;
 import org.uengine.modeling.*;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware {
@@ -236,13 +232,12 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         }
 
         for (WorkProduct workProduct : getElements(WorkProduct.class)) {
-//            LanguageElementInstance defaultWorkProduct = workProduct.createInstance("<id>");
+            LanguageElementInstance defaultWorkProduct = workProduct.createInstance("<id>");
             pv = new ProcessVariable(new Object[]{
                     "name", workProduct.getName(),
                     "type", LanguageElementInstance.class
-//                    ,"defaultValue", (Serializable)defaultWorkProduct
             });
-//              pv.setDefaultValue(defaultWorkProduct);
+            pv.setDefaultValue(defaultWorkProduct);
             pvList.add(pv);
         }
 
@@ -408,6 +403,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
     /**
      * get element by element view's id ( opengraph id )
+     *
      * @param id
      * @return
      */
@@ -545,10 +541,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             if (activity.getCompletionCriteria() != null) {
                 for (LanguageElement e : activity.getCompletionCriteria()) {
                     Criterion criterion = (Criterion) e;
-                    State state = criterion.getState();
-                    State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
-                    if (fullState != null) {
-                        state.setListFace(fullState.getListFace());
+                    if (criterion.getState() != null) {
+                        State state = criterion.getState();
+                        State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
+                        if (fullState != null) {
+                            state.setList(fullState.getList());
+                        }
+
                     }
                 }
             }

@@ -140,10 +140,18 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             sprintPlanningInEssenceDefinition.setCompetency(new SelectBox());
             sprintPlanningInEssenceDefinition.getCompetency().setSelectedText("Product Owner");
 
-            List<LanguageElement> workProducts = new ArrayList<LanguageElement>();
-            workProducts.add(sprint);
+            List<LanguageElement> completionCriteria = new ArrayList<LanguageElement>();
 
-            sprintPlanningInEssenceDefinition.setWorkProductList(workProducts);
+            Criterion criterion = new Criterion();
+
+            LevelOfDetail levelOfDetail = new LevelOfDetail();
+            levelOfDetail.setParentWorkProduct(sprint);
+            levelOfDetail.setName("done");
+
+            criterion.setLevelOfDetail(levelOfDetail);
+            completionCriteria.add(criterion);
+
+            sprintPlanningInEssenceDefinition.setCompletionCriteria(completionCriteria);
 
         }
 
@@ -308,7 +316,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             t1.setSourceRef("a9");
             t1.setTargetRef("sub");
 
-            subProcess.addSequenceFlow(t1);
+            processDefinition.addSequenceFlow(t1);
         }
         {
             SequenceFlow t1 = new SequenceFlow();
