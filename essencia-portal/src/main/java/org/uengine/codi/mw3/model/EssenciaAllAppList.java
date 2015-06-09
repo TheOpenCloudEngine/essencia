@@ -16,6 +16,11 @@ public class EssenciaAllAppList extends AbstractAllAppList{
     public void load() throws Exception{
     }
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     @ServiceMethod(target= ServiceMethodContext.TARGET_APPEND)
     public Object[] goEssencia() throws Exception {
         Loader loader = new Loader();
@@ -26,15 +31,4 @@ public class EssenciaAllAppList extends AbstractAllAppList{
         application.setEssencia(essencia);
         return new Object[]{new Refresh(application), new Refresh(application.loadTopCenterPanel(session)), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
     }
-
-    @ServiceMethod(target= ServiceMethodContext.TARGET_APPEND)
-    public Object[] goBaidu() throws Exception {
-        IFrame iframe = new IFrame("http://www.baidu.com/");
-
-        IKFrameApplication application = new IKFrameApplication();
-        application.setContent(iframe);
-
-        return new Object[]{new Refresh(application), new Refresh(application.loadTopCenterPanel(session)), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
-    }
-
 }
