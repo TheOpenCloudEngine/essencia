@@ -1,0 +1,48 @@
+<table style="
+    width: 100%;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+">
+	<tr>
+		<td>
+			<img src=<%=value['img']%> height="60" width="70"  />
+			<%=fields.parentName.here()%>
+		</td>
+
+	</tr>
+
+	<tr style="height: 23em;">
+		<td style="width : 50%; overflow:auto; position:relative; border-top:1px solid;">
+			<%=fields.canvas.here()%>
+		</td>
+
+		<td style="width : 50%; overflow:auto;position: relative; border-top:1px solid; border-left:1px solid;">
+			<table style="border:1px ; border-style:solid; width:15em; background-color:white;">
+
+
+				<tr>
+					<td colspan="2" style=" font-size: large; border: 2px; padding: 10px 40px; text-align: center; border-style:solid; border-radius:10px;">
+						<%=fields.name.here()%>
+						<div style="float:right;height: 2px;font-size: x-small;width: 1px;"><%=fields.stateNumber.here()%></div>
+					</td>
+				</tr>
+
+
+				<tr>
+					<td colspan="2" style="font-size:x-small;">
+						<%
+							for(var i=0; i < value.list.length; i++){
+						%>
+								<input type="checkBox" value=<%=value.list[i]%> ><%=value.list[i]%></input><br/>
+						<%
+							}
+						%>
+					</td>
+				</tr>
+
+            </table>
+
+		</td>
+	</tr>
+</table>
