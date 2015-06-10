@@ -20,6 +20,7 @@ import org.uengine.modeling.IElement;
 import org.uengine.modeling.RelationView;
 import org.uengine.modeling.Symbol;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,12 +29,14 @@ import java.util.List;
  */
 public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
 
+    String IMG_LOCATION = "resources" + File.separator + "images"+ File.separator + "symbol" + File.separator + "OG.shape.essencia.Alpha.png";
+
     protected List<CheckBox> list;
     protected List<String> states;
     protected TextContext name;
     protected String parentName;
     protected String img;
-    protected AlphaInstance alphaInstance;
+    private AlphaInstance alphaInstance;
 
     public List<String> getStates() {
         return states;
@@ -43,16 +46,6 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
         this.states = states;
     }
 
-
-    public AlphaInstance getAlphaInstance() {
-        return alphaInstance;
-    }
-
-    public void setAlphaInstance(AlphaInstance alphaInstance) {
-        this.alphaInstance = alphaInstance;
-    }
-
-
     public List<CheckBox> getList() {
         return list;
     }
@@ -61,16 +54,15 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
         this.list = list;
     }
 
-    protected ElementView view = null;
+    private Alpha alpha;
 
-    public ElementView getView() {
-        return view;
+    public Alpha getAlpha() {
+        return alpha;
     }
 
-    public void setView(ElementView view) {
-        this.view = view;
+    public void setAlpha(Alpha alpha) {
+        this.alpha = alpha;
     }
-
 
     @Override
     public String getName() {
@@ -122,29 +114,22 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
         setStates(new ArrayList<String>());
     }
 
-    public AlphaInstanceFace(ElementView view) {
-        this();
-
-        setView(view);
-
-        doDefaultSetting();
-
-        initAlphaInstance();
-    }
-
     private void doDefaultSetting() {
-        setImg(IMG_LOCATION + view.getShapeId() + IMG_EXTENSION);
-        setParentName(view.getLabel().substring(0, view.getLabel().indexOf("(")));
-        setName(view.getLabel().substring(view.getLabel().indexOf("(") + 1, view.getLabel().length() - 1));
+        setImg(IMG_LOCATION);
+        setParentName(getAlpha().getName().substring(0, getAlpha().getName().indexOf("(")));
+        setName(getAlpha().getName().substring(getAlpha().getName().indexOf("(") + 1, getAlpha().getName().length() - 1));
 
-        for (int i = 0; i < ((Alpha) view.getElement()).getList().size(); i++) {
-            State state = ((Alpha) view.getElement()).getList().get(i);
+        for (int i = 0; i < getAlpha().getList().size(); i++) {
+            State state = getAlpha().getList().get(i);
             getStates().add(state.getName());
             if (state.getName().equals(getName())) {
                 for (CheckPoint checkPoint : state.getList()) {
                     CheckBox c = new CheckBox();
                     ContextUtil.setWhen(c, EssenciaContext.WHEN_EDIT);
                     c.add(checkPoint.getName(), checkPoint.getName());
+                    if(this.alphaInstance.isChecked(checkPoint.getName())){
+                        c.setSelected(checkPoint.getName());
+                    }
                     getList().add(c);
                 }
             }
@@ -152,19 +137,26 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
     }
 
     private void initAlphaInstance() {
-        this.alphaInstance = ((Alpha) view.getElement()).createInstance(getParentName() + "@" + getName());
-        getAlphaInstance().setCurrentStateName(getName());
+        this.alphaInstance = getAlpha().createInstance(getParentName() + "@" + getName());
+        this.alphaInstance.setCurrentStateName(getName());
 
     }
 
     @Override
     public void setValueToFace(AlphaInstance value) {
-        System.out.println(value);
+        this.alphaInstance = value;
+
+        setAlpha(value.getAlpha());
+
+        doDefaultSetting();
+
     }
 
     @Override
     public AlphaInstance createValueFromFace() {
-        return null;
+        initAlphaInstance();
+        applyCheckPointToInstance();
+        return this.alphaInstance;
 
     }
 
@@ -173,7 +165,7 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
     public Object[] apply() {
         applyCheckPointToInstance();
-        return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(getAlphaInstance(), true)};
+        return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(this.alphaInstance, true)};
     }
 
     @Order(2)
@@ -186,7 +178,7 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
     private void applyCheckPointToInstance() {
         for (CheckBox c : getList()) {
             if (!"".equals(c.getSelected())) {
-                getAlphaInstance().setChecked(c.getOptionValues().get(0));
+                this.alphaInstance.setChecked(c.getOptionValues().get(0));
             }
         }
     }
