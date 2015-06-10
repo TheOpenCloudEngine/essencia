@@ -207,10 +207,12 @@ public class MethodEnactmentTest extends UEngineTest{
             sprintVariableMapping.setDirection(ParameterContext.DIRECTION_INOUT);
             sprintVariableMapping.setSplit(true);
 
-        /*    subProcess.setVariableBindings(new ParameterContext[]{
-                    alphaBacklogMapping,
-                    sprintVariableMapping
-            });*/
+            List<SubProcessParameterContext> subProcessParameterContextList = new ArrayList<SubProcessParameterContext>();
+
+            subProcessParameterContextList.add(alphaBacklogMapping);
+            subProcessParameterContextList.add(sprintVariableMapping);
+
+            subProcess.setVariableBindings(subProcessParameterContextList);
         }
 
         processDefinition.addChildActivity(subProcess);
