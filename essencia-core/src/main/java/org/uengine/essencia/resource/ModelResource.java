@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.metaworks.EventContext;
 import org.metaworks.Refresh;
@@ -139,7 +140,11 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	@Override
 	public IModel loadModel() throws Exception {
 		try {
-			return (IModel) ObjectRepository.getInstance().get(this);
+			IModel model =  (IModel)ObjectRepository.getInstance().get(this);
+			if( Objects.isNull(model) ){
+				throw new IllegalStateException("Practice Definition Model is not founded from Object Repository or deserialize is failed");
+			}
+			return model;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
