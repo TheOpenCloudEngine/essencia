@@ -1,0 +1,38 @@
+<%
+if(mw3.when == mw3.WHEN_EDIT || mw3.when == mw3.WHEN_NEW){
+
+	for(var i=0; i<descriptor.options.length; i++){
+		var inputOption = '';
+		if(value == descriptor.values[i])
+			inputOption = 'checked=\"checked\"';
+		
+%>
+
+<div class="skin-section">
+    <ul class="list col-md-6">
+        <li class="m-b-20">
+            <label>
+            	<input type="radio" name="radio_<%=objectId%>"	value="<%=mw3.localize(descriptor.values[i])%>" <%=inputOption%> >
+				 <%=mw3.localize(descriptor.options[i])%>
+            </label>
+        </li>
+    </ul> 
+</div>
+
+
+<%  
+	}
+}else{
+	
+	if(value != null){
+		for(var i=0; i<descriptor.options.length; i++){
+			if(value == descriptor.values[i]){
+	%>
+		<%=mw3.localize(descriptor.options[i])%>
+	<%
+			}
+		}
+
+	}
+}
+%>

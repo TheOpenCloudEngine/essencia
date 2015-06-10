@@ -14,6 +14,8 @@ import org.uengine.modeling.IModel;
 import org.uengine.modeling.Modeler;
 import org.uengine.modeling.modeler.ProcessModeler;
 
+import java.util.Objects;
+
 public abstract class ModelerEditor extends Editor {
 
     private Modeler modeler;
@@ -44,8 +46,11 @@ public abstract class ModelerEditor extends Editor {
 
         if (!MetaworksContext.WHEN_NEW.equals(getResource().getMetaworksContext().getWhen())) {
             IModel model = ((IModelResource) getResource()).loadModel();
-
-            this.getModeler().setModel(model);
+            if( model == null ){
+                throw new IllegalStateException("Practice Definition Model is not founded from Object Repository or deserialize is failed");
+            } else {
+                this.getModeler().setModel(model);
+            }
         }
     }
 

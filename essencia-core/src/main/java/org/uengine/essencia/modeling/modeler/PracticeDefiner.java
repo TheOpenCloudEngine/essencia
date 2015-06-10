@@ -2,6 +2,7 @@ package org.uengine.essencia.modeling.modeler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.BasicElement;
@@ -27,22 +28,24 @@ public class PracticeDefiner extends EssenciaModeler {
 
     @Override
     public void setModel(IModel model) throws Exception {
-        List<ElementView> elementViewList = new ArrayList<ElementView>();
-        List<RelationView> relationViewList = new ArrayList<RelationView>();
+        if( model != null ){
+            List<ElementView> elementViewList = new ArrayList<ElementView>();
+            List<RelationView> relationViewList = new ArrayList<RelationView>();
 
-        PracticeDefinition practice = (PracticeDefinition) model;
-        practice.afterDeserialize();
+            PracticeDefinition practice = (PracticeDefinition) model;
+            practice.afterDeserialize();
 
-        for (IElement element : practice.getElementList()) {
-            elementViewList.add(((BasicElement) element).asView());
+            for (IElement element : practice.getElementList()) {
+                elementViewList.add(((BasicElement) element).asView());
+            }
+
+            for (IRelation relation : practice.getRelationList()) {
+                relationViewList.add(relation.asView());
+            }
+
+            getCanvas().setElementViewList(elementViewList);
+            getCanvas().setRelationViewList(relationViewList);
         }
-
-        for (IRelation relation : practice.getRelationList()) {
-            relationViewList.add(relation.asView());
-        }
-
-        getCanvas().setElementViewList(elementViewList);
-        getCanvas().setRelationViewList(relationViewList);
     }
 
 

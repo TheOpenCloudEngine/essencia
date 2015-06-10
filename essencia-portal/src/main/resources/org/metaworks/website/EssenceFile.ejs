@@ -1,0 +1,29 @@
+<%
+	if(value){
+		var showText = !(descriptor && descriptor.getOptionValue('hideText', false));
+		if(showText)
+			showText = !objectMetadata.getOptionValue('hideText', false);			
+%>
+
+	<span id="filebtnadd_<%=objectId%>" style="float:left">
+		<button type="button" class="btn btn-info btn-xs" ><span class="glyphicon glyphicon-paperclip"></span> File Attach</button>
+		
+		<%=fields.fileTransfer.here()%>
+	</span>
+	<span id="filebtnimport_<%=objectId%>" style="float:right">
+		<%=methods.importEssence.here()%>
+	</span>
+	
+	<span id="filebtndel_<%=objectId%>" style="display:none;float:left">
+		<button type="button" class="btn btn-danger btn-xs" onclick="mw3.getFaceHelper(<%=objectId%>).del(event)"><span class="glyphicon glyphicon-remove" style="font-size: 14px; line-height: 24px"></span> 파일삭제</button>
+	</span>
+<%
+			
+			if(showText){
+%>
+	<span style="float: left; line-height:1.8em; margin-left:10px; max-width:200px; overflow:hidden; white-space:nowrap; text-overflow: ellipsis;" id="filename_<%=objectId%>">선택된 파일 없음</span>
+	<div style="clear:both"></div>
+<%
+			}
+	}
+%>
