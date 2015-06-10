@@ -7,8 +7,10 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.designer.EssenciaPropertyPanel;
+import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace;
 import org.uengine.essencia.enactment.face.LanguageElementInstanceFace;
+import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.CardViewable;
 import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.modeling.canvas.CardCanvas;
@@ -44,23 +46,25 @@ public abstract class LanguageElementView extends ElementView {
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_STICK)
     public Object showProperty() throws Exception {
         ModalWindow modal = null;
-        if (cardCanvas != null && (this instanceof AlphaView || this instanceof WorkProductView) ) {
-            //instance card view
-            if (getElement() instanceof CardViewable) {
-                if(this instanceof  AlphaView){
-                    AlphaInstanceFace f = new AlphaInstanceFace(this);
-                    modal = new ModalWindow(f, 650, 600, "Card View");
-                } else {
-                    LanguageElementInstanceFace ff = new LanguageElementInstanceFace(this);
-                    modal = new ModalWindow(ff, 650, 600, "Card View");
-                }
-            }
-        } else {
+//        if (cardCanvas != null && (this instanceof AlphaView || this instanceof WorkProductView) ) {
+//            //instance card view
+//            if (getElement() instanceof CardViewable) {
+//                if(this instanceof  AlphaView){
+//
+//                    AlphaInstance alphaInstance = ((Alpha)getElement()).createInstance("<null>");
+//                    AlphaInstanceFace f = new AlphaInstanceFace(this);
+//                    modal = new ModalWindow(f, 650, 600, "Card View");
+//                } else {
+//                    LanguageElementInstanceFace ff = new LanguageElementInstanceFace(this);
+//                    modal = new ModalWindow(ff, 650, 600, "Card View");
+//                }
+//            }
+//        } else {
             EssenciaPropertyPanel propertyPanel = new EssenciaPropertyPanel(this);
             ContextUtil.setHow(propertyPanel, "dynamicSize");
             modal = new ModalWindow(propertyPanel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() + "]");
-
-        }
+//
+//        }
         return modal;
     }
 
