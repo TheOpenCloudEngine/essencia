@@ -28,25 +28,24 @@ public class PracticeDefiner extends EssenciaModeler {
 
     @Override
     public void setModel(IModel model) throws Exception {
-        if( Objects.isNull(model) ){
-            throw new IllegalStateException("Practice Definition Model is not founded from Object Repository or deserialize is failed");
+        if( model != null ){
+            List<ElementView> elementViewList = new ArrayList<ElementView>();
+            List<RelationView> relationViewList = new ArrayList<RelationView>();
+
+            PracticeDefinition practice = (PracticeDefinition) model;
+            practice.afterDeserialize();
+
+            for (IElement element : practice.getElementList()) {
+                elementViewList.add(((BasicElement) element).asView());
+            }
+
+            for (IRelation relation : practice.getRelationList()) {
+                relationViewList.add(relation.asView());
+            }
+
+            getCanvas().setElementViewList(elementViewList);
+            getCanvas().setRelationViewList(relationViewList);
         }
-        List<ElementView> elementViewList = new ArrayList<ElementView>();
-        List<RelationView> relationViewList = new ArrayList<RelationView>();
-
-        PracticeDefinition practice = (PracticeDefinition) model;
-        practice.afterDeserialize();
-
-        for (IElement element : practice.getElementList()) {
-            elementViewList.add(((BasicElement) element).asView());
-        }
-
-        for (IRelation relation : practice.getRelationList()) {
-            relationViewList.add(relation.asView());
-        }
-
-        getCanvas().setElementViewList(elementViewList);
-        getCanvas().setRelationViewList(relationViewList);
     }
 
 
