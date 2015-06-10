@@ -1,5 +1,7 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.annotation.Face;
+import org.uengine.essencia.enactment.face.AlphaInstanceFace;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.State;
@@ -7,6 +9,7 @@ import org.uengine.kernel.ProcessInstance;
 
 import java.util.*;
 
+@Face(faceClass = AlphaInstanceFace.class)
 public class AlphaInstance extends LanguageElementInstance {
 
     public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";

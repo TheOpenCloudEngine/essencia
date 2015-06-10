@@ -7,8 +7,10 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.designer.EssenciaPropertyPanel;
+import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace;
 import org.uengine.essencia.enactment.face.LanguageElementInstanceFace;
+import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.CardViewable;
 import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.modeling.canvas.CardCanvas;
@@ -48,8 +50,9 @@ public abstract class LanguageElementView extends ElementView {
             //instance card view
             if (getElement() instanceof CardViewable) {
                 if(this instanceof  AlphaView){
-                    AlphaInstanceFace f = new AlphaInstanceFace(this);
-                    modal = new ModalWindow(f, 650, 600, "Card View");
+                    AlphaInstance a = ((Alpha)getElement()).createInstance(getElement().getName());
+//                    AlphaInstanceFace f = new AlphaInstanceFace(this);
+                    modal = new ModalWindow(a, 650, 600, "Card View");
                 } else {
                     LanguageElementInstanceFace ff = new LanguageElementInstanceFace(this);
                     modal = new ModalWindow(ff, 650, 600, "Card View");

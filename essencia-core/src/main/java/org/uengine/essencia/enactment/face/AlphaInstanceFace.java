@@ -159,6 +159,8 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
 
     @Override
     public void setValueToFace(AlphaInstance value) {
+        this.alphaInstance = value;
+
 
     }
 
