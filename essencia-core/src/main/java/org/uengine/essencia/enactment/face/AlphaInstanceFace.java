@@ -123,17 +123,25 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
     }
 
     public AlphaInstanceFace(ElementView view) {
-      this();
+        this();
+
         setView(view);
+
+        doDefaultSetting();
+
+        initAlphaInstance();
+    }
+
+    private void doDefaultSetting() {
         setImg(IMG_LOCATION + view.getShapeId() + IMG_EXTENSION);
         setParentName(view.getLabel().substring(0, view.getLabel().indexOf("(")));
-        setName(view.getLabel().substring(view.getLabel().indexOf("(") + 1, view.getLabel().length()-1 ) );
+        setName(view.getLabel().substring(view.getLabel().indexOf("(") + 1, view.getLabel().length() - 1));
 
-        for(int i=0; i < ((Alpha)view.getElement()).getList().size(); i++){
-            State state = ((Alpha)view.getElement()).getList().get(i);
+        for (int i = 0; i < ((Alpha) view.getElement()).getList().size(); i++) {
+            State state = ((Alpha) view.getElement()).getList().get(i);
             getStates().add(state.getName());
-            if(state.getName().equals(getName())){
-                for (CheckPoint checkPoint : state.getList()){
+            if (state.getName().equals(getName())) {
+                for (CheckPoint checkPoint : state.getList()) {
                     CheckBox c = new CheckBox();
                     ContextUtil.setWhen(c, EssenciaContext.WHEN_EDIT);
                     c.add(checkPoint.getName(), checkPoint.getName());
@@ -141,8 +149,11 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
                 }
             }
         }
-        alphaInstance = ((Alpha)view.getElement()).createInstance(getParentName()+"@"+getName());
-        alphaInstance.setCurrentStateName(getName());
+    }
+
+    private void initAlphaInstance() {
+        this.alphaInstance = ((Alpha) view.getElement()).createInstance(getParentName() + "@" + getName());
+        getAlphaInstance().setCurrentStateName(getName());
 
     }
 
@@ -161,13 +172,8 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
     @org.metaworks.annotation.Face(displayName = "Apply")
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
     public Object[] apply() {
-
-        for(CheckBox c : getList()){
-            if(!"".equals(c.getSelected())){
-                alphaInstance.setChecked(c.getOptionValues().get(0));
-            }
-        }
-        return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(alphaInstance, true)};
+        applyCheckPointToInstance();
+        return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(getAlphaInstance(), true)};
     }
 
     @Order(2)
@@ -175,5 +181,13 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
     public ToEvent cancel() {
         return new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE);
+    }
+
+    private void applyCheckPointToInstance() {
+        for (CheckBox c : getList()) {
+            if (!"".equals(c.getSelected())) {
+                getAlphaInstance().setChecked(c.getOptionValues().get(0));
+            }
+        }
     }
 }
