@@ -186,7 +186,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             List<LanguageElement> workProducts = new ArrayList<LanguageElement>();
             workProducts.add(sprint);
 
-            activityInEssenceDefinition.setWorkProductList(workProducts);
+            activityInEssenceDefinition.setCompletionCriteria(workProducts);
         }
 
         /////// building process definition :  later it should be generated from PracticeDefinition by default
@@ -264,10 +264,10 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             sprintVariableMapping.setDirection(ParameterContext.DIRECTION_INOUT);
             sprintVariableMapping.setSplit(true);
 
-            subProcess.setVariableBindings(new ParameterContext[]{
+           /* subProcess.setVariableBindings(new ParameterContext[]{
                     alphaBacklogMapping,
                     sprintVariableMapping
-            });
+            });*/
         }
 
         processDefinition.addChildActivity(subProcess);
