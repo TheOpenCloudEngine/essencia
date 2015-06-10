@@ -116,8 +116,10 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
 
     private void doDefaultSetting() {
         setImg(IMG_LOCATION);
-        setParentName(getAlpha().getName().substring(0, getAlpha().getName().indexOf("(")));
-        setName(getAlpha().getName().substring(getAlpha().getName().indexOf("(") + 1, getAlpha().getName().length() - 1));
+//        setParentName(getAlpha().getName().substring(0, getAlpha().getName().indexOf("(")));
+//        setName(getAlpha().getName().substring(getAlpha().getName().indexOf("(") + 1, getAlpha().getName().length() - 1));
+        setParentName(this.alphaInstance.getAlpha().getName());
+        setName(this.alphaInstance.getCurrentStateName());
 
         for (int i = 0; i < getAlpha().getList().size(); i++) {
             State state = getAlpha().getList().get(i);
