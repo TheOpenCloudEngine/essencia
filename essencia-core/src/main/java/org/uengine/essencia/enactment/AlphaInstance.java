@@ -9,7 +9,7 @@ import org.uengine.kernel.ProcessInstance;
 
 import java.util.*;
 
-@Face(faceClass = AlphaInstanceFace.class)
+@Face(faceClass= AlphaInstanceFace.class)
 public class AlphaInstance extends LanguageElementInstance {
 
     public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
