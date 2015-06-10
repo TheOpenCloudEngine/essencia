@@ -30,10 +30,10 @@ public class Activity extends AbstractActivity {
 
     private SelectBox competency;
     private List<LanguageElement> requiredCompetencyLevel;
-    private RequiredCompetencyLevelFace requiredCompetencyLevelFace;
+    private transient RequiredCompetencyLevelFace requiredCompetencyLevelFace;
 
-    private ApproachListFace approachPanel;
-    private ActionListFace actionPanel;
+    private transient ApproachListFace approachPanel;
+    private transient ActionListFace actionPanel;
 
     @Hidden
     public List<LanguageElement> getEntryCriteria() {

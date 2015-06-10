@@ -2,6 +2,7 @@ package org.uengine.essencia.modeling.modeler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.BasicElement;
@@ -27,6 +28,9 @@ public class PracticeDefiner extends EssenciaModeler {
 
     @Override
     public void setModel(IModel model) throws Exception {
+        if( Objects.isNull(model) ){
+            throw new IllegalStateException("Practice Definition Model is not founded from Object Repository or deserialize is failed");
+        }
         List<ElementView> elementViewList = new ArrayList<ElementView>();
         List<RelationView> relationViewList = new ArrayList<RelationView>();
 
