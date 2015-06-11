@@ -32,7 +32,7 @@ public final static String SHAPE_ID = "OG.shape.essencia.Alpha";
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(50);
 		symbol.setWidth(130);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(Alpha.class.getName());
 		
 		return symbol;
@@ -44,7 +44,7 @@ public final static String SHAPE_ID = "OG.shape.essencia.Alpha";
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(50);
 		symbol.setWidth(130);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(Alpha.class.getName());
 		
 		return symbol;

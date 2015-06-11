@@ -52,7 +52,6 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
         return card;
     }
 
-    //@Hidden(how = {EssenciaContext.HOW_IN_LIST})
     @Override
     public String getDescription() {
         return description.getText();
@@ -61,6 +60,7 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
     @Override
     public void transformContext() {
         ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+        ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
     }
 
     @Override

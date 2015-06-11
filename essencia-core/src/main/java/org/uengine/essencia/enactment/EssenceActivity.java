@@ -48,17 +48,19 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
             }
         }
 
-        if(getActivityInEssenceDefinition().getEntryCriteria()!=null && getActivityInEssenceDefinition().getEntryCriteria().size() > 0) {
-
-            for(LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getEntryCriteria()){
-
-                ParameterContext parameterContext = createParameterContextFromCriterion((Criterion) completionCriterion_);
-                parameterContext.setDirection(ParameterContext.DIRECTION_IN);
-                parameterContexts.add(parameterContext);
-            }
-
-
-        }
+        //TODO: disabled for now
+//
+//        if(getActivityInEssenceDefinition().getEntryCriteria()!=null && getActivityInEssenceDefinition().getEntryCriteria().size() > 0) {
+//
+//            for(LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getEntryCriteria()){
+//
+//                ParameterContext parameterContext = createParameterContextFromCriterion((Criterion) completionCriterion_);
+//                parameterContext.setDirection(ParameterContext.DIRECTION_IN);
+//                parameterContexts.add(parameterContext);
+//            }
+//
+//
+//        }
 
         ParameterContext [] parameterContextsInArray = new ParameterContext[parameterContexts.size()];
         parameterContexts.toArray(parameterContextsInArray);

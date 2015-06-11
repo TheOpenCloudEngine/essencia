@@ -104,6 +104,7 @@ public class Competency extends BasicElement implements Concernable, ContextTran
             ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_VIEW);
         } else {
             ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
         }
     }
 

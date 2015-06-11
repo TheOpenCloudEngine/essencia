@@ -177,8 +177,16 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             Criterion completionCriteria = new Criterion();
             completionCriteria.setState(selected);
 
+            Criterion completionCriteria2 = new Criterion();
+            LevelOfDetail levelOfDetail = new LevelOfDetail();
+            levelOfDetail.setParentWorkProduct(sprint);
+            levelOfDetail.setName("done");
+
+            completionCriteria2.setLevelOfDetail(levelOfDetail);
+
             List<LanguageElement> completionCriteriaList = new ArrayList<LanguageElement>(); //TODO:
-            completionCriteriaList.add(criterion);
+            completionCriteriaList.add(completionCriteria);
+            completionCriteriaList.add(completionCriteria2);
 
 
             activityInEssenceDefinition.setCompletionCriteria(completionCriteriaList);

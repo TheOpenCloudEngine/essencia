@@ -1,5 +1,7 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.annotation.ServiceMethod;
+
 public class AlphaCardBoard {
 
     public AlphaCardBoard() throws Exception {
@@ -14,5 +16,10 @@ public class AlphaCardBoard {
         public void setAlphaInstance(AlphaInstance alphaInstance) {
             this.alphaInstance = alphaInstance;
         }
+
+    @ServiceMethod
+    public void save(){
+        alphaInstance.isCurrentStateCompletable();
+    }
 
 }

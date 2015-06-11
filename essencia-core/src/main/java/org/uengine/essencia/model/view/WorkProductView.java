@@ -24,7 +24,7 @@ public class WorkProductView extends LanguageElementView {
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(72);
 		symbol.setWidth(40);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(WorkProduct.class.getName());
 		return symbol;
 	}
