@@ -156,7 +156,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
      * @throws Exception
      */
     public ProcessDefinition toProcessDefinition() {
-        ProcessDefinition returnProcessDefinition = new ProcessDefinition();
+        ProcessDefinition returnProcessDefinition = new EssenceProcessDefinition();
+        ((EssenceProcessDefinition)returnProcessDefinition).setPracticeDefinition(this);
         returnProcessDefinition.setName(getName());
         List<Role> roleList = new ArrayList<>();
         List<ProcessVariable> pvList = new ArrayList<>();
