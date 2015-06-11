@@ -22,6 +22,9 @@ public class ActivityView extends LanguageElementView {
     public EssenciaCanvas essenciaCanvas;
 
     public ActivityView() {
+        setShapeId(SHAPE_ID);
+        setHeight(56);
+        setWidth(96);
     }
 
     public ActivityView(IElement element) {

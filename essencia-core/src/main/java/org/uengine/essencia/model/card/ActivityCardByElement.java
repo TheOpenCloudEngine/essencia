@@ -1,29 +1,25 @@
 package org.uengine.essencia.model.card;
 
-import org.uengine.essencia.model.Activity;
-import org.uengine.essencia.model.BasicElement;
-import org.uengine.essencia.model.Competency;
-import org.uengine.essencia.model.Criterion;
-import org.uengine.essencia.model.LanguageElement;
-import org.uengine.essencia.model.WorkProduct;
+import org.metaworks.ContextAware;
+import org.metaworks.MetaworksContext;
+import org.uengine.essencia.context.EssenciaContext;
+import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.view.ActivityArrowView;
 import org.uengine.essencia.model.view.AlphaView;
 import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.WorkProductView;
+import org.uengine.essencia.util.ContextUtil;
+import org.uengine.modeling.IElement;
 
-public class ActivityCard extends BasicCard {
+import java.util.ArrayList;
+import java.util.List;
 
-    protected final String NEXT_LINE = "<br/>";
-    protected final int X_INTERVAL = 96;
-    protected final int Y_INTERVAL = 70;
-    protected final int X_START = 64;
-    protected final int Y_START = 48;
-
-    public ActivityCard() {
+public class ActivityCardByElement extends ActivityCard implements ContextAware {
+    public ActivityCardByElement() {
 
     }
 
-    public ActivityCard(BasicElement element) {
+    public ActivityCardByElement(BasicElement element) {
         this();
         makeCard(element);
     }
@@ -32,29 +28,49 @@ public class ActivityCard extends BasicCard {
 
         setName(element.getName());
         String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<span>The activity is completed when:</span>";
-        setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
+
+        List<LanguageElement> entryList = null;
+        List<LanguageElement> completionList = null;
+        List<LanguageElement> workProductList = null;
+
+        setView(element.createView());
+        setImg(IMG_LOCATION + getView().getShapeId() + IMG_EXTENSION);
+
+        entryList = ((Activity) element).getEntryCriteria();
+        completionList = new ArrayList<>();
+        workProductList = new ArrayList<>();
+
+        for (LanguageElement l : ((Activity) element).getCompletionCriteria()) {
+            Criterion c = (Criterion) l;
+            if (c.getState() != null) {
+                completionList.add(l);
+            } else {
+                workProductList.add(l);
+            }
+        }
 
         int elementIndex = 0;
         y = -30;
-        for (LanguageElement e : ((Activity) element).getEntryCriteriaPanel().createValue()) {
-            Criterion criterion = (Criterion) e;
-            setSymbol((new AlphaView()).createSymbol());
-            setView(criterion.getState().getParentAlpha().createView());
 
-            x = getXCoordinate(elementIndex);
-            y = getYCoordinate(y, elementIndex);
+        if (entryList != null) {
+            for (LanguageElement e : entryList) {
+                Criterion criterion = (Criterion) e;
+                setSymbol((new AlphaView()).createSymbol());
+                setView(criterion.getState().getParentAlpha().createView());
 
-            getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
-            getView().setWidth(String.valueOf(64));
-            getView().setHeight(String.valueOf(24));
+                x = getXCoordinate(elementIndex);
+                y = getYCoordinate(y, elementIndex);
 
-            getView().setElement(criterion.getState().getParentAlpha());
-            getView().setId(String.valueOf(trcTag++));
+                getView().fill(getSymbol());
+                getView().setX(String.valueOf(x));
+                getView().setY(String.valueOf(y));
+                getView().setWidth(String.valueOf(64));
+                getView().setHeight(String.valueOf(24));
 
-            getCanvas().getElementViewList().add(getView());
-            elementIndex++;
+                getView().setElement(criterion.getState().getParentAlpha());
+                getCanvas().getElementViewList().add(getView());
+                elementIndex++;
+            }
         }
         // Competency View
         y = y + Integer.valueOf(getView().getHeight()) + Y_INTERVAL;
@@ -83,14 +99,12 @@ public class ActivityCard extends BasicCard {
         getView().setWidth(String.valueOf(120));
         getView().setHeight(String.valueOf(100));
 
-        getView().setId(String.valueOf(trcTag++));
-
         getCanvas().getElementViewList().add(getView());
         y += 20;
         // Output Alpha View
         elementIndex = 0;
         description += "<ul>";
-        for (LanguageElement e : ((Activity) element).getCompletionCriterionFace().createValue()) {
+        for (LanguageElement e : completionList) {
             Criterion criterion = (Criterion) e;
             description += "<li>" + criterion.getState().getParentAlpha().getName() + ": "
                     + criterion.getState().getParentAlpha().getName() + "</li>";
@@ -107,13 +121,12 @@ public class ActivityCard extends BasicCard {
             getView().setY(String.valueOf(y));
             getView().setWidth(String.valueOf(64));
             getView().setHeight(String.valueOf(24));
-            getView().setId(String.valueOf(trcTag++));
 
             getCanvas().getElementViewList().add(getView());
             elementIndex++;
         }
         // Output WorkProduct View
-        for (LanguageElement e : ((Activity) element).getWorkProductFace().createValue()) {
+        for (LanguageElement e : workProductList) {
             Criterion criterion = (Criterion) e;
             description += "<li>" + criterion.getLevelOfDetail().getParentWorkProduct().getName() + ": " + criterion.getLevelOfDetail().getName()
                     + "</li>";
@@ -129,26 +142,23 @@ public class ActivityCard extends BasicCard {
             getView().setX(String.valueOf(x));
             getView().setY(String.valueOf(y));
 
-            getView().setId(String.valueOf(trcTag++));
-
             getCanvas().getElementViewList().add(getView());
             elementIndex++;
         }
         description += "</ul>";
         setDescription(description);
+
+        ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
     }
 
-    protected int getXCoordinate(int elementIndex) {
-        if (elementIndex % 2 == 1) {
-            return X_START + X_INTERVAL;
-        }
-        return X_START;
+    private MetaworksContext context;
+    @Override
+    public MetaworksContext getMetaworksContext() {
+        return this.context;
     }
 
-    protected int getYCoordinate(int y, int elementIndex) {
-        if (elementIndex % 2 == 0) {
-            y += Y_INTERVAL;
-        }
-        return y;
+    @Override
+    public void setMetaworksContext(MetaworksContext context) {
+        this.context = context;
     }
 }

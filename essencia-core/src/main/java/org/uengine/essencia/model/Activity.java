@@ -9,6 +9,7 @@ import org.metaworks.annotation.Order;
 import org.metaworks.component.SelectBox;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.card.ActivityCard;
+import org.uengine.essencia.model.card.ActivityCardByElement;
 import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.model.face.ActivityCompletionCriterionFace;
 import org.uengine.essencia.model.face.ActivityEntryCriterionFace;
@@ -221,7 +222,12 @@ public class Activity extends AbstractActivity {
 
     @Override
     public Card createCardView() {
-        Card card = new ActivityCard(this);
+        Card card = null;
+        if( getElementView() == null ){
+            card = new ActivityCardByElement(this);
+        } else {
+            card = new ActivityCard(this);
+        }
         return card;
     }
 
