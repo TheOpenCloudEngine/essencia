@@ -13,43 +13,43 @@ public class WorkProductCard extends BasicCard {
     }
 
     public WorkProductCard(BasicElement element) {
-	this();
-	makeCard(element);
+        this();
+        makeCard(element);
     }
 
     protected void makeCard(BasicElement element) {
 
-	setName(element.getName());
-	setDescription(element.getDescription());
-	ElementView tempView = element.createView();
-	tempView.fill(tempView.createSymbol());
-	element.setElementView(tempView);
-	setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
+        setName(element.getName());
+        setDescription(element.getDescription());
+        ElementView tempView = element.createView();
+        tempView.fill(tempView.createSymbol());
+        element.setElementView(tempView);
+        setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
 
-	x = 120;
-	y = 48;
+        x = 120;
+        y = 48;
 
-	String prefix = getName().replaceAll(" ", "");
+        String prefix = getName().replaceAll(" ", "");
 
-	for (LevelOfDetail levelOfDetail : ((WorkProduct) element).getListFace().createValue()) {
-	    setSymbol(new LevelOfDetailView().createSymbol());
-	    setView(levelOfDetail.createView());
+        for (LevelOfDetail levelOfDetail : ((WorkProduct) element).getListFace().createValue()) {
+            setSymbol(new LevelOfDetailView().createSymbol());
+            setView(levelOfDetail.createView());
 
-	    makeUpView(levelOfDetail);
+            makeUpView(levelOfDetail);
 
-	    if (trcTag > 0) {
-		getView().setFromEdge(prefix + String.valueOf(trcTag++));
-	    }
+            if (trcTag > 0) {
+                getView().setFromEdge(prefix + String.valueOf(trcTag++));
+            }
 
-	    getView().setId(prefix + String.valueOf(trcTag++));
+            getView().setId(prefix + String.valueOf(trcTag++));
 
-	    if (getCanvas().getElementViewList().size() < ((WorkProduct) element).getListFace().getEssenciaElementList().size() - 1) {
-		getView().setToEdge(prefix + String.valueOf(trcTag));
-		makeRelation(prefix);
-	    }
+            if (getCanvas().getElementViewList().size() < ((WorkProduct) element).getListFace().getEssenciaElementList().size() - 1) {
+                getView().setToEdge(prefix + String.valueOf(trcTag));
+                makeRelation(prefix);
+            }
 
-	    getCanvas().getElementViewList().add(getView());
-	}
+            getCanvas().getElementViewList().add(getView());
+        }
     }
 
 }
