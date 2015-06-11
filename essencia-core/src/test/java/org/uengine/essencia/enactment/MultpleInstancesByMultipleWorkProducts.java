@@ -12,6 +12,7 @@ import org.uengine.kernel.test.UEngineTest;
 import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
@@ -58,6 +59,8 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         sprint.setName("Sprint");
         sprint.addProperty("duration", Long.class);
         sprint.addProperty("iteration", Integer.class);
+        sprint.addProperty("startDate", Calendar.class);
+        sprint.addProperty("endDate", Calendar.class);
 
         alphaBacklog = new Alpha();
         alphaBacklog.setName("Backlog");
@@ -202,6 +205,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
         LanguageElementInstance defaultSprint = sprint.createInstance("<id>");
         defaultSprint.setProperty("iteration", new Integer(5));
+        defaultSprint.setProperty("startDate", Calendar.getInstance());
 //        defaultSprint.put("duration", 14);
 
         ProcessVariableValue pvv = new ProcessVariableValue();
