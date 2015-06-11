@@ -6,7 +6,10 @@ var org_uengine_essencia_modeling_palette_EssenciaKernelPalette = function(objec
 	this.objectDiv = $('#' + this.objectDivId);
 	
 	this.objectDiv.css({
-		height: '50%',
+		height: '100%',
 		overflow: 'auto'
 	});
+
+	this.objectDiv.parent().css('height', '100%');
+
 }
