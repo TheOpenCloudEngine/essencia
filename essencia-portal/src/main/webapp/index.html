@@ -320,23 +320,20 @@
 //
 //		 		};
 
-			Metaworks3.prototype.startLoading = function(objId){
-				var divId = mw3._getObjectDivId(objId);
-				var offset = $('#' + divId).offset();
+			Metaworks3.prototype.startLoading = function(){
+//			 			$('body').prepend('<div id=\"mw3_progress\" style=\"position:absolute; z-index:9999999; top:50%; left:50%; margin-top:-90px; margin-left:-60px;\"><div id=\"info_div_box\"><img src=\"images/loading.gif\"></div></div>');
 
-				if(offset){
-					var offsetRight = offset.left + $('#' + divId).width() - 20;
-					var offsetMiddle = offset.top + ($('#' + divId).height()/2- 11);
+				$.blockUI.defaults.css.backgroundColor = "none";
+				$.blockUI.defaults.css.border = "none";
 
-					var html;
-					html = "<div id='loading_div_" + objId + "' style='position:absolute; z-index:9999999; top:"+offsetMiddle+"px; left:"+offsetRight+"px;'><div id='info_div_box' ><img src='dwr/metaworks/images/circleloading.gif'></div></div>";
-
-					$('body').append(html);
-				}
+				$.blockUI({ message: '<img src=\"images/loading.gif\" style=\"width:5em;\">' });
 			};
+			Metaworks3.prototype.endLoading = function(){
+//			 			/*setTimeout(function(){
+//			 				$('#mw3_progress').remove();
+//			 			}, 100);*/
 
-			Metaworks3.prototype.endLoading = function(objId){
-				$('body>#loading_div_' + objId).remove();
+				$.unblockUI();
 			};
 
 
