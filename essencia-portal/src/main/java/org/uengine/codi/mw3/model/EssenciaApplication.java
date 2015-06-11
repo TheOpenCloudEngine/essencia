@@ -1,6 +1,7 @@
 package org.uengine.codi.mw3.model;
 
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.Hidden;
 import org.uengine.codi.mw3.widget.IFrame;
 import org.uengine.essencia.Essencia;
 import org.uengine.essencia.Loader;
@@ -10,6 +11,13 @@ import org.uengine.essencia.Loader;
  */
 @Face(ejsPath="dwr/metaworks/genericfaces/CleanObjectFace.ejs")
 public class EssenciaApplication extends Application {
+
+    @Override
+    @Hidden
+    public String getTopCenterPanelType() {
+        return super.getTopCenterPanelType();
+    }
+
     Essencia essencia;
 
     public Essencia getEssencia() {
