@@ -2,14 +2,16 @@ package org.uengine.essencia.enactment;
 
 import org.metaworks.annotation.Face;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace;
+import org.uengine.essencia.enactment.face.AlphaInstanceFace2;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.State;
+import org.uengine.essencia.model.WorkProduct;
 import org.uengine.kernel.ProcessInstance;
 
 import java.util.*;
 
-@Face(faceClass= AlphaInstanceFace.class)
+@Face(faceClass= AlphaInstanceFace2.class)
 public class AlphaInstance extends LanguageElementInstance {
 
     public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
@@ -35,11 +37,17 @@ public class AlphaInstance extends LanguageElementInstance {
             return checkedCheckpointNames.contains(checkpointName);
         }
         public void setChecked(String checkpointName){
+            setChecked(checkpointName, true);
+        }
+        public void setChecked(String checkpointName, boolean checked){
 
             //try to find the checkpoint is in the current state to prevent illegal checking
             getCurrentState().findCheckpoint(checkpointName);
 
-            checkedCheckpointNames.add(checkpointName);
+            if(checked)
+                checkedCheckpointNames.add(checkpointName);
+            else
+                checkedCheckpointNames.remove(checkpointName);
         }
 
 
@@ -159,6 +167,28 @@ public class AlphaInstance extends LanguageElementInstance {
                 for(AlphaInstance subAlphaInstance : subAlphaInstances){
 
                     String aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
+
+                    getAlpha().findState(aggregationAlphaStateName);
+
+
+                    int runningCntOfThisState = 0;
+                    Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
+
+                    if(wipCntObject!=null)
+                        runningCntOfThisState = (int)wipCntObject;
+
+                    setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
+                }
+            }else if(element instanceof WorkProduct){
+                WorkProduct subAlpha = (WorkProduct)element;
+
+                List<WorkProductInstance> subAlphaInstances = subAlpha.getInstances(instance);
+
+                totalCount += subAlphaInstances.size();
+
+                for(WorkProductInstance subAlphaInstance : subAlphaInstances){
+
+                    String aggregationAlphaStateName = subAlphaInstance.getCurrentLevelOfDetail().getAggregationAlphaState();
 
                     getAlpha().findState(aggregationAlphaStateName);
 

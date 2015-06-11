@@ -5,6 +5,7 @@ import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.CheckPoint;
+import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.State;
 import org.uengine.kernel.*;
 
@@ -87,7 +88,7 @@ public class ExampleAlphaInstance {
             state.setParentAlpha(sprintAlpha); //TODO: should be removed. alpha.setList should do this.
         }
 
-        workAlpha.setChildElements(new ArrayList<Alpha>());
+        workAlpha.setChildElements(new ArrayList<LanguageElement>());
         workAlpha.getChildElements().add(sprintAlpha);
 
         sprintAlpha.setList(statesOfSprint);

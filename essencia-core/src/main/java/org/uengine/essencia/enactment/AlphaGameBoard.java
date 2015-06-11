@@ -27,19 +27,19 @@ public class AlphaGameBoard {
 //            this.practiceDefinition = practiceDefinition;
 //        }
 
-    Map<String, List<AlphaInstance>> alphaInstances;
+    Map<String, List<? extends LanguageElementInstance>> alphaInstances;
 
-    public AlphaGameBoard(Alpha alpha, Map<String, List<AlphaInstance>> alphaInstancesMap) {
+    public AlphaGameBoard(Alpha alpha, Map<String, List<? extends LanguageElementInstance>> alphaInstancesMap) {
         setAlpha(alpha);
         setAlphaInstances(alphaInstancesMap);
     }
 
-    public Map<String, List<AlphaInstance>> getAlphaInstances() {
+    public Map<String, List<? extends LanguageElementInstance>> getAlphaInstances() {
             return alphaInstances;
         }
-        public void setAlphaInstances(Map<String, List<AlphaInstance>> alphaInstances) {
-            this.alphaInstances = alphaInstances;
-        }
+    public void setAlphaInstances(Map<String, List<? extends LanguageElementInstance>> alphaInstances) {
+        this.alphaInstances = alphaInstances;
+    }
 
     Alpha alpha;
         public Alpha getAlpha() {
@@ -56,7 +56,7 @@ public class AlphaGameBoard {
         ProcessInstance instance = exampleAlphaInstance.getProcessInstance();
         ProcessDefinition processDefinition = exampleAlphaInstance.getProcessInstance().getProcessDefinition();
 
-        setAlphaInstances(new HashMap<String, List<AlphaInstance>>());
+        setAlphaInstances(new HashMap<String, List<? extends LanguageElementInstance>>());
 
 
         for(ProcessVariable pv : processDefinition.getProcessVariables()){

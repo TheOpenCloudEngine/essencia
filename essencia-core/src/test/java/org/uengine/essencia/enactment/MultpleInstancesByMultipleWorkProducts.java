@@ -8,6 +8,7 @@ import org.uengine.kernel.Activity;
 import org.uengine.kernel.bpmn.SequenceFlow;
 import org.uengine.kernel.bpmn.SubProcess;
 import org.uengine.kernel.test.UEngineTest;
+import org.uengine.modeling.IElement;
 
 import java.io.FileOutputStream;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
-    ProcessDefinition processDefinition;
+    EssenceProcessDefinition processDefinition;
     PracticeDefinition practiceDefinition;
     Alpha alphaBacklog;
     org.uengine.essencia.model.Activity activityInEssenceDefinition;
@@ -46,7 +47,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
     public void setUp() throws Exception {
 
 
-//        practiceDefinition = new PracticeDefinition();
+        practiceDefinition = new PracticeDefinition();
 //
 //        practiceDefinition.addElement();
 //
@@ -59,13 +60,24 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         sprint.setName("Sprint");
         sprint.addProperty("duration", Long.class);
         sprint.addProperty("iteration", Integer.class);
-        sprint.addProperty("startDate", Calendar.class);
-        sprint.addProperty("endDate", Calendar.class);
+        sprint.addProperty("startDate", String.class);
+        sprint.addProperty("endDate", String.class);
+
+
 
         alphaBacklog = new Alpha();
         alphaBacklog.setName("Backlog");
         alphaBacklog.addProperty("type", String.class);
         alphaBacklog.addProperty("parent", String.class);
+
+        List<LanguageElement> childElements = new ArrayList<LanguageElement>();
+        childElements.add(sprint);
+        alphaBacklog.setChildElements(childElements);
+
+        List<IElement> elementList = new ArrayList<IElement>();
+        elementList.add(alphaBacklog);
+
+        practiceDefinition.setElementList(elementList);
 
 
         State identified;
@@ -147,11 +159,20 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
             Criterion criterion = new Criterion();
 
-            LevelOfDetail levelOfDetail = new LevelOfDetail();
-            levelOfDetail.setParentWorkProduct(sprint);
-            levelOfDetail.setName("done");
+            sprint.setList(new ArrayList<LevelOfDetail>());
 
-            criterion.setLevelOfDetail(levelOfDetail);
+            LevelOfDetail done = new LevelOfDetail();
+            done.setParentWorkProduct(sprint);
+            done.setName("done");
+
+            LevelOfDetail draft = new LevelOfDetail();
+            draft.setParentWorkProduct(sprint);
+            draft.setName("draft");
+
+            sprint.getList().add(draft);
+            sprint.getList().add(done);
+
+            criterion.setLevelOfDetail(done);
             completionCriteria.add(criterion);
 
             sprintPlanningInEssenceDefinition.setCompletionCriteria(completionCriteria);
@@ -199,13 +220,16 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         /////// building process definition :  later it should be generated from PracticeDefinition by default
 
 
-        processDefinition = new ProcessDefinition();
+        processDefinition = new EssenceProcessDefinition();
+
+        processDefinition.setPracticeDefinition(practiceDefinition);
 
         processDefinition.setId("scrum process");
 
-        LanguageElementInstance defaultSprint = sprint.createInstance("<id>");
+        WorkProductInstance defaultSprint = sprint.createInstance("<id>");
         defaultSprint.setProperty("iteration", new Integer(5));
-        defaultSprint.setProperty("startDate", Calendar.getInstance());
+        defaultSprint.setProperty("startDate", "");
+        defaultSprint.setCurrentLevelOfDetailName("draft");
 //        defaultSprint.put("duration", 14);
 
         ProcessVariableValue pvv = new ProcessVariableValue();
@@ -291,7 +315,6 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             if(i==2){
 
                 essenceActivity = new EssenceActivity(activityInEssenceDefinition);
-
                 a1 = essenceActivity;
             }
 
@@ -309,7 +332,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
             if(i==9){
                 sprintPlanningActivity = new EssenceActivity(sprintPlanningInEssenceDefinition);
-
+                sprintPlanningActivity.getParameters()[0].setMultipleInput(true);
                 a1 = sprintPlanningActivity;
             }
 

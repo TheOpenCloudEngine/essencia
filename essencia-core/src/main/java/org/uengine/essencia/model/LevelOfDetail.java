@@ -22,6 +22,7 @@ public class LevelOfDetail extends LanguageElement implements IElement, FaceTran
 	private TextContext name;
 	private TextContext description;
 	private boolean isSufficientLevel;
+	private String aggregationAlphaState;
 
 	@Hidden
 	public List<CheckPoint> getList() {
@@ -158,4 +159,11 @@ public class LevelOfDetail extends LanguageElement implements IElement, FaceTran
 		setList(getListFace().createValue());
 	}
 
+	public String getAggregationAlphaState() {
+		return aggregationAlphaState;
+	}
+
+	public void setAggregationAlphaState(String aggregationAlphaState) {
+		this.aggregationAlphaState = aggregationAlphaState;
+	}
 }

@@ -119,7 +119,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
             state.setParentAlpha(sprintAlpha); //TODO: should be removed. alpha.setList should do this.
         }
 
-        workAlpha.setChildElements(new ArrayList<Alpha>());
+        workAlpha.setChildElements(new ArrayList<LanguageElement>());
         workAlpha.getChildElements().add(sprintAlpha);
 
         sprintAlpha.setList(statesOfSprint);
