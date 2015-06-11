@@ -6,6 +6,7 @@ import org.metaworks.widget.ModalWindow;
 import org.springframework.stereotype.Component;
 import org.uengine.codi.mw3.model.InstanceTooltip;
 import org.uengine.essencia.enactment.AlphaGameBoard;
+import org.uengine.essencia.enactment.GameBoard;
 
 @Component
 public class EssenciaInstanceTooltip extends InstanceTooltip{
@@ -16,10 +17,8 @@ public class EssenciaInstanceTooltip extends InstanceTooltip{
     @Override
     @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)
     public ModalWindow monitor() throws Exception{
-        ModalWindow modal = new ModalWindow(new AlphaGameBoard());
+        ModalWindow modal = new ModalWindow(new GameBoard((EssenceProcessDefinition)));
         return modal;
     }
-
-
 
 }
