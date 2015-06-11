@@ -7,17 +7,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.metaworks.MetaworksContext;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.modeling.IResource;
 
+@Ignore
 public class CompositeEditorTest {
 	static List<CompositeEditor> editorList = new ArrayList<CompositeEditor>();
 

@@ -19,6 +19,7 @@ import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.*;
+import org.uengine.kernel.bpmn.StartEvent;
 import org.uengine.kernel.view.HumanActivityView;
 import org.uengine.modeling.*;
 
@@ -185,8 +186,24 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
                 laneCnt++;
             }
+            if (returnProcessDefinition.getChildActivities().size() == 0) {
+                StartEvent s = new StartEvent();
+                s.setTracingTag("0");
+                ElementView view = s.createView();
+                view.setShapeId("OG.shape.bpmn.E_Start");
+                view.setHeight("32");
+                view.setWidth("32");
+                int temp = Integer.valueOf(roleView.getX()) - 83;
 
-            //make essence activity
+                view.setX(temp);
+                view.setY(roleView.getY());
+                s.setElementView(view);
+                returnProcessDefinition.getChildActivities().add(s);
+
+            }
+
+
+                //make essence activity
             EssenceActivity essenceActivity = new EssenceActivity((Activity) element);
             humanView = essenceActivity.createView();
 
@@ -214,6 +231,20 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
             returnProcessDefinition.addChildActivity(essenceActivity);
 
+        }
+        if (returnProcessDefinition.getChildActivities().size() != 0) {
+            EndEvent e = new EndEvent();
+            e.setTracingTag("99");
+            ElementView view = e.createView();
+            view.setShapeId("OG.shape.bpmn.E_End");
+            view.setHeight("32");
+            view.setWidth("32");
+            int temp = Integer.valueOf(humanView.getX()) + 83;
+
+            view.setX(temp);
+            view.setY(humanView.getY());
+            e.setElementView(view);
+            returnProcessDefinition.getChildActivities().add(e);
         }
 
         Role[] roleArray = {};

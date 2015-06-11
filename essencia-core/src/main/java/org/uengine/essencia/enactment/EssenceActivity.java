@@ -140,6 +140,7 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
     public void beforeSerialization() {
         for(ParameterContext parameterContext : getParameters()){
             if(parameterContext.getVariable()!=null){
+                parameterContext.getVariable().setName(parameterContext.getArgument().getText());
                 ProcessVariable realPV = getProcessDefinition().getProcessVariable(parameterContext.getVariable().getName());
                 parameterContext.setVariable(realPV);
             }

@@ -2,6 +2,7 @@ package org.uengine.essencia.model.card;
 
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.BasicElement;
+import org.uengine.essencia.modeling.canvas.CardCanvas;
 import org.uengine.modeling.Canvas;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
@@ -68,11 +69,11 @@ public abstract class BasicCard implements Card{
 			this.description.setText(description);
 		}
 
-	protected Canvas canvas;
-		public Canvas getCanvas() {
+	protected CardCanvas canvas;
+		public CardCanvas getCanvas() {
 			return canvas;
 		}
-		public void setCanvas(Canvas canvas) {
+		public void setCanvas(CardCanvas canvas) {
 			this.canvas = canvas;
 		}
 	
@@ -81,7 +82,7 @@ public abstract class BasicCard implements Card{
 	public BasicCard(){
 		this.name = new TextContext();
 		this.description = new TextContext();
-		setCanvas(new Canvas());
+		setCanvas(new CardCanvas());
 	}
 	
 	protected void makeRelation(String prefix){
