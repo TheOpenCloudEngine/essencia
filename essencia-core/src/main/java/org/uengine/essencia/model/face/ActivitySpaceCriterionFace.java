@@ -37,7 +37,7 @@ public class ActivitySpaceCriterionFace extends CriterionFace {
         List<LanguageElement> returnList = new ArrayList<LanguageElement>();
         for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
             Criterion criterion = new CompletionCriterion();
-            criterion.setUpState(((CriterionSelectBoxFace) box).getSubSelectBox().getSelectedText(), box.getMainSelectBox().getSelectedText());
+            criterion.setUpState(((CriterionSelectBoxFace) box).getSubSelectBox().getSelected(), box.getMainSelectBox().getSelected());
             returnList.add(criterion);
         }
 

@@ -25,63 +25,63 @@ public class ActivityView extends LanguageElementView {
     }
 
     public ActivityView(IElement element) {
-	super(element);
+        super(element);
     }
 
     @Override
     public Symbol createSymbol() {
-	Symbol symbol = new Symbol();
-	symbol.setName("Activity");
-	symbol.setShapeId(SHAPE_ID);
-	symbol.setHeight(56);
-	symbol.setWidth(96);
-	symbol.setShapeType("GEOM");
-	symbol.setElementClassName(Activity.class.getName());
-	return symbol;
+        Symbol symbol = new Symbol();
+        symbol.setName("Activity");
+        symbol.setShapeId(SHAPE_ID);
+        symbol.setHeight(56);
+        symbol.setWidth(96);
+        symbol.setShapeType(GEOM_TYPE);
+        symbol.setElementClassName(Activity.class.getName());
+        return symbol;
     }
 
     public EssenciaKernelSymbol createKernelSymbol() {
-	EssenciaKernelSymbol symbol = new EssenciaKernelSymbol();
-	symbol.setShapeId(SHAPE_ID);
-	symbol.setHeight(56);
-	symbol.setWidth(96);
-	symbol.setShapeType("GEOM");
-	symbol.setElementClassName(Activity.class.getName());
-	return symbol;
+        EssenciaKernelSymbol symbol = new EssenciaKernelSymbol();
+        symbol.setShapeId(SHAPE_ID);
+        symbol.setHeight(56);
+        symbol.setWidth(96);
+        symbol.setShapeType(GEOM_TYPE);
+        symbol.setElementClassName(Activity.class.getName());
+        return symbol;
     }
 
     @Override
     public Object showProperty() throws Exception {
-	List<ElementView> list = new ArrayList<ElementView>();
-	for (ElementView e : essenciaCanvas.getSafeElementViewList()) {
-	    if (e instanceof AlphaView) {
-		list.add(e);
-	    } else if (e instanceof WorkProductView) {
-		list.add(e);
-	    } else if (e instanceof CompetencyView) {
-		list.add(e);
-	    } else if (e instanceof ActivitySpaceView) {
-		if (getFromEdge() != null) {
-		    String[] fromEdges = getFromEdge().split(",");
-		    //the activitySpace doesn't have any child activity
-		    if(e.getToEdge() == null){
-			continue;
-		    }
-		    String[] toEdges = e.getToEdge().split(",");
-		    for (String fromEdeg : fromEdges) {
-			for (String toEdge : toEdges) {
-			    if (fromEdeg.equals(toEdge)) {
-				list.add(e);
-			    }
-			}
-		    }
-		}
-	    }
-	}
+        List<ElementView> list = new ArrayList<ElementView>();
+        for (ElementView e : essenciaCanvas.getSafeElementViewList()) {
+            if (e instanceof AlphaView) {
+                list.add(e);
+            } else if (e instanceof WorkProductView) {
+                list.add(e);
+            } else if (e instanceof CompetencyView) {
+                list.add(e);
+            } else if (e instanceof ActivitySpaceView) {
+                if (getFromEdge() != null) {
+                    String[] fromEdges = getFromEdge().split(",");
+                    //the activitySpace doesn't have any child activity
+                    if (e.getToEdge() == null) {
+                        continue;
+                    }
+                    String[] toEdges = e.getToEdge().split(",");
+                    for (String fromEdeg : fromEdges) {
+                        for (String toEdge : toEdges) {
+                            if (fromEdeg.equals(toEdge)) {
+                                list.add(e);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-	ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
-	ContextUtil.setHow(panel, "dynamicSize");
-	return new ModalWindow(panel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() + "]");
+        ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
+        ContextUtil.setHow(panel, "dynamicSize");
+        return new ModalWindow(panel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() + "]");
     }
 
 }

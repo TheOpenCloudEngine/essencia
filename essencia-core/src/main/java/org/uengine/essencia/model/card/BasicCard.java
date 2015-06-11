@@ -3,10 +3,9 @@ package org.uengine.essencia.model.card;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.modeling.canvas.CardCanvas;
-import org.uengine.modeling.Canvas;
-import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IElement;
-import org.uengine.modeling.Symbol;
+import org.uengine.kernel.bpmn.SequenceFlow;
+import org.uengine.kernel.bpmn.view.SequenceFlowView;
+import org.uengine.modeling.*;
 
 
 public abstract class BasicCard implements Card{
@@ -86,8 +85,7 @@ public abstract class BasicCard implements Card{
 	}
 	
 	protected void makeRelation(String prefix){
-		//TODO :
-		/*Transition transition = new Transition();
+		SequenceFlow transition = new SequenceFlow();
 		RelationView view = transition.createView();
 		setSymbol(view.createSymbol());
 		
@@ -98,7 +96,7 @@ public abstract class BasicCard implements Card{
 		view.setFrom(prefix + String.valueOf(trcTag - 1) + TERMINAL_IN_OUT);
 		view.setTo(prefix + String.valueOf(trcTag + 1) + TERMINAL_IN_OUT);
 		
-		getCanvas().getRelationViewList().add(view);*/
+		getCanvas().getRelationViewList().add(view);
 	}
 	
 	protected void makeUpView(IElement element){

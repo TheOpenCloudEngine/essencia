@@ -27,7 +27,7 @@ public final static String SHAPE_ID = "OG.shape.essencia.Competency";
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(96);
 		symbol.setWidth(96);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(Competency.class.getName());
 		
 		return symbol;
@@ -39,7 +39,7 @@ public final static String SHAPE_ID = "OG.shape.essencia.Competency";
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(96);
 		symbol.setWidth(96);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(Competency.class.getName());
 		
 		return symbol;

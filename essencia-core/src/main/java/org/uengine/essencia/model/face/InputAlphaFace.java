@@ -39,7 +39,7 @@ public class InputAlphaFace extends AbstractInputAndCriterionFace {
     public List<LanguageElement> createValue() {
         List<LanguageElement> returnList = new ArrayList<LanguageElement>();
         for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
-            Alpha alpha = new Alpha(box.getMainSelectBox().getSelectedText());
+            Alpha alpha = new Alpha(box.getMainSelectBox().getSelected());
             returnList.add(alpha);
         }
 

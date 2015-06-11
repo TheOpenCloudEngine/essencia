@@ -24,7 +24,7 @@ public class LevelOfDetailView extends LanguageElementView {
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(40);
 		symbol.setWidth(176);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(LevelOfDetail.class.getName());
 		return symbol;
 	}

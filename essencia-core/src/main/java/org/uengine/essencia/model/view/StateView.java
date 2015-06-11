@@ -24,7 +24,7 @@ public class StateView extends LanguageElementView {
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(40);
 		symbol.setWidth(96);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(State.class.getName());
 		return symbol;
 	}
