@@ -35,7 +35,7 @@ public class ActivitySpaceView extends LanguageElementView implements KernelLang
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(56);
 		symbol.setWidth(96);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(ActivitySpace.class.getName());
 		return symbol;
 	}
@@ -46,7 +46,7 @@ public class ActivitySpaceView extends LanguageElementView implements KernelLang
 		symbol.setShapeId(SHAPE_ID);
 		symbol.setHeight(56);
 		symbol.setWidth(96);
-		symbol.setShapeType("GEOM");
+		symbol.setShapeType(GEOM_TYPE);
 		symbol.setElementClassName(ActivitySpace.class.getName());
 		return symbol;
 	}

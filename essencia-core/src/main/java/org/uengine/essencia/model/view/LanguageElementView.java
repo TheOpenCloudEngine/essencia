@@ -20,49 +20,22 @@ import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.Symbol;
 
-/**
- * @author jyj
- */
 public abstract class LanguageElementView extends ElementView {
 
-    @AutowiredFromClient
-    public CardCanvas cardCanvas;
+    public static final String GEOM_TYPE = "GEOM";
 
     public LanguageElementView() {
-        setMetaworksContext(new MetaworksContext());
     }
 
     public LanguageElementView(IElement element) {
         super(element);
     }
 
-    @Override
-    abstract public Symbol createSymbol();
-
-    public Symbol createKernelSymbol() {
-        return null;
-    }
-
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_STICK)
     public Object showProperty() throws Exception {
-        ModalWindow modal = null;
-        if (cardCanvas != null && (this instanceof AlphaView || this instanceof WorkProductView) ) {
-            //instance card view
-            if (getElement() instanceof CardViewable) {
-                if(this instanceof  AlphaView){
-                    AlphaInstance alphaInstance = ((Alpha)getElement()).createInstance("<null>");
-                    modal = new ModalWindow(alphaInstance, 650, 600, "Card View");
-                } else {
-                    LanguageElementInstanceFace ff = new LanguageElementInstanceFace(this);
-                    modal = new ModalWindow(ff, 650, 600, "Card View");
-                }
-            }
-        } else {
-            EssenciaPropertyPanel propertyPanel = new EssenciaPropertyPanel(this);
-            ContextUtil.setHow(propertyPanel, "dynamicSize");
-            modal = new ModalWindow(propertyPanel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() + "]");
-
-        }
+        EssenciaPropertyPanel propertyPanel = new EssenciaPropertyPanel(this);
+        ContextUtil.setHow(propertyPanel, "dynamicSize");
+        ModalWindow modal = new ModalWindow(propertyPanel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() + "]");
         return modal;
     }
 
