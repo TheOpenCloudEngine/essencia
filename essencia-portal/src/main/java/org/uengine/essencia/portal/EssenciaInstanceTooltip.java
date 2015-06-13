@@ -28,7 +28,10 @@ public class EssenciaInstanceTooltip extends InstanceTooltip{
 
         PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)instance.getProcessDefinition()).getPracticeDefinition();
 
-        ModalWindow modal = new ModalWindow(new GameBoard(practiceDefinition, instance));
+        ModalWindow modal = new ModalWindow(
+                new GameBoard(practiceDefinition, instance)
+
+        );
 
 
         return modal;

@@ -8,10 +8,10 @@ import org.uengine.kernel.GlobalContext;
 
 public class ObjectRepository {
 	private static ObjectRepository instance = new ObjectRepository();
-	private Map<String, Object> repository;
+	//private Map<String, Object> repository;
 	
 	private ObjectRepository(){
-		this.repository = new HashMap<String, Object>();
+		/*this.repository = new HashMap<String, Object>();*/
 	}
 	
 	public static ObjectRepository getInstance(){
@@ -33,16 +33,16 @@ public class ObjectRepository {
 	}
 	
 	public Object get(Resource resource, boolean fromCache) throws Exception {
-		if(fromCache && this.repository.containsKey(resource.getPath()))
+		/*if(fromCache && this.repository.containsKey(resource.getPath()))
 			return this.repository.get(resource.getPath());
-
+*/
 		return this.deserialize(resource);
 	}
 
 	
 	public void put(Resource resource, Object value) throws Exception {
 			this.serialize(resource, value);
-			this.repository.put(resource.getPath(), this.deserialize(resource));
+			//this.repository.put(resource.getPath(), this.deserialize(resource));
 	}
 
 	private String serialize(Resource resource, Object value) throws Exception {

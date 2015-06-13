@@ -36,7 +36,7 @@ public class ActivityCard extends BasicCard {
 
         int elementIndex = 0;
         y = -30;
-        for (LanguageElement e : ((Activity) element).getEntryCriteriaPanel().createValue()) {
+        for (LanguageElement e : ((Activity) element).getEntryCriteria()) {
             Criterion criterion = (Criterion) e;
             setSymbol((new AlphaView()).createSymbol());
             setView(criterion.getState().getParentAlpha().createView());

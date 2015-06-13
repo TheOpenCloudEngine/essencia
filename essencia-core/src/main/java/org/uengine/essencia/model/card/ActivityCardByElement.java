@@ -29,7 +29,7 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
         setName(element.getName());
         String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<span>The activity is completed when:</span>";
 
-        List<LanguageElement> entryList = null;
+        List<Criterion> entryList = null;
         List<LanguageElement> completionList = null;
         List<LanguageElement> workProductList = null;
 
@@ -114,8 +114,9 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
             x = getXCoordinate(elementIndex);
             y = getYCoordinate(y, elementIndex);
 
-            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
-                    + ")");
+            ///TODO:  Never do like this: model will be re-used. so, it may distort operation
+//            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
+//                    + ")");
             getView().fill(getSymbol());
             getView().setX(String.valueOf(x));
             getView().setY(String.valueOf(y));
@@ -136,8 +137,10 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
             x = getXCoordinate(elementIndex);
             y = getYCoordinate(y, elementIndex);
 
-            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
-                    + ")");
+            //TODO: never do this: instance data may harm the definition data. two should be separated by context input
+//            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
+//                    + ")");
+
             getView().fill(getSymbol());
             getView().setX(String.valueOf(x));
             getView().setY(String.valueOf(y));

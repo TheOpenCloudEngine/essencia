@@ -73,8 +73,10 @@ public class FileUtil {
 			e.printStackTrace();
 		}finally{
 			 try {
-				osw.close();
-				fos.close();
+				if(osw!=null)
+					osw.close();
+				if(fos!=null)
+					fos.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
