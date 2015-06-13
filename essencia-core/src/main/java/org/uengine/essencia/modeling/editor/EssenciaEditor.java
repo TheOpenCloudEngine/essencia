@@ -39,7 +39,10 @@ import org.uengine.modeling.IResource;
 public abstract class EssenciaEditor extends CompositeEditor {
 
 	@AutowiredFromClient
-	public Session session;
+	public Session essenciaSession;
+
+	@AutowiredFromClient
+	public org.uengine.codi.mw3.model.Session session;
 	
 	private EditorMenu menu;
 	
@@ -93,9 +96,9 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	@ServiceMethod(callByContent = true, eventBinding = EditorContext.CHECK_OUT, target = ServiceMethodContext.TARGET_APPEND)
 	public Object[] checkOut() throws Exception {
 		if(getResource() instanceof Lockable){
-			((Lockable)getResource()).lock(session.getUser());
+			((Lockable)getResource()).lock(essenciaSession.getUser());
 			
-			load(session, getResource());
+			load(essenciaSession, getResource());
 			
 			return new Object[] { new Refresh(this, false, true) };
 		}
@@ -106,9 +109,9 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	@ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
 	public Object[] checkIn() throws Exception {
 		if(getResource() instanceof Lockable){
-			((Lockable)getResource()).unlock(session.getUser());
+			((Lockable)getResource()).unlock(essenciaSession.getUser());
 			
-			load(session, getResource());
+			load(essenciaSession, getResource());
 			
 			return new Object[] { new Refresh(this, false, true) };
 		}
@@ -144,7 +147,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		validate();
 		
 		rename();
-		processNewResource(getResource(), session.getUser());
+		processNewResource(getResource(), essenciaSession.getUser());
 
 		super.save();
 		
@@ -155,7 +158,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
         if(getResource() instanceof Commitable){
             CommitRecord record = new CommitRecord();
             record.setResources(getResource().getName());
-            record.setAuthor(session.getUser().getEmpName());
+            record.setAuthor(essenciaSession.getUser().getEmpName());
 
             Commitable commitable = (Commitable)getResource();
             commitable.setRecord(record);
@@ -173,7 +176,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 			return new Object[] { new ModalWindow(new ConfirmPanel(ConfirmPanel.DUPLICATED, ue.getMessage()), 300, 200) };
 		}
 		
-		load(session, getResource());
+		load(essenciaSession, getResource());
 		
 		return new Object[] { 
 				new ToEvent(getResource().getParent(), EssenciaEventContext.REFRESH, true), 

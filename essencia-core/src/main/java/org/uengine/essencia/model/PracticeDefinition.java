@@ -157,8 +157,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
      */
     public ProcessDefinition toProcessDefinition() {
         ProcessDefinition returnProcessDefinition = new EssenceProcessDefinition();
-        ((EssenceProcessDefinition)returnProcessDefinition).setPracticeDefinition(this);
-        returnProcessDefinition.setId(getName().getText());
+        ((EssenceProcessDefinition) returnProcessDefinition).setPracticeDefinition(this);
+//        returnProcessDefinition.setId(getName().getText());
 
         List<Role> roleList = new ArrayList<>();
         List<ProcessVariable> pvList = new ArrayList<>();
@@ -188,24 +188,24 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
                 laneCnt++;
             }
-            if (returnProcessDefinition.getChildActivities().size() == 0) {
-                StartEvent s = new StartEvent();
-                s.setTracingTag("0");
-                ElementView view = s.createView();
-                view.setShapeId("OG.shape.bpmn.E_Start");
-                view.setHeight("32");
-                view.setWidth("32");
-                int temp = Integer.valueOf(roleView.getX()) - 83;
+//            if (returnProcessDefinition.getChildActivities().size() == 0) {
+//                StartEvent s = new StartEvent();
+//                s.setTracingTag("0");
+//                ElementView view = s.createView();
+//                view.setShapeId("OG.shape.bpmn.E_Start");
+//                view.setHeight("32");
+//                view.setWidth("32");
+//                int temp = Integer.valueOf(roleView.getX()) - 83;
+//
+//                view.setX(temp);
+//                view.setY(roleView.getY());
+//                s.setElementView(view);
+//                returnProcessDefinition.getChildActivities().add(s);
+//
+//            }
 
-                view.setX(temp);
-                view.setY(roleView.getY());
-                s.setElementView(view);
-                returnProcessDefinition.getChildActivities().add(s);
 
-            }
-
-
-                //make essence activity
+            //make essence activity
             EssenceActivity essenceActivity = new EssenceActivity((Activity) element);
             humanView = essenceActivity.createView();
 
@@ -234,20 +234,20 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             returnProcessDefinition.addChildActivity(essenceActivity);
 
         }
-        if (returnProcessDefinition.getChildActivities().size() != 0) {
-            EndEvent e = new EndEvent();
-            e.setTracingTag("99");
-            ElementView view = e.createView();
-            view.setShapeId("OG.shape.bpmn.E_End");
-            view.setHeight("32");
-            view.setWidth("32");
-            int temp = Integer.valueOf(humanView.getX()) + 83;
-
-            view.setX(temp);
-            view.setY(humanView.getY());
-            e.setElementView(view);
-            returnProcessDefinition.getChildActivities().add(e);
-        }
+//        if (returnProcessDefinition.getChildActivities().size() != 0) {
+//            EndEvent e = new EndEvent();
+//            e.setTracingTag("99");
+//            ElementView view = e.createView();
+//            view.setShapeId("OG.shape.bpmn.E_End");
+//            view.setHeight("32");
+//            view.setWidth("32");
+//            int temp = Integer.valueOf(humanView.getX()) + 83;
+//
+//            view.setX(temp);
+//            view.setY(humanView.getY());
+//            e.setElementView(view);
+//            returnProcessDefinition.getChildActivities().add(e);
+//        }
 
         Role[] roleArray = {};
         roleArray = roleList.toArray(roleArray);
@@ -258,8 +258,10 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         ProcessVariable pv = null;
         for (Alpha alpha : getElements(Alpha.class)) {
             AlphaInstance alphaInstance = alpha.createInstance(alpha.getName());
-            for(Property property : alpha.getPropertyList()){
-                alphaInstance.setProperty(property.getKey(), property.getType());
+            if (alpha.getPropertyList() != null) {
+                for (Property property : alpha.getPropertyList()) {
+                    alphaInstance.setProperty(property.getKey(), property.getType());
+                }
             }
             //여기서 property를 다 set 해주어야할듯
 
@@ -273,8 +275,10 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
         for (WorkProduct workProduct : getElements(WorkProduct.class)) {
             LanguageElementInstance workProductInstance = workProduct.createInstance(workProduct.getName());
-            for(Property property : workProduct.getPropertyList()){
-                workProductInstance.setProperty(property.getKey(), property.getType());
+            if (workProduct.getPropertyList() != null) {
+                for (Property property : workProduct.getPropertyList()) {
+                    workProductInstance.setProperty(property.getKey(), property.getType());
+                }
             }
             pv = new ProcessVariable(new Object[]{
                     "name", workProduct.getName(),

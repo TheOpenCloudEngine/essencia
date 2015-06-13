@@ -3,13 +3,18 @@ package org.uengine.essencia.designer;
 import org.metaworks.EventContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.ToEvent;
+import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.IContent;
 import org.uengine.essencia.i18n.Locale;
 import org.uengine.essencia.modeling.editor.EmptyEditor;
 
 public class Designer implements IContent {
+
+	@AutowiredFromClient
+	public Session session;
 
 	public Designer() {
 	}

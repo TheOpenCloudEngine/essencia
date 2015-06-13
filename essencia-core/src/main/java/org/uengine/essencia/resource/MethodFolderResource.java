@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.metaworks.Refresh;
 import org.metaworks.annotation.*;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.designer.Designer;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
@@ -15,6 +16,9 @@ import org.uengine.modeling.IResource;
 
 	
 public class MethodFolderResource extends ContainerResource {
+
+	@AutowiredFromClient
+	public Session session;
 
 	@AutowiredFromClient
 	public Designer designer;
