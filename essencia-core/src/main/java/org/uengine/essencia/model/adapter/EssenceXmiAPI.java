@@ -468,7 +468,7 @@ public class EssenceXmiAPI {
 			element = competency;
 		} else if (essenceElement instanceof Essence.ActivitySpaceAndActivity.Activity) {
 			Activity activity = new Activity();
-			activity.setEntryCriteria(new ArrayList<Criterion>());
+			activity.setEntryCriteria(new ArrayList<LanguageElement>());
 			activity.setCompletionCriteria(new ArrayList<LanguageElement>());
 			activity.setRequiredCompetencyLevel(new ArrayList<LanguageElement>());
 			activity.setName(((Essence.ActivitySpaceAndActivity.Activity) essenceElement).getName());

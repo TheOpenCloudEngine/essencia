@@ -141,7 +141,7 @@ public class MethodEnactmentTest extends UEngineTest{
         Criterion criterion = new Criterion();
         criterion.setState(identified);
 
-        List<Criterion> criteriaList = new ArrayList<Criterion>();
+        List<LanguageElement> criteriaList = new ArrayList<LanguageElement>();
         criteriaList.add(criterion);
 
         activityInEssenceDefinition.setEntryCriteria(criteriaList);
