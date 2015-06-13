@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import org.metaworks.EventContext;
 import org.metaworks.Refresh;
@@ -38,7 +37,7 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	public EditorPanel editorPanel;
 
 	@AutowiredFromClient
-	public Session session;
+	public Session essenciaSession;
 
 	private boolean locked;
 
@@ -184,13 +183,13 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	@Available(condition="!locked")
 	@ServiceMethod(callByContent=true, inContextMenu=true)
 	public void checkOut() throws Exception {
-		this.lock(session.getUser());
+		this.lock(essenciaSession.getUser());
 	}
 
 	@Available(condition = "locked")
 	@ServiceMethod(callByContent = true, inContextMenu = true)
 	public void checkIn() throws Exception {
-		this.unlock(session.getUser());
+		this.unlock(essenciaSession.getUser());
 	}
 
     public void commit() throws Exception {

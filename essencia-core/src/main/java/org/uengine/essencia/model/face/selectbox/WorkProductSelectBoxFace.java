@@ -14,15 +14,15 @@ public class WorkProductSelectBoxFace extends CriterionSelectBoxFace {
 
     @Override
     public void selectBoxChanged() {
-	setSubSelectBox(new EssenciaSelectBox());
-	for (IElement e : essenciaCanvas.takeElementList()) {
-	    if (e instanceof WorkProduct && getMainSelectBox().getSelectedText().equals(((WorkProduct) e).getName())) {
-		for (LevelOfDetail l : ((WorkProduct) e).getList()) {
-		    getSubSelectBox().add(l.getName(), l.getName());
-		}
-	    }
-	}
-	ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+        setSubSelectBox(new EssenciaSelectBox());
+        for (IElement e : essenciaCanvas.takeElementList()) {
+            if (e instanceof WorkProduct && getMainSelectBox().getSelectedText().equals(((WorkProduct) e).getName())) {
+                for (LevelOfDetail l : ((WorkProduct) e).getList()) {
+                    getSubSelectBox().add(l.getName(), l.getName());
+                }
+            }
+        }
+        ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
     }
 
 }

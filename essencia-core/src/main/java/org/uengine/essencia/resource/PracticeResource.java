@@ -16,7 +16,7 @@ public class PracticeResource extends ModelResource {
 	@Override
 	public Editor createEditor() throws Exception {
 		PracticeDefinerEditor editor = new PracticeDefinerEditor();
-		editor.load(session, this);
+		editor.load(essenciaSession, this);
 		
 		return editor; 
 	}

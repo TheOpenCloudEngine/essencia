@@ -5,10 +5,7 @@ import java.util.List;
 
 import org.uengine.essencia.component.EssenciaSelectBox;
 import org.uengine.essencia.context.EssenciaContext;
-import org.uengine.essencia.model.ActivitySpace;
-import org.uengine.essencia.model.CompletionCriterion;
-import org.uengine.essencia.model.Criterion;
-import org.uengine.essencia.model.LanguageElement;
+import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.face.selectbox.AbstractSelectBoxFace;
 import org.uengine.essencia.model.face.selectbox.ActivityCompletionCriterionSelectBoxFace;
 import org.uengine.essencia.model.face.selectbox.CriterionSelectBoxFace;
@@ -19,12 +16,17 @@ public class ActivityCompletionCriterionFace extends CriterionFace {
     @Override
     public void add() {
         CriterionSelectBoxFace box = new ActivityCompletionCriterionSelectBoxFace();
+//        for (IElement e : getElementListFromCanvas()) {
+//            if (e instanceof ActivitySpace && !"".equals(((ActivitySpace) e).getName())) {
+//                for (LanguageElement temp : ((ActivitySpace) e).getCompletionCriteria()) {
+//                    Criterion c = (Criterion) temp;
+//                    box.getMainSelectBox().add(c.getState().getParentAlpha().getName(), c.getState().getParentAlpha().getName());
+//                }
+//            }
+//        }
         for (IElement e : getElementListFromCanvas()) {
-            if (e instanceof ActivitySpace && !"".equals(((ActivitySpace) e).getName())) {
-                for (LanguageElement temp : ((ActivitySpace) e).getCompletionCriteria()) {
-                    Criterion c = (Criterion) temp;
-                    box.getMainSelectBox().add(c.getState().getParentAlpha().getName(), c.getState().getParentAlpha().getName());
-                }
+            if (e instanceof Alpha && !"".equals(((Alpha) e).getName())) {
+                box.getMainSelectBox().add(((Alpha) e).getName(), ((Alpha) e).getName());
             }
         }
         ContextUtil.setWhen(box, EssenciaContext.WHEN_EDIT);
