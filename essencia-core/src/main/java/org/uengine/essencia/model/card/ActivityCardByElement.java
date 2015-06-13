@@ -9,6 +9,7 @@ import org.uengine.essencia.model.view.AlphaView;
 import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.WorkProductView;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.kernel.GlobalContext;
 import org.uengine.modeling.IElement;
 
 import java.util.ArrayList;
@@ -21,6 +22,12 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
 
     public ActivityCardByElement(BasicElement element) {
         this();
+
+        try {
+            element = (BasicElement) GlobalContext.deserialize(GlobalContext.serialize(element, String.class), String.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         makeCard(element);
     }
 
@@ -136,8 +143,8 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
             x = getXCoordinate(elementIndex);
             y = getYCoordinate(y, elementIndex);
 
-            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
-                    + ")");
+//            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
+//                    + ")");
             getView().fill(getSymbol());
             getView().setX(String.valueOf(x));
             getView().setY(String.valueOf(y));

@@ -76,7 +76,8 @@ public class Criterion extends LanguageElement {
 
             try {
                 for (AlphaInstance alphaInstance : alphaInstances) {
-                    alphaInstance.advanceState(instance);
+                    if(alphaInstance!=null)
+                        alphaInstance.advanceState(instance);
                 }
             }catch(NotCompletableException nce){
                 validationContext.add(nce.getMessage());
