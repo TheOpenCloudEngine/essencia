@@ -54,8 +54,8 @@ public class ActivityCard extends BasicCard {
             getView().setElement(criterion.getState().getParentAlpha());
             getView().setId(String.valueOf(trcTag++));
 
-            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
-                    + ")");
+            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName());// + "(" + criterion.getState().getName()
+//                    + ")");
 
             getCanvas().getElementViewList().add(getView());
             elementIndex++;
@@ -104,8 +104,8 @@ public class ActivityCard extends BasicCard {
             x = getXCoordinate(elementIndex);
             y = getYCoordinate(y, elementIndex);
 
-            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
-                    + ")");
+            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName());// + "(" + criterion.getState().getName()
+//                    + ")");
             getView().fill(getSymbol());
             getView().setX(String.valueOf(x));
             getView().setY(String.valueOf(y));
@@ -127,8 +127,8 @@ public class ActivityCard extends BasicCard {
             x = getXCoordinate(elementIndex);
             y = getYCoordinate(y, elementIndex);
 
-            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
-                    + ")");
+            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName());// + "(" + criterion.getLevelOfDetail().getName()
+                    //+ ")");
             getView().fill(getSymbol());
             getView().setX(String.valueOf(x));
             getView().setY(String.valueOf(y));
