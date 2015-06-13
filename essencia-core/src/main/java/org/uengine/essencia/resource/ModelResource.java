@@ -39,6 +39,9 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	@AutowiredFromClient
 	public Session essenciaSession;
 
+	@AutowiredFromClient
+	public org.uengine.codi.mw3.model.Session session;
+
 	private boolean locked;
 
     private CommitRecord record;
