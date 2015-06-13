@@ -144,11 +144,11 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		validate();
 		
 		rename();
-//		processNewResource(getResource(), session.getUser());
+		processNewResource(getResource(), session.getUser());
 
 		super.save();
 		
-//		commit();
+		commit();
 	}
 
     private void commit()throws Exception{

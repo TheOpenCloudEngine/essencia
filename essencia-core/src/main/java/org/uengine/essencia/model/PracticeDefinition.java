@@ -158,7 +158,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
     public ProcessDefinition toProcessDefinition() {
         ProcessDefinition returnProcessDefinition = new EssenceProcessDefinition();
         ((EssenceProcessDefinition)returnProcessDefinition).setPracticeDefinition(this);
-        returnProcessDefinition.setName(getName());
+        returnProcessDefinition.setId(getName().getText());
+
         List<Role> roleList = new ArrayList<>();
         List<ProcessVariable> pvList = new ArrayList<>();
 
@@ -256,20 +257,30 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         // these are make the recursive error in dwr
         ProcessVariable pv = null;
         for (Alpha alpha : getElements(Alpha.class)) {
+            AlphaInstance alphaInstance = alpha.createInstance(alpha.getName());
+            for(Property property : alpha.getPropertyList()){
+                alphaInstance.setProperty(property.getKey(), property.getType());
+            }
+            //여기서 property를 다 set 해주어야할듯
+
             pv = new ProcessVariable(new Object[]{
                     "name", alpha.getName(),
                     "type", AlphaInstance.class
             });
+            pv.setDefaultValue(alphaInstance);
             pvList.add(pv);
         }
 
         for (WorkProduct workProduct : getElements(WorkProduct.class)) {
-            LanguageElementInstance defaultWorkProduct = workProduct.createInstance("<id>");
+            LanguageElementInstance workProductInstance = workProduct.createInstance(workProduct.getName());
+            for(Property property : workProduct.getPropertyList()){
+                workProductInstance.setProperty(property.getKey(), property.getType());
+            }
             pv = new ProcessVariable(new Object[]{
                     "name", workProduct.getName(),
                     "type", LanguageElementInstance.class
             });
-            pv.setDefaultValue(defaultWorkProduct);
+            pv.setDefaultValue(workProductInstance);
             pvList.add(pv);
         }
 
