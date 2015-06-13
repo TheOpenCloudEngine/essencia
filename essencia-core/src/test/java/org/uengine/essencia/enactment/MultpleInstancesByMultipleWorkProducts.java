@@ -192,7 +192,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             Criterion criterion = new Criterion();
             criterion.setState(identified);
 
-            List<LanguageElement> criteriaList = new ArrayList<LanguageElement>();
+            List<Criterion> criteriaList = new ArrayList<Criterion>();
             criteriaList.add(criterion);
 
             activityInEssenceDefinition.setEntryCriteria(criteriaList);

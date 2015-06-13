@@ -11,11 +11,7 @@ import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.card.ActivityCard;
 import org.uengine.essencia.model.card.ActivityCardByElement;
 import org.uengine.essencia.model.card.Card;
-import org.uengine.essencia.model.face.ActivityCompletionCriterionFace;
-import org.uengine.essencia.model.face.ActivityEntryCriterionFace;
-import org.uengine.essencia.model.face.CriterionFace;
-import org.uengine.essencia.model.face.RequiredCompetencyLevelFace;
-import org.uengine.essencia.model.face.WorkProductFace;
+import org.uengine.essencia.model.face.*;
 import org.uengine.essencia.model.face.list.ActionListFace;
 import org.uengine.essencia.model.face.list.ApproachListFace;
 import org.uengine.essencia.util.ContextUtil;
@@ -23,7 +19,15 @@ import org.uengine.modeling.IElement;
 
 public class Activity extends AbstractActivity {
 
-    private List<LanguageElement> entryCriteria;
+    private List<Criterion> entryCriteria;
+    @Face(faceClass = CriterionListFace.class)
+        public List<Criterion> getEntryCriteria() {
+            return entryCriteria;
+        }
+        public void setEntryCriteria(List<Criterion> entryCriteria) {
+            this.entryCriteria = entryCriteria;
+        }
+
     private transient CriterionFace entryCriteriaPanel;
 
 //    private List<LanguageElement> workProductList;
@@ -36,14 +40,16 @@ public class Activity extends AbstractActivity {
     private transient ApproachListFace approachPanel;
     private transient ActionListFace actionPanel;
 
-    @Hidden
-    public List<LanguageElement> getEntryCriteria() {
-        return entryCriteria;
-    }
 
-    public void setEntryCriteria(List<LanguageElement> entryCriteria) {
-        this.entryCriteria = entryCriteria;
-    }
+    //TODO: old ways should be removed
+//    @Hidden
+//    public List<LanguageElement> getEntryCriteria() {
+//        return entryCriteria;
+//    }
+//
+//    public void setEntryCriteria(List<LanguageElement> entryCriteria) {
+//        this.entryCriteria = entryCriteria;
+//    }
 
 //    @Order(7)
 //    @Hidden
@@ -55,15 +61,15 @@ public class Activity extends AbstractActivity {
 //        this.workProductList = workProductList;
 //    }
 
-    @Order(5)
-    @Face(displayName = "EntryCriterion")
-    public CriterionFace getEntryCriteriaPanel() {
-        return entryCriteriaPanel;
-    }
-
-    public void setEntryCriteriaPanel(CriterionFace entryCriteriaPanel) {
-        this.entryCriteriaPanel = entryCriteriaPanel;
-    }
+//    @Order(5)
+//    @Face(displayName = "EntryCriterion")
+//    public CriterionFace getEntryCriteriaPanel() {
+//        return entryCriteriaPanel;
+//    }
+//
+//    public void setEntryCriteriaPanel(CriterionFace entryCriteriaPanel) {
+//        this.entryCriteriaPanel = entryCriteriaPanel;
+//    }
 
     @Face(displayName = "Action")
     public ActionListFace getActionPanel() {
@@ -168,8 +174,8 @@ public class Activity extends AbstractActivity {
         setRequiredCompetencyLevelFace(new RequiredCompetencyLevelFace());
         getRequiredCompetencyLevelFace().fill(elementList);
 
-        setEntryCriteriaPanel(new ActivityEntryCriterionFace());
-        getEntryCriteriaPanel().fill(elementList);
+//        setEntryCriteriaPanel(new ActivityEntryCriterionFace());
+//        getEntryCriteriaPanel().fill(elementList);
 
         setCompletionCriterionFace(new ActivityCompletionCriterionFace());
         getCompletionCriterionFace().fill(elementList);
@@ -188,10 +194,10 @@ public class Activity extends AbstractActivity {
             getRequiredCompetencyLevelFace().fillElements(getRequiredCompetencyLevel());
             getRequiredCompetencyLevel().clear();
         }
-        if (getEntryCriteria() != null) {
-            getEntryCriteriaPanel().fillElements(getEntryCriteria());
-            getEntryCriteria().clear();
-        }
+//        if (getEntryCriteria() != null) {
+//            getEntryCriteriaPanel().fillElements(getEntryCriteria());
+//            getEntryCriteria().clear();
+//        }
         if (getCompletionCriteria() != null) {
             List<LanguageElement> stateCriteria = new ArrayList<>();
             List<LanguageElement> levelOfDetailCriteria = new ArrayList<>();
@@ -215,7 +221,7 @@ public class Activity extends AbstractActivity {
 
         super.beforeApply();
         setRequiredCompetencyLevel(getRequiredCompetencyLevelFace().createValue());
-        setEntryCriteria(getEntryCriteriaPanel().createValue());
+//        setEntryCriteria(getEntryCriteriaPanel().createValue());
         setCompletionCriteria(getCompletionCriterionFace().createValue());
         getCompletionCriteria().addAll(getWorkProductFace().createValue());
     }
