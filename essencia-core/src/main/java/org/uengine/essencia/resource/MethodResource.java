@@ -15,9 +15,6 @@ import org.uengine.essencia.common.DeployPanel;
 
 public class MethodResource extends ModelResource {
 
-	@AutowiredFromClient
-	public Session session;
-	
 	public MethodResource() {
 		
 	}

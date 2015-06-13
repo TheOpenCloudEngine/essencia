@@ -1,5 +1,6 @@
 package org.uengine.essencia.model.card;
 
+import jdk.nashorn.internal.objects.Global;
 import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.Competency;
@@ -10,6 +11,7 @@ import org.uengine.essencia.model.view.ActivityArrowView;
 import org.uengine.essencia.model.view.AlphaView;
 import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.WorkProductView;
+import org.uengine.kernel.GlobalContext;
 
 public class ActivityCard extends BasicCard {
 
@@ -25,6 +27,12 @@ public class ActivityCard extends BasicCard {
 
     public ActivityCard(BasicElement element) {
         this();
+
+        try {
+            element = (BasicElement)GlobalContext.deserialize(GlobalContext.serialize(element, String.class), String.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         makeCard(element);
     }
 
