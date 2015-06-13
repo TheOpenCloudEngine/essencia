@@ -1,6 +1,6 @@
 <org.uengine.essencia.enactment.EssenceProcessDefinition>
   <name>
-    <text>이름없음</text>
+    <text>Noname</text>
   </name>
   <cost>0</cost>
   <retryLimit>0</retryLimit>

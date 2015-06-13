@@ -332,7 +332,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
             if(i==9){
                 sprintPlanningActivity = new EssenceActivity(sprintPlanningInEssenceDefinition);
-                sprintPlanningActivity.getParameters()[0].setMultipleInput(true);
+//                sprintPlanningActivity.getParameters()[0].setMultipleInput(true);
                 a1 = sprintPlanningActivity;
             }
 

@@ -10,7 +10,7 @@ import org.uengine.essencia.model.WorkProduct;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelOfDetailNameSelector extends SelectBox implements Face<String> {
+public class LevelOfDetailNameSelector extends SelectBox implements Face<String>, FieldFace<WorkProductInstance> {
     @Override
     public void setValueToFace(String value) {
         setSelectedValue(value);
@@ -21,5 +21,15 @@ public class LevelOfDetailNameSelector extends SelectBox implements Face<String>
         return getSelected();
     }
 
+    @Override
+    public void visitHolderObjectOfField(WorkProductInstance holderObject) {
 
+        ArrayList<String> options = new ArrayList<String>();
+        for(LevelOfDetail levelOfDetail : holderObject.getWorkProduct().getList()){
+            options.add(levelOfDetail.getName());
+        }
+
+        setOptionNames(options);
+        setOptionValues(options);
+    }
 }
