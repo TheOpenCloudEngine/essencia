@@ -227,7 +227,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             humanView.setX(rst);
             humanView.setY(roleView.getY());
 
-            essenceActivity.setTool(makeTool(element));
+//            essenceActivity.setTool(makeTool(element));
 
             essenceActivity.setElementView(humanView);
 
