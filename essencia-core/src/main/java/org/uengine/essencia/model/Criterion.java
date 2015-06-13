@@ -1,18 +1,14 @@
 package org.uengine.essencia.model;
 
-import org.metaworks.annotation.Face;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.enactment.NotCompletableException;
-import org.uengine.essencia.model.face.CriterionFace;
-import org.uengine.essencia.model.face.CriterionFace2;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ValidationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Face(faceClass= CriterionFace2.class)
 public class Criterion extends LanguageElement {
 
     private String description;
