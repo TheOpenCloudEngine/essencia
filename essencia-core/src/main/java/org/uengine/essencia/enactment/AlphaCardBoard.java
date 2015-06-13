@@ -6,7 +6,7 @@ public class AlphaCardBoard {
 
     public AlphaCardBoard() throws Exception {
         AlphaGameBoard alphaGameBoard = new AlphaGameBoard();
-        setAlphaInstance(alphaGameBoard.getAlphaInstances().get(alphaGameBoard.getAlpha().getName()).get(0));
+        setAlphaInstance((AlphaInstance) alphaGameBoard.getAlphaInstances().get(alphaGameBoard.getAlpha().getName()).get(0));
     }
 
     AlphaInstance alphaInstance;

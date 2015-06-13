@@ -21,7 +21,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     private String concern;
     private transient SelectBox concernSelectBox;
 
-    private List<Alpha> childElements;
+    private List<LanguageElement> childElements;
 
     private List<State> list;
     private transient StateListFace listFace;
@@ -54,14 +54,14 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     }
 
     @Hidden
-    public List<Alpha> getChildElements() {
+    public List<LanguageElement> getChildElements() {
         if (childElements == null) {
-            setChildElements(new ArrayList<Alpha>());
+            setChildElements(new ArrayList<LanguageElement>());
         }
         return childElements;
     }
 
-    public void setChildElements(List<Alpha> childElements) {
+    public void setChildElements(List<LanguageElement> childElements) {
         this.childElements = childElements;
     }
 

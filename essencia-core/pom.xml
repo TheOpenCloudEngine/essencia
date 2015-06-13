@@ -59,6 +59,10 @@
 
             <exclusions>
                 <exclusion>
+                    <groupId>org.uengine.metaworks</groupId>
+                    <artifactId>metaworks-dwr</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-core</artifactId>
                 </exclusion>
