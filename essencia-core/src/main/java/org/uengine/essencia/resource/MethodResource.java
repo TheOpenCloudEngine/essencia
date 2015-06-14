@@ -2,16 +2,21 @@ package org.uengine.essencia.resource;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
+import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.common.DeployPanel;
 
 public class MethodResource extends ModelResource {
+
+	@AutowiredFromClient
+	public Session session;
 	
 	public MethodResource() {
 		
@@ -24,7 +29,7 @@ public class MethodResource extends ModelResource {
 	@Override
 	public Editor createEditor() throws Exception {
 		MethodComposerEditor editor = new MethodComposerEditor();
-		editor.load(session, this);
+		editor.load(essenciaSession, this);
 		
 		return editor; 
 	}

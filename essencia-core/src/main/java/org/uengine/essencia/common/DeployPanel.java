@@ -9,10 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.metaworks.MetaworksContext;
+import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.SelectBox;
+import org.oce.garuda.multitenancy.TenantContext;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.repository.ObjectRepository;
 import org.uengine.essencia.resource.MethodResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
@@ -21,59 +24,99 @@ import org.uengine.kernel.GlobalContext;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.processmanager.ProcessManagerRemote;
 
-@Face(ejsPath="dwr/metaworks/genericfaces/FormFace.ejs")
+@Face(ejsPath = "dwr/metaworks/genericfaces/FormFace.ejs")
 public class DeployPanel {
 
-	private SelectBox selectBox;
-	private MetaworksContext metaworksContext;
-	private MethodResource resource;
+    @AutowiredFromClient
+    public Session session;
 
-	@Hidden
-	public MethodResource getResource() {
-		return resource;
-	}
+    private SelectBox selectBox;
+    private MetaworksContext metaworksContext;
+    private MethodResource resource;
 
-	public void setResource(MethodResource resource) {
-		this.resource = resource;
-	}
+    @Hidden
+    public MethodResource getResource() {
+        return resource;
+    }
 
-	public DeployPanel() {
-	}
-	
-	public DeployPanel(Resource resource) {
-		setResource((MethodResource)resource);
-		selectBox = new SelectBox();
-		List<CommitRecord> records = CommitUtils.getRecordsByFilename(resource.getName());
-		String name = "";
-		Iterator<CommitRecord> iterator = records.iterator();
-		SimpleDateFormat df = new SimpleDateFormat("yy.MM.dd. a hh:mm");
-		while(iterator.hasNext()){
+
+
+    public void setResource(MethodResource resource) {
+        this.resource = resource;
+    }
+
+    public DeployPanel() {
+    }
+
+    public DeployPanel(Resource resource) {
+        setResource((MethodResource) resource);
+        selectBox = new SelectBox();
+        List<CommitRecord> records = CommitUtils.getRecordsByFilename(resource.getName());
+        String name = "";
+        Iterator<CommitRecord> iterator = records.iterator();
+        SimpleDateFormat df = new SimpleDateFormat("yy.MM.dd. a hh:mm");
+        while (iterator.hasNext()) {
             CommitRecord record = iterator.next();
-			name = record.getResources();
-			name = name.substring(0, name.indexOf(".")) + ".process";
-			selectBox.add(String.valueOf(record.getRevision()) + " : " + record.getAuthor() + " "
-					+ df.format(record.getDate()), name + "." + String.valueOf(record.getRevision()) + ".rev");
-		}
-	}
-	
-	@Face(displayName="selectRevision")
-	public SelectBox getSelectBox() {
-		return selectBox;
-	}
-	public void setSelectBox(SelectBox selectBox) {
-		this.selectBox = selectBox;
-	}
-	public MetaworksContext getMetaworksContext() {
-		return metaworksContext;
-	}
-	public void setMetaworksContext(MetaworksContext metaworksContext) {
-		this.metaworksContext = metaworksContext;
-	}
+            name = record.getResources();
+            name = name.substring(0, name.indexOf(".")) + ".process";
+            selectBox.add(String.valueOf(record.getRevision()) + " : " + record.getAuthor() + " "
+                    + df.format(record.getDate()), name + "." + String.valueOf(record.getRevision()) + ".rev");
+        }
+    }
 
-	@ServiceMethod(callByContent=true)
-	public void deploy(){
-		System.out.println();
-		
+    @Face(displayName = "selectRevision")
+    public SelectBox getSelectBox() {
+        return selectBox;
+    }
+
+    public void setSelectBox(SelectBox selectBox) {
+        this.selectBox = selectBox;
+    }
+
+    public MetaworksContext getMetaworksContext() {
+        return metaworksContext;
+    }
+
+    public void setMetaworksContext(MetaworksContext metaworksContext) {
+        this.metaworksContext = metaworksContext;
+    }
+
+    @ServiceMethod(callByContent = true)
+    public void deploy() {
+        String exsistingFileName = RepositoryFolderResource.getMethodsRepository() + selectBox.getSelected();
+        String tenantId = TenantContext.getThreadLocalInstance().getTenantId();
+        tenantId = (tenantId == null ? "default" : tenantId);
+        String path = GlobalContext.getPropertyString("codebase") + File.separator + "codi" + File.separator + tenantId + File.separator + getResource().getProcessResource().getName();
+
+
+        FileInputStream in = null;
+        FileOutputStream out = null;
+
+        try {
+            in = new FileInputStream(exsistingFileName);
+            out = new FileOutputStream(path);
+
+            int c;
+            while ((c = in.read()) != -1) {
+                out.write(c);
+            }
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+		/*System.out.println();
+
 		HttpURLConnection conn = null;
 	    DataOutputStream dos = null;
 	    DataInputStream inStream = null;
@@ -143,6 +186,6 @@ public class DeployPanel {
 	      inStream.close();
 	    }catch (IOException ioex){
 	      System.out.println("Error: "+ioex);
-	    }
-	}
+	    }*/
+    }
 }

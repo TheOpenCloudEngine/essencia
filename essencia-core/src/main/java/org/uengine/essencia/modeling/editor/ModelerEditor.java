@@ -2,8 +2,10 @@ package org.uengine.essencia.modeling.editor;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
+import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 //import org.uengine.essencia.modeling.modeler.EssenciaModeler;
 import org.uengine.essencia.modeling.modeler.EssenciaModeler;
@@ -17,6 +19,9 @@ import org.uengine.modeling.modeler.ProcessModeler;
 import java.util.Objects;
 
 public abstract class ModelerEditor extends Editor {
+
+    @AutowiredFromClient
+    public Session session;
 
     private Modeler modeler;
 

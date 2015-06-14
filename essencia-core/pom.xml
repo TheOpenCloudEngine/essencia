@@ -52,6 +52,16 @@
     </repositories>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.uengine</groupId>
+            <artifactId>processcodi</artifactId>
+            <classifier>classes</classifier>
+            <version>1.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>org.uengine.metaworks</groupId>
             <artifactId>metaworks3</artifactId>

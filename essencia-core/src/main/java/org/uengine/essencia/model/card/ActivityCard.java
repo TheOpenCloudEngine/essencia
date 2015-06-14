@@ -36,13 +36,14 @@ public class ActivityCard extends BasicCard {
 
         int elementIndex = 0;
         y = -30;
-        for (LanguageElement e : ((Activity) element).getEntryCriteriaPanel().createValue()) {
+        for (LanguageElement e : ((Activity) element).getEntryCriteria()) {
             Criterion criterion = (Criterion) e;
             setSymbol((new AlphaView()).createSymbol());
             setView(criterion.getState().getParentAlpha().createView());
 
             x = getXCoordinate(elementIndex);
             y = getYCoordinate(y, elementIndex);
+
 
             getView().fill(getSymbol());
             getView().setX(String.valueOf(x));
@@ -52,6 +53,9 @@ public class ActivityCard extends BasicCard {
 
             getView().setElement(criterion.getState().getParentAlpha());
             getView().setId(String.valueOf(trcTag++));
+
+            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
+                    + ")");
 
             getCanvas().getElementViewList().add(getView());
             elementIndex++;

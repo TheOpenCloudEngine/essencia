@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.annotation.Hidden;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.Activity;
@@ -12,6 +13,7 @@ import java.util.List;
 public class EssenceActivity extends HumanActivity implements NeedArrangementToSerialize {
 
     private org.uengine.essencia.model.Activity activityInEssenceDefinition;
+        @Hidden
         public Activity getActivityInEssenceDefinition() {
             return activityInEssenceDefinition;
         }
