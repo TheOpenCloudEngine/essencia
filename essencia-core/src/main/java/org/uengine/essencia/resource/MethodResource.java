@@ -51,7 +51,7 @@ public class MethodResource extends ModelResource {
 		modalWindow.setPanel(deployPanel);
 		modalWindow.setWidth(300);
 		modalWindow.setHeight(300);
-		modalWindow.setTitle("DeployPanel");
+		modalWindow.setTitle("Deploy...");
 		return modalWindow;
 	}
 }

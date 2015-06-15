@@ -20,20 +20,20 @@ import org.uengine.util.UEngineUtil;
 public abstract class BasicElement extends LanguageElement implements IElement, SerializationSensitive {
 
 	protected TextContext name;
-	protected TextContext briefDescription;
-	protected TextContext description;
-	private ElementView elementView;
-
 	@Order(1)
 	@Id
 	@Name
 	public String getName() {
 		return name.getText();
 	}
-
 	public void setName(String name) {
 		this.name.setText(name);
 	}
+
+	protected TextContext briefDescription;
+	protected TextContext description;
+	private ElementView elementView;
+
 
 	public String getName(String locale) {
 		return name.getText(locale);

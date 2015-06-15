@@ -5,6 +5,7 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 //import org.uengine.essencia.modeling.modeler.EssenciaModeler;
@@ -78,6 +79,9 @@ public abstract class ModelerEditor extends Editor {
             model = ((EssenciaModeler) this.getModeler()).takeModel();
         } else {
             ProcessModeler processModeler = (ProcessModeler) getModeler();
+
+            MetaworksRemoteService.autowire(processModeler);
+
             if(processModeler.getModel() == null){
                 model = processModeler.createModel();
             } else {

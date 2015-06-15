@@ -32,6 +32,8 @@ import org.uengine.essencia.resource.LockResource;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.UEngineException;
+import org.uengine.kernel.bpmn.face.ProcessVariablePanel;
+import org.uengine.kernel.bpmn.face.RolePanel;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.IResource;
@@ -169,7 +171,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	
 	@Available(condition="saveable")
 	@ServiceMethod(callByContent = true, eventBinding = EditorContext.SAVE, target = ServiceMethodContext.TARGET_APPEND)
-	public Object[] saveAndRefresh() throws Exception {
+	public Object[] saveAndRefresh(@AutowiredFromClient RolePanel rolePanel, @AutowiredFromClient ProcessVariablePanel processVariablePanel) throws Exception {
 		try {
 			this.save();
 		} catch (UEngineException ue) {

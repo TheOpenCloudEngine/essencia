@@ -9,12 +9,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.metaworks.MetaworksContext;
+import org.metaworks.Remover;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.SelectBox;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.repository.ObjectRepository;
 import org.uengine.essencia.resource.MethodResource;
@@ -31,17 +35,28 @@ public class DeployPanel {
     public Session session;
 
     private SelectBox selectBox;
+        @Face(displayName = "selectRevision")
+        public SelectBox getSelectBox() {
+            return selectBox;
+        }
+        public void setSelectBox(SelectBox selectBox) {
+            this.selectBox = selectBox;
+        }
+
     private MetaworksContext metaworksContext;
+        public MetaworksContext getMetaworksContext() {
+            return metaworksContext;
+        }
+        public void setMetaworksContext(MetaworksContext metaworksContext) {
+            this.metaworksContext = metaworksContext;
+        }
+
     private MethodResource resource;
-
-    @Hidden
-    public MethodResource getResource() {
-        return resource;
-    }
-
-
-
-    public void setResource(MethodResource resource) {
+        @Hidden
+        public MethodResource getResource() {
+            return resource;
+        }
+        public void setResource(MethodResource resource) {
         this.resource = resource;
     }
 
@@ -64,26 +79,12 @@ public class DeployPanel {
         }
     }
 
-    @Face(displayName = "selectRevision")
-    public SelectBox getSelectBox() {
-        return selectBox;
-    }
 
-    public void setSelectBox(SelectBox selectBox) {
-        this.selectBox = selectBox;
-    }
-
-    public MetaworksContext getMetaworksContext() {
-        return metaworksContext;
-    }
-
-    public void setMetaworksContext(MetaworksContext metaworksContext) {
-        this.metaworksContext = metaworksContext;
-    }
+    @Autowired ProcessManagerRemote processManager;
 
     @ServiceMethod(callByContent = true)
     public void deploy() {
-        String exsistingFileName = RepositoryFolderResource.getMethodsRepository() + selectBox.getSelected();
+        String existingFileName = RepositoryFolderResource.getMethodsRepository() + selectBox.getSelected();
         String tenantId = TenantContext.getThreadLocalInstance().getTenantId();
         tenantId = (tenantId == null ? "default" : tenantId);
         String path = GlobalContext.getPropertyString("codebase") + File.separator + "codi" + File.separator + tenantId + File.separator + getResource().getProcessResource().getName();
@@ -92,28 +93,32 @@ public class DeployPanel {
         FileInputStream in = null;
         FileOutputStream out = null;
 
-        try {
-            in = new FileInputStream(exsistingFileName);
-            out = new FileOutputStream(path);
+        processManager.addProcessDefinition(getResource().getName(), 0, getResource().getDisplayName(), false,  );
 
-            int c;
-            while ((c = in.read()) != -1) {
-                out.write(c);
-            }
-        } catch (Exception e) {
-
-        } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        try {
+//            in = new FileInputStream(exsistingFileName);
+//            out = new FileOutputStream(path);
+//
+//            int c;
+//            while ((c = in.read()) != -1) {
+//                out.write(c);
+//            }
+//        } catch (Exception e) {
+//
+//        } finally {
+//            try {
+//                if (in != null) {
+//                    in.close();
+//                }
+//                if (out != null) {
+//                    out.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            MetaworksRemoteService.wrapReturn(new Remover(new ModalWindow()));
+//        }
 
 		/*System.out.println();
 

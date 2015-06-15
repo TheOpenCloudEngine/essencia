@@ -18,6 +18,17 @@ import org.uengine.modeling.IElement;
 public class State extends LanguageElement implements IElement, FaceTransformer {
 
     private String name;
+        @Name
+        @Order(1)
+        @Id
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
     private String description;
 
     private ElementView elementView;
@@ -57,16 +68,6 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
 	this.listFace = listFace;
     }
 
-    @Name
-    @Order(1)
-    @Id
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
-    }
 
     @Order(2)
     public String getDescription() {

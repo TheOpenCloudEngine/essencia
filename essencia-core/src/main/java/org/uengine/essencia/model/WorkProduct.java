@@ -13,7 +13,7 @@ import org.uengine.essencia.model.face.list.LevelOfDetailListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.ProcessInstance;
 
-public class WorkProduct extends BasicElement implements ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
+public class WorkProduct extends BasicElement implements ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement, HasLevel {
 
 
 
@@ -119,5 +119,10 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
     @Override
     public WorkProductInstance createInstance(String id) {
         return (WorkProductInstance) new WorkProductInstance(this, id);
+    }
+
+    @Override
+    public List<LevelOfDetail> getLevels() {
+        return getLevelOfDetails();
     }
 }

@@ -1,6 +1,9 @@
 package org.uengine.essencia.modeling.editor;
 
 import org.metaworks.annotation.Face;
+import org.uengine.essencia.enactment.EssenceProcessDefinition;
+import org.uengine.essencia.modeling.modeler.EssenciaProcessModeler;
+import org.uengine.kernel.ProcessDefinition;
 import org.uengine.modeling.modeler.ProcessModeler;
 import org.uengine.modeling.IResource;
 
@@ -16,6 +19,6 @@ public class ProcessModelerEditor extends ModelerEditor {
     }
 
     public void createModeler() {
-        this.setModeler(new ProcessModeler());
+        this.setModeler(new EssenciaProcessModeler());
     }
 }

@@ -1,0 +1,57 @@
+<%
+if(value){
+	if(mw3.how == 'action'){
+%>
+
+<div class="icon_toolbar">
+	<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$process")%>" class="icon-rounded m-r-10 tooltip-top" onclick="<%=methods.monitor.here()%>">
+		<i class="glyphicon glyphicon-random  workitem_btn"></i>
+	</div>
+
+	<div data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="icon-rounded m-r-10 tooltip-top" >
+		<i class="glyphicon glyphicon-info-sign workitem_btn"></i>
+	</div>
+
+	<div data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="icon-rounded m-r-10 tooltip-top" >
+		<i class="glyphicon glyphicon-trash workitem_btn"></i>
+	</div>
+
+	<div data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="icon-rounded m-r-10 tooltip-top" >
+		<i class="glyphicon glyphicon-eye-close workitem_btn"></i>
+	</div>
+
+	<div data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="icon-rounded m-r-10 current tooltip-top" >
+		<i class="glyphicon glyphicon-ok workitem_btn current"></i>
+	</div>
+</div>
+
+
+
+<%
+		if( value.eventTriggers ){
+			for(var i=0; i < value.eventTriggers.length; i++){
+				var options;
+				var eventTrigger = value.eventTriggers[i];
+				if(typeof options == 'undefined'){
+					options = objectMetadata;
+				}
+				options['htmlTag'] =  'li';
+			%>
+			<%=mw3.locateObject(eventTrigger, eventTrigger.__className, null , options, {objectId: objectId, name: '[' + i + ']'}) %>
+			<%
+			}
+		}
+%>
+
+<%
+	}else{
+%>
+<span onClick="<%=methods.schedule.caller()%>"><img src="images/waveStyle/i_gantt.png" title="schedule" /></span>
+<span onClick="<%=methods.remove.caller()%>"><img src="images/waveStyle/i_delete.png" title="remove" /></span>
+<span onClick="<%=methods.complete.caller()%>"><img src="images/waveStyle/i_complete.png" title="complete" /></span>
+<%
+	}
+}
+%>
+
+

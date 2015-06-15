@@ -23,6 +23,11 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
     public EssenceActivity(){}
 
+    @Override
+    @Hidden
+    public String getTool() {
+        return super.getTool();
+    }
 
     public EssenceActivity(org.uengine.essencia.model.Activity activityInEssenceDefinition){
         setActivityInEssenceDefinition(activityInEssenceDefinition);

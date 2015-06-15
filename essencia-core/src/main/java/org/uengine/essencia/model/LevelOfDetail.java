@@ -19,7 +19,32 @@ public class LevelOfDetail extends LanguageElement implements IElement, FaceTran
 
 	private ElementView elementView;
 	private WorkProduct parentWorkProduct;
+
 	private TextContext name;
+		@Name
+		@Order(1)
+		public String getName() {
+			if (this.name == null) {
+				return "";
+			}
+			return name.getText();
+		}
+
+		public void setName(String name) {
+			if (this.name == null) {
+				this.name = new TextContext();
+			}
+			this.name.setText(name);
+		}
+
+		public String getName(String locale) {
+			return name.getText(locale);
+		}
+
+		public void setName(String locale, String name) {
+			this.name.setText(locale, name);
+		}
+
 	private TextContext description;
 	private boolean isSufficientLevel;
 	private String aggregationAlphaState;
@@ -60,29 +85,6 @@ public class LevelOfDetail extends LanguageElement implements IElement, FaceTran
 		this.parentWorkProduct = parentWorkProduct;
 	}
 
-	@Name
-	@Order(1)
-	public String getName() {
-		if (this.name == null) {
-			return "";
-		}
-		return name.getText();
-	}
-
-	public void setName(String name) {
-		if (this.name == null) {
-			this.name = new TextContext();
-		}
-		this.name.setText(name);
-	}
-
-	public String getName(String locale) {
-		return name.getText(locale);
-	}
-
-	public void setName(String locale, String name) {
-		this.name.setText(locale, name);
-	}
 
 	@Order(2)
 	public String getDescription() {
