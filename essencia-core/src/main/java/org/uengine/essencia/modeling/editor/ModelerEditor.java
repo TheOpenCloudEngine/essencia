@@ -82,10 +82,10 @@ public abstract class ModelerEditor extends Editor {
 
             MetaworksRemoteService.autowire(processModeler);
 
-            if(processModeler.getModel() == null){
+            model = processModeler.getModel();
+
+            if(model == null){
                 model = processModeler.createModel();
-            } else {
-                model = processModeler.getModel();
             }
         }
         getModelResource().saveResource(model);

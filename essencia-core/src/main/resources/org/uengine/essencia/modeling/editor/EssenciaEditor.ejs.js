@@ -54,12 +54,14 @@ var org_uengine_essencia_modeling_editor_EssenciaEditor = function(objectId, cla
 	}
 	
 	this.sync = function(){
-		if(this.syncable){
+
+		//TODO: should be restored
+		//if(this.syncable){
 			this.syncable = false;
 			
 			var modelerEditor = mw3.getAutowiredObject('org.uengine.essencia.modeling.editor.ModelerEditor');
 			this.objectDiv.trigger('sync');
-		}
+		//}
 	}
 	
 	this.checkIn = function(){
