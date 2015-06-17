@@ -55,13 +55,13 @@ public class EditorMenu extends MainMenu {
 	}
 
 
-	@Order(2)
-	@Face(displayName="Check In")
-	@Available(when={MetaworksContext.WHEN_EDIT})
-	@ServiceMethod(target=ServiceMethodContext.TARGET_APPEND)
-	public Object[] checkIn(){
-		return new Object[]{new ToEvent(new EmptyEditor(), EditorContext.CHECK_IN)};
-	}
+//	@Order(2)
+//	@Face(displayName="Check In")
+//	@Available(when={MetaworksContext.WHEN_EDIT})
+//	@ServiceMethod(target=ServiceMethodContext.TARGET_APPEND)
+//	public Object[] checkIn(){
+//		return new Object[]{new ToEvent(new EmptyEditor(), EditorContext.CHECK_IN)};
+//	}
 	
 	@Order(3)
 	@Face(displayName="Edit")
