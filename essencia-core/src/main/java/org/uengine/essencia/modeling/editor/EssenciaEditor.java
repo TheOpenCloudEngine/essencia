@@ -13,6 +13,7 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Name;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Download;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.ConfirmPanel;
@@ -24,11 +25,16 @@ import org.uengine.essencia.common.LockInfo;
 import org.uengine.essencia.common.Lockable;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.context.EssenciaEventContext;
+import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.PracticeDefinition;
+import org.uengine.essencia.modeling.modeler.EssenciaModeler;
+import org.uengine.essencia.modeling.modeler.EssenciaProcessModeler;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
 import org.uengine.essencia.resource.ExportResource;
 import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.LockResource;
+import org.uengine.essencia.resource.Resource;
+import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.UEngineException;
@@ -37,6 +43,8 @@ import org.uengine.kernel.bpmn.face.RolePanel;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.IResource;
+import org.uengine.modeling.Modeler;
+import org.uengine.modeling.modeler.ProcessModeler;
 
 public abstract class EssenciaEditor extends CompositeEditor {
 
@@ -151,8 +159,43 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		rename();
 		processNewResource(getResource(), essenciaSession.getUser());
 
-		super.save();
-		
+
+		if(getItems().get(0) instanceof ComposerEditor){
+
+			/* Setting EssenceProcessDefinition */
+			{
+				ComposerEditor composerEditor = (ComposerEditor) getItems().get(0);
+				ProcessModelerEditor processModelerEditor = (ProcessModelerEditor) getItems().get(1);
+
+				PracticeDefinition practiceDefinition =
+						(PracticeDefinition) composerEditor.takeEssenciaModeler().takeModel();
+
+				composerEditor.getModelResource().saveResource(practiceDefinition);
+				ContextUtil.setWhen((Resource) composerEditor.getResource(), EssenciaContext.WHEN_EDIT);
+
+
+				EssenciaProcessModeler processModeler = (EssenciaProcessModeler) processModelerEditor.getModeler();
+				MetaworksRemoteService.autowire(processModeler);
+
+				EssenceProcessDefinition processDefinition = (EssenceProcessDefinition) processModeler.getModel();
+
+				if (processDefinition == null) {
+					processDefinition = (EssenceProcessDefinition) processModeler.createModel();
+				}
+
+				if (processDefinition != null) {
+					processDefinition.setPracticeDefinition(practiceDefinition);
+					processModeler.setModel(processDefinition);
+				}
+
+				processModelerEditor.getModelResource().saveResource(processDefinition);
+				ContextUtil.setWhen((Resource) processModelerEditor.getResource(), EssenciaContext.WHEN_EDIT);
+
+			}
+		} else {
+			super.save();
+		}
+
 		commit();
 	}
 
@@ -256,7 +299,17 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		try {
 			PracticeDefinition practiceDefinition = ( (MethodComposer)getEssenciaModelerEditor().getModeler() ).createPracticeDefinition();
 
-			ProcessDefinition processDefinition = practiceDefinition.toProcessDefinition();
+			EssenciaProcessModeler processModeler = (EssenciaProcessModeler) getProcessModelerEditor().getModeler();
+			MetaworksRemoteService.autowire(processModeler);
+
+			EssenceProcessDefinition processDefinition = (EssenceProcessDefinition) processModeler.getModel();
+
+			if (processDefinition == null) {
+				processDefinition = (EssenceProcessDefinition) processModeler.createModel();
+			}
+
+			processDefinition = practiceDefinition.toProcessDefinition(processDefinition);
+
 			getProcessModelerEditor().getModeler().setModel(processDefinition);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -30,6 +30,8 @@ public class EssenciaInstanceTooltip extends InstanceTooltip{
 
         ModalWindow modal = new ModalWindow(new GameBoard(practiceDefinition, instance), 600, 700);
 
+        modal.setTitle("Alpha Dashboard");
+
 
         return modal;
     }

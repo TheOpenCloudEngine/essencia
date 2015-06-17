@@ -61,7 +61,12 @@ public class ActivityCard extends BasicCard {
             elementIndex++;
         }
         // Competency View
-        y = y + Integer.valueOf(getView().getHeight()) + Y_INTERVAL;
+
+        if(getView()!=null)
+            y = y + Integer.valueOf(getView().getHeight()) + Y_INTERVAL;
+        else
+            y = y + Y_INTERVAL;
+
         String competencyName = ((Activity) element).getCompetency().getSelectedText();
         setSymbol(new CompetencyView().createSymbol());
         Competency competency = new Competency();

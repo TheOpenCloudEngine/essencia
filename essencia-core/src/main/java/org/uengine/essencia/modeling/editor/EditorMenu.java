@@ -126,4 +126,6 @@ public class EditorMenu extends MainMenu {
 	public Object coverage(){
 		return new ModalWindow(new MethodCoverage(essenciaCanvas), 1100, 650, "Method Coverage");
 	}
+
+
 }
