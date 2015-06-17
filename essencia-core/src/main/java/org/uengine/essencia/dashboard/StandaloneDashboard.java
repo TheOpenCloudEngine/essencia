@@ -19,9 +19,9 @@ public class StandaloneDashboard {
 
 		AlphaInstance alphaInstance = exampleAlphaInstance.getAlphaInstance();
 
-		getDashboard().setAlphaInstanceMap(new HashMap<String, List<AlphaInstance>>());
+//		getDashboard().setAlphaInstanceMap(new HashMap<String, List<AlphaInstance>>());
 
-		getDashboard().getAlphaInstanceMap().put(alphaInstance.getAlpha().getName(), alphaInstance.getAlpha().getInstances(exampleAlphaInstance.getProcessInstance()));
+//		getDashboard().getAlphaInstanceMap().put(alphaInstance.getAlpha().getName(), alphaInstance.getAlpha().getInstances(exampleAlphaInstance.getProcessInstance()));
 		getDashboard().setAlphas(new Alpha[]{alphaInstance.getAlpha()});
 	}
 
