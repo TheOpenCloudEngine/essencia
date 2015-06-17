@@ -1,17 +1,11 @@
 package org.uengine.essencia.modeling.modeler;
 
 import org.uengine.essencia.model.*;
-import org.uengine.essencia.model.face.list.ListFace;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
 import org.uengine.essencia.modeling.canvas.MethodCanvas;
 import org.uengine.essencia.modeling.palette.EssenciaPalette;
 import org.uengine.essencia.util.ElementUtil;
-import org.uengine.modeling.IElement;
-import org.uengine.modeling.IModel;
-import org.uengine.modeling.IRelation;
 import org.uengine.util.UEngineUtil;
-
-import java.util.List;
 
 public class MethodComposer extends PracticeDefiner {
 
@@ -34,19 +28,34 @@ public class MethodComposer extends PracticeDefiner {
         pd.setRelationList(ElementUtil.convertToRelationList(((EssenciaCanvas) getCanvas()).getSafeRelationViewList()));
 
         for (org.uengine.essencia.model.Activity activity : pd.getElements(org.uengine.essencia.model.Activity.class)) {
-            for (LanguageElement e : activity.getEntryCriteria()) {
-                createFullCriterion(pd, (Criterion) e);
+
+
+            for (int i=0; i<activity.getEntryCriteria().size(); i++) {
+
+                LanguageElement e = activity.getEntryCriteria().get(i);
+
+                if(!fillRealCriterion(pd, (Criterion) e)){
+                    activity.getEntryCriteria().remove(e);
+                }
             }
 
-            for (LanguageElement e : activity.getCompletionCriteria()) {
+            for (int i=0; i<activity.getCompletionCriteria().size(); i++) {
+
+                LanguageElement e = activity.getCompletionCriteria().get(i);
 
                 Criterion completionCriterion = (Criterion)e;
 
+                boolean filled = false;
+
                 //TODO: if value is valid, the value states are valid too.
                 if(completionCriterion.getLevelOfDetail()!=null && UEngineUtil.isNotEmpty(completionCriterion.getLevelOfDetail().getName())) {
-                    createFullCriterion(pd, (Criterion) e);
+                    filled = fillRealCriterion(pd, (Criterion) e);
                 }else if(completionCriterion.getState()!=null && UEngineUtil.isNotEmpty(completionCriterion.getState().getName())) {
-                    createFullCriterion(pd, (Criterion) e);
+                    filled = fillRealCriterion(pd, (Criterion) e);
+                }
+
+                if(!filled){
+                    activity.getCompletionCriteria().remove(e);
                 }
 
             }
@@ -59,31 +68,43 @@ public class MethodComposer extends PracticeDefiner {
      * @param pd
      * @param criterion
      */
-    private void createFullCriterion(PracticeDefinition pd, Criterion criterion) {
+    private boolean fillRealCriterion(PracticeDefinition pd, Criterion criterion) {
         if( criterion.getLevelOfDetail() == null ){
             Alpha fullParentAlpha = pd.getElement(criterion.getState().getParentAlpha().getName(), Alpha.class);
-            for (State state : fullParentAlpha.getStates()) {
-                if (criterion.getState().getName().equals(state.getName())) {
-                    criterion.setState(state);
-                    break;
+
+            if(fullParentAlpha!=null && fullParentAlpha.getStates()!=null){
+                for (State state : fullParentAlpha.getStates()) {
+                    if (criterion.getState().getName().equals(state.getName())) {
+                        criterion.setState(state);
+                        break;
+                    }
+
                 }
 
+                criterion.getState().setParentAlpha(fullParentAlpha);
+
+                return true;
             }
 
-            criterion.getState().setParentAlpha(fullParentAlpha);
         } else {
             WorkProduct fullWorkProduct = pd.getElement(criterion.getLevelOfDetail().getParentWorkProduct().getName(), WorkProduct.class);
-            for (LevelOfDetail levelOfDetail : fullWorkProduct.getLevelOfDetails()) {
-                if (criterion.getLevelOfDetail().getName().equals(levelOfDetail.getName())) {
-                    criterion.setLevelOfDetail(levelOfDetail);
-                    break;
+
+            if(fullWorkProduct!=null && fullWorkProduct.getLevelOfDetails()!=null) {
+                for (LevelOfDetail levelOfDetail : fullWorkProduct.getLevelOfDetails()) {
+                    if (criterion.getLevelOfDetail().getName().equals(levelOfDetail.getName())) {
+                        criterion.setLevelOfDetail(levelOfDetail);
+                        break;
+                    }
+
                 }
 
-            }
+                criterion.getLevelOfDetail().setParentWorkProduct(fullWorkProduct);
 
-            criterion.getLevelOfDetail().setParentWorkProduct(fullWorkProduct);
+                return true;
+            }
         }
 
+        return false;
     }
 
 

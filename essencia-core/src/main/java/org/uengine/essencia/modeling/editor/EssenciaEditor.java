@@ -174,6 +174,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 				ContextUtil.setWhen((Resource) composerEditor.getResource(), EssenciaContext.WHEN_EDIT);
 
 
+
 				EssenciaProcessModeler processModeler = (EssenciaProcessModeler) processModelerEditor.getModeler();
 				MetaworksRemoteService.autowire(processModeler);
 
@@ -185,7 +186,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 				if (processDefinition != null) {
 					processDefinition.setPracticeDefinition(practiceDefinition);
-					processModeler.setModel(processDefinition);
+					//processModeler.setModel(processDefinition);
 				}
 
 				processModelerEditor.getModelResource().saveResource(processDefinition);
@@ -295,12 +296,16 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	@ServiceMethod(callByContent=true, eventBinding="sync", bindingHidden=true, target=ServiceMethodContext.TARGET_APPEND)
 	public Object sync(){
 		List<ElementView> elementViewList = null;
-		
+
+		//if(!isChanged()) return null;
+
 		try {
 			PracticeDefinition practiceDefinition = ( (MethodComposer)getEssenciaModelerEditor().getModeler() ).createPracticeDefinition();
 
 			EssenciaProcessModeler processModeler = (EssenciaProcessModeler) getProcessModelerEditor().getModeler();
 			MetaworksRemoteService.autowire(processModeler);
+
+			//getting existing process definition.
 
 			EssenceProcessDefinition processDefinition = (EssenceProcessDefinition) processModeler.getModel();
 
