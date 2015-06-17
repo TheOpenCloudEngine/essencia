@@ -2,6 +2,7 @@ package org.uengine.essencia.model.coverage;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -69,13 +70,11 @@ public class MethodCoverage {
 
 	public List<Alpha> loadKernelAlphaList() {
 		PracticeDefinition practice = null;
-		URL url = getClass().getResource("../../model/kernel/kernel.practice");
 		try {
+			InputStream is = getClass().getResourceAsStream("/org/uengine/essencia/model/kernel/kernel.practice");
 			XStream x = new XStream();
-			File file = new File(url.getPath());
-			FileInputStream fis = new FileInputStream(file);
-			InputStreamReader isr = new InputStreamReader(fis);
-			practice = (PracticeDefinition) x.fromXML(isr);
+			InputStreamReader isr = new InputStreamReader(is);
+			practice = (PracticeDefinition)x.fromXML(isr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -86,10 +86,12 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	}
 	
 	private void processContext(IResource resource, IUser user) {
-		getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
-		
-		if(resource instanceof Lockable)
-			processContextForLock(resource, user);
+		getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+
+//		getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
+//
+//		if(resource instanceof Lockable)
+//			processContextForLock(resource, user);
 	}
 	
 	private void processContextForLock(IResource resource, IUser user) {
@@ -240,7 +242,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		if(MetaworksContext.WHEN_NEW.equals(getMetaworksContext().getWhen())){
 			resource.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 		
-			processNewResourceForLock(resource, user);
+//			processNewResourceForLock(resource, user);
 		}
 	}
 	
