@@ -18,6 +18,8 @@ import org.metaworks.component.SelectBox;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.uengine.codi.CodiProcessDefinitionFactory;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.repository.ObjectRepository;
 import org.uengine.essencia.resource.MethodResource;
@@ -25,7 +27,7 @@ import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.kernel.GlobalContext;
 import org.uengine.kernel.ProcessDefinition;
-import org.uengine.processmanager.ProcessManagerRemote;
+import org.uengine.processmanager.*;
 
 @Face(ejsPath = "dwr/metaworks/genericfaces/FormFace.ejs")
 public class DeployPanel {
@@ -85,7 +87,6 @@ public class DeployPanel {
     }
 
 
-
     @ServiceMethod(callByContent = true)
     public void deploy() {
         String exsistingFileName = RepositoryFolderResource.getMethodsRepository() + selectBox.getSelected();
@@ -121,6 +122,13 @@ public class DeployPanel {
 
             MetaworksRemoteService.wrapReturn(new Remover(new ModalWindow()));
         }
+
+        String processId = getResource().getName();
+        if(processId.endsWith(".method")){
+            processId = processId.substring(0, processId.indexOf(".")) + ".process";
+        }
+
+        CodiProcessDefinitionFactory.getInstance(new DummyProcessTransactionContext(null)).removeFromCache(getResource().getName());
 
 		/*System.out.println();
 
@@ -194,5 +202,12 @@ public class DeployPanel {
 	    }catch (IOException ioex){
 	      System.out.println("Error: "+ioex);
 	    }*/
+    }
+
+    class DummyProcessTransactionContext extends ProcessTransactionContext{
+
+        protected DummyProcessTransactionContext(ProcessManagerBean processManagerBean) {
+            super(processManagerBean);
+        }
     }
 }

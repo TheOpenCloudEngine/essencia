@@ -20,11 +20,14 @@ public class EssenceProcessDefinition extends ProcessDefinition{
     @Override
     public void beforeSerialization() {
 
-        for(ProcessVariable processVariable : getProcessVariables()){
-            if(processVariable.getDefaultValue() instanceof LanguageElementInstance){
-                LanguageElementInstance languageElementInstance = (LanguageElementInstance)processVariable.getDefaultValue();
+        if(practiceDefinition!=null){
+            if(getProcessVariables()!=null)
+            for(ProcessVariable processVariable : getProcessVariables()){
+                if(processVariable.getDefaultValue() instanceof LanguageElementInstance){
+                    LanguageElementInstance languageElementInstance = (LanguageElementInstance)processVariable.getDefaultValue();
 
-                languageElementInstance.setLanguageElement((BasicElement) getPracticeDefinition().getElementByName(languageElementInstance.getLanguageElement().getName()));
+                    languageElementInstance.setLanguageElement((BasicElement) getPracticeDefinition().getElementByName(languageElementInstance.getLanguageElement().getName()));
+                }
             }
         }
 
