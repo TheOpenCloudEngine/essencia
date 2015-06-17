@@ -9,6 +9,7 @@ import org.uengine.essencia.util.ElementUtil;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.IRelation;
+import org.uengine.util.UEngineUtil;
 
 import java.util.List;
 
@@ -38,7 +39,16 @@ public class MethodComposer extends PracticeDefiner {
             }
 
             for (LanguageElement e : activity.getCompletionCriteria()) {
-                createFullCriterion(pd, (Criterion) e);
+
+                Criterion completionCriterion = (Criterion)e;
+
+                //TODO: if value is valid, the value states are valid too.
+                if(completionCriterion.getLevelOfDetail()!=null && UEngineUtil.isNotEmpty(completionCriterion.getLevelOfDetail().getName())) {
+                    createFullCriterion(pd, (Criterion) e);
+                }else if(completionCriterion.getState()!=null && UEngineUtil.isNotEmpty(completionCriterion.getState().getName())) {
+                    createFullCriterion(pd, (Criterion) e);
+                }
+
             }
         }
         return pd;

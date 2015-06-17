@@ -1,12 +1,10 @@
 package org.uengine.essencia.model;
 
-import java.io.File;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
@@ -14,14 +12,15 @@ import org.uengine.contexts.TextContext;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.EssenceActivity;
+import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.*;
-import org.uengine.kernel.bpmn.StartEvent;
 import org.uengine.kernel.view.HumanActivityView;
 import org.uengine.modeling.*;
+import org.uengine.util.ActivityFor;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
@@ -149,32 +148,47 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return result;
     }
 
-    /**
-     * this method make this practice definition convert to uEngine's Process Definition
-     *
-     * @return ProcessDefinition ( from uengine-core module )
-     * @throws Exception
-     */
-    public ProcessDefinition toProcessDefinition() {
-        ProcessDefinition returnProcessDefinition = new EssenceProcessDefinition();
-        ((EssenceProcessDefinition) returnProcessDefinition).setPracticeDefinition(this);
-//        returnProcessDefinition.setId(getName().getText());
 
-        List<Role> roleList = new ArrayList<>();
+    public ProcessDefinition toProcessDefinition() {
+
+        return toProcessDefinition(null);
+    }
+
+        /**
+         * this method make this practice definition convert to uEngine's Process Definition
+         *
+         * @return ProcessDefinition ( from uengine-core module )
+         * @throws Exception
+         */
+    public EssenceProcessDefinition toProcessDefinition(EssenceProcessDefinition existingProcessDefinition) {
+
+        EssenceProcessDefinition returnProcessDefinition = existingProcessDefinition;
+
+        if(returnProcessDefinition==null)
+            returnProcessDefinition = new EssenceProcessDefinition();
+
+        ((EssenceProcessDefinition) returnProcessDefinition).setPracticeDefinition(this);
+
         List<ProcessVariable> pvList = new ArrayList<>();
 
         Role role = null;
         ElementView roleView = null;
         int laneCnt = 0;
         ElementView humanView = null;
+
+
         for (IElement element : getElements(Activity.class)) {
 
-            Competency competency = getElement(((Activity) element).getCompetencyName(), Competency.class);
+            Activity activityInPracticeDefinition = (Activity) element;
+            Competency competency = getElement(activityInPracticeDefinition.getCompetencyName(), Competency.class);
 
-            if (!roleList.contains(competency)) {
+            if (returnProcessDefinition.getRole(competency.getName())==null) {
                 role = Role.forName(competency.getName());
                 role.setDisplayName(role.getName());
                 roleView = role.createView();
+
+                returnProcessDefinition.addRole(role);
+                laneCnt = returnProcessDefinition.getRoles().length - 1;
 
                 roleView.setWidth(calculateLaneWidth(competency.getName()) + 40 + 192);
                 roleView.setHeight("128");
@@ -184,54 +198,88 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
                 roleView.setLabel(role.getName());
 
                 role.setElementView(roleView);
-                roleList.add(role);
-
-                laneCnt++;
             }
-//            if (returnProcessDefinition.getChildActivities().size() == 0) {
-//                StartEvent s = new StartEvent();
-//                s.setTracingTag("0");
-//                ElementView view = s.createView();
-//                view.setShapeId("OG.shape.bpmn.E_Start");
-//                view.setHeight("32");
-//                view.setWidth("32");
-//                int temp = Integer.valueOf(roleView.getX()) - 83;
-//
-//                view.setX(temp);
-//                view.setY(roleView.getY());
-//                s.setElementView(view);
-//                returnProcessDefinition.getChildActivities().add(s);
-//
-//            }
 
 
             //make essence activity
-            EssenceActivity essenceActivity = new EssenceActivity((Activity) element);
-            humanView = essenceActivity.createView();
+            final String nameOfFindingActivity = ((Activity) element).getName();
 
-            essenceActivity.setName(element.getName());
 
-            humanView.setLabel(element.getName());
-            humanView.setShapeId(HumanActivityView.SHAPE_ID_BPMN);
-            humanView.setHeight("96");
-            humanView.setWidth("96");
+            new ActivityFor() {
+                @Override
+                public void logic(org.uengine.kernel.Activity activity) {
+                    if(activity instanceof EssenceActivity) {
+                        EssenceActivity essenceActivity = (EssenceActivity) activity;
 
-            int laneX = Integer.valueOf(roleView.getX());
-            int laneHalfWidth = Integer.valueOf(roleView.getWidth()) / 2;
-            int prevActivitiesCnt = prevActivitiesCntWithSameCompetency(returnProcessDefinition.getChildActivities(), competency);
-            int humanX = Integer.valueOf(humanView.getWidth()) * prevActivitiesCnt;
+                        if(essenceActivity.getActivityInEssenceDefinition()==null){
+                            ((ComplexActivity)essenceActivity.getParentActivity()).removeChildActivity(essenceActivity);
+                        }
+                    }
+                }
+            }.run(returnProcessDefinition);
 
-            int rst = laneX - laneHalfWidth + humanX;
-            rst = rst + 64 * prevActivitiesCnt;
 
-            humanView.setX(rst);
-            humanView.setY(roleView.getY());
+
+            final ActivityFor findingActivityByName = new ActivityFor(){
+
+                @Override
+                public void logic(org.uengine.kernel.Activity activity) {
+                    if(activity instanceof EssenceActivity){
+                        EssenceActivity essenceActivity = (EssenceActivity)activity;
+
+                        if(nameOfFindingActivity.equals(essenceActivity.getActivityInEssenceDefinition().getName())) {
+                            setReturnValue(activity);
+                            stop();
+                        }
+                    }
+                }
+            };
+
+            findingActivityByName.run(returnProcessDefinition);
+
+
+            EssenceActivity essenceActivity = (EssenceActivity) findingActivityByName.getReturnValue();
+
+            if(essenceActivity==null){
+                essenceActivity = new EssenceActivity();
+
+                humanView = essenceActivity.createView();
+
+                essenceActivity.setName(element.getName());
+
+                humanView.setLabel(element.getName());
+                humanView.setShapeId(HumanActivityView.SHAPE_ID_BPMN);
+                humanView.setHeight("96");
+                humanView.setWidth("96");
+
+                int laneX = Integer.valueOf(roleView.getX());
+                int laneHalfWidth = Integer.valueOf(roleView.getWidth()) / 2;
+                int prevActivitiesCnt = prevActivitiesCntWithSameCompetency(returnProcessDefinition.getChildActivities(), competency);
+                int humanX = Integer.valueOf(humanView.getWidth()) * prevActivitiesCnt;
+
+                int rst = laneX - laneHalfWidth + humanX;
+                rst = rst + 64 * prevActivitiesCnt;
+
+                humanView.setX(rst);
+                humanView.setY(roleView.getY());
 
 //            essenceActivity.setTool(makeTool(element));
 
-            essenceActivity.setElementView(humanView);
+                essenceActivity.setElementView(humanView);
 
-            returnProcessDefinition.addChildActivity(essenceActivity);
+                essenceActivity.setActivityInEssenceDefinition(activityInPracticeDefinition);
+                essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetencyName()));//TODO: should be getCompetency().getName()
+
+                returnProcessDefinition.addChildActivity(essenceActivity);
+
+            }else{
+                essenceActivity.setActivityInEssenceDefinition(activityInPracticeDefinition);
+                essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetencyName()));//TODO: should be getCompetency().getName()
+
+                essenceActivity.initInputOutputParameters(); //Refresh the parameters
+
+            }
+
 
         }
 //        if (returnProcessDefinition.getChildActivities().size() != 0) {
@@ -249,18 +297,15 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 //            returnProcessDefinition.getChildActivities().add(e);
 //        }
 
-        Role[] roleArray = {};
-        roleArray = roleList.toArray(roleArray);
-        returnProcessDefinition.setRoles(roleArray);
 
-
-        // these are make the recursive error in dwr
-        ProcessVariable pv = null;
         for (Alpha alpha : getElements(Alpha.class)) {
-            AlphaInstance alphaInstance = alpha.createInstance(alpha.getName());
+            ProcessVariable pv = null;
+
+            AlphaInstance alphaInstance = alpha.createInstance(alpha.getName()); //reset the alphaInstance all the times.
+
             if (alpha.getPropertyList() != null) {
                 for (Property property : alpha.getPropertyList()) {
-                    alphaInstance.setProperty(property.getKey(), property.getType());
+                    alphaInstance.setProperty(property.getKey(), property.getType());//TODO: property.getType() for value???? kidding me?
                 }
             }
             //여기서 property를 다 set 해주어야할듯
@@ -270,10 +315,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
                     "type", AlphaInstance.class
             });
             pv.setDefaultValue(alphaInstance);
+
             pvList.add(pv);
         }
 
         for (WorkProduct workProduct : getElements(WorkProduct.class)) {
+            ProcessVariable pv = null;
+
             LanguageElementInstance workProductInstance = workProduct.createInstance(workProduct.getName());
             if (workProduct.getPropertyList() != null) {
                 for (Property property : workProduct.getPropertyList()) {
@@ -287,6 +335,16 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             pv.setDefaultValue(workProductInstance);
             pvList.add(pv);
         }
+
+        //restore the general process variables defined in Process Modeler
+        if(returnProcessDefinition.getProcessVariables()!=null)
+        for(ProcessVariable pvInExistingPD : returnProcessDefinition.getProcessVariables()){
+            if(!(pvInExistingPD.getDefaultValue() instanceof LanguageElementInstance)){
+
+                pvList.add(pvInExistingPD);
+            }
+        }
+
 
         ProcessVariable[] pvArray = {};
         pvArray = pvList.toArray(pvArray);

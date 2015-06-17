@@ -8,6 +8,7 @@ import org.uengine.kernel.*;
 import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class EssenceActivity extends HumanActivity implements NeedArrangementToSerialize {
@@ -26,7 +27,7 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
     @Override
     @Hidden
     public String getTool() {
-        return super.getTool();
+        return "mw3." + UEngineUtil.getComponentClassName(getClass(),  "handler");
     }
 
     public EssenceActivity(org.uengine.essencia.model.Activity activityInEssenceDefinition){
@@ -34,25 +35,70 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
         setName(activityInEssenceDefinition.getName());
         setRole(Role.forName(activityInEssenceDefinition.getCompetencyName()));//TODO: should be getCompetency().getName()
 
-        setInputOutputParameters();
-
-        setTool("mw3." + UEngineUtil.getComponentClassName(getClass(),  "handler"));
-
+        initInputOutputParameters();
     }
 
-    private void setInputOutputParameters() {
+    public void initInputOutputParameters() {
 
-        List<ParameterContext> parameterContexts = new ArrayList<ParameterContext>();
+        List<ParameterContext> addingParameterContexts = new ArrayList<ParameterContext>();
 
+        HashMap<String, ParameterContext> parameterContextHashMap = new HashMap<String, ParameterContext>();
+
+        if(getParameters()!=null)
+        for(ParameterContext parameterContext : getParameters()){
+            parameterContextHashMap.put(parameterContext.getArgument().getText(), parameterContext);
+        }
 
         if(getActivityInEssenceDefinition().getCompletionCriteria()!=null && getActivityInEssenceDefinition().getCompletionCriteria().size() > 0) {
 
+            //HashMap<String, Criterion> completionCriteriaByName = new HashMap<String, Criterion>();
+
             for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getCompletionCriteria()) {
 
-                ParameterContext parameterContext = createParameterContextFromCriterion((Criterion) completionCriterion_);
-                parameterContext.setDirection(ParameterContext.DIRECTION_INOUT);
-                parameterContexts.add(parameterContext);
+                Criterion criterion = (Criterion) completionCriterion_;
+
+                String criterionName = criterion.getElement().getName();
+                ParameterContext existingParameterContext = null;
+
+                boolean newlyAddedParameterContext = !parameterContextHashMap.containsKey(criterionName);
+
+                if(!newlyAddedParameterContext){
+                    existingParameterContext = parameterContextHashMap.get(criterionName);
+                }
+
+                ParameterContext parameterContext = createParameterContextFromCriterion(criterion, existingParameterContext);
+
+                addingParameterContexts.add(parameterContext);
+
+                //completionCriteriaByName.put(criterionName, criterion);
             }
+
+
+            for(int i=0; i<addingParameterContexts.size(); i++){
+                ParameterContext parameterContext = addingParameterContexts.get(i);
+
+                boolean found = false;
+                for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getCompletionCriteria()) {
+
+                    Criterion criterion = (Criterion) completionCriterion_;
+                    String criterionName = criterion.getElement().getName();
+
+                    if(parameterContext.getArgument().getText().equals(criterionName)){
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(!found || !UEngineUtil.isNotEmpty(parameterContext.getArgument().getText())){
+                    addingParameterContexts.remove(parameterContext);
+                }
+            }
+
+            ParameterContext[] newParameterContexts = new ParameterContext[addingParameterContexts.size()];
+
+            newParameterContexts = addingParameterContexts.toArray(newParameterContexts);
+
+            setParameters(newParameterContexts);
         }
 
         //TODO: disabled for now
@@ -69,20 +115,19 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 //
 //        }
 
-        ParameterContext [] parameterContextsInArray = new ParameterContext[parameterContexts.size()];
-        parameterContexts.toArray(parameterContextsInArray);
+        ParameterContext [] parameterContextsInArray = new ParameterContext[addingParameterContexts.size()];
+        addingParameterContexts.toArray(parameterContextsInArray);
 
         setParameters(parameterContextsInArray);
 
 
     }
 
-    private ParameterContext createParameterContextFromCriterion(Criterion completionCriterion_) {
-        ParameterContext parameterContext = new ParameterContext();
+    private ParameterContext createParameterContextFromCriterion(Criterion completionCriterion_, ParameterContext existingParameterContext) {
+        ParameterContext parameterContext = (existingParameterContext == null ? new ParameterContext() : existingParameterContext);
 
         Criterion completionCriterion = completionCriterion_;
 
-        parameterContext = new ParameterContext();
 
         TextContext textContext = TextContext.createInstance();
 
@@ -92,6 +137,10 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
         //workProducts should be accessed by global naming
         parameterContext.setVariable(ProcessVariable.forName(parameterContext.getArgument().getText()));
+
+        if(existingParameterContext==null){
+            parameterContext.setDirection(ParameterContext.DIRECTION_INOUT);
+        }
 
 
         return parameterContext;

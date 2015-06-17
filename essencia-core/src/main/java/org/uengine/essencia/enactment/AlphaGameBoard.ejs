@@ -4,7 +4,7 @@
 <%var alphaInstanceList = value.alphaInstances[alpha.name];%>
     <table class="table table-striped active">
         <tr>
-            <td>State</td>
+            <td>Id</td>
         <%
          for(var i in alpha.list){
             var state = alpha.list[i];
@@ -19,6 +19,10 @@
         for(var i in alphaInstanceList){
             var alphaInstance = alphaInstanceList[i];
 
+            if(alphaInstance && alphaInstance.alphaInstance){
+                alphaInstance = alphaInstance.alphaInstance;
+            }
+
             %><tr><td><%=alphaInstance.id%></td><%
 
             for(var j in alpha.list){
@@ -26,7 +30,7 @@
                 var state = alpha.list[j];
 
                 if(alphaInstance.currentStateName == state.name){
-                    %><td>X<%
+                    %><td><div class="icon-rounded m-r-10 current tooltip-top"><i class="glyphicon glyphicon-ok workitem_btn current"></i></div><%
                 }else{
                     %><td><%
                 }
