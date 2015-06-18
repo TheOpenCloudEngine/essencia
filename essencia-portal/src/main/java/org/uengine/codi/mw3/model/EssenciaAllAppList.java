@@ -24,7 +24,7 @@ public class EssenciaAllAppList extends AbstractAllAppList {
     @Override
     public Object[] goSNS() throws Exception {
         SNS sns = new SNS(session);
-        //topPanel.setTopCenterTitle(getSnsAppName());
+        topPanel.setTopCenterTitle(getSnsAppName());
         return new Object[]{new Refresh(sns), new Refresh(topPanel),
                 new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
     }
@@ -42,7 +42,7 @@ public class EssenciaAllAppList extends AbstractAllAppList {
         EssenciaApplication application = new EssenciaApplication();
         application.setEssencia(essencia);
 
-        //topPanel.setTopCenterTitle(getEssenciaAppName());
+        topPanel.setTopCenterTitle(getEssenciaAppName());
         return new Object[]{new Refresh(application), new Refresh(topPanel), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
     }
 

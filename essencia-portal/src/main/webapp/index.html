@@ -487,13 +487,13 @@
 				mw3.setWhere(mw3.WHERE_EVER);
 				var ssoService = request.getParameter("service")!=null?request.getParameter("service"):"";
 				var startcodi = new MetaworksObject({
-					__className : "org.uengine.codi.mw3.StartCodi",
+					__className : "org.uengine.codi.mw3.EssenciaStartCodi",
 					key : "loader",
 					ssoService: ssoService
 				}, 'body');
 			}else{
 				var startcodi = new MetaworksObject({
-					__className : "org.uengine.codi.mw3.StartCodi",
+					__className : "org.uengine.codi.mw3.EssenciaStartCodi",
 					key : 'loader'
 				}, 'body');
 			}
