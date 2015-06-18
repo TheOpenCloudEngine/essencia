@@ -445,7 +445,7 @@
       <message>onHumanActivityResulta9</message>
       <parameters>
         <org.uengine.kernel.ParameterContext>
-          <multipleInput>true</multipleInput>
+          <multipleInput>false</multipleInput>
           <argument>
             <text>Sprint</text>
             <localedTexts/>

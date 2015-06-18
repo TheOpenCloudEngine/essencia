@@ -1,15 +1,13 @@
 package org.uengine.essencia.model.card;
 
-import org.uengine.essencia.model.Activity;
-import org.uengine.essencia.model.BasicElement;
-import org.uengine.essencia.model.Competency;
-import org.uengine.essencia.model.Criterion;
-import org.uengine.essencia.model.LanguageElement;
-import org.uengine.essencia.model.WorkProduct;
+import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.view.ActivityArrowView;
 import org.uengine.essencia.model.view.AlphaView;
 import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.WorkProductView;
+import org.uengine.kernel.GlobalContext;
+
+import java.util.List;
 
 public class ActivityCard extends BasicCard {
 
@@ -25,6 +23,12 @@ public class ActivityCard extends BasicCard {
 
     public ActivityCard(BasicElement element) {
         this();
+
+        try {
+            element = (BasicElement)GlobalContext.deserialize(GlobalContext.serialize(element, String.class), String.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         makeCard(element);
     }
 
@@ -36,7 +40,17 @@ public class ActivityCard extends BasicCard {
 
         int elementIndex = 0;
         y = -30;
-        for (LanguageElement e : ((Activity) element).getEntryCriteriaPanel().createValue()) {
+
+        List<LanguageElement> entryCriteriaList;
+
+        if(((Activity) element).getEntryCriteriaPanel()!=null){
+            entryCriteriaList =((Activity) element).getEntryCriteriaPanel().createValue();
+        }else{
+            entryCriteriaList = ((Activity) element).getEntryCriteria();
+        }
+
+        if(entryCriteriaList!=null)
+        for (LanguageElement e : entryCriteriaList) {
             Criterion criterion = (Criterion) e;
             setSymbol((new AlphaView()).createSymbol());
             setView(criterion.getState().getParentAlpha().createView());
@@ -99,17 +113,32 @@ public class ActivityCard extends BasicCard {
         // Output Alpha View
         elementIndex = 0;
         description += "<ul>";
-        for (LanguageElement e : ((Activity) element).getCompletionCriterionFace().createValue()) {
+
+        List<LanguageElement> completionCriterionList;
+        if(((Activity) element).getCompletionCriterionFace()!=null){
+            completionCriterionList = ((Activity) element).getCompletionCriterionFace().createValue();
+        }else{
+            completionCriterionList = ((Activity) element).getCompletionCriteria();
+        }
+
+        if(completionCriterionList!=null)
+        for (LanguageElement e : completionCriterionList) {
             Criterion criterion = (Criterion) e;
-            description += "<li>" + criterion.getState().getParentAlpha().getName() + ": "
-                    + criterion.getState().getParentAlpha().getName() + "</li>";
-            setSymbol((new AlphaView().createSymbol()));
-            setView(criterion.getState().getParentAlpha().createView());
+
+            BasicElement theElementForCriteria = criterion.getElement();
+
+            description += "<li>" + theElementForCriteria.getName() + ": "
+                    + theElementForCriteria.getName() + "</li>";
+
+            setView(theElementForCriteria.createView());
+
+            setSymbol(getView().createSymbol());
 
             x = getXCoordinate(elementIndex);
             y = getYCoordinate(y, elementIndex);
 
-            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
+            ((BasicElement) getView().getElement()).setName(theElementForCriteria.getName() + "("
+                    + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
                     + ")");
             getView().fill(getSymbol());
             getView().setX(String.valueOf(x));
@@ -121,8 +150,18 @@ public class ActivityCard extends BasicCard {
             getCanvas().getElementViewList().add(getView());
             elementIndex++;
         }
+
+        List<LanguageElement> workProductList;
+
+        if(((Activity) element).getWorkProductFace()!=null){
+            workProductList = ((Activity) element).getWorkProductFace().createValue();
+        }else{
+            workProductList = null;
+        }
+
         // Output WorkProduct View
-        for (LanguageElement e : ((Activity) element).getWorkProductFace().createValue()) {
+        if(workProductList!=null)
+        for (LanguageElement e : workProductList) {
             Criterion criterion = (Criterion) e;
             description += "<li>" + criterion.getLevelOfDetail().getParentWorkProduct().getName() + ": " + criterion.getLevelOfDetail().getName()
                     + "</li>";

@@ -171,24 +171,41 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
         List<ProcessVariable> pvList = new ArrayList<>();
 
-        Role role = null;
-        ElementView roleView = null;
-        int laneCnt = 0;
-        ElementView humanView = null;
 
 
         for (IElement element : getElements(Activity.class)) {
+            Role role = null;
+            ElementView roleView = null;
+            int laneCnt = 0;
+            ElementView humanView = null;
 
             Activity activityInPracticeDefinition = (Activity) element;
             Competency competency = getElement(activityInPracticeDefinition.getCompetencyName(), Competency.class);
 
-            if (returnProcessDefinition.getRole(competency.getName())==null) {
+            //finding role from the existing process definition first.
+            if(returnProcessDefinition.getRoles()!=null)
+            for(int i=0; i<returnProcessDefinition.getRoles().length; i++){
+                if(returnProcessDefinition.getRoles()[i].getName().equalsIgnoreCase(competency.getName())){
+                    role = returnProcessDefinition.getRoles()[i];
+
+                    laneCnt = i;
+                    break;
+                }
+            }
+
+            if (role==null) {
                 role = Role.forName(competency.getName());
                 role.setDisplayName(role.getName());
-                roleView = role.createView();
-
                 returnProcessDefinition.addRole(role);
+
                 laneCnt = returnProcessDefinition.getRoles().length - 1;
+
+            }
+
+            roleView = role.getElementView();
+
+            if(roleView == null){
+                roleView = role.createView();
 
                 roleView.setWidth(calculateLaneWidth(competency.getName()) + 40 + 192);
                 roleView.setHeight("128");
@@ -199,7 +216,6 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
                 role.setElementView(roleView);
             }
-
 
             //make essence activity
             final String nameOfFindingActivity = ((Activity) element).getName();
