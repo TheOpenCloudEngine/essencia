@@ -63,10 +63,8 @@
 						}
 						options['htmlTag'] =  'li';
 				%>
-				<div data-toggle="tooltip" data-placement="top" title="eventTrigger" class="icon-rounded m-r-10 tooltip-top">
-				  <i class="glyphicon glyphicon-triangle-top">
+				<div data-toggle="tooltip" data-placement="top" title="<%=eventTrigger.displayName%>" class="icon-rounded m-r-10 tooltip-top style="padding-top:15.5px">
 					<%=mw3.locateObject(eventTrigger, eventTrigger.__className, null , options, {objectId: objectId, name: '[' + i + ']'}) %>
-				  </i>
 				</div>
 				<%
 							}
