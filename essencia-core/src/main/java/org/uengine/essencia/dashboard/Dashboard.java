@@ -1,5 +1,6 @@
 package org.uengine.essencia.dashboard;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class Dashboard implements ContextAware {
 		metaworksContext.setWhere("dashboard");
 		this.practiceDefinition = practiceDefinition;
 
-		this.practiceDefinition = getKernelDefinition(); //TODO example.practices ´ëÀÔ
+		this.practiceDefinition = getKernelDefinition(); //TODO example.practices ëŒ€ìž…
 
 
 		//
@@ -103,23 +104,12 @@ public class Dashboard implements ContextAware {
 	}
 
 
-	public static PracticeDefinition getKernelDefinition() {
+	public PracticeDefinition getKernelDefinition() {
 		PracticeDefinition practice = null;
-		//URL url = EssenciaKernelPalette.class.getResource("../model/kernel/kernel.practice");
-
-
 		try {
-			//TODO: my local setting only
-
-
-
-			//URL url = new URL("file:///d:/dev/git/essencia/essencia-core/src/main/resources/org/uengine/essencia/model/kernel/kernel.practice");
-			URL url  = new URL("classpath:org/uengine/essencia/dashboard/kernel.practice");
-
+			InputStream is = getClass().getResourceAsStream("/org/uengine/essencia/model/kernel/kernel.practice");
 			XStream x = new XStream();
-			File file = new File(url.getPath());
-			FileInputStream fis = new FileInputStream(file);
-			InputStreamReader isr = new InputStreamReader(fis);
+			InputStreamReader isr = new InputStreamReader(is);
 			practice = (PracticeDefinition)x.fromXML(isr);
 		} catch (Exception e) {
 			e.printStackTrace();
