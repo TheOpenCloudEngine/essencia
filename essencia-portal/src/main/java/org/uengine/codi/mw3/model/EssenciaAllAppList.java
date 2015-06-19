@@ -13,13 +13,9 @@ import org.uengine.essencia.Loader;
  * Created by hoo.lim on 6/3/2015.
  */
 @Face(ejsPath = "dwr/metaworks/org/uengine/codi/mw3/model/EssenciaAllAppList.ejs")
-public class EssenciaAllAppList extends AbstractAllAppList {
+public class EssenciaAllAppList extends AllAppList {
     @AutowiredFromClient
     public TopPanel topPanel;
-
-    @Override
-    public void load() throws Exception {
-    }
 
     @Override
     public Object[] goSNS() throws Exception {
