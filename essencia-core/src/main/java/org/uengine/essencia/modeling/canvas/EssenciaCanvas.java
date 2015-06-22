@@ -24,7 +24,7 @@ import org.uengine.modeling.Symbol;
 
 public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 
-	public final static String CANVAS_DROP = "drop";
+	public final static String CANVAS_DROP = "canvasdrop";
 
 	@AutowiredFromClient
 	public Clipboard clipboard;
