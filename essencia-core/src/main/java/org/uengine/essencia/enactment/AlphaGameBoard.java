@@ -49,8 +49,7 @@ public class AlphaGameBoard {
 
 
     public AlphaGameBoard() throws Exception {
-      /*
-        ExampleAlphaInstance exampleAlphaInstance = new ExampleAlphaInstance();
+        /*ExampleAlphaInstance exampleAlphaInstance = new ExampleAlphaInstance();
 
         ProcessInstance instance = exampleAlphaInstance.getProcessInstance();
         ProcessDefinition processDefinition = exampleAlphaInstance.getProcessInstance().getProcessDefinition();
@@ -71,8 +70,7 @@ public class AlphaGameBoard {
             }
         }
 
-        setAlpha(exampleAlphaInstance.getAlphaInstance().getAlpha());
-        */
+        setAlpha(exampleAlphaInstance.getAlphaInstance().getAlpha());*/
 
     }
 

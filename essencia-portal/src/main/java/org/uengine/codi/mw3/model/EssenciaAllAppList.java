@@ -13,25 +13,11 @@ import org.uengine.essencia.Loader;
  * Created by hoo.lim on 6/3/2015.
  */
 @Face(ejsPath = "dwr/metaworks/org/uengine/codi/mw3/model/EssenciaAllAppList.ejs")
-public class EssenciaAllAppList extends AbstractAllAppList {
-    @AutowiredFromClient
-    public TopPanel topPanel;
-
-    @Override
-    public void load() throws Exception {
-    }
-
-    @Override
-    public Object[] goSNS() throws Exception {
-        SNS sns = new SNS(session);
-        topPanel.setTopCenterTitle(getSnsAppName());
-        return new Object[]{new Refresh(sns), new Refresh(topPanel),
-                new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
-    }
+public class EssenciaAllAppList extends AllAppList {
 
     /**
-     * @throws Exception
      * @return11111111
+     * @throws Exception
      */
     @ServiceMethod(target = ServiceMethodContext.TARGET_APPEND)
     public Object[] goEssencia() throws Exception {
@@ -42,27 +28,7 @@ public class EssenciaAllAppList extends AbstractAllAppList {
         EssenciaApplication application = new EssenciaApplication();
         application.setEssencia(essencia);
 
-        //topPanel.setTopCenterTitle(getEssenciaAppName());
+        topPanel.setTopCenterTitle("$AppList.Essencia");
         return new Object[]{new Refresh(application), new Refresh(topPanel), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
-    }
-
-    String snsAppName;
-
-    public String getSnsAppName() {
-        return "Workspace";
-    }
-
-    public void setSnsAppName(String snsAppName) {
-        this.snsAppName = snsAppName;
-    }
-
-    String essenciaAppName;
-
-    public String getEssenciaAppName() {
-        return "Practice Composer";
-    }
-
-    public void setEssenciaAppName(String essenciaAppName) {
-        this.essenciaAppName = essenciaAppName;
     }
 }

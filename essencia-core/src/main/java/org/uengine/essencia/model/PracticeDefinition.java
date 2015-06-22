@@ -154,12 +154,12 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         return toProcessDefinition(null);
     }
 
-    /**
-     * this method make this practice definition convert to uEngine's Process Definition
-     *
-     * @return ProcessDefinition ( from uengine-core module )
-     * @throws Exception
-     */
+        /**
+         * this method make this practice definition convert to uEngine's Process Definition
+         *
+         * @return ProcessDefinition ( from uengine-core module )
+         * @throws Exception
+         */
     public EssenceProcessDefinition toProcessDefinition(EssenceProcessDefinition existingProcessDefinition) {
 
         EssenceProcessDefinition returnProcessDefinition = existingProcessDefinition;
@@ -184,14 +184,14 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
             //finding role from the existing process definition first.
             if(returnProcessDefinition.getRoles()!=null)
-                for(int i=0; i<returnProcessDefinition.getRoles().length; i++){
-                    if(returnProcessDefinition.getRoles()[i].getName().equalsIgnoreCase(competency.getName())){
-                        role = returnProcessDefinition.getRoles()[i];
+            for(int i=0; i<returnProcessDefinition.getRoles().length; i++){
+                if(returnProcessDefinition.getRoles()[i].getName().equalsIgnoreCase(competency.getName())){
+                    role = returnProcessDefinition.getRoles()[i];
 
-                        laneCnt = i;
-                        break;
-                    }
+                    laneCnt = i;
+                    break;
                 }
+            }
 
             if (role==null) {
                 role = Role.forName(competency.getName());
@@ -354,12 +354,12 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
         //restore the general process variables defined in Process Modeler
         if(returnProcessDefinition.getProcessVariables()!=null)
-            for(ProcessVariable pvInExistingPD : returnProcessDefinition.getProcessVariables()){
-                if(!(pvInExistingPD.getDefaultValue() instanceof LanguageElementInstance)){
+        for(ProcessVariable pvInExistingPD : returnProcessDefinition.getProcessVariables()){
+            if(!(pvInExistingPD.getDefaultValue() instanceof LanguageElementInstance)){
 
-                    pvList.add(pvInExistingPD);
-                }
+                pvList.add(pvInExistingPD);
             }
+        }
 
 
         ProcessVariable[] pvArray = {};
@@ -666,7 +666,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
                         State state = criterion.getState();
                         State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
                         if (fullState != null) {
-                            state.setCheckPoints(fullState.getCheckPoints());
+                            state.setList(fullState.getList());
                         }
 
                     }
@@ -679,7 +679,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         List<Alpha> alphaList = this.getElements(Alpha.class);
         for (Alpha alpha : alphaList) {
             if (alpha.getName().equals(alphaName)) {
-                for (State state : alpha.getStates()) {
+                for (State state : alpha.getList()) {
                     if (state.getName().equals(stateName))
                         return state;
                 }
