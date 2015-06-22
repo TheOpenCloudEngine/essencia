@@ -11,7 +11,6 @@ import org.metaworks.ToAppend;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
-import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.Practice;
@@ -39,7 +38,7 @@ public class MethodCanvas extends EssenciaCanvas {
     }
 
     @Available(when = {MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
-    @ServiceMethod(payload = {"clipboard", "modelerType", "elementViewList", "relationViewList"}, target = ServiceMethodContext.TARGET_APPEND, mouseBinding = CANVAS_DROP)
+    @ServiceMethod(payload = {"clipboard", "modelerType", "elementViewList", "relationViewList"}, target = ServiceMethodContext.TARGET_APPEND, eventBinding = CANVAS_DROP)
     @Override
     public Object[] drop() {
 
