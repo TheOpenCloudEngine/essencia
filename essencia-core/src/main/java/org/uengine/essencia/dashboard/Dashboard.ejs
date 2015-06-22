@@ -47,6 +47,7 @@
   }
 
   .state {
+
     background: #ddd;
     font-size: 10px;
     margin-bottom: 3px;
@@ -59,12 +60,12 @@
     text-overflow: ellipsis;
     word-wrap: break-word;
     cursor: hand;
-    margin-top:100px;
+    /*margin-top:100px;*/
   }
 
   .plan-month {
-    border-bottom: 1px dashed red;
-    margin-top: 50px;
+    border-bottom: 1px dashed #888;
+    margin-top: 30px;
     text-align: right;
     font-weight: bold;
     font-size: 10px;
@@ -117,39 +118,49 @@ function monthDiff(d1, d2) {
 
 
 </script>
-
+<!--
    <div>
   		<button>Planning</button>
   		<button>Monitoring</button>
 	<div>
-
+-->
               <div id="plan-month" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
-				  <div class="plan-month"><span id="start-date"
+				  <div id="plan-month-start" class="plan-month"><span id="start-date"
 				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">S</span>
 				  </div>
 				  <div id="plan-month-gen">
 				  </div>
 
 				  <div class="plan-month"><span
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">August</span>
+				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">06/2015</span>
 				  </div>
 				  <div class="plan-month"><span
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">September</span>
+				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">07/2015</span>
 				  </div>
 				  <div class="plan-month"><span
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">October</span>
+				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">08/2015</span>
 				  </div>
+				  <div class="plan-month">
+				    <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">09/2015</span>
+                 </div>
+                 <div class="plan-month">
+                       <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">10/2015</span>
+                 </div>
 
-				  <div class="plan-month" stlye="margin-top:400px;"><span id="end-date"
+                 <div class="plan-month">
+                       <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">11/2015</span>
+                 </div>
+
+				  <div id="plan-month-end" class="plan-month" stlye="margin-top:400px;"><span id="end-date"
 				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">E</span>
 				  </div>
 				</div>
 
 				<div id="plan-status" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
-				  <div class="plan-status"><span
+				  <div id="plan-status-now" class="plan-status"><span
 				        style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">Now</span>
 				  </div>
-				  <div class="plan-status"><span
+				  <div id="plan-status-todo" class="plan-status"><span
 				        style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">To-Do</span>
 				  </div>
 				</div>
@@ -216,7 +227,7 @@ function monthDiff(d1, d2) {
 				                <% console.log(stakeholder.states); %>
 				                <% for(idx in stakeholder.states){ %>
 				                <div id="alpha-3-state-<%= idx %>" index="<%= idx %>"
-				                     class="state" style="margin-top:50px"><%= (stakeholder.states[idx].name) %></div>
+				                     class="state"><%= (stakeholder.states[idx].name) %></div>
 				                <% } %>
 				                <div id="state-7"></div>
 				              </div>
@@ -306,12 +317,21 @@ function monthDiff(d1, d2) {
 				  //대시보드 초기화
 				  dashboard.init = function(){
 
-
 				     this.setPlanDate();
 
 				    //알파 및 스테이트 이벤트 맵핑
 				    for (var a = 1; a < 8; a++) {
+				      //temp margin
+				      var top = 30;
 				      for (var i = 0; i < 7; i++) {
+
+				        setTimeout(function(){
+				        var r = Math.floor((Math.random() * 100) + 1);
+				        var t = r + 10 + (top*i);
+				        $("#alpha-" + a + "-state-" + i).css({'top': 200 + 20 + (top*i), 'position':'relative'});
+				        $("#alpha-" + a + "-state-" + i).css('border', '1px solid red'); //comp.
+				        },5000);
+
 				        $("#alpha-" + a + "-state-" + i).draggable({
 				          containment: "parent",
 				          start: function (event, ui) {
@@ -321,6 +341,7 @@ function monthDiff(d1, d2) {
 				            dashboard.state.dragStop(this, event, ui);
 				          }
 				        });
+
 				      }
 				    };
 
@@ -336,7 +357,7 @@ function monthDiff(d1, d2) {
 				  //플랜일정 셋팅
 				  dashboard.setPlanDate = function(){
 				  		dashboard.startdate = new Date(2015,05,05); //시작
-				  		dashboard.enddate   = new Date(2015,09,12); //종료
+				  		dashboard.enddate   = new Date(2015,10,12); //종료
 				  		//
 
 				  		//일정
@@ -356,6 +377,11 @@ function monthDiff(d1, d2) {
 				    	//NOW/TODO 설정
 				  };
 
+                   //
+				   dashboard.setNowTodoDate = function(){
+
+				    }
+
 				  //대비소드 리사이즈(알파를 길게)
 				  dashboard.resize = function (){
 				   //시작 완료일자에 맞게 알파 높이 설정
@@ -374,7 +400,7 @@ function monthDiff(d1, d2) {
 				            //
 				            var top = $(obj).offset().top;
 				            var left = $(obj).offset().left;
-				            $(obj).attr('orgTop', top);
+				           // $(obj).attr('orgTop', top);
 				            $(obj).attr('orgLeft', left);
 				            //위/아래 오브젝트 포지션 체크
 				            // console.log($(obj).attr('index'));
@@ -435,6 +461,7 @@ function monthDiff(d1, d2) {
 
 				  //state를 날자에 따라 위치를 지정해 준다.
 				  dashboard.state.setPosition = function(){
+				    /*
 				    $( ".state" ).each(function(index, obj) {
 				    	 var date = $(obj).attr('plan-date');
 				   		//var a = 10; //start_date + plus_date;
@@ -442,12 +469,37 @@ function monthDiff(d1, d2) {
 				    	var top =  base_line_top + 30; //date값으로 부터 +day 계산
 				    	$(obj).offset({ top: top });
 				    });
+				    */
+
+                    /*
+				    setTimeout(function(){
+				    $("#alpha-1-state-3").css({'top': 90, 'position':'relative'});
+				    }, 1000);
+				    */
+
 				  };
 
 				  //
 				  $(function() {
 				    dashboard.init();
 				    dashboard.state.setPosition();
+
+
+				    setTimeout(function(){
+
+ 					 for (var a = 1; a < 8; a++) {
+				       //temp margin
+				       var top = 0;
+				       for (var i = 0; i < 7; i++) {
+				            r = Math.floor((Math.random() * 100) + 1);;
+				            $("#alpha-" + a + "-state-" + i).css({'top': r + 20 + (0), 'position':'relative'});
+                        	//$("#alpha-" + a + "-state-" + i).css('border', '1px solid red'); //comp.
+				        }
+                    	}
+
+                    	},
+                    	1000);
+
 				  });
 
 				</script>

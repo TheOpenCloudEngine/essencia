@@ -16450,10 +16450,15 @@ OG.renderer.RaphaelRenderer.prototype._drawLabel = function (position, text, siz
 		"font-size"   : _style["font-size"] || me._CONFIG.DEFAULT_STYLE.LABEL["font-size"],
 		"fill-opacity": 1
 	});
-	
+
+    if(text != ""){
+        $(element.node).css({
+            "background-color" : _style["fill"] || me._CONFIG.DEFAULT_STYLE.LABEL["fill"]
+        });
+    }
+
 	$(element.node).css({
-		"cursor"	 : "move",
-        "background-color" : _style["fill"] || me._CONFIG.DEFAULT_STYLE.LABEL["fill"]
+		"cursor"	 : "move"
 	});
 
 	// angle 적용
