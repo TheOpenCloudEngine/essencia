@@ -12,6 +12,8 @@ import org.uengine.essencia.model.face.selectbox.CriterionSelectBoxFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.IElement;
 
+import javax.annotation.processing.Completion;
+
 public class ActivityCompletionCriterionFace extends CriterionFace {
     @Override
     public void add() {
@@ -34,10 +36,10 @@ public class ActivityCompletionCriterionFace extends CriterionFace {
     }
 
     @Override
-    public List<LanguageElement> createValue() {
-        List<LanguageElement> returnList = new ArrayList<LanguageElement>();
+    public List<CompletionCriterion> createValue() {
+        List<CompletionCriterion> returnList = new ArrayList<CompletionCriterion>();
         for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
-            Criterion criterion = new CompletionCriterion();
+            CompletionCriterion criterion = new CompletionCriterion();
             criterion.setUpState(((CriterionSelectBoxFace) box).getSubSelectBox().getSelectedText(), box.getMainSelectBox().getSelectedText());
             returnList.add(criterion);
         }
@@ -46,7 +48,7 @@ public class ActivityCompletionCriterionFace extends CriterionFace {
     }
 
     @Override
-    public void fillElements(List<LanguageElement> list) {
+    public void fillElements(List<? extends LanguageElement> list) {
         for (int i = 0; i < list.size(); i++) {
             add();
             getAbstractSelectBoxFaceList().get(i).getMainSelectBox().setSelected(((Criterion) list.get(i)).getState().getParentAlpha().getName());

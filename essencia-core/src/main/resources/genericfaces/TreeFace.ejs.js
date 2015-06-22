@@ -12,3 +12,14 @@ var TreeFace = function(objectId, className){
 	if('java.util.List' != this.objectDiv.parent().attr('classname'))		
 		this.objectDiv.addClass('filemgr-tree').addClass('filemgr-treeFocus')
 }
+
+
+TreeFace.prototype = {
+	startLoading: function () {
+		mw3.startLoading();
+	},
+
+	endLoading: function () {
+		mw3.endLoading();
+	}
+}

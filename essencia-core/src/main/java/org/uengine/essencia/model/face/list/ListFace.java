@@ -76,6 +76,7 @@ public abstract class ListFace<T> implements ContextAware {
 		EssenciaElement element = new EssenciaElement();
 		element.setValue(t);
 
+		ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
 		ContextUtil.setWhen(element, EssenciaContext.WHEN_EDIT);
 		ContextUtil.setWhen((LanguageElement) t, EssenciaContext.WHEN_EDIT);
 

@@ -42,11 +42,11 @@ public class StateCard extends DetailCard{
 		setImg(IMG_LOCATION + parentElement.createView().createSymbol().getShapeId() + IMG_EXTENSION);
 		setParentName(parentElement.getName());
 		
-		for(int i=0; i < ((Alpha)parentElement).getList().size(); i++){
-			State state = ((Alpha)parentElement).getList().get(i);
+		for(int i=0; i < ((Alpha)parentElement).getStates().size(); i++){
+			State state = ((Alpha)parentElement).getStates().get(i);
 			if(state.getName().equals(element.getName())){
-				setStateNumber(i + 1 + "/" + ((Alpha)parentElement).getList().size());
-				for (CheckPoint checkPoint : state.getList()){
+				setStateNumber(i + 1 + "/" + ((Alpha)parentElement).getStates().size());
+				for (CheckPoint checkPoint : state.getCheckPoints()){
 					getList().add(checkPoint.getName());
 				}
 			}

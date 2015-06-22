@@ -23,25 +23,25 @@ import org.uengine.modeling.IElement;
 
 public class Activity extends AbstractActivity {
 
-    private List<LanguageElement> entryCriteria;
+    private List<EntryCriterion> entryCriteria;
     private transient CriterionFace entryCriteriaPanel;
 
 //    private List<LanguageElement> workProductList;
     private transient WorkProductFace workProductFace;
 
     private SelectBox competency;
-    private List<LanguageElement> requiredCompetencyLevel;
+    private List<CompetencyLevel> requiredCompetencyLevel;
     private transient RequiredCompetencyLevelFace requiredCompetencyLevelFace;
 
     private transient ApproachListFace approachPanel;
     private transient ActionListFace actionPanel;
 
     @Hidden
-    public List<LanguageElement> getEntryCriteria() {
+    public List<EntryCriterion> getEntryCriteria() {
         return entryCriteria;
     }
 
-    public void setEntryCriteria(List<LanguageElement> entryCriteria) {
+    public void setEntryCriteria(List<EntryCriterion> entryCriteria) {
         this.entryCriteria = entryCriteria;
     }
 
@@ -102,11 +102,11 @@ public class Activity extends AbstractActivity {
     }
 
     @Hidden
-    public List<LanguageElement> getRequiredCompetencyLevel() {
+    public List<CompetencyLevel> getRequiredCompetencyLevel() {
         return requiredCompetencyLevel;
     }
 
-    public void setRequiredCompetencyLevel(List<LanguageElement> requiredCompetencyLevel) {
+    public void setRequiredCompetencyLevel(List<CompetencyLevel> requiredCompetencyLevel) {
         this.requiredCompetencyLevel = requiredCompetencyLevel;
     }
 
@@ -215,8 +215,8 @@ public class Activity extends AbstractActivity {
 
         super.beforeApply();
         setRequiredCompetencyLevel(getRequiredCompetencyLevelFace().createValue());
-        setEntryCriteria(getEntryCriteriaPanel().createValue());
-        setCompletionCriteria(getCompletionCriterionFace().createValue());
+        setEntryCriteria(((ActivityEntryCriterionFace) getEntryCriteriaPanel()).createValue());
+        setCompletionCriteria(((ActivityCompletionCriterionFace) getCompletionCriterionFace()).createValue());
         getCompletionCriteria().addAll(getWorkProductFace().createValue());
     }
 

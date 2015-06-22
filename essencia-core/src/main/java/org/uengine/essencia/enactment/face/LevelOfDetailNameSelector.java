@@ -25,7 +25,7 @@ public class LevelOfDetailNameSelector extends SelectBox implements Face<String>
     public void visitHolderObjectOfField(WorkProductInstance holderObject) {
 
         ArrayList<String> options = new ArrayList<String>();
-        for(LevelOfDetail levelOfDetail : holderObject.getWorkProduct().getList()){
+        for(LevelOfDetail levelOfDetail : holderObject.getWorkProduct().getLevelOfDetails()){
             options.add(levelOfDetail.getName());
         }
 

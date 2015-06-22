@@ -666,7 +666,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
                         State state = criterion.getState();
                         State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
                         if (fullState != null) {
-                            state.setList(fullState.getList());
+                            state.setCheckPoints(fullState.getCheckPoints());
                         }
 
                     }
@@ -679,7 +679,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         List<Alpha> alphaList = this.getElements(Alpha.class);
         for (Alpha alpha : alphaList) {
             if (alpha.getName().equals(alphaName)) {
-                for (State state : alpha.getList()) {
+                for (State state : alpha.getStates()) {
                     if (state.getName().equals(stateName))
                         return state;
                 }

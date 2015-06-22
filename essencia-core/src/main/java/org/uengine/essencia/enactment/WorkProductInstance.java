@@ -34,8 +34,8 @@ public class WorkProductInstance extends LanguageElementInstance {
 
         super(workProduct, id);
 
-        if(getWorkProduct()!=null && getWorkProduct().getList()!=null && getWorkProduct().getList().size() > 0)
-            setCurrentLevelOfDetailName(getWorkProduct().getList().get(0).getName());
+        if(getWorkProduct()!=null && getWorkProduct().getLevelOfDetails()!=null && getWorkProduct().getLevelOfDetails().size() > 0)
+            setCurrentLevelOfDetailName(getWorkProduct().getLevelOfDetails().get(0).getName());
     }
 
     //only for serialization / deserialization

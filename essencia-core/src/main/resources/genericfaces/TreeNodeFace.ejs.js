@@ -59,11 +59,12 @@ TreeNodeFace.prototype = {
 		$(this.nodeDiv).unbind('click').unbind('dblclick');
 	},
 	startLoading : function(){
-		
+		mw3.startLoading();
 	},
 	
 	endLoading : function(){
-		this.nodeDiv.removeClass('loading');		
+		this.nodeDiv.removeClass('loading');
+		mw3.endLoading();
 	},
 	
 	showStatus : function(message){

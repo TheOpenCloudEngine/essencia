@@ -16,22 +16,19 @@ import org.uengine.kernel.ProcessInstance;
 public class WorkProduct extends BasicElement implements ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement, HasLevel {
 
 
-
-    private List<LevelOfDetail> list;
+    private List<LevelOfDetail> levelOfDetails;
     private transient LevelOfDetailListFace listFace;
 
-    public List<LevelOfDetail> getLevelOfDetails() {
-        return getList();
-    }
 
     @Hidden
-    public List<LevelOfDetail> getList() {
-        return list;
+    public List<LevelOfDetail> getLevelOfDetails() {
+        return this.levelOfDetails;
     }
 
-    public void setList(List<LevelOfDetail> list) {
-        this.list = list;
+    public void setLevelOfDetails(List<LevelOfDetail> levelOfDetails) {
+        this.levelOfDetails = levelOfDetails;
     }
+
 
     @Face(displayName = "LevelOfDetail")
     public LevelOfDetailListFace getListFace() {
@@ -75,7 +72,7 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
         // set alpha
         workProduct.setName(getName());
         workProduct.setDescription(getDescription());
-        for (LevelOfDetail levelOfDetail : getList()) {
+        for (LevelOfDetail levelOfDetail : getLevelOfDetails()) {
             workProduct.getLevelOfDetail().add(levelOfDetail.toXmi());
         }
 
@@ -86,23 +83,23 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
     public void setUpElement() {
         super.setUpElement();
         setListFace(new LevelOfDetailListFace());
-        if (getList() != null) {
-            getListFace().fillElements(getList());
-            getList().clear();
+        if (getLevelOfDetails() != null) {
+            getListFace().fillElements(getLevelOfDetails());
+            getLevelOfDetails().clear();
         }
     }
 
     @Override
     public void beforeApply() {
         super.beforeApply();
-        setList(getListFace().createValue());
+        setLevelOfDetails(getListFace().createValue());
     }
 
     public LevelOfDetail findLevelOfDetail(String levelOfDetailName) {
-        if(levelOfDetailName==null) return null;//throw new IllegalArgumentException("Finding state name is null");
+        if (levelOfDetailName == null) return null;//throw new IllegalArgumentException("Finding state name is null");
 
-        for(LevelOfDetail levelOfDetail : getList()){
-            if(levelOfDetailName.equals(levelOfDetail.getName())){
+        for (LevelOfDetail levelOfDetail : getLevelOfDetails()) {
+            if (levelOfDetailName.equals(levelOfDetail.getName())) {
                 return levelOfDetail;
             }
         }
@@ -113,7 +110,7 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
 
     @Override
     public List<WorkProductInstance> getInstances(ProcessInstance instance) {
-        return (List<WorkProductInstance>)super.getInstances(instance);
+        return (List<WorkProductInstance>) super.getInstances(instance);
     }
 
     @Override

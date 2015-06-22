@@ -20,16 +20,16 @@ public class Competency extends BasicElement implements Concernable, ContextTran
     private String concern;
     private transient SelectBox concernSelectBox;
 
-    private List<CompetencyLevel> list;
+    private List<CompetencyLevel> competencyLevels;
     private transient CompetencyLevelListFace listFace;
 
     @Hidden
-    public List<CompetencyLevel> getList() {
-        return list;
+    public List<CompetencyLevel> getCompetencyLevels() {
+        return competencyLevels;
     }
 
-    public void setList(List<CompetencyLevel> list) {
-        this.list = list;
+    public void setCompetencyLevels(List<CompetencyLevel> competencyLevels) {
+        this.competencyLevels = competencyLevels;
     }
 
     @Hidden
@@ -115,7 +115,7 @@ public class Competency extends BasicElement implements Concernable, ContextTran
         // set alpha
         competency.setName(getName());
         competency.setDescription(getDescription());
-        for (CompetencyLevel cl : getList()) {
+        for (CompetencyLevel cl : getCompetencyLevels()) {
             competency.getPossibleLevel().add(cl.toXmi());
         }
 
@@ -126,9 +126,9 @@ public class Competency extends BasicElement implements Concernable, ContextTran
     public void setUpElement() {
         super.setUpElement();
         setListFace(new CompetencyLevelListFace());
-        if (getList() != null) {
-            getListFace().fillElements(getList());
-            getList().clear();
+        if (getCompetencyLevels() != null) {
+            getListFace().fillElements(getCompetencyLevels());
+            getCompetencyLevels().clear();
         }
 
         setConcernBox(new EssenciaConcernSelectBox());
@@ -139,7 +139,7 @@ public class Competency extends BasicElement implements Concernable, ContextTran
     @Override
     public void beforeApply() {
         super.beforeApply();
-        setList(getListFace().createValue());
+        setCompetencyLevels(getListFace().createValue());
 
         setConcern(getConcernBox().getSelected());
         setConcernBox(null);

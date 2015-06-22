@@ -97,7 +97,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(alphaBacklog); //TODO: should be removed. alpha.setList should do this.
 
@@ -118,7 +118,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(alphaBacklog);
 
@@ -139,14 +139,14 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
             state.setParentAlpha(alphaBacklog);
 
 
         }
 
 
-        alphaBacklog.setList(statesOfBacklog);
+        alphaBacklog.setStates(statesOfBacklog);
 
         {
             sprintPlanningInEssenceDefinition = new org.uengine.essencia.model.Activity();
@@ -154,11 +154,11 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             sprintPlanningInEssenceDefinition.setCompetency(new SelectBox());
             sprintPlanningInEssenceDefinition.getCompetency().setSelectedText("Product Owner");
 
-            List<LanguageElement> completionCriteria = new ArrayList<LanguageElement>();
+            List<CompletionCriterion> completionCriteria = new ArrayList<CompletionCriterion>();
 
-            Criterion criterion = new Criterion();
+            CompletionCriterion criterion = new CompletionCriterion();
 
-            sprint.setList(new ArrayList<LevelOfDetail>());
+            sprint.setLevelOfDetails(new ArrayList<LevelOfDetail>());
 
             LevelOfDetail done = new LevelOfDetail();
             done.setParentWorkProduct(sprint);
@@ -168,8 +168,8 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             draft.setParentWorkProduct(sprint);
             draft.setName("draft");
 
-            sprint.getList().add(draft);
-            sprint.getList().add(done);
+            sprint.getLevelOfDetails().add(draft);
+            sprint.getLevelOfDetails().add(done);
 
             criterion.setLevelOfDetail(done);
             completionCriteria.add(criterion);
@@ -188,26 +188,26 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             activityInEssenceDefinition.setCompetency(new SelectBox());
             activityInEssenceDefinition.getCompetency().setSelectedText("Product Owner");
 
-            Criterion criterion = new Criterion();
+            EntryCriterion criterion = new EntryCriterion();
             criterion.setState(identified);
 
-            List<LanguageElement> criteriaList = new ArrayList<LanguageElement>();
+            List<EntryCriterion> criteriaList = new ArrayList<EntryCriterion>();
             criteriaList.add(criterion);
 
             activityInEssenceDefinition.setEntryCriteria(criteriaList);
 
 
-            Criterion completionCriteria = new Criterion();
+            CompletionCriterion completionCriteria = new CompletionCriterion();
             completionCriteria.setState(selected);
 
-            Criterion completionCriteria2 = new Criterion();
+            CompletionCriterion completionCriteria2 = new CompletionCriterion();
             LevelOfDetail levelOfDetail = new LevelOfDetail();
             levelOfDetail.setParentWorkProduct(sprint);
             levelOfDetail.setName("done");
 
             completionCriteria2.setLevelOfDetail(levelOfDetail);
 
-            List<LanguageElement> completionCriteriaList = new ArrayList<LanguageElement>(); //TODO:
+            List<CompletionCriterion> completionCriteriaList = new ArrayList<CompletionCriterion>(); //TODO:
             completionCriteriaList.add(completionCriteria);
             completionCriteriaList.add(completionCriteria2);
 
@@ -448,7 +448,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for(CheckPoint point : alphaBacklog.getList().get(0).getList()){
+            for(CheckPoint point : alphaBacklog.getStates().get(0).getCheckPoints()){
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);
@@ -480,7 +480,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for(CheckPoint point : alphaBacklog.getList().get(1).getList()){
+            for(CheckPoint point : alphaBacklog.getStates().get(1).getCheckPoints()){
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);
@@ -509,7 +509,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for (CheckPoint point : alphaBacklog.getList().get(2).getList()) {
+            for (CheckPoint point : alphaBacklog.getStates().get(2).getCheckPoints()) {
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);
