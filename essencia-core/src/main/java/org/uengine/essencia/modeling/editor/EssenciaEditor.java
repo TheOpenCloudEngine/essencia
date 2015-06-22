@@ -86,10 +86,12 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	}
 	
 	private void processContext(IResource resource, IUser user) {
-		getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
-		
-		if(resource instanceof Lockable)
-			processContextForLock(resource, user);
+		getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+
+//		getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
+//
+//		if(resource instanceof Lockable)
+//			processContextForLock(resource, user);
 	}
 	
 	private void processContextForLock(IResource resource, IUser user) {
@@ -174,6 +176,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 				ContextUtil.setWhen((Resource) composerEditor.getResource(), EssenciaContext.WHEN_EDIT);
 
 
+
 				EssenciaProcessModeler processModeler = (EssenciaProcessModeler) processModelerEditor.getModeler();
 				MetaworksRemoteService.autowire(processModeler);
 
@@ -185,7 +188,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 				if (processDefinition != null) {
 					processDefinition.setPracticeDefinition(practiceDefinition);
-					processModeler.setModel(processDefinition);
+					//processModeler.setModel(processDefinition);
 				}
 
 				processModelerEditor.getModelResource().saveResource(processDefinition);
@@ -239,7 +242,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		if(MetaworksContext.WHEN_NEW.equals(getMetaworksContext().getWhen())){
 			resource.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 		
-			processNewResourceForLock(resource, user);
+//			processNewResourceForLock(resource, user);
 		}
 	}
 	
@@ -295,12 +298,16 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	@ServiceMethod(callByContent=true, eventBinding="sync", bindingHidden=true, target=ServiceMethodContext.TARGET_APPEND)
 	public Object sync(){
 		List<ElementView> elementViewList = null;
-		
+
+		//if(!isChanged()) return null;
+
 		try {
 			PracticeDefinition practiceDefinition = ( (MethodComposer)getEssenciaModelerEditor().getModeler() ).createPracticeDefinition();
 
 			EssenciaProcessModeler processModeler = (EssenciaProcessModeler) getProcessModelerEditor().getModeler();
 			MetaworksRemoteService.autowire(processModeler);
+
+			//getting existing process definition.
 
 			EssenceProcessDefinition processDefinition = (EssenceProcessDefinition) processModeler.getModel();
 

@@ -16450,10 +16450,15 @@ OG.renderer.RaphaelRenderer.prototype._drawLabel = function (position, text, siz
 		"font-size"   : _style["font-size"] || me._CONFIG.DEFAULT_STYLE.LABEL["font-size"],
 		"fill-opacity": 1
 	});
-	
+
+    if(text != ""){
+        $(element.node).css({
+            "background-color" : _style["fill"] || me._CONFIG.DEFAULT_STYLE.LABEL["fill"]
+        });
+    }
+
 	$(element.node).css({
-		"text-align" : "center"
-		,"cursor"	 : "move"
+		"cursor"	 : "move"
 	});
 
 	// angle 적용
@@ -25715,7 +25720,7 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
 			TERMINAL_OVER : { stroke: "#0077FF", "stroke-width": 0, fill: "r(0.5, 0.5)#FFFFFF-#0077FF", "fill-opacity": 1, cursor: "pointer" },
 			TERMINAL_BBOX : { stroke: "none", fill: "white", "fill-opacity": 0 },
 			DROP_OVER_BBOX: { stroke: "#0077FF", fill: "none", opacity: 0.3, "shape-rendering": "crispEdges" },
-			LABEL         : { "font-size": 12, "font-color": "black" },
+			LABEL         : { "font-size": 12, "font-color": "black", "fill": "white" },
 			LABEL_EDITOR  : { position: "absolute", overflow: "visible", resize: "none", "text-align": "center", display: "block", padding: 0 },
 			COLLAPSE      : { stroke: "black", fill: "none", "fill-opacity": 0, cursor: "pointer", "shape-rendering": "crispEdges" },
 			COLLAPSE_BBOX : { stroke: "none", fill: "none", "fill-opacity": 0 },

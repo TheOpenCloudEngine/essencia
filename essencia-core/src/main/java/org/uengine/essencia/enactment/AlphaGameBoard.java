@@ -1,8 +1,6 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.Instance;
-import org.uengine.essencia.dashboard.ExampleAlphaInstance;
-import org.uengine.essencia.dashboard.StandaloneDashboard;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -51,7 +49,7 @@ public class AlphaGameBoard {
 
 
     public AlphaGameBoard() throws Exception {
-        ExampleAlphaInstance exampleAlphaInstance = new ExampleAlphaInstance();
+        /*ExampleAlphaInstance exampleAlphaInstance = new ExampleAlphaInstance();
 
         ProcessInstance instance = exampleAlphaInstance.getProcessInstance();
         ProcessDefinition processDefinition = exampleAlphaInstance.getProcessInstance().getProcessDefinition();
@@ -72,7 +70,7 @@ public class AlphaGameBoard {
             }
         }
 
-        setAlpha(exampleAlphaInstance.getAlphaInstance().getAlpha());
+        setAlpha(exampleAlphaInstance.getAlphaInstance().getAlpha());*/
 
     }
 

@@ -196,6 +196,8 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
 
     @Override
     public void beforeSerialization() {
+
+        if(getParameters()!=null)
         for(ParameterContext parameterContext : getParameters()){
             if(parameterContext.getVariable()!=null){
                 parameterContext.getVariable().setName(parameterContext.getArgument().getText());
