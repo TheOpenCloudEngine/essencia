@@ -64,20 +64,20 @@ var org_uengine_essencia_modeling_editor_EssenciaEditor = function(objectId, cla
 		//}
 	}
 	
-	this.checkIn = function(){
-		if(this.object.changed)
-			this.confirmChanged(
-				'체크인',
-				function(){
-					mw3.call($(element).data('objectId'), 'checkIn');
-				}, 
-				function(){
-					mw3.call($(element).data('objectId'), 'saveAndCheckIn');
-				}
-			);
-		else
-			mw3.call(this.objectId, 'checkIn');
-	}
+	//this.checkIn = function(){
+	//	if(this.object.changed)
+	//		this.confirmChanged(
+	//			'체크인',
+	//			function(){
+	//				mw3.call($(element).data('objectId'), 'checkIn');
+	//			},
+	//			function(){
+	//				mw3.call($(element).data('objectId'), 'saveAndCheckIn');
+	//			}
+	//		);
+	//	else
+	//		mw3.call(this.objectId, 'checkIn');
+	//}
 	
 	this.closeTab = function(){
 		this.tabs.attr('keep', false);
@@ -148,12 +148,12 @@ var org_uengine_essencia_modeling_editor_EssenciaEditor = function(objectId, cla
 		mw3.getFaceHelper(event.data.objectId).sync();
 	});
 	
-	this.objectDiv.bind('check_in', {objectId: this.objectId}, function(event, ui){
-		event.stopPropagation();
-		event.preventDefault();
-		
-		mw3.getFaceHelper(event.data.objectId).checkIn();
-	});
+	//this.objectDiv.bind('check_in', {objectId: this.objectId}, function(event, ui){
+	//	event.stopPropagation();
+	//	event.preventDefault();
+	//
+	//	mw3.getFaceHelper(event.data.objectId).checkIn();
+	//});
 	
 	
 	this.objectDiv.bind('close', {objectId: this.objectId}, function(event, ui){
