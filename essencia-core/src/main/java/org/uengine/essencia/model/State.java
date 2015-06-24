@@ -17,83 +17,83 @@ import org.uengine.modeling.IElement;
 
 public class State extends LanguageElement implements IElement, FaceTransformer {
 
-    private String name;
-        @Name
-        @Order(1)
-        @Id
-        public String getName() {
-            return name;
-        }
+//    private String name;
+//
+//    @Name
+//    @Order(1)
+//    @Id
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-    private String description;
+//    private String description;
 
     private ElementView elementView;
     private Alpha parentAlpha;
 
-    private List<CheckPoint> list;
+    private List<CheckPoint> checkPoints;
     private transient CheckPointListFace listFace;
 
 
     private String aggregationAlphaState;
-        public String getAggregationAlphaState() {
-            return aggregationAlphaState;
-        }
 
-        public void setAggregationAlphaState(String aggregationAlphaState) {
-            this.aggregationAlphaState = aggregationAlphaState;
-        }
+    public String getAggregationAlphaState() {
+        return aggregationAlphaState;
+    }
 
-
+    public void setAggregationAlphaState(String aggregationAlphaState) {
+        this.aggregationAlphaState = aggregationAlphaState;
+    }
 
 
     @Hidden
-    public List<CheckPoint> getList() {
-	return list;
+    public List<CheckPoint> getCheckPoints() {
+        return checkPoints;
     }
 
-    public void setList(List<CheckPoint> list) {
-	this.list = list;
+    public void setCheckPoints(List<CheckPoint> checkPoints) {
+        this.checkPoints = checkPoints;
     }
 
     @Face(displayName = "CheckPoint")
     public CheckPointListFace getListFace() {
-	return listFace;
+        return listFace;
     }
 
     public void setListFace(CheckPointListFace listFace) {
-	this.listFace = listFace;
+        this.listFace = listFace;
     }
 
 
-    @Order(2)
-    public String getDescription() {
-	return description;
-    }
-
-    public void setDescription(String description) {
-	this.description = description;
-    }
+//    @Order(2)
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
 
     @Hidden
     public Alpha getParentAlpha() {
-	return parentAlpha;
+        return parentAlpha;
     }
 
     public void setParentAlpha(Alpha parentAlpha) {
-	this.parentAlpha = parentAlpha;
+        this.parentAlpha = parentAlpha;
     }
 
     public State() {
-    	setListFace(new CheckPointListFace());
+        setListFace(new CheckPointListFace());
     }
 
     public State(String name) {
-	this();
-	setName(name);
+        this();
+        setName(name);
     }
 
     public DetailCard createDetailCardView(Alpha parentElement) {
@@ -105,7 +105,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
         Essence.AlphaAndWorkProduct.State state = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createState();
         state.setName(getName());
         state.setDescription(getDescription());
-        for (CheckPoint c : getList()) {
+        for (CheckPoint c : getCheckPoints()) {
             state.getCheckListItem().add(c.toXmi());
         }
         return state;
@@ -114,46 +114,46 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     @Hidden
     @Override
     public ElementView getElementView() {
-	return this.elementView;
+        return this.elementView;
     }
 
     @Override
     public void setElementView(ElementView elementView) {
-	this.elementView = elementView;
+        this.elementView = elementView;
     }
 
     @Override
     public void setUpElement() {
         setListFace(new CheckPointListFace());
-        if (getList() != null) {
-            getListFace().fillElements(getList());
-            getList().clear();
+        if (getCheckPoints() != null) {
+            getListFace().fillElements(getCheckPoints());
+            getCheckPoints().clear();
         }
     }
 
     @Override
     public void beforeApply() {
-    	setList(getListFace().createValue());
+        setCheckPoints(getListFace().createValue());
     }
 
     @Override
     public ElementView createView() {
-    	return new StateView(this);
+        return new StateView(this);
     }
 
     public CheckPoint findCheckpoint(String checkpointName) {
-        for(CheckPoint checkPoint : getList()){
-            if(checkpointName.equals(checkPoint.getName())){
+        for (CheckPoint checkPoint : getCheckPoints()) {
+            if (checkpointName.equals(checkPoint.getName())) {
                 return checkPoint;
             }
         }
 
-        throw new IllegalArgumentException("No such checkPoint named '" + checkpointName +"' in this state '" + getName() +"'");
+        throw new IllegalArgumentException("No such checkPoint named '" + checkpointName + "' in this state '" + getName() + "'");
     }
 
     public boolean isAllChecked(AlphaInstance alphaInstance) {
-        for(CheckPoint checkPoint : getList()){
-            if(!alphaInstance.isChecked(checkPoint.getName())){
+        for (CheckPoint checkPoint : getCheckPoints()) {
+            if (!alphaInstance.isChecked(checkPoint.getName())) {
                 return false;
             }
         }

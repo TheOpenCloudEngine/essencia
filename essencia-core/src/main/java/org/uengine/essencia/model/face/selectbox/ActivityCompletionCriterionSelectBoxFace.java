@@ -25,7 +25,7 @@ public class ActivityCompletionCriterionSelectBoxFace extends CriterionSelectBox
 //        }
         for (IElement e : essenciaCanvas.takeElementList()) {
             if (e instanceof Alpha && getMainSelectBox().getSelectedText().equals(((Alpha) e).getName())) {
-                for (State state : ((Alpha) e).getList()) {
+                for (State state : ((Alpha) e).getStates()) {
                     getSubSelectBox().add(state.getName(), state.getName());
                 }
             }

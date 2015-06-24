@@ -33,20 +33,20 @@ public class WorkProductFace extends CriterionFace {
     }
 
     @Override
-    public List<LanguageElement> createValue() {
-        List<LanguageElement> returnList = new ArrayList<LanguageElement>();
+    public List<CompletionCriterion> createValue() {
+        List<CompletionCriterion> returnList = new ArrayList<CompletionCriterion>();
         for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
             Criterion criterion = new CompletionCriterion();
             criterion.setUpLevelOfDetail(((CriterionSelectBoxFace) box).getSubSelectBox().getSelectedText(), box.getMainSelectBox()
                     .getSelectedText());
-            returnList.add(criterion);
+            returnList.add((CompletionCriterion)criterion);
         }
         getAbstractSelectBoxFaceList().clear();
         return returnList;
     }
 
     @Override
-    public void fillElements(List<LanguageElement> list) {
+    public void fillElements(List<? extends LanguageElement> list) {
         for (int i = 0; i < list.size(); i++) {
             add();
             getAbstractSelectBoxFaceList().get(i).getMainSelectBox()
@@ -55,7 +55,7 @@ public class WorkProductFace extends CriterionFace {
             for (IElement e : getElementListFromCanvas()) {
                 if (e instanceof WorkProduct
                         && ((Criterion) list.get(i)).getLevelOfDetail().getParentWorkProduct().getName().equals(((WorkProduct) e).getName())) {
-                    for (LevelOfDetail l : ((WorkProduct) e).getList()) {
+                    for (LevelOfDetail l : ((WorkProduct) e).getLevelOfDetails()) {
                         ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().add(l.getName(), l.getName());
                     }
                 }

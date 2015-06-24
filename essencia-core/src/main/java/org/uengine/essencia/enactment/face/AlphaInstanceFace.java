@@ -121,11 +121,11 @@ public class AlphaInstanceFace implements Card, Face<AlphaInstance> {
         setParentName(this.alphaInstance.getAlpha().getName());
         setName(this.alphaInstance.getCurrentStateName());
 
-        for (int i = 0; i < getAlpha().getList().size(); i++) {
-            State state = getAlpha().getList().get(i);
+        for (int i = 0; i < getAlpha().getStates().size(); i++) {
+            State state = getAlpha().getStates().get(i);
             getStates().add(state.getName());
             if (state.getName().equals(getName())) {
-                for (CheckPoint checkPoint : state.getList()) {
+                for (CheckPoint checkPoint : state.getCheckPoints()) {
                     CheckBox c = new CheckBox();
                     ContextUtil.setWhen(c, EssenciaContext.WHEN_EDIT);
                     c.add(checkPoint.getName(), checkPoint.getName());

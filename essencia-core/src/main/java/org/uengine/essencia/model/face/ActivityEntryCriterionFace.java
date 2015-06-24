@@ -42,10 +42,10 @@ public class ActivityEntryCriterionFace extends CriterionFace {
     }
 
     @Override
-    public List<LanguageElement> createValue() {
-        List<LanguageElement> returnList = new ArrayList<LanguageElement>();
+    public List<EntryCriterion> createValue() {
+        List<EntryCriterion> returnList = new ArrayList<EntryCriterion>();
         for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
-            Criterion criterion = new EntryCriterion();
+            EntryCriterion criterion = new EntryCriterion();
             criterion.setUpState(((CriterionSelectBoxFace) box).getSubSelectBox().getSelectedText(), box.getMainSelectBox().getSelectedText());
             returnList.add(criterion);
         }
@@ -54,7 +54,7 @@ public class ActivityEntryCriterionFace extends CriterionFace {
     }
 
     @Override
-    public void fillElements(List<LanguageElement> list) {
+    public void fillElements(List<? extends LanguageElement> list) {
         for (int i = 0; i < list.size(); i++) {
             add();
             getAbstractSelectBoxFaceList().get(i).getMainSelectBox().setSelected(((Criterion) list.get(i)).getState().getParentAlpha().getName());
@@ -62,7 +62,7 @@ public class ActivityEntryCriterionFace extends CriterionFace {
             for (IElement e : getElementListFromCanvas()) {
                 if (e instanceof Alpha && ((Criterion) list.get(i)).getState().getParentAlpha().getName().equals(((Alpha) e).getName())) {
 
-                    for (State s : ((Alpha) e).getList()) {
+                    for (State s : ((Alpha) e).getStates()) {
                         ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().add(s.getName(), s.getName());
                     }
                 }

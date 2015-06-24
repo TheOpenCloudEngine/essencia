@@ -19,29 +19,28 @@ import org.uengine.util.UEngineUtil;
 
 public abstract class BasicElement extends LanguageElement implements IElement, SerializationSensitive {
 
-	protected TextContext name;
-	@Order(1)
-	@Id
-	@Name
-	public String getName() {
-		return name.getText();
-	}
-	public void setName(String name) {
-		this.name.setText(name);
-	}
+//	protected TextContext name;
+//	@Order(1)
+//	@Id
+//	@Name
+//	public String getName() {
+//		return name.getText();
+//	}
+//	public void setName(String name) {
+//		this.name.setText(name);
+//	}
 
 	protected TextContext briefDescription;
-	protected TextContext description;
+//	protected TextContext description;
 	private ElementView elementView;
 
 
-	public String getName(String locale) {
-		return name.getText(locale);
-	}
-
-	public void setName(String locale, String name) {
-		this.name.setText(locale, name);
-	}
+//	public String getName(String locale) {
+//		return name.getText(locale);
+//	}
+//	public void setName(String locale, String name) {
+//		this.name.setText(locale, name);
+//	}
 
 	@Order(2)
 	public String getBriefDescription() {
@@ -60,22 +59,22 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 		this.briefDescription.setText(locale, description);
 	}
 
-	@Order(3)
-	public String getDescription() {
-		return description.getText();
-	}
-
-	public void setDescription(String description) {
-		this.description.setText(description);
-	}
-
-	public String getDescription(String locale) {
-		return description.getText(locale);
-	}
-
-	public void setDescription(String locale, String description) {
-		this.description.setText(locale, description);
-	}
+//	@Order(3)
+//	public String getDescription() {
+//		return description.getText();
+//	}
+//
+//	public void setDescription(String description) {
+//		this.description.setText(description);
+//	}
+//
+//	public String getDescription(String locale) {
+//		return description.getText(locale);
+//	}
+//
+//	public void setDescription(String locale, String description) {
+//		this.description.setText(locale, description);
+//	}
 
 	protected String parentElementId;
 
@@ -135,8 +134,8 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	public BasicElement() {
 
-		this.name = new TextContext();
-		this.description = new TextContext();
+//		this.name = new TextContext();
+//		this.description = new TextContext();
 		this.briefDescription = new TextContext();
 
 	}

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
+import org.metaworks.annotation.*;
+import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.face.list.ResourceListFace;
 import org.uengine.essencia.model.face.list.TagListFace;
 import org.uengine.kernel.GlobalContext;
@@ -15,6 +15,41 @@ import org.uengine.kernel.GlobalContext;
 public abstract class LanguageElement implements ContextAware, Serializable, FaceTransformer {
 
 	private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
+
+	protected TextContext name;
+	@Order(1)
+	@Id
+	@Name
+	public String getName() {
+		return name.getText();
+	}
+	public void setName(String name) {
+		this.name.setText(name);
+	}
+	public String getName(String locale) {
+		return name.getText(locale);
+	}
+	public void setName(String locale, String name) {
+		this.name.setText(locale, name);
+	}
+
+	protected TextContext description;
+	public String getDescription() {
+		return description.getText();
+	}
+
+	public void setDescription(String description) {
+		this.description.setText(description);
+	}
+
+	public String getDescription(String locale) {
+		return description.getText(locale);
+	}
+
+	public void setDescription(String locale, String description) {
+		this.description.setText(locale, description);
+	}
+
 
 	private List<Resource> resourceList;
 	private transient ResourceListFace resourceListFace;
@@ -114,6 +149,8 @@ public abstract class LanguageElement implements ContextAware, Serializable, Fac
 
 	public LanguageElement() {
 		setSuppressable(true);
+		this.name = new TextContext();
+		this.description = new TextContext();
 	}
 
 	@Override

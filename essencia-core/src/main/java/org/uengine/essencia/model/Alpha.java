@@ -3,6 +3,7 @@ package org.uengine.essencia.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
@@ -23,7 +24,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
     private List<LanguageElement> childElements;
 
-    private List<State> list;
+    private List<State> states;
     private transient StateListFace listFace;
 
     public Alpha() {
@@ -32,16 +33,11 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
     @Hidden
     public List<State> getStates() {
-        return getList();
+        return this.states;
     }
 
-    @Hidden
-    public List<State> getList() {
-        return list;
-    }
-
-    public void setList(List<State> list) {
-        this.list = list;
+    public void setStates(List<State> states) {
+        this.states = states;
     }
 
     @Face(displayName = "State")
@@ -121,11 +117,11 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
     @Override
     public Essence.Foundation.BasicElement toXmi() {
-        Essence.AlphaAndWorkProduct.Alpha alpha = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createAlpha();
+        Essence.AlphaAndWorkProduct.Alpha alpha = AlphaAndWorkProductFactory.eINSTANCE.createAlpha();
         alpha.setName(getName());
         alpha.setDescription(getDescription());
         alpha.setBriefDescription(getBriefDescription());
-        for (State s : getList()) {
+        for (State s : getStates()) {
             alpha.getStates().add(s.toXmi());
         }
         return alpha;
@@ -135,9 +131,9 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     public void setUpElement() {
         super.setUpElement();
         setListFace(new StateListFace());
-        if (getList() != null) {
-            getListFace().fillElements(getList());
-            getList().clear();
+        if (getStates() != null) {
+            getListFace().fillElements(getStates());
+            getStates().clear();
         }
 
         setConcernBox(new EssenciaConcernSelectBox());
@@ -148,7 +144,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     @Override
     public void beforeApply() {
         super.beforeApply();
-        setList(getListFace().createValue());
+        setStates(getListFace().createValue());
 
         setConcern(getConcernBox().getSelected());
         setConcernBox(null);
@@ -168,7 +164,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
         if(stateName==null) throw new IllegalArgumentException("Finding state name is null");
 
-        for(State state : getList()){
+        for(State state : getStates()){
             if(stateName.equals(state.getName())){
                 return state;
             }

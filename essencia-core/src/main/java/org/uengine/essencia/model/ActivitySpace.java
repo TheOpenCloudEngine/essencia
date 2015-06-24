@@ -22,18 +22,18 @@ public class ActivitySpace extends AbstractActivity implements Concernable {
 
     private List<Activity> childActivities;
 
-    private List<LanguageElement> inputList;
+    private List<Alpha> inputList;
     private transient InputAlphaFace inputFace;
 
     private String concern;
     private transient SelectBox concernSelectBox;
 
     @Hidden
-    public List<LanguageElement> getInputList() {
+    public List<Alpha> getInputList() {
         return inputList;
     }
 
-    public void setInputList(List<LanguageElement> inputList) {
+    public void setInputList(List<Alpha> inputList) {
         this.inputList = inputList;
     }
 
@@ -93,7 +93,7 @@ public class ActivitySpace extends AbstractActivity implements Concernable {
 
         super.beforeApply();
         setInputList(getInputFace().createValue());
-        setCompletionCriteria(getCompletionCriterionFace().createValue());
+        setCompletionCriteria(((ActivitySpaceCriterionFace)getCompletionCriterionFace()).createValue());
 
         setConcern(getConcernBox().getSelected());
         setConcernBox(null);

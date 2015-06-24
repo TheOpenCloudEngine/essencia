@@ -36,8 +36,8 @@ public class InputAlphaFace extends AbstractInputAndCriterionFace {
     }
 
     @Override
-    public List<LanguageElement> createValue() {
-        List<LanguageElement> returnList = new ArrayList<LanguageElement>();
+    public List<Alpha>  createValue() {
+        List<Alpha> returnList = new ArrayList<Alpha>();
         for (AbstractSelectBoxFace box : getAbstractSelectBoxFaceList()) {
             Alpha alpha = new Alpha(box.getMainSelectBox().getSelected());
             returnList.add(alpha);
@@ -47,7 +47,7 @@ public class InputAlphaFace extends AbstractInputAndCriterionFace {
     }
 
     @Override
-    public void fillElements(List<LanguageElement> inputList) {
+    public void fillElements(List<? extends LanguageElement> inputList) {
         for (int i = 0; i < inputList.size(); i++) {
             AbstractSelectBoxFace inputSelectBox = new InputAlphaSelectBoxFace();
             for (IElement e : getElementListFromCanvas()) {

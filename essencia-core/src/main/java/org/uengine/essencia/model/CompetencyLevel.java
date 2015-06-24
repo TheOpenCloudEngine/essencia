@@ -16,20 +16,20 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 	private List<CheckPoint> list;
 	private transient CheckPointListFace listFace;
 
-	private String name;
+//	private String name;
 	private String briefDescription;
 	private ElementView elementView;
 	private int level;
 
-	@Name
-	@Order(1)
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+//	@Name
+//	@Order(1)
+//	public String getName() {
+//		return name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 
 	@Order(2)
 	public String getBriefDescription() {
@@ -116,9 +116,9 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 		setList(getListFace().createValue());
 	}
 
-	//TODO: modify IElement
-	@Override
-	public String getDescription() {
-		return null;
-	}
+//	//TODO: modify IElement
+//	@Override
+//	public String getDescription() {
+//		return null;
+//	}
 }

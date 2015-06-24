@@ -14,12 +14,12 @@ public abstract class AbstractActivity extends BasicElement implements ContextTr
 
     protected transient List<IElement> elementListFromCanvas;
 
-    private List<LanguageElement> completionCriteria;
+    private List<CompletionCriterion> completionCriteria;
         @Hidden
-        public List<LanguageElement> getCompletionCriteria() {
+        public List<CompletionCriterion> getCompletionCriteria() {
             return completionCriteria;
         }
-        public void setCompletionCriteria(List<LanguageElement> completionCriteria) {
+        public void setCompletionCriteria(List<CompletionCriterion> completionCriteria) {
             this.completionCriteria = completionCriteria;
         }
 

@@ -35,7 +35,7 @@ public class AlphaInstanceFace2 implements Face<AlphaInstance> {
         setCheckPointInstanceList(new ArrayList<CheckPointInstance>());
 
         if(value.getCurrentState()!=null)
-        for(CheckPoint checkPoint : value.getCurrentState().getList()){
+        for(CheckPoint checkPoint : value.getCurrentState().getCheckPoints()){
             CheckPointInstance checkPointInstance = new CheckPointInstance();
             checkPointInstance.setCheckPoint(checkPoint);
             checkPointInstance.setChecked(value.isChecked(checkPoint.getName()));

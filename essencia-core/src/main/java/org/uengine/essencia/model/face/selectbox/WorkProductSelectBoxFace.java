@@ -17,7 +17,7 @@ public class WorkProductSelectBoxFace extends CriterionSelectBoxFace {
         setSubSelectBox(new EssenciaSelectBox());
         for (IElement e : essenciaCanvas.takeElementList()) {
             if (e instanceof WorkProduct && getMainSelectBox().getSelectedText().equals(((WorkProduct) e).getName())) {
-                for (LevelOfDetail l : ((WorkProduct) e).getList()) {
+                for (LevelOfDetail l : ((WorkProduct) e).getLevelOfDetails()) {
                     getSubSelectBox().add(l.getName(), l.getName());
                 }
             }
