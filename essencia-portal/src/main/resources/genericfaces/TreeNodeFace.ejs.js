@@ -167,6 +167,7 @@ TreeNodeFace.prototype = {
 			zIndex: 100,
 			start: function(event, ui) {
 				eval(command);
+				isDroppable = true;
 			},
 			drag: function() {
 			},

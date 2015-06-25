@@ -14,7 +14,7 @@ import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
-//import org.uengine.codi.mw3.model.Session;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.dashboard.Dashboard;
 import org.uengine.essencia.designer.Designer;
