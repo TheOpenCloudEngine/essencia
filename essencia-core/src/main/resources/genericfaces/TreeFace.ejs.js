@@ -13,7 +13,6 @@ var TreeFace = function(objectId, className){
 		this.objectDiv.addClass('filemgr-tree').addClass('filemgr-treeFocus')
 }
 
-
 TreeFace.prototype = {
 	startLoading: function () {
 		mw3.startLoading();

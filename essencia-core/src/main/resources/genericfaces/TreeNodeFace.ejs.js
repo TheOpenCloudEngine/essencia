@@ -61,7 +61,7 @@ TreeNodeFace.prototype = {
 	startLoading : function(){
 		mw3.startLoading();
 	},
-	
+
 	endLoading : function(){
 		this.nodeDiv.removeClass('loading');
 		mw3.endLoading();
