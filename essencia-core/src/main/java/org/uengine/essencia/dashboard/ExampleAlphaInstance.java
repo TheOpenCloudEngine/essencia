@@ -56,12 +56,12 @@ public class ExampleAlphaInstance {
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(workAlpha); //TODO: should be removed. alpha.setList should do this.
         }
 
-        workAlpha.setList(statesOfWork);
+        workAlpha.setStates(statesOfWork);
 
         Alpha sprintAlpha = new Alpha();
         sprintAlpha.setName("sprint");
@@ -83,7 +83,7 @@ public class ExampleAlphaInstance {
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(sprintAlpha); //TODO: should be removed. alpha.setList should do this.
         }
@@ -91,12 +91,12 @@ public class ExampleAlphaInstance {
         workAlpha.setChildElements(new ArrayList<LanguageElement>());
         workAlpha.getChildElements().add(sprintAlpha);
 
-        sprintAlpha.setList(statesOfSprint);
+        sprintAlpha.setStates(statesOfSprint);
 
 
-        sprintAlpha.getList().get(0).setAggregationAlphaState("b");
-        sprintAlpha.getList().get(1).setAggregationAlphaState("d");
-        sprintAlpha.getList().get(2).setAggregationAlphaState("e");
+        sprintAlpha.getStates().get(0).setAggregationAlphaState("b");
+        sprintAlpha.getStates().get(1).setAggregationAlphaState("d");
+        sprintAlpha.getStates().get(2).setAggregationAlphaState("e");
 
 
         ProcessDefinition processDefinition = new ProcessDefinition();
@@ -144,7 +144,7 @@ public class ExampleAlphaInstance {
 
         //advancing state to "y" (completing checkpoints for state "x") for sprint 1,2,3 (all sprints)
         {
-            for(CheckPoint point : sprintAlpha.findState("x").getList()){
+            for(CheckPoint point : sprintAlpha.findState("x").getCheckPoints()){
                 sprint1.setChecked(point.getName());
                 sprint2.setChecked(point.getName());
                 sprint3.setChecked(point.getName());
@@ -157,7 +157,7 @@ public class ExampleAlphaInstance {
 
         //advancing state to "z" for sprint 3 only
         {
-            for(CheckPoint point : sprintAlpha.findState("y").getList()){
+            for(CheckPoint point : sprintAlpha.findState("y").getCheckPoints()){
                 sprint3.setChecked(point.getName());
             }
 
