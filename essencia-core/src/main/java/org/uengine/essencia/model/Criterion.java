@@ -64,15 +64,15 @@ public class Criterion extends LanguageElement {
         return null;
     }
 
-//    public BasicElement getLevelElement(){
-//        if(getState()!=null){
-//            return getState();
-//        }else if(getLevelOfDetail()!=null){
-//            return getLevelOfDetail();
-//        }
-//
-//        return null;
-//    }
+    public LanguageElement getLevelElement(){
+        if(getState()!=null){
+            return getState();
+        }else if(getLevelOfDetail()!=null){
+            return getLevelOfDetail();
+        }
+
+        return null;
+    }
 
     public ValidationContext investigateCompletable(ProcessInstance instance) {
 

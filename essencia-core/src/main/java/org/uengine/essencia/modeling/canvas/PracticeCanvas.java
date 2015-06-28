@@ -26,7 +26,7 @@ public class PracticeCanvas extends EssenciaCanvas {
 	}
 	
 	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
-	@ServiceMethod(payload={"clipboard", "modelerType", "elementViewList"}, target=ServiceMethodContext.TARGET_APPEND, mouseBinding=CANVAS_DROP)
+	@ServiceMethod(payload={"clipboard", "modelerType", "elementViewList"}, target=ServiceMethodContext.TARGET_APPEND, eventBinding="drop")
 	@Override
 	public Object[] drop() {
 		
