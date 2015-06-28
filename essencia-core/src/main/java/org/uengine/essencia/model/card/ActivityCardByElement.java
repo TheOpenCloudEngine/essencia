@@ -12,6 +12,7 @@ import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.GlobalContext;
 import org.uengine.modeling.IElement;
 
+import javax.annotation.processing.Completion;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,9 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
         setName(element.getName());
         String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<span>The activity is completed when:</span>";
 
-        List<LanguageElement> entryList = null;
-        List<LanguageElement> completionList = null;
-        List<LanguageElement> workProductList = null;
+        List<EntryCriterion> entryList = null;
+        List<CompletionCriterion> completionList = null;
+        List<CompletionCriterion> workProductList = null;
 
         setView(element.createView());
         setImg(IMG_LOCATION + getView().getShapeId() + IMG_EXTENSION);
@@ -50,9 +51,9 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
         for (LanguageElement l : ((Activity) element).getCompletionCriteria()) {
             Criterion c = (Criterion) l;
             if (c.getState() != null) {
-                completionList.add(l);
+                completionList.add((CompletionCriterion)c);
             } else {
-                workProductList.add(l);
+                workProductList.add((CompletionCriterion)c);
             }
         }
 

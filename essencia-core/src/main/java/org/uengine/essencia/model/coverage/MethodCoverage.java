@@ -11,124 +11,127 @@ import java.util.List;
 import java.util.Map;
 
 import org.uengine.essencia.model.Alpha;
+import org.uengine.essencia.model.Criterion;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
 
 import com.thoughtworks.xstream.XStream;
+import org.uengine.essencia.util.KernelUtil;
+import org.uengine.modeling.ElementView;
 
 public class MethodCoverage {
 
-	private List<String> activity;
-	private List<String> alpha;
-	private Map<String, List<State>> alphaMapping;
-	private Map<String, List<State>> activityMapping;
+    private List<String> activity;
+    private List<String> alpha;
+    private Map<String, List<State>> alphaMapping;
+    private Map<String, List<State>> activityMapping;
 
-	public MethodCoverage() {
+    public MethodCoverage() {
 
-	}
-	
-	public MethodCoverage(EssenciaCanvas essenciaCanvas) {
-		this.activity = new ArrayList<String>();
-		this.alpha = new ArrayList<String>();
-		this.alphaMapping = new HashMap<String, List<State>>();
-		this.activityMapping = new HashMap<String, List<State>>();
+    }
 
-		this.load(essenciaCanvas);
-	}
+    public MethodCoverage(EssenciaCanvas essenciaCanvas) {
+        this.activity = new ArrayList<String>();
+        this.alpha = new ArrayList<String>();
+        this.alphaMapping = new HashMap<String, List<State>>();
+        this.activityMapping = new HashMap<String, List<State>>();
 
-	public List<String> getActivity() {
-		return activity;
-	}
+        this.load(essenciaCanvas);
+    }
 
-	public void setActivity(List<String> activity) {
-		this.activity = activity;
-	}
+    public List<String> getActivity() {
+        return activity;
+    }
 
-	public List<String> getAlpha() {
-		return alpha;
-	}
+    public void setActivity(List<String> activity) {
+        this.activity = activity;
+    }
 
-	public void setAlpha(List<String> alpha) {
-		this.alpha = alpha;
-	}
+    public List<String> getAlpha() {
+        return alpha;
+    }
 
-	public Map<String, List<State>> getAlphaMapping() {
-		return alphaMapping;
-	}
+    public void setAlpha(List<String> alpha) {
+        this.alpha = alpha;
+    }
 
-	public void setAlphaMapping(Map<String, List<State>> alphaMapping) {
-		this.alphaMapping = alphaMapping;
-	}
+    public Map<String, List<State>> getAlphaMapping() {
+        return alphaMapping;
+    }
 
-	public Map<String, List<State>> getActivityMapping() {
-		return activityMapping;
-	}
+    public void setAlphaMapping(Map<String, List<State>> alphaMapping) {
+        this.alphaMapping = alphaMapping;
+    }
 
-	public void setActivityMapping(Map<String, List<State>> activityMapping) {
-		this.activityMapping = activityMapping;
-	}
+    public Map<String, List<State>> getActivityMapping() {
+        return activityMapping;
+    }
 
-	public List<Alpha> loadKernelAlphaList() {
-		PracticeDefinition practice = null;
-		try {
-			InputStream is = getClass().getResourceAsStream("/org/uengine/essencia/model/kernel/kernel.practice");
-			XStream x = new XStream();
-			InputStreamReader isr = new InputStreamReader(is);
-			practice = (PracticeDefinition)x.fromXML(isr);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    public void setActivityMapping(Map<String, List<State>> activityMapping) {
+        this.activityMapping = activityMapping;
+    }
 
-		return practice.getElements(Alpha.class);
-	}
-	
-	public void load(EssenciaCanvas essenciaCanvas){
-		/*
-		List<Alpha> kernelAlphaList = loadKernelAlphaList();
-		for (Alpha alpha : kernelAlphaList) {
-			this.alpha.add(alpha.getName());
+    public List<Alpha> loadKernelAlphaList() {
+        List<Alpha> alphaList = null;
+        try {
+            alphaList = KernelUtil.getInstance().getKernelAlphaList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-			List<State> tempStates = new ArrayList<State>();
+        return alphaList;
+    }
 
-			for (org.uengine.essencia.model.State state : alpha.getStates()
-					.getStates()) {
-				State st = new State(state.getName());
-				tempStates.add(st);
-			}
+    public void load(EssenciaCanvas essenciaCanvas) {
 
-			this.alphaMapping.put(alpha.getName(), tempStates);
-		}
+        List<Alpha> kernelAlphaList = loadKernelAlphaList();
+        for (Alpha alpha : kernelAlphaList) {
+            this.alpha.add(alpha.getName());
 
-		List<ElementView> viewList = essenciaCanvas.getElementViewList();
+            List<State> tempStates = new ArrayList<State>();
 
-		Map tmpMapping = new HashMap<String, String>();
-		for (ElementView elementview : viewList) {
-			if (elementview.getElement() instanceof Activity) {
-				Activity activity = (Activity) elementview.getElement();
-				this.getActivity().add(activity.getName());
+            for (org.uengine.essencia.model.State state : alpha.getStates()) {
+                State st = new State(state.getName());
+                tempStates.add(st);
+            }
 
-				Criteria criteria = activity.getCompletionCriteria();
-				for (Criterion criterion : criteria.getCriteria()) {
-						String stateName = criterion.getState().getName();
-						
-						tmpMapping.put(criterion.getName(), String.valueOf(i)); 
+            this.alphaMapping.put(alpha.getName(), tempStates);
+        }
 
-						for (int j=0; j<this.getAlphaMapping().get(criterion.getName()).size(); j++) {
-							if (stateName.equals(this.getAlphaMapping().get(criterion.getName()).get(j).getName())) {
-								this.getAlphaMapping().get(criterion.getName()).get(j).setInvolved(true);
-								String tmpMappingIndex = (String) tmpMapping.get(criterion.getName());
-								if (tmpMappingIndex != null) {
-									for (int k=j-1; k>i; k--) {
-										this.getAlphaMapping().get(criterion.getName()).get(k).setInvolved(true);
-									}
-								}
-							}
-						
-						
-					}// state List
-				}// outputAlpha List
-			}// activity List
-		}*/
-	}
+        List<ElementView> viewList = essenciaCanvas.getElementViewList();
+
+        Map tmpMapping = new HashMap<String, String>();
+        for (ElementView elementview : viewList) {
+            if (elementview.getElement() instanceof org.uengine.essencia.model.Activity) {
+                org.uengine.essencia.model.Activity activity = (org.uengine.essencia.model.Activity) elementview.getElement();
+                this.getActivity().add(activity.getName());
+
+                for (int i = 0; i < activity.getCompletionCriteria().size(); i++) {
+                    Criterion criterion = activity.getCompletionCriteria().get(i);
+                    if (criterion.getState() != null) {
+                        String stateName = criterion.getState().getName();
+
+                        tmpMapping.put(criterion.getState().getName(), String.valueOf(i));
+
+                        if (this.getAlphaMapping().containsKey(criterion.getState().getParentAlpha().getName())) {
+                            for (int j = 0; j < this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).size(); j++) {
+                                if (stateName.equals(this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(j).getName())) {
+                                    this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(j).setInvolved(true);
+                                    String tmpMappingIndex = (String) tmpMapping.get(criterion.getState().getName());
+                                    if (tmpMappingIndex != null) {
+                                        for (int k = j - 1; k > i; k--) {
+                                            this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(k).setInvolved(true);
+                                        }
+                                    }
+                                }
+                            }// state List
+                        }
+
+                    }
+
+                }// outputAlpha List
+            }// activity List
+        }
+    }
 
 }

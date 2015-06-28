@@ -48,15 +48,15 @@ public class CriterionFace2 implements Face<Criterion>, ContextAware {
 
                 Alpha alpha = (Alpha)element;
 
-                if(alpha.getList()!=null)
-                for(State state : alpha.getList()){
+                if(alpha.getStates()!=null)
+                for(State state : alpha.getStates()){
                     getLevelSelector().getOptionNames().add(state.getName());
                 }
             }else if(element instanceof WorkProduct){
                 WorkProduct workProduct = (WorkProduct)element;
 
-                if(workProduct.getList()!=null)
-                for(LevelOfDetail levelOfDetail : workProduct.getList()){
+                if(workProduct.getLevelOfDetails()!=null)
+                for(LevelOfDetail levelOfDetail : workProduct.getLevelOfDetails()){
                     getLevelSelector().getOptionNames().add(levelOfDetail.getName());
                 }
             }

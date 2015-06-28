@@ -87,12 +87,12 @@ public class AlphaProgressAggregationTest extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(workAlpha); //TODO: should be removed. alpha.setList should do this.
         }
 
-        workAlpha.setList(statesOfWork);
+        workAlpha.setStates(statesOfWork);
 
         Alpha sprintAlpha = new Alpha();
         sprintAlpha.setName("Sprint");
@@ -114,7 +114,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(sprintAlpha); //TODO: should be removed. alpha.setList should do this.
         }
@@ -122,12 +122,12 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         workAlpha.setChildElements(new ArrayList<LanguageElement>());
         workAlpha.getChildElements().add(sprintAlpha);
 
-        sprintAlpha.setList(statesOfSprint);
+        sprintAlpha.setStates(statesOfSprint);
 
 
-        sprintAlpha.getList().get(0).setAggregationAlphaState("Prepared");
-        sprintAlpha.getList().get(1).setAggregationAlphaState("UnderControl");
-        sprintAlpha.getList().get(2).setAggregationAlphaState("Closed");
+        sprintAlpha.getStates().get(0).setAggregationAlphaState("Prepared");
+        sprintAlpha.getStates().get(1).setAggregationAlphaState("UnderControl");
+        sprintAlpha.getStates().get(2).setAggregationAlphaState("Closed");
 
 
         ProcessDefinition processDefinition = new ProcessDefinition();
@@ -175,7 +175,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
 
         //advancing state to "y" (completing checkpoints for state "x") for sprint 1,2,3 (all sprints)
         {
-            for(CheckPoint point : sprintAlpha.findState("open").getList()){
+            for(CheckPoint point : sprintAlpha.findState("open").getCheckPoints()){
                 sprint1.setChecked(point.getName());
                 sprint2.setChecked(point.getName());
                 sprint3.setChecked(point.getName());
@@ -188,7 +188,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
 
         //advancing state to "z" for sprint 3 only
         {
-            for(CheckPoint point : sprintAlpha.findState("doing").getList()){
+            for(CheckPoint point : sprintAlpha.findState("doing").getCheckPoints()){
                 sprint3.setChecked(point.getName());
             }
 

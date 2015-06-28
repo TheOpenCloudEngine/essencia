@@ -79,7 +79,7 @@ public class MethodEnactmentTest extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(alphaBacklog); //TODO: should be removed. alpha.setList should do this.
 
@@ -100,7 +100,7 @@ public class MethodEnactmentTest extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
 
             state.setParentAlpha(alphaBacklog);
 
@@ -121,14 +121,14 @@ public class MethodEnactmentTest extends UEngineTest{
                 checkPoints.add(point);
             }
 
-            state.setList(checkPoints);
+            state.setCheckPoints(checkPoints);
             state.setParentAlpha(alphaBacklog);
 
 
         }
 
 
-        alphaBacklog.setList(statesOfBacklog);
+        alphaBacklog.setStates(statesOfBacklog);
 
         activityInEssenceDefinition = new org.uengine.essencia.model.Activity();
 
@@ -138,20 +138,20 @@ public class MethodEnactmentTest extends UEngineTest{
         activityInEssenceDefinition.setCompetency(new SelectBox());
         activityInEssenceDefinition.getCompetency().setSelectedText("Product Owner");
 
-        Criterion criterion = new Criterion();
+        EntryCriterion criterion = new EntryCriterion();
         criterion.setState(identified);
 
-        List<LanguageElement> criteriaList = new ArrayList<LanguageElement>();
+        List<EntryCriterion> criteriaList = new ArrayList<EntryCriterion>();
         criteriaList.add(criterion);
 
         activityInEssenceDefinition.setEntryCriteria(criteriaList);
 
 
-        Criterion completionCriteria = new Criterion();
+        CompletionCriterion completionCriteria = new CompletionCriterion();
         completionCriteria.setState(selected);
 
-        List<LanguageElement> completionCriteriaList = new ArrayList<LanguageElement>(); //TODO:
-        completionCriteriaList.add(criterion);
+        List<CompletionCriterion> completionCriteriaList = new ArrayList<CompletionCriterion>(); //TODO:
+        completionCriteriaList.add(completionCriteria);
 
 
         activityInEssenceDefinition.setCompletionCriteria(completionCriteriaList);
@@ -364,7 +364,7 @@ public class MethodEnactmentTest extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for(CheckPoint point : alphaBacklog.getList().get(0).getList()){
+            for(CheckPoint point : alphaBacklog.getStates().get(0).getCheckPoints()){
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);
@@ -396,7 +396,7 @@ public class MethodEnactmentTest extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for(CheckPoint point : alphaBacklog.getList().get(0).getList()){
+            for(CheckPoint point : alphaBacklog.getStates().get(0).getCheckPoints()){
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);
@@ -425,7 +425,7 @@ public class MethodEnactmentTest extends UEngineTest{
         {
             AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
 
-            for (CheckPoint point : alphaBacklog.getList().get(0).getList()) {
+            for (CheckPoint point : alphaBacklog.getStates().get(0).getCheckPoints()) {
                 alphaInstanceOfSub1.setChecked(point.getName());
 
                 //point.setChecked(alphaInstanceOfSub1);

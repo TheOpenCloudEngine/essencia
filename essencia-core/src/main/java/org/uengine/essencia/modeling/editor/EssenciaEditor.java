@@ -53,38 +53,38 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 	@AutowiredFromClient
 	public org.uengine.codi.mw3.model.Session session;
-	
+
 	private EditorMenu menu;
-	
+
 	public EssenciaEditor() {
 		super();
 	}
 
 	public EssenciaEditor(IResource resource) throws Exception {
 		this();
-		
+
 		getMetaworksContext().setWhen(MetaworksContext.WHEN_NEW);
-		
+
 		loadNewEditor(resource);
 	}
-	
+
 	public void loadNewEditor(IResource resource) throws Exception {
 		setMenu(new EditorMenu());
 		setResource(resource);
 
 		setChanged(true);
-		
+
 		super.load();
 	}
-	
+
 	public void load(Session session, IResource resource) throws Exception {
 		processContext(resource, session.getUser());
 		setChanged(true);
-		
-		loadNewEditor(resource);		
+
+		loadNewEditor(resource);
 		setChanged(false);
 	}
-	
+
 	private void processContext(IResource resource, IUser user) {
 		getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 
@@ -93,28 +93,28 @@ public abstract class EssenciaEditor extends CompositeEditor {
 //		if(resource instanceof Lockable)
 //			processContextForLock(resource, user);
 	}
-	
+
 	private void processContextForLock(IResource resource, IUser user) {
 		if(!((Lockable)resource).isLocked())
 			return;
-		
+
 		getMetaworksContext().setWhen(EssenciaContext.WHEN_VIEW_LOCK);
-		
+
 		LockResource lockResource = new LockResource(resource);
 		if(lockResource.confirmLocker(user))
 			getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 	}
-	
+
 	@ServiceMethod(callByContent = true, eventBinding = EditorContext.CHECK_OUT, target = ServiceMethodContext.TARGET_APPEND)
 	public Object[] checkOut() throws Exception {
 		if(getResource() instanceof Lockable){
 			((Lockable)getResource()).lock(essenciaSession.getUser());
-			
+
 			load(essenciaSession, getResource());
-			
+
 			return new Object[] { new Refresh(this, false, true) };
 		}
-		
+
 		return null;
 	}
 
@@ -122,15 +122,15 @@ public abstract class EssenciaEditor extends CompositeEditor {
 	public Object[] checkIn() throws Exception {
 		if(getResource() instanceof Lockable){
 			((Lockable)getResource()).unlock(essenciaSession.getUser());
-			
+
 			load(essenciaSession, getResource());
-			
+
 			return new Object[] { new Refresh(this, false, true) };
 		}
 
 		return null;
 	}
-	
+
 	@ServiceMethod(payload="resource", eventBinding = EditorContext.LOCK_INFO, target = ServiceMethodContext.TARGET_POPUP)
 	public ModalWindow lockInfo() throws Exception {
 		if(getResource() instanceof Lockable){
@@ -152,12 +152,12 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		}
 		return download;
 	}
-	
+
 	@ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
 	@Override
 	public void save() throws Exception {
 		validate();
-		
+
 		rename();
 		processNewResource(getResource(), essenciaSession.getUser());
 
@@ -202,19 +202,19 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		commit();
 	}
 
-    private void commit()throws Exception{
-        if(getResource() instanceof Commitable){
-            CommitRecord record = new CommitRecord();
-            record.setResources(getResource().getName());
-            record.setAuthor(essenciaSession.getUser().getEmpName());
+	private void commit()throws Exception{
+		if(getResource() instanceof Commitable){
+			CommitRecord record = new CommitRecord();
+			record.setResources(getResource().getName());
+			record.setAuthor(essenciaSession.getUser().getEmpName());
 
-            Commitable commitable = (Commitable)getResource();
-            commitable.setRecord(record);
-            commitable.commit();
-        }
-    }
+			Commitable commitable = (Commitable)getResource();
+			commitable.setRecord(record);
+			commitable.commit();
+		}
+	}
 
-	
+
 	@Available(condition="saveable")
 	@ServiceMethod(callByContent = true, eventBinding = EditorContext.SAVE, target = ServiceMethodContext.TARGET_APPEND)
 	public Object[] saveAndRefresh(@AutowiredFromClient RolePanel rolePanel, @AutowiredFromClient ProcessVariablePanel processVariablePanel) throws Exception {
@@ -223,39 +223,39 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		} catch (UEngineException ue) {
 			return new Object[] { new ModalWindow(new ConfirmPanel(ConfirmPanel.DUPLICATED, ue.getMessage()), 300, 200) };
 		}
-		
+
 		load(essenciaSession, getResource());
-		
-		return new Object[] { 
-				new ToEvent(getResource().getParent(), EssenciaEventContext.REFRESH, true), 
+
+		return new Object[] {
+				new ToEvent(getResource().getParent(), EssenciaEventContext.REFRESH, true),
 				new Refresh(this, false, true)
 		};
 	}
-	
+
 	@ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
 	public Object[] saveAndCheckIn() throws Exception {
 		this.save();
 		return this.checkIn();
 	}
-	
+
 	private void processNewResource(IResource resource, IUser user) throws Exception {
 		if(MetaworksContext.WHEN_NEW.equals(getMetaworksContext().getWhen())){
 			resource.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
-		
+
 //			processNewResourceForLock(resource, user);
 		}
 	}
-	
+
 	private void processNewResourceForLock(IResource resource, IUser user) throws Exception {
 		if(resource instanceof Lockable)
 			((Lockable)resource).lock(user);
 	}
-	
+
 	private void rename() throws Exception {
 		renameResource();
 		renameChildResource();
 	}
-	
+
 	private void renameResource() throws Exception {
 		try {
 			getResource().rename(getEssenciaModelerEditor().getAlias());
@@ -282,18 +282,18 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		}
 		if("".equals(sourceName.trim())){
 			throw new UEngineException("name is required, please fill it");
-		} 
+		}
 
 		String regex = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s]";
 		String targetName = sourceName.replaceAll(regex, " ");
-		
+
 		if(!(sourceName.equals(targetName))){
 			throw new UEngineException("can not use special character in name");
 		}
 
 		return true;
 	}
-		
+
 	@Hidden
 	@ServiceMethod(callByContent=true, eventBinding="sync", bindingHidden=true, target=ServiceMethodContext.TARGET_APPEND)
 	public Object sync(){
@@ -321,7 +321,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return new Refresh(getProcessModelerEditor());
 	}
 
@@ -335,11 +335,11 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 	@Override
 	@Name
-	@Id 
+	@Id
 	public IResource getResource(){
 		return super.getResource();
 	}
-	
+
 	public EditorMenu getMenu() {
 		return menu;
 	}

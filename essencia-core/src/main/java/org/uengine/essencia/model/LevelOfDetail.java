@@ -14,158 +14,160 @@ import org.uengine.modeling.IElement;
 
 public class LevelOfDetail extends LanguageElement implements IElement, FaceTransformer {
 
-	private List<CheckPoint> list;
-	private transient CheckPointListFace listFace;
+    private List<CheckPoint> checkPoints;
+    private transient CheckPointListFace listFace;
 
-	private ElementView elementView;
-	private WorkProduct parentWorkProduct;
+    private ElementView elementView;
+    private WorkProduct parentWorkProduct;
 
-	private TextContext name;
-		@Name
-		@Order(1)
-		public String getName() {
-			if (this.name == null) {
-				return "";
-			}
-			return name.getText();
-		}
+//    private TextContext name;
+//
+//    @Name
+//    @Order(1)
+//    public String getName() {
+//        if (this.name == null) {
+//            return "";
+//        }
+//        return name.getText();
+//    }
+//
+//    public void setName(String name) {
+//        if (this.name == null) {
+//            this.name = new TextContext();
+//        }
+//        this.name.setText(name);
+//    }
 
-		public void setName(String name) {
-			if (this.name == null) {
-				this.name = new TextContext();
-			}
-			this.name.setText(name);
-		}
+    public String getName(String locale) {
+        return name.getText(locale);
+    }
 
-		public String getName(String locale) {
-			return name.getText(locale);
-		}
+    public void setName(String locale, String name) {
+        this.name.setText(locale, name);
+    }
 
-		public void setName(String locale, String name) {
-			this.name.setText(locale, name);
-		}
-
-	private TextContext description;
-	private boolean isSufficientLevel;
-	private String aggregationAlphaState;
-
-	@Hidden
-	public List<CheckPoint> getList() {
-		return list;
-	}
-
-	public void setList(List<CheckPoint> list) {
-		this.list = list;
-	}
-
-	@Order(3)
-	@Face(displayName = "CheckPoint")
-	public CheckPointListFace getListFace() {
-		return listFace;
-	}
-
-	public void setListFace(CheckPointListFace listFace) {
-		this.listFace = listFace;
-	}
-
-	public boolean isSufficientLevel() {
-		return isSufficientLevel;
-	}
-
-	public void setSufficientLevel(boolean isSufficientLevel) {
-		this.isSufficientLevel = isSufficientLevel;
-	}
-
-	@Hidden
-	public WorkProduct getParentWorkProduct() {
-		return parentWorkProduct;
-	}
-
-	public void setParentWorkProduct(WorkProduct parentWorkProduct) {
-		this.parentWorkProduct = parentWorkProduct;
-	}
+//    private TextContext description;
+    private boolean isSufficientLevel;
+    private String aggregationAlphaState;
 
 
-	@Order(2)
-	public String getDescription() {
-		if (this.description == null) {
-			return "";
-		}
-		return description.getText();
-	}
+    @Hidden
+    public List<CheckPoint> getCheckPoints() {
+        return checkPoints;
+    }
 
-	public void setDescription(String description) {
-		if (this.description == null) {
-			this.description = new TextContext();
-		}
-		this.description.setText(description);
-	}
+    public void setCheckPoints(List<CheckPoint> checkPoints) {
+        this.checkPoints = checkPoints;
+    }
 
-	public String getDescription(String locale) {
-		return description.getText(locale);
-	}
+    @Order(3)
+    @Face(displayName = "CheckPoint")
+    public CheckPointListFace getListFace() {
+        return listFace;
+    }
 
-	public void setDescription(String locale, String description) {
-		this.description.setText(locale, description);
-	}
+    public void setListFace(CheckPointListFace listFace) {
+        this.listFace = listFace;
+    }
 
-	public LevelOfDetail() {
-		setListFace(new CheckPointListFace());
-	}
+    public boolean isSufficientLevel() {
+        return isSufficientLevel;
+    }
 
-	public LevelOfDetail(String name) {
-		setName(name);
-	}
+    public void setSufficientLevel(boolean isSufficientLevel) {
+        this.isSufficientLevel = isSufficientLevel;
+    }
 
-	public Essence.AlphaAndWorkProduct.LevelOfDetail toXmi() {
-		Essence.AlphaAndWorkProduct.LevelOfDetail levelOfDetail = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE
-				.createLevelOfDetail();
+    @Hidden
+    public WorkProduct getParentWorkProduct() {
+        return parentWorkProduct;
+    }
 
-		// set alpha
-		levelOfDetail.setName(getName());
-		levelOfDetail.setDescription(getDescription());
+    public void setParentWorkProduct(WorkProduct parentWorkProduct) {
+        this.parentWorkProduct = parentWorkProduct;
+    }
 
-		for (CheckPoint checkPoint : getList()) {
-			levelOfDetail.getCheckListItem().add(checkPoint.toXmi());
-		}
-		return levelOfDetail;
-	}
 
-	@Hidden
-	@Override
-	public ElementView getElementView() {
-		return this.elementView;
-	}
+//    @Order(2)
+//    public String getDescription() {
+//        if (this.description == null) {
+//            return "";
+//        }
+//        return description.getText();
+//    }
+//
+//    public void setDescription(String description) {
+//        if (this.description == null) {
+//            this.description = new TextContext();
+//        }
+//        this.description.setText(description);
+//    }
+//
+//    public String getDescription(String locale) {
+//        return description.getText(locale);
+//    }
+//
+//    public void setDescription(String locale, String description) {
+//        this.description.setText(locale, description);
+//    }
 
-	@Override
-	public void setElementView(ElementView elementView) {
-		this.elementView = elementView;
-	}
+    public LevelOfDetail() {
+        setListFace(new CheckPointListFace());
+    }
 
-	@Override
-	public ElementView createView() {
-		return new LevelOfDetailView(this);
-	}
+    public LevelOfDetail(String name) {
+        setName(name);
+    }
 
-	@Override
-	public void setUpElement() {
-		setListFace(new CheckPointListFace());
-		if (getList() != null) {
-			getListFace().fillElements(getList());
-			getList().clear();
-		}
-	}
+    public Essence.AlphaAndWorkProduct.LevelOfDetail toXmi() {
+        Essence.AlphaAndWorkProduct.LevelOfDetail levelOfDetail = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE
+                .createLevelOfDetail();
 
-	@Override
-	public void beforeApply() {
-		setList(getListFace().createValue());
-	}
+        // set alpha
+        levelOfDetail.setName(getName());
+        levelOfDetail.setDescription(getDescription());
 
-	public String getAggregationAlphaState() {
-		return aggregationAlphaState;
-	}
+        for (CheckPoint checkPoint : getCheckPoints()) {
+            levelOfDetail.getCheckListItem().add(checkPoint.toXmi());
+        }
+        return levelOfDetail;
+    }
 
-	public void setAggregationAlphaState(String aggregationAlphaState) {
-		this.aggregationAlphaState = aggregationAlphaState;
-	}
+    @Hidden
+    @Override
+    public ElementView getElementView() {
+        return this.elementView;
+    }
+
+    @Override
+    public void setElementView(ElementView elementView) {
+        this.elementView = elementView;
+    }
+
+    @Override
+    public ElementView createView() {
+        return new LevelOfDetailView(this);
+    }
+
+    @Override
+    public void setUpElement() {
+        setListFace(new CheckPointListFace());
+        if (getCheckPoints() != null) {
+            getListFace().fillElements(getCheckPoints());
+            getCheckPoints().clear();
+        }
+    }
+
+    @Override
+    public void beforeApply() {
+        setCheckPoints(getListFace().createValue());
+    }
+
+    public String getAggregationAlphaState() {
+        return aggregationAlphaState;
+    }
+
+    public void setAggregationAlphaState(String aggregationAlphaState) {
+        this.aggregationAlphaState = aggregationAlphaState;
+    }
 }

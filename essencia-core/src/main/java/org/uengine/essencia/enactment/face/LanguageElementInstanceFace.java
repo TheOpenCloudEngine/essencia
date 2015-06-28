@@ -179,12 +179,12 @@ public class LanguageElementInstanceFace implements Card, Face<LanguageElementIn
         setParentName(view.getLabel().substring(0, view.getLabel().indexOf("(")));
         setName(view.getLabel().substring(view.getLabel().indexOf("(") + 1, view.getLabel().length()-1 ) );
 
-        if( ((WorkProduct)view.getElement()).getList()  != null){
-            for(int i=0; i < ((WorkProduct)view.getElement()).getList().size(); i++){
-                LevelOfDetail levelOfDetail = ((WorkProduct)view.getElement()).getList().get(i);
+        if( ((WorkProduct)view.getElement()).getLevelOfDetails()  != null){
+            for(int i=0; i < ((WorkProduct)view.getElement()).getLevelOfDetails().size(); i++){
+                LevelOfDetail levelOfDetail = ((WorkProduct)view.getElement()).getLevelOfDetails().get(i);
                 getLevels().add(levelOfDetail.getName());
                 if(levelOfDetail.getName().equals(n)){
-                    for (CheckPoint checkPoint : levelOfDetail.getList()){
+                    for (CheckPoint checkPoint : levelOfDetail.getCheckPoints()){
                         getList().add(checkPoint.getName());
                     }
                 }

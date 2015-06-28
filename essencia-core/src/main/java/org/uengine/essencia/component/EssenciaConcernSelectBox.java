@@ -6,7 +6,7 @@ public class EssenciaConcernSelectBox extends SelectBox {
     
     final String CONCERN_CUSTOMER = "Customer";
     final String CONCERN_SOLUTION = "Solution";
-    final String CONCERN_ENDEAVOUR = "Endeavour";
+    final String CONCERN_ENDEAVOUR = "Endeavor";
 
     public EssenciaConcernSelectBox() {
 	add(0, CONCERN_CUSTOMER, CONCERN_CUSTOMER);

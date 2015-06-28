@@ -74,8 +74,8 @@ public abstract class AbstractInputAndCriterionFace implements ContextAware {
         setElementListFromCanvas(list);
     }
 
-    public abstract List<LanguageElement> createValue();
+    public abstract List<? extends LanguageElement> createValue() ;
 
-    public abstract void fillElements(List<LanguageElement> list);
+    public abstract void fillElements(List<? extends LanguageElement> list);
 
 }

@@ -16,22 +16,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.uengine.contexts.TextContext;
-import org.uengine.essencia.model.Activity;
-import org.uengine.essencia.model.ActivitySpace;
-import org.uengine.essencia.model.Alpha;
-import org.uengine.essencia.model.CheckPoint;
-import org.uengine.essencia.model.Competency;
-import org.uengine.essencia.model.CompetencyLevel;
-import org.uengine.essencia.model.CompletionCriterion;
-import org.uengine.essencia.model.Criterion;
-import org.uengine.essencia.model.LanguageElement;
-import org.uengine.essencia.model.LevelOfDetail;
-import org.uengine.essencia.model.Practice;
-import org.uengine.essencia.model.PracticeDefinition;
-import org.uengine.essencia.model.State;
-import org.uengine.essencia.model.WorkProduct;
-import org.uengine.essencia.model.XMIElement;
-import org.uengine.essencia.model.XMIResourceElement;
+import org.uengine.essencia.model.*;
 import org.uengine.essencia.resource.FolderResourceType;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.kernel.GlobalContext;
@@ -41,7 +26,6 @@ import org.uengine.uml.ui.CompositionRelationView;
 import org.uengine.util.FileUtil;
 
 import Essence.ActivitySpaceAndActivity.AbstractActivity;
-import Essence.ActivitySpaceAndActivity.EntryCriterion;
 import Essence.Foundation.BasicElement;
 
 public class EssenceXmiAPI {
@@ -415,14 +399,14 @@ public class EssenceXmiAPI {
 		IElement element = null;
 		if (essenceElement instanceof Essence.AlphaAndWorkProduct.Alpha) {
 			Alpha alpha = new Alpha();
-			alpha.setList(new ArrayList<State>());
+			alpha.setStates(new ArrayList<State>());
 			alpha.setName(((Essence.AlphaAndWorkProduct.Alpha) essenceElement).getName());
 			alpha.setDescription(((Essence.AlphaAndWorkProduct.Alpha) essenceElement).getDescription());
 
 			EList<Essence.AlphaAndWorkProduct.State> states = ((Essence.AlphaAndWorkProduct.Alpha) essenceElement).getStates();
 			for (Essence.AlphaAndWorkProduct.State state : states) {
 				State s = new State();
-				s.setList(new ArrayList<CheckPoint>());
+				s.setCheckPoints(new ArrayList<CheckPoint>());
 				s.setName(state.getName());
 				s.setDescription(state.getDescription());
 
@@ -430,14 +414,14 @@ public class EssenceXmiAPI {
 					CheckPoint c = new CheckPoint();
 					c.setName(cp.getName());
 					c.setDescription(cp.getDescription());
-					s.getList().add(c);
+					s.getCheckPoints().add(c);
 				}
-				alpha.getList().add(s);
+				alpha.getStates().add(s);
 			}
 			element = alpha;
 		} else if (essenceElement instanceof Essence.AlphaAndWorkProduct.WorkProduct) {
 			WorkProduct workProduct = new WorkProduct();
-			workProduct.setList(new ArrayList<LevelOfDetail>());
+			workProduct.setLevelOfDetails(new ArrayList<LevelOfDetail>());
 			workProduct.setName(((Essence.AlphaAndWorkProduct.WorkProduct) essenceElement).getName());
 			workProduct.setDescription(((Essence.AlphaAndWorkProduct.WorkProduct) essenceElement).getDescription());
 
@@ -447,12 +431,12 @@ public class EssenceXmiAPI {
 				l.setName(lod.getName());
 				l.setDescription(lod.getDescription());
 
-				workProduct.getList().add(l);
+				workProduct.getLevelOfDetails().add(l);
 			}
 			element = workProduct;
 		} else if (essenceElement instanceof Essence.Competency.Competency) {
 			Competency competency = new Competency();
-			competency.setList(new ArrayList<CompetencyLevel>());
+			competency.setCompetencyLevels(new ArrayList<CompetencyLevel>());
 			competency.setName(((Essence.Competency.Competency) essenceElement).getName());
 			competency.setDescription(((Essence.Competency.Competency) essenceElement).getDescription());
 
@@ -463,14 +447,14 @@ public class EssenceXmiAPI {
 				c.setBriefDescription(cl.getBriefDescription());
 				c.setLevel(cl.getLevel());
 
-				competency.getList().add(c);
+				competency.getCompetencyLevels().add(c);
 			}
 			element = competency;
 		} else if (essenceElement instanceof Essence.ActivitySpaceAndActivity.Activity) {
 			Activity activity = new Activity();
-			activity.setEntryCriteria(new ArrayList<LanguageElement>());
-			activity.setCompletionCriteria(new ArrayList<LanguageElement>());
-			activity.setRequiredCompetencyLevel(new ArrayList<LanguageElement>());
+			activity.setEntryCriteria(new ArrayList<EntryCriterion>());
+			activity.setCompletionCriteria(new ArrayList<CompletionCriterion>());
+			activity.setRequiredCompetencyLevel(new ArrayList<CompetencyLevel>());
 			activity.setName(((Essence.ActivitySpaceAndActivity.Activity) essenceElement).getName());
 			activity.setDescription(((Essence.ActivitySpaceAndActivity.Activity) essenceElement).getDescription());
 			activity.setBriefDescription(((Essence.ActivitySpaceAndActivity.Activity) essenceElement).getBriefDescription());
@@ -487,9 +471,9 @@ public class EssenceXmiAPI {
 					essenciaCriterion.getState().setDescription(criterion.getState().getDescription());
 					essenciaCriterion.getState().getParentAlpha().setDescription(criterion.getState().getAlpha().getDescription());
 					if (criterion instanceof EntryCriterion) {
-						activity.getEntryCriteria().add(essenciaCriterion);
+						activity.getEntryCriteria().add((EntryCriterion)essenciaCriterion);
 					} else {
-						activity.getCompletionCriteria().add(essenciaCriterion);
+						activity.getCompletionCriteria().add((CompletionCriterion)essenciaCriterion);
 					}
 				} else if (criterion.getLevelOfDetail() != null) {
 					essenciaCriterion.setUpLevelOfDetail(criterion.getLevelOfDetail().getName(), criterion.getLevelOfDetail().getWorkProduct()
@@ -497,7 +481,7 @@ public class EssenceXmiAPI {
 					essenciaCriterion.getLevelOfDetail().setDescription(criterion.getLevelOfDetail().getDescription());
 					essenciaCriterion.getLevelOfDetail().getParentWorkProduct()
 							.setDescription(criterion.getLevelOfDetail().getWorkProduct().getDescription());
-					activity.getCompletionCriteria().add(essenciaCriterion);
+					activity.getCompletionCriteria().add((CompletionCriterion)essenciaCriterion);
 				}
 			}
 			for (Essence.Competency.CompetencyLevel competencyLevel : ((Essence.ActivitySpaceAndActivity.Activity) essenceElement)
@@ -523,7 +507,7 @@ public class EssenceXmiAPI {
 		} else if (essenceElement instanceof Essence.ActivitySpaceAndActivity.ActivitySpace) {
 			ActivitySpace as = new ActivitySpace();
 
-			as.setCompletionCriteria(new ArrayList<LanguageElement>());
+			as.setCompletionCriteria(new ArrayList<CompletionCriterion>());
 			as.setName(((Essence.ActivitySpaceAndActivity.ActivitySpace) essenceElement).getName());
 			as.setDescription(((Essence.ActivitySpaceAndActivity.ActivitySpace) essenceElement).getDescription());
 			as.setBriefDescription(((Essence.ActivitySpaceAndActivity.ActivitySpace) essenceElement).getBriefDescription());
@@ -543,12 +527,12 @@ public class EssenceXmiAPI {
 					essenciaCriterion.setState(s);
 					essenciaCriterion.getState().setParentAlpha(a);
 
-					as.getCompletionCriteria().add(essenciaCriterion);
+					as.getCompletionCriteria().add((CompletionCriterion)essenciaCriterion);
 				}
 			}
 
 			if (((Essence.ActivitySpaceAndActivity.ActivitySpace) essenceElement).getInput() != null) {
-				as.setInputList(new ArrayList<LanguageElement>());
+				as.setInputList(new ArrayList<Alpha>());
 				for (Essence.AlphaAndWorkProduct.Alpha essenceAlpha : ((Essence.ActivitySpaceAndActivity.ActivitySpace) essenceElement).getInput()) {
 					Alpha alpha = new Alpha();
 					alpha.setName(essenceAlpha.getName());

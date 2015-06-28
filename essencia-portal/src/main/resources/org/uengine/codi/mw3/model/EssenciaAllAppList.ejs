@@ -1,16 +1,15 @@
 <%
 	if(value){
-	debugger;
 %>
 		<div>
 			<ul class="process_map2 allApp">
 				<li onClick="<%=methods.goSNS.caller()%>">
                     <img src="images/waveStyle/app_social.png">
-                    <div style="text-align:center"><%=value.snsAppName%></div>
+                    <div style="text-align:center"><%=mw3.localize("$AppList.SNS")%></div>
                 </li>
                 <li onClick="<%=methods.goEssencia.caller()%>">
                     <img src="images/waveStyle/app_essencia.png">
-                    <div style="text-align:center"><%=value.essenciaAppName%></div>
+                    <div style="text-align:center"><%=mw3.localize("$AppList.Essencia")%></div>
                 </li>
 			</ul>
 		</div>

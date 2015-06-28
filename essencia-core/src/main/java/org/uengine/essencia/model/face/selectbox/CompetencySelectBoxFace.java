@@ -17,7 +17,7 @@ public class CompetencySelectBoxFace extends CriterionSelectBoxFace {
 	setSubSelectBox(new EssenciaSelectBox());
 	for (IElement e : essenciaCanvas.takeElementList()) {
 	    if (e instanceof Competency && getMainSelectBox().getSelectedText().equals(((Competency) e).getName())) {
-		for (CompetencyLevel l : ((Competency)e).getList()) {
+		for (CompetencyLevel l : ((Competency)e).getCompetencyLevels()) {
 		    getSubSelectBox().add(l.getName(), l.getName());
 		}
 	    }

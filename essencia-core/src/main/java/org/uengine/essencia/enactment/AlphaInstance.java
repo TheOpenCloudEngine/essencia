@@ -64,8 +64,8 @@ public class AlphaInstance extends LanguageElementInstance {
 
         super(alpha, id);
 
-        if(getAlpha().getList().size() > 0)
-            setCurrentStateName(getAlpha().getList().get(0).getName());
+        if(getAlpha().getStates().size() > 0)
+            setCurrentStateName(getAlpha().getStates().get(0).getName());
     }
 
     //only for serialization / deserialization
@@ -86,11 +86,11 @@ public class AlphaInstance extends LanguageElementInstance {
         }else{
 
 
-            int currentStateIndex = getAlpha().getList().indexOf(getCurrentState());
+            int currentStateIndex = getAlpha().getStates().indexOf(getCurrentState());
 
-            if(currentStateIndex < getAlpha().getList().size() -1){
+            if(currentStateIndex < getAlpha().getStates().size() -1){
                 currentStateIndex ++;
-                State currentState = getAlpha().getList().get(currentStateIndex);
+                State currentState = getAlpha().getStates().get(currentStateIndex);
                 setCurrentStateName(currentState.getName());
             }
 
