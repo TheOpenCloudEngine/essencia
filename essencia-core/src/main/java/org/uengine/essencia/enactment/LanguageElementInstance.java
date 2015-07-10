@@ -132,7 +132,8 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
 
         if(propertyValues!=null)
         for(PropertyValue propertyValue : propertyValues){
-            cachedMap.put(propertyValue.getKey(), propertyValue.getValue());
+            if(propertyValue!=null)
+                cachedMap.put(propertyValue.getKey(), propertyValue.getValue());
         }
     }
 }

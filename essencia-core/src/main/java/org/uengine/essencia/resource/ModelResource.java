@@ -143,15 +143,12 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	public IModel loadModel() throws Exception {
 		try {
 			IModel model =  (IModel)ObjectRepository.getInstance().get(this);
-			if( model == null ){
-				throw new IllegalStateException("Practice Definition Model is not founded from Object Repository or deserialize is failed");
-			}
+
 			return model;
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception("Can't open " + getName() + " due to: ", e);
 		}
 
-		return null;
 	}
 
 	@Override

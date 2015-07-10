@@ -28,6 +28,7 @@ import org.uengine.essencia.resource.Resource;
 import org.uengine.kernel.GlobalContext;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.processmanager.*;
+import org.uengine.util.UEngineUtil;
 
 @Face(ejsPath = "dwr/metaworks/genericfaces/FormFace.ejs")
 public class DeployPanel {
@@ -102,23 +103,20 @@ public class DeployPanel {
             in = new FileInputStream(exsistingFileName);
             out = new FileOutputStream(path);
 
-            int c;
-            while ((c = in.read()) != -1) {
-                out.write(c);
-            }
+            UEngineUtil.copyStream(in, out);
         } catch (Exception e) {
 
         } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                if (in != null) {
+//                    in.close();
+//                }
+//                if (out != null) {
+//                    out.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             MetaworksRemoteService.wrapReturn(new Remover(new ModalWindow()));
         }
