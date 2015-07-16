@@ -22,7 +22,7 @@ import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.editor.PracticeDefinerEditor;
 import org.uengine.essencia.modeling.modeler.PracticeDefiner;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 import com.thoughtworks.xstream.XStream;
 

@@ -2,7 +2,7 @@ package org.uengine.essencia.modeling.editor;
 
 import org.metaworks.annotation.Face;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 @Face(displayName="MethodComposer")
 public class ComposerEditor extends DefinerEditor {

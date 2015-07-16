@@ -1,6 +1,6 @@
 package org.uengine.essencia.resource;
 
-import org.uengine.modeling.IContainer;
+import org.uengine.modeling.resource.IContainer;
 
 public enum FolderResourceType {
 	PRACTICE_FOLDER(PracticeFolderResource.class, new ResourceType[]{ResourceType.PRACTICE_RESOURCE}, "Practices"),

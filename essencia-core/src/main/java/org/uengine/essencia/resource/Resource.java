@@ -31,9 +31,9 @@ import org.uengine.essencia.designer.ResourceNavigator;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.GlobalContext;
 import org.uengine.kernel.UEngineException;
-import org.uengine.modeling.IContainer;
-import org.uengine.modeling.IResource;
-import org.uengine.modeling.IResourceVisitor;
+import org.uengine.modeling.resource.IContainer;
+import org.uengine.modeling.resource.IResource;
+import org.uengine.modeling.resource.IResourceVisitor;
 import org.uengine.util.FileUtil;
 
 public class Resource implements IResource, Comparable<IResource> {

@@ -11,8 +11,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.uengine.modeling.IContainer;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IContainer;
+import org.uengine.modeling.resource.IResource;
 
 public class ResourceTest {
 	static List<IResource> resourceList = new ArrayList<IResource>();
