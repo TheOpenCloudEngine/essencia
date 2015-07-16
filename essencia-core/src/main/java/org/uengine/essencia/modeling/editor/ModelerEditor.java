@@ -53,7 +53,7 @@ public abstract class ModelerEditor extends Editor {
         if (!MetaworksContext.WHEN_NEW.equals(getResource().getMetaworksContext().getWhen())) {
             IModel model = ((IModelResource) getResource()).loadModel();
             if( model == null ){
-                throw new IllegalStateException("Practice Definition Model is not founded from Object Repository or deserialize is failed");
+                throw new IllegalStateException("No Such Practice Definition");
             } else {
                 this.getModeler().setModel(model);
             }

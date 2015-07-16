@@ -38,7 +38,7 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
         initInputOutputParameters();
     }
 
-        public void initInputOutputParameters() {
+    public void initInputOutputParameters() {
 
         List<ParameterContext> addingParameterContexts = new ArrayList<ParameterContext>();
 

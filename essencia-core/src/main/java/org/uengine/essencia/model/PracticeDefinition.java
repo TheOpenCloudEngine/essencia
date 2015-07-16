@@ -169,8 +169,6 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
         ((EssenceProcessDefinition) returnProcessDefinition).setPracticeDefinition(this);
 
-        List<ProcessVariable> pvList = new ArrayList<>();
-
 
 
         for (IElement element : getElements(Activity.class)) {
@@ -314,6 +312,15 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 //        }
 
 
+        overrideProcessVariablesTo(returnProcessDefinition);
+
+
+        return returnProcessDefinition;
+    }
+
+    public void overrideProcessVariablesTo(EssenceProcessDefinition returnProcessDefinition) {
+        List<ProcessVariable> pvList = new ArrayList<>();
+
         for (Alpha alpha : getElements(Alpha.class)) {
             ProcessVariable pv = null;
 
@@ -321,7 +328,16 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
             if (alpha.getPropertyList() != null) {
                 for (Property property : alpha.getPropertyList()) {
-                    alphaInstance.setProperty(property.getKey(), property.getType());//TODO: property.getType() for value???? kidding me?
+
+                    Serializable defaultPropertyValue = null;
+                    try{
+                        defaultPropertyValue = (Serializable) Class.forName(property.getType()).newInstance();
+                    }catch (Exception e){
+
+                    }
+
+                    if(defaultPropertyValue!=null)
+                        alphaInstance.setProperty(property.getKey(), defaultPropertyValue);
                 }
             }
             //여기서 property를 다 set 해주어야할듯
@@ -365,9 +381,6 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         ProcessVariable[] pvArray = {};
         pvArray = pvList.toArray(pvArray);
         returnProcessDefinition.setProcessVariables(pvArray);
-
-
-        return returnProcessDefinition;
     }
 
 //    private void deployProcessDefinition() throws Exception {
