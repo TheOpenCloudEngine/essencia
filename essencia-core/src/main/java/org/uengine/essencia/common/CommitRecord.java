@@ -28,7 +28,7 @@ import org.uengine.essencia.modeling.editor.PracticeDefinerEditor;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 @XmlRootElement(name = "record")
 @Face(ejsPath = "dwr/metaworks/genericfaces/Record.ejs")

@@ -1,7 +1,7 @@
 package org.uengine.essencia.modeling.editor;
 
 import org.uengine.essencia.resource.MethodResource;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 
 public class MethodComposerEditor extends EssenciaEditor {

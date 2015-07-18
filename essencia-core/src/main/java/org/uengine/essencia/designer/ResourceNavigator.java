@@ -6,7 +6,7 @@ import org.metaworks.widget.Clipboard;
 import org.uengine.essencia.i18n.Locale;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.essencia.resource.FolderResourceType;
-import org.uengine.modeling.IContainer;
+import org.uengine.modeling.resource.IContainer;
 
 public class ResourceNavigator {
 
@@ -51,10 +51,18 @@ public class ResourceNavigator {
 
 	public void load(String locale) {
 		IContainer practiceResource = (IContainer) Resource.newPracticeFolderResource(File.separator.concat(FolderResourceType.PRACTICE_FOLDER.getName()));
-		practiceResource.setChildren(practiceResource.list());
+		try {
+			practiceResource.setChildren(practiceResource.list());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		IContainer methodResource = (IContainer) Resource.newMethodFolderResource(File.separator.concat(FolderResourceType.METHOD_FOLDER.getName()));
-		methodResource.setChildren(methodResource.list());
+		try {
+			methodResource.setChildren(methodResource.list());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		this.setPracticeResource(practiceResource);
 		this.setMethodResource(methodResource);

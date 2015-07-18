@@ -12,7 +12,7 @@ import org.metaworks.MetaworksContext;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.Resource;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 @Ignore
 public class CompositeEditorTest {

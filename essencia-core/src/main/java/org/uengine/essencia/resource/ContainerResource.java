@@ -21,9 +21,9 @@ import org.metaworks.widget.Clipboard;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.designer.ResourceNavigator;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.modeling.IContainer;
-import org.uengine.modeling.IResource;
-import org.uengine.modeling.IResourceVisitor;
+import org.uengine.modeling.resource.IContainer;
+import org.uengine.modeling.resource.IResource;
+import org.uengine.modeling.resource.IResourceVisitor;
 
 public class ContainerResource extends Resource implements IContainer {
 

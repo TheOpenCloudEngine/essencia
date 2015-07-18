@@ -5,7 +5,7 @@ import java.io.File;
 import org.uengine.essencia.IUser;
 import org.uengine.essencia.common.LockInfo;
 import org.uengine.essencia.repository.ObjectRepository;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 public class LockResource extends Resource {
 

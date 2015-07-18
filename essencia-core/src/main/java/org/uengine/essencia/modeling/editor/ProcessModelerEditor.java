@@ -5,7 +5,7 @@ import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.modeling.modeler.EssenciaProcessModeler;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.modeling.modeler.ProcessModeler;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 @Face(displayName = "ProcessModeler")
 public class ProcessModelerEditor extends ModelerEditor {

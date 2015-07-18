@@ -38,7 +38,7 @@ import org.uengine.kernel.UEngineException;
 import org.uengine.kernel.bpmn.face.ProcessVariablePanel;
 import org.uengine.kernel.bpmn.face.RolePanel;
 import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 public abstract class EssenciaEditor extends CompositeEditor {
 
