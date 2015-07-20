@@ -32,6 +32,7 @@
         <convert converter="metaworks" match="org.uengine.essencia.model.*"/>
         <convert converter="metaworks" match="org.uengine.essencia.*"/>
         <convert converter="metaworks" match="org.uengine.modeling.*"/>
+        <convert converter="metaworks" match="org.uengine.modeling.resource.*"/>
 <!--end-->
 
       <convert converter="metaworks" match="org.uengine.codi.mw3.*"/>
@@ -55,6 +56,9 @@
         <convert converter="metaworks" match="org.uengine.processmarket.*"/>
 
         <convert converter="metaworks" match="org.uengine.codi.mw3.webProcessDesigner.*"/>
+        <convert converter="metaworks" match="org.uengine.kernel.*"/>
+        <convert converter="metaworks" match="org.uengine.kernel.view.*"/>
+        <convert converter="metaworks" match="org.uengine.kernel.designer.*"/>
         <convert converter="metaworks" match="org.uengine.contexts.*"/>
 
         <convert converter="metaworks" match="org.uengine.codi.activitytypes.wih.*"/>

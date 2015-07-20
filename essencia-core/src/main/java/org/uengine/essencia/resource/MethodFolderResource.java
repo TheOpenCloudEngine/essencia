@@ -12,7 +12,7 @@ import org.uengine.essencia.designer.Designer;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 	
 public class MethodFolderResource extends ContainerResource {

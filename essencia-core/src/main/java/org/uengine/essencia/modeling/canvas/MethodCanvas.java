@@ -11,6 +11,7 @@ import org.metaworks.ToAppend;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.Practice;

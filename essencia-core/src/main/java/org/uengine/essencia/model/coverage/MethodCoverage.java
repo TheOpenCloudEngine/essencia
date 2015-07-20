@@ -108,21 +108,27 @@ public class MethodCoverage {
 
                 for (int i = 0; i < activity.getCompletionCriteria().size(); i++) {
                     Criterion criterion = activity.getCompletionCriteria().get(i);
-                    String stateName = criterion.getState().getName();
+                    if (criterion.getState() != null) {
+                        String stateName = criterion.getState().getName();
 
-                    tmpMapping.put(criterion.getState().getName(), String.valueOf(i));
+                        tmpMapping.put(criterion.getState().getName(), String.valueOf(i));
 
-                    for (int j = 0; j < this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).size(); j++) {
-                        if (stateName.equals(this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(j).getName())) {
-                            this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(j).setInvolved(true);
-                            String tmpMappingIndex = (String) tmpMapping.get(criterion.getState().getName());
-                            if (tmpMappingIndex != null) {
-                                for (int k = j - 1; k > i; k--) {
-                                    this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(k).setInvolved(true);
+                        if (this.getAlphaMapping().containsKey(criterion.getState().getParentAlpha().getName())) {
+                            for (int j = 0; j < this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).size(); j++) {
+                                if (stateName.equals(this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(j).getName())) {
+                                    this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(j).setInvolved(true);
+                                    String tmpMappingIndex = (String) tmpMapping.get(criterion.getState().getName());
+                                    if (tmpMappingIndex != null) {
+                                        for (int k = j - 1; k > i; k--) {
+                                            this.getAlphaMapping().get(criterion.getState().getParentAlpha().getName()).get(k).setInvolved(true);
+                                        }
+                                    }
                                 }
-                            }
+                            }// state List
                         }
-                    }// state List
+
+                    }
+
                 }// outputAlpha List
             }// activity List
         }

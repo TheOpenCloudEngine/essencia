@@ -16,7 +16,7 @@ import java.util.List;
  * Created by ik on 2015-06-24.
  */
 public final class KernelUtil {
-    private static KernelUtil instance;
+    private volatile static KernelUtil instance;
 
     private PracticeDefinition practiceDefinition;
 

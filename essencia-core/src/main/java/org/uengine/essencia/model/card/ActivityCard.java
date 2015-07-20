@@ -1,6 +1,9 @@
 package org.uengine.essencia.model.card;
 
 import org.uengine.essencia.model.*;
+import org.uengine.essencia.model.face.ActivityCompletionCriterionFace;
+import org.uengine.essencia.model.face.ActivityEntryCriterionFace;
+import org.uengine.essencia.model.face.WorkProductFace;
 import org.uengine.essencia.model.view.ActivityArrowView;
 import org.uengine.essencia.model.view.AlphaView;
 import org.uengine.essencia.model.view.CompetencyView;
@@ -24,11 +27,11 @@ public class ActivityCard extends BasicCard {
     public ActivityCard(BasicElement element) {
         this();
 
-        try {
-            element = (BasicElement)GlobalContext.deserialize(GlobalContext.serialize(element, String.class), String.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            element = (BasicElement)GlobalContext.deserialize(GlobalContext.serialize(element, String.class), String.class);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
         makeCard(element);
     }
 
@@ -41,10 +44,10 @@ public class ActivityCard extends BasicCard {
         int elementIndex = 0;
         y = -30;
 
-        List<LanguageElement> entryCriteriaList;
+        List<EntryCriterion> entryCriteriaList;
 
         if(((Activity) element).getEntryCriteriaPanel()!=null){
-            entryCriteriaList =((Activity) element).getEntryCriteriaPanel().createValue();
+            entryCriteriaList =((ActivityEntryCriterionFace)((Activity) element).getEntryCriteriaPanel()).createValue();
         }else{
             entryCriteriaList = ((Activity) element).getEntryCriteria();
         }
@@ -114,9 +117,9 @@ public class ActivityCard extends BasicCard {
         elementIndex = 0;
         description += "<ul>";
 
-        List<LanguageElement> completionCriterionList;
+        List<CompletionCriterion> completionCriterionList;
         if(((Activity) element).getCompletionCriterionFace()!=null){
-            completionCriterionList = ((Activity) element).getCompletionCriterionFace().createValue();
+            completionCriterionList = ((ActivityCompletionCriterionFace)((Activity) element).getCompletionCriterionFace()).createValue();
         }else{
             completionCriterionList = ((Activity) element).getCompletionCriteria();
         }
@@ -151,10 +154,10 @@ public class ActivityCard extends BasicCard {
             elementIndex++;
         }
 
-        List<LanguageElement> workProductList;
+        List<CompletionCriterion> workProductList;
 
         if(((Activity) element).getWorkProductFace()!=null){
-            workProductList = ((Activity) element).getWorkProductFace().createValue();
+            workProductList = ((WorkProductFace)((Activity) element).getWorkProductFace()).createValue();
         }else{
             workProductList = null;
         }

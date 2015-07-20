@@ -5,7 +5,7 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Id;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 public abstract class Editor implements ContextAware {
 

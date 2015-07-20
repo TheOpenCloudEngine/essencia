@@ -3,7 +3,7 @@ package org.uengine.essencia.modeling.editor;
 import org.metaworks.annotation.Face;
 import org.uengine.essencia.modeling.modeler.EssenciaModeler;
 import org.uengine.essencia.modeling.modeler.PracticeDefiner;
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 @Face(displayName="PracticeDefiner")
 public class DefinerEditor extends EssenciaModelerEditor {

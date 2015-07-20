@@ -1,6 +1,6 @@
 package org.uengine.essencia.resource;
 
-import org.uengine.modeling.IResource;
+import org.uengine.modeling.resource.IResource;
 
 public enum ResourceType {
 	PRACTICE_RESOURCE(PracticeResource.class, ".practice"),

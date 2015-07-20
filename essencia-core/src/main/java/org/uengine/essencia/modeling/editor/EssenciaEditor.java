@@ -27,7 +27,6 @@ import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.context.EssenciaEventContext;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.PracticeDefinition;
-import org.uengine.essencia.modeling.modeler.EssenciaModeler;
 import org.uengine.essencia.modeling.modeler.EssenciaProcessModeler;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
 import org.uengine.essencia.resource.ExportResource;
@@ -35,16 +34,11 @@ import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.LockResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.essencia.util.ElementUtil;
-import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.UEngineException;
 import org.uengine.kernel.bpmn.face.ProcessVariablePanel;
 import org.uengine.kernel.bpmn.face.RolePanel;
 import org.uengine.modeling.ElementView;
-import org.uengine.modeling.IModel;
-import org.uengine.modeling.IResource;
-import org.uengine.modeling.Modeler;
-import org.uengine.modeling.modeler.ProcessModeler;
+import org.uengine.modeling.resource.IResource;
 
 public abstract class EssenciaEditor extends CompositeEditor {
 
@@ -188,6 +182,8 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 				if (processDefinition != null) {
 					processDefinition.setPracticeDefinition(practiceDefinition);
+
+					practiceDefinition.overrideProcessVariablesTo(processDefinition);
 					//processModeler.setModel(processDefinition);
 				}
 

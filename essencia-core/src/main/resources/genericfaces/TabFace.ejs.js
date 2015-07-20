@@ -31,7 +31,7 @@ var TabFace = function(objectId, className){
 	});
 	
 	$(this.tabs).on("tabsactivate", {objectId: this.objectId}, function(event, ui) {
-		var faceHelper = mw3.getFaceHelper(event.data.objectId);
+		var faceHelper = mw3.getFaceHelper(event.data.objectId);		 
 		
 		if(ui){
 			var index = ui.newPanel.attr('index');
