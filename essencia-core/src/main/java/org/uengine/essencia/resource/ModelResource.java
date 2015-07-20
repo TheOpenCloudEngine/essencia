@@ -193,7 +193,7 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	}
 
     public void commit() throws Exception {
-//        CommitUtils.serializeRecord(record);
+        CommitUtils.serializeRecord(record);
 
         if(record.getResources().endsWith(ResourceType.PRACTICE_RESOURCE.getType())){
             File source = new File(Resource.getCodebase() + FolderResourceType.PRACTICE_FOLDER.getName() + File.separator + record.getResources());
