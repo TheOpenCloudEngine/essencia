@@ -75,6 +75,11 @@ public class Resource implements IResource, Comparable<IResource> {
 		this.path = path;
 	}
 
+	@Override
+	public void save(Object o) throws Exception {
+
+	}
+
 	/**
 	 * name is provided from path by parsing * for example,
 	 * <p>

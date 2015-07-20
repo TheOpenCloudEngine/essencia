@@ -1,12 +1,12 @@
 package org.uengine.essencia.enactment;
 
-import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
 import org.metaworks.dwr.SerializationSensitive;
-import org.uengine.essencia.enactment.face.LanguageElementInstanceFace;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.NeedArrangementToSerialize;
+import org.uengine.uml.model.Attribute;
+import org.uengine.uml.model.AttributeInstance;
 
 import java.io.Serializable;
 import java.util.*;
@@ -61,9 +61,9 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
         //if(!DWR.inSerialization()) throw new IllegalStatusError('This constructor is only for DWR instantiation');
     }
 
-    public Serializable setProperty(String key, Serializable value) {
+    public Serializable setAttribute(String key, Serializable value) {
 
-        Map<String, Property> propertyMap = getLanguageElement().createPropertyMap();
+        Map<String, Attribute> propertyMap = getLanguageElement().createAttributeMap();
 
         if("id".equals(key)){
             throw new IllegalArgumentException("Don't use 'put(\"id\", id)'. Use 'setId(id)' instead.");
@@ -89,16 +89,16 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
         return getCachedMap().put(key, value);
     }
 
-    public Serializable getProperty(String key){
+    public Serializable getAttribute(String key){
         return getCachedMap().get(key);
     }
 
-    List<PropertyValue> propertyValues;
-        public List<PropertyValue> getPropertyValues() {
-            return propertyValues;
+    List<AttributeInstance> attributeValues;
+        public List<AttributeInstance> getAttributeValues() {
+            return attributeValues;
         }
-        public void setPropertyValues(List<PropertyValue> propertyValues) {
-            this.propertyValues = propertyValues;
+        public void setAttributeValues(List<AttributeInstance> attributeValues) {
+            this.attributeValues = attributeValues;
         }
 
 
@@ -111,17 +111,17 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
     public void beforeSerialization() {
         if(cachedMap==null) return;
 
-        List<PropertyValue> values = new ArrayList<PropertyValue>();
+        List<AttributeInstance> values = new ArrayList<AttributeInstance>();
 
         for(String key : cachedMap.keySet()){
-            PropertyValue propertyValue = new PropertyValue();
-            propertyValue.setKey(key);
+            AttributeInstance propertyValue = new AttributeInstance();
+            propertyValue.setName(key);
             propertyValue.setValue(cachedMap.get(key));
 
             values.add(propertyValue);
         }
 
-        setPropertyValues(values);
+        setAttributeValues(values);
     }
 
     @Override
@@ -130,10 +130,10 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
 
         cachedMap = new HashMap<String, Serializable>();
 
-        if(propertyValues!=null)
-        for(PropertyValue propertyValue : propertyValues){
+        if(attributeValues !=null)
+        for(AttributeInstance propertyValue : attributeValues){
             if(propertyValue!=null)
-                cachedMap.put(propertyValue.getKey(), propertyValue.getValue());
+                cachedMap.put(propertyValue.getName(), (Serializable) propertyValue.getValue());
         }
     }
 }

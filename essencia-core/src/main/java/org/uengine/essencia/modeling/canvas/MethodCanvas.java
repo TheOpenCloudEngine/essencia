@@ -41,6 +41,9 @@ public class MethodCanvas extends EssenciaCanvas {
     @Available(when = {MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
     @ServiceMethod(payload = {"clipboard", "modelerType", "elementViewList", "relationViewList"}, target = ServiceMethodContext.TARGET_APPEND, eventBinding = CANVAS_DROP)
     @Override
+    /**
+     * Practice Merge
+     */
     public Object[] drop() {
 
         ElementView elementView = null;
@@ -309,10 +312,15 @@ public class MethodCanvas extends EssenciaCanvas {
             newId = createId();
             r.getRelationView().setId(newId);
 
-            IElement e = p.pickElementByViewId(r.getRelationView().getTo());
-            e.getElementView().setFromEdge(e.getElementView().getFromEdge().replace(oldId, newId));
-            e = p.pickElementByViewId(r.getRelationView().getFrom());
-            e.getElementView().setToEdge(e.getElementView().getToEdge().replace(oldId, newId));
+            IElement to = p.pickElementByViewId(r.getRelationView().getTo());
+            if(to!=null) {
+                to.getElementView().setFromEdge(to.getElementView().getFromEdge().replace(oldId, newId));
+            }
+
+            IElement from = p.pickElementByViewId(r.getRelationView().getFrom());
+            if(from!=null){
+                from.getElementView().setToEdge(from.getElementView().getToEdge().replace(oldId, newId));
+            }
         }
 
     }

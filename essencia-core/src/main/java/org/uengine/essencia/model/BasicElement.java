@@ -10,11 +10,13 @@ import org.metaworks.annotation.*;
 import org.metaworks.dwr.SerializationSensitive;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.enactment.LanguageElementInstance;
-import org.uengine.essencia.model.face.PropertyListFace;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
+import org.uengine.uml.model.Attribute;
+import org.uengine.uml.model.AttributeInstance;
+import org.uengine.uml.model.face.AttributeListFace;
 import org.uengine.util.UEngineUtil;
 
 public abstract class BasicElement extends LanguageElement implements IElement, SerializationSensitive {
@@ -204,39 +206,39 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	//transient Map<String, Property> properties = new HashMap<String, Property>();
 
-	public void addProperty(String id, Property property)
+	public void addAttribute(String id, Attribute property)
 	{
-		propertyList.add(property);
+		attributeList.add(property);
 	}
-	public void addProperty(String id, Class type) {
+	public void addAttribute(String id, Class type) {
 //		Property property = new Property();
 //		property.setKey(id);
 //		property.setType(type.getName());
 //
 //		properties.put(id, property);
 
-		Property property = new Property();
-		property.setKey(id);
+		Attribute property = new Attribute();
+		property.setName(id);
 		property.setType(type.getName());
 
-		propertyList.add(property);
+		attributeList.add(property);
 	}
 
-	List<Property> propertyList = new ArrayList<Property>();
-	@Face(faceClass = PropertyListFace.class)
-	public List<Property> getPropertyList() {
-		return propertyList;
+	List<Attribute> attributeList = new ArrayList<Attribute>();
+	@Face(faceClass = AttributeListFace.class)
+	public List<Attribute> getAttributeList() {
+		return attributeList;
 	}
-	public void setPropertyList(List<Property> propertyList) {
-		this.propertyList = propertyList;
+	public void setAttributeList(List<Attribute> attributeList) {
+		this.attributeList = attributeList;
 	}
 
 
-	public Map<String, Property> createPropertyMap(){
-		Map<String, Property> map = new HashMap<String, Property>();
+	public Map<String, Attribute> createAttributeMap(){
+		Map<String, Attribute> map = new HashMap<String, Attribute>();
 
-		for(Property property : propertyList){
-			map.put(property.getKey(), property);
+		for(Attribute property : attributeList){
+			map.put(property.getName(), property);
 		}
 
 		return map;
@@ -285,19 +287,19 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	}
 
-	public List<PropertyValue> createDefaultPropertyValues() {
-
-		List<PropertyValue> propertyValues = new ArrayList<PropertyValue>();
-
-		for(Property property : getPropertyList()){
-			PropertyValue propertyValue = new PropertyValue();
-			propertyValue.setKey(property.getKey());
-			propertyValue.setType(property.getType());
-
-			propertyValues.add(propertyValue);
-		}
-
-		return propertyValues;
-	}
+//	public List<AttributeInstance> createDefaultPropertyValues() {
+//
+//		List<AttributeInstance> attributeInstances = new ArrayList<AttributeInstance>();
+//
+//		for(Attribute property : getAttritbuteList()){
+//			AttributeInstance propertyValue = new AttributeInstance();
+//			propertyValue.setName(property.getName());
+//			propertyValue.setType(property.getType());
+//
+//			attributeInstances.add(propertyValue);
+//		}
+//
+//		return attributeInstances;
+//	}
 
 }

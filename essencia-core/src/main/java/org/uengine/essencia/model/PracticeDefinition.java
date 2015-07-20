@@ -20,6 +20,8 @@ import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.*;
 import org.uengine.kernel.view.HumanActivityView;
 import org.uengine.modeling.*;
+import org.uengine.uml.model.Attribute;
+import org.uengine.uml.model.AttributeInstance;
 import org.uengine.util.ActivityFor;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware {
@@ -326,18 +328,18 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
             AlphaInstance alphaInstance = alpha.createInstance(alpha.getName()); //reset the alphaInstance all the times.
 
-            if (alpha.getPropertyList() != null) {
-                for (Property property : alpha.getPropertyList()) {
+            if (alpha.getAttributeList() != null) {
+                for (Attribute property : alpha.getAttributeList()) {
 
-                    Serializable defaultPropertyValue = null;
+                    AttributeInstance defaultPropertyValue = null;
                     try{
-                        defaultPropertyValue = (Serializable) Class.forName(property.getType()).newInstance();
+                        defaultPropertyValue = property.createInstance();
                     }catch (Exception e){
 
                     }
 
                     if(defaultPropertyValue!=null)
-                        alphaInstance.setProperty(property.getKey(), defaultPropertyValue);
+                        alphaInstance.setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
                 }
             }
             //여기서 property를 다 set 해주어야할듯
@@ -355,9 +357,17 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             ProcessVariable pv = null;
 
             LanguageElementInstance workProductInstance = workProduct.createInstance(workProduct.getName());
-            if (workProduct.getPropertyList() != null) {
-                for (Property property : workProduct.getPropertyList()) {
-                    workProductInstance.setProperty(property.getKey(), property.getType());
+            if (workProduct.getAttributeList() != null) {
+                for (Attribute property : workProduct.getAttributeList()) {
+                    AttributeInstance defaultPropertyValue = null;
+                    try{
+                        defaultPropertyValue = property.createInstance();
+                    }catch (Exception e){
+
+                    }
+
+                    if(defaultPropertyValue!=null)
+                        workProductInstance.setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
                 }
             }
             pv = new ProcessVariable(new Object[]{
@@ -543,9 +553,11 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
      */
     public IElement pickElementByViewId(String id) {
         IElement element = null;
+
+        String[] stringArrays = id.split("_");
+        String temp = stringArrays[0] + "_" + stringArrays[1] + "_" + stringArrays[2];
+
         for (IElement e : getElementList()) {
-            String[] stringArrays = id.split("_");
-            String temp = stringArrays[0] + "_" + stringArrays[1] + "_" + stringArrays[2];
             if (temp.equals(e.getElementView().getId())) {
                 element = e;
                 break;

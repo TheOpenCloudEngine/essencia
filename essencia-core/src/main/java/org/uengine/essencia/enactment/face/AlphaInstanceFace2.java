@@ -1,7 +1,6 @@
 package org.uengine.essencia.enactment.face;
 
 import org.metaworks.Face;
-import org.metaworks.annotation.Hidden;
 import org.springframework.beans.BeanUtils;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.CheckPointInstance;
@@ -35,7 +34,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
     public void setValueToFace(AlphaInstance value) {
         BeanUtils.copyProperties(value, this);
 
-        setPropertyValues(value.getPropertyValues());
+        setAttributeValues(value.getAttributeValues());
 
         setCheckPointInstanceList(new ArrayList<CheckPointInstance>());
 
@@ -59,7 +58,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
         AlphaInstance alphaInstance = new AlphaInstance();
         BeanUtils.copyProperties(this, alphaInstance);
 
-        alphaInstance.setPropertyValues(getPropertyValues());
+        alphaInstance.setAttributeValues(getAttributeValues());
 
         if(alphaInstance.getCurrentState()!=null && getCheckPointInstanceList()!=null)
         for(CheckPointInstance checkPointInstance : getCheckPointInstanceList()){
