@@ -1,17 +1,20 @@
 package org.uengine.modeling.resource.resources;
 
 import org.metaworks.MetaworksContext;
+import org.metaworks.Remover;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
+import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.resource.ModelResource;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.common.DeployPanel;
+import org.uengine.modeling.resource.ResourceManager;
 
 public class MethodResource extends ModelResource {
 
@@ -53,5 +56,20 @@ public class MethodResource extends ModelResource {
 		modalWindow.setHeight(300);
 		modalWindow.setTitle("Deploy...");
 		return modalWindow;
+	}
+
+	@Override
+	public Object delete() {
+		try {
+			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			resourceManager.getStorage().delete(this);
+			ProcessResource processResource = new ProcessResource();
+			processResource.setPath(this.getPath().replace(ResourceType.METHOD_RESOURCE.getType(),
+					ResourceType.PROCESS_RESOURCE.getType()));
+			resourceManager.getStorage().delete(processResource);
+		} catch (IllegalAccessException|InstantiationException e) {
+			return null;
+		}
+		return new Remover(this);
 	}
 }

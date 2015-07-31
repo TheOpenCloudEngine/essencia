@@ -26,6 +26,7 @@ import org.metaworks.widget.Clipboard;
 import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.uengine.ConfirmPanel;
+import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.designer.ResourceNavigator;
 import org.uengine.essencia.util.ContextUtil;
@@ -34,6 +35,7 @@ import org.uengine.kernel.UEngineException;
 import org.uengine.modeling.resource.IContainer;
 import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.IResourceVisitor;
+import org.uengine.modeling.resource.ResourceManager;
 import org.uengine.util.FileUtil;
 
 public class Resource implements IResource, Comparable<IResource> {
@@ -230,10 +232,18 @@ public class Resource implements IResource, Comparable<IResource> {
 	}
 
 	public Object delete() {
-		if (deleteAll(this.getAbsolutePath())) {
-			return new Remover(this);
+//		if (deleteAll(this.getAbsolutePath())) {
+//			return new Remover(this);
+//		}
+//		return null;
+
+		try {
+			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			resourceManager.getStorage().delete(this);
+		} catch (IllegalAccessException|InstantiationException e) {
+			return null;
 		}
-		return null;
+		return new Remover(this);
 	}
 
 	public boolean deleteAll(String path) {
@@ -402,12 +412,19 @@ public class Resource implements IResource, Comparable<IResource> {
 	@Override
 	public void rename(String newName) {
 		String oldAbsolutePath = this.getAbsolutePath();
-		
+
 		setDisplayName(newName);
-		
+
 		File fromFile = new File(oldAbsolutePath);
 		File toFile = new File(this.getAbsolutePath());
 
 		fromFile.renameTo(toFile);
+
+//		try {
+//			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+//			resourceManager.getStorage().rename(this,newName);
+//		} catch (IllegalAccessException|InstantiationException e) {
+//			e.printStackTrace();
+//		}
 	}
 }
