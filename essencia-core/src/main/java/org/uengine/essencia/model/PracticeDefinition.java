@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.metaworks.ContextAware;
@@ -321,27 +322,29 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
     }
 
     public void overrideProcessVariablesTo(EssenceProcessDefinition returnProcessDefinition) {
-        List<ProcessVariable> pvList = new ArrayList<>();
+        List<ProcessVariable> pvList = new ArrayList<ProcessVariable>(){
+            HashMap<String, String> names = new HashMap<String, String>();
+
+            @Override
+            public boolean add(ProcessVariable element) {
+                names.put(element.getName(), element.getName());
+                return super.add(element);
+            }
+
+            @Override
+            public boolean contains(Object o) {
+
+                if(names.containsKey(((ProcessVariable)o).getName())) return true;
+
+                return super.contains(o);
+            }
+        };
 
         for (Alpha alpha : getElements(Alpha.class)) {
             ProcessVariable pv = null;
 
             AlphaInstance alphaInstance = alpha.createInstance(alpha.getName()); //reset the alphaInstance all the times.
 
-            if (alpha.getAttributeList() != null) {
-                for (Attribute property : alpha.getAttributeList()) {
-
-                    AttributeInstance defaultPropertyValue = null;
-                    try{
-                        defaultPropertyValue = property.createInstance();
-                    }catch (Exception e){
-
-                    }
-
-                    if(defaultPropertyValue!=null)
-                        alphaInstance.setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
-                }
-            }
             //여기서 property를 다 set 해주어야할듯
 
             pv = new ProcessVariable(new Object[]{
@@ -357,19 +360,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             ProcessVariable pv = null;
 
             LanguageElementInstance workProductInstance = workProduct.createInstance(workProduct.getName());
-            if (workProduct.getAttributeList() != null) {
-                for (Attribute property : workProduct.getAttributeList()) {
-                    AttributeInstance defaultPropertyValue = null;
-                    try{
-                        defaultPropertyValue = property.createInstance();
-                    }catch (Exception e){
 
-                    }
-
-                    if(defaultPropertyValue!=null)
-                        workProductInstance.setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
-                }
-            }
             pv = new ProcessVariable(new Object[]{
                     "name", workProduct.getName(),
                     "type", LanguageElementInstance.class
@@ -381,7 +372,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         //restore the general process variables defined in Process Modeler
         if(returnProcessDefinition.getProcessVariables()!=null)
         for(ProcessVariable pvInExistingPD : returnProcessDefinition.getProcessVariables()){
-            if(!(pvInExistingPD.getDefaultValue() instanceof LanguageElementInstance)){
+            if(!(pvInExistingPD.getDefaultValue() instanceof LanguageElementInstance) && !pvList.contains(pvInExistingPD)){
 
                 pvList.add(pvInExistingPD);
             }

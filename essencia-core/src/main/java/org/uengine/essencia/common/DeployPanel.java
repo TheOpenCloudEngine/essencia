@@ -126,7 +126,7 @@ public class DeployPanel {
             processId = processId.substring(0, processId.indexOf(".")) + ".process";
         }
 
-        CodiProcessDefinitionFactory.getInstance(new DummyProcessTransactionContext(null)).removeFromCache(getResource().getName());
+        CodiProcessDefinitionFactory.getInstance(new DummyProcessTransactionContext(null)).removeFromCache(processId);
 
 		/*System.out.println();
 

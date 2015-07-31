@@ -1,6 +1,7 @@
 package org.metaworks.website;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -17,6 +18,7 @@ import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.resource.FolderResourceType;
 import org.uengine.essencia.resource.ModelResource;
 import org.uengine.essencia.resource.Resource;
+import org.uengine.kernel.GlobalContext;
 import org.uengine.util.FileUtil;
 
 
@@ -57,14 +59,23 @@ public class EssenceFile extends AbstractMetaworksFile {
 		return uploadPath;
 	}
 	
-	@Face(displayName="Improt")
+	@Face(displayName="Import")
 	@ServiceMethod(callByContent=true, target=ServiceMethodContext.TARGET_APPEND)
 	public Object[] importEssence() throws FileNotFoundException, IOException, Exception{
 		super.upload();
 
-		EssenceXmiAPI essenceImportable = new EssenceXmiAPI();
-		essenceImportable.setXmiPath(overrideUploadPathPrefix() + getUploadedPath());
-		PracticeDefinition pd = essenceImportable.importXmi();
+
+		PracticeDefinition pd = null;
+
+		if(getUploadedPath().endsWith(".xmi")) {
+
+			EssenceXmiAPI essenceImportable = new EssenceXmiAPI();
+			essenceImportable.setXmiPath(overrideUploadPathPrefix() + getUploadedPath());
+			pd = essenceImportable.importXmi();
+		}else{
+			pd = (PracticeDefinition) GlobalContext.deserialize(new FileInputStream(new File(overrideUploadPathPrefix() + getUploadedPath())), String.class);
+		}
+
 
         ModelResource resource = (ModelResource) Resource.newInstance(new File(getResourceFolder() + pd.getName().getText() + getResourceType()));
 		resource.setPath(getResourceFolder() + pd.getName().getText() + getResourceType());
