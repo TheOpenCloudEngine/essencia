@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.uengine.essencia.resource.element.EssenciaResource;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.modeling.resource.resources.MethodResource;
 
 public class RevisionResource extends MethodResource {
 	

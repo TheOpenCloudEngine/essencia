@@ -1,9 +1,6 @@
 package org.uengine.essencia.common;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -18,15 +15,12 @@ import org.metaworks.component.SelectBox;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.CodiProcessDefinitionFactory;
 import org.uengine.codi.mw3.model.Session;
-import org.uengine.essencia.repository.ObjectRepository;
-import org.uengine.essencia.resource.MethodResource;
+import org.uengine.modeling.resource.resources.MethodResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.kernel.GlobalContext;
-import org.uengine.kernel.ProcessDefinition;
 import org.uengine.processmanager.*;
 import org.uengine.util.UEngineUtil;
 
