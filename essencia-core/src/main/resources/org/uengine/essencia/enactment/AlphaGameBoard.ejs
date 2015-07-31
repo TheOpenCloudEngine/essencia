@@ -6,8 +6,8 @@
         <tr>
             <td>Id</td>
         <%
-         for(var i in alpha.list){
-            var state = alpha.list[i];
+         for(var i in alpha.states){
+            var state = alpha.states[i];
              %><td><%=state.name%></td><%
          }
         %>
@@ -25,9 +25,9 @@
 
             %><tr><td><%=alphaInstance.id%></td><%
 
-            for(var j in alpha.list){
+            for(var j in alpha.states){
 
-                var state = alpha.list[j];
+                var state = alpha.states[j];
 
                 if(alphaInstance.currentStateName == state.name){
                     %><td><div class="icon-rounded m-r-10 current tooltip-top"><i class="glyphicon glyphicon-ok workitem_btn current"></i></div><%

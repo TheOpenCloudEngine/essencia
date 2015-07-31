@@ -52,13 +52,13 @@ public class MethodEnactmentTest extends UEngineTest{
 
         sprint = new WorkProduct();
         sprint.setName("Sprint");
-        sprint.addProperty("duration", Long.class);
-        sprint.addProperty("iteration", Integer.class);
+        sprint.addAttribute("duration", Long.class);
+        sprint.addAttribute("iteration", Integer.class);
 
         alphaBacklog = new Alpha();
         alphaBacklog.setName("Backlog");
-        alphaBacklog.addProperty("type", String.class);
-        alphaBacklog.addProperty("parent", String.class);
+        alphaBacklog.addAttribute("type", String.class);
+        alphaBacklog.addAttribute("parent", String.class);
 
 
         State identified;
@@ -295,24 +295,24 @@ public class MethodEnactmentTest extends UEngineTest{
 
         AlphaInstance backlogInstance = alphaBacklog.createInstance("backlog1");
         {
-            backlogInstance.setProperty("type", "Story");
+            backlogInstance.setAttribute("type", "Story");
 
             try {
-                backlogInstance.setProperty("undefinedField", "someValue");
+                backlogInstance.setAttribute("undefinedField", "someValue");
 
                 fail("undefined property is accepted");
             } catch (Throwable t) {
             }
 
             try {
-                backlogInstance.setProperty("type", new Boolean(true));
+                backlogInstance.setAttribute("type", new Boolean(true));
 
                 fail("illegal value for property 'type' is accepted");
             } catch (Throwable t) {
             }
 
             try {
-                backlogInstance.setProperty("id", "id");
+                backlogInstance.setAttribute("id", "id");
 
                 fail("put('id', value) must be denied");
             } catch (Throwable t) {
@@ -324,8 +324,8 @@ public class MethodEnactmentTest extends UEngineTest{
 
         {
             backlogInstance = alphaBacklog.createInstance("backlog2");
-            backlogInstance.setProperty("type", "Epic");
-            backlogInstance.setProperty("parent", "backlog1");
+            backlogInstance.setAttribute("type", "Epic");
+            backlogInstance.setAttribute("parent", "backlog1");
 
             pvv.setValue(backlogInstance);
             pvv.moveToAdd();
@@ -334,8 +334,8 @@ public class MethodEnactmentTest extends UEngineTest{
 
         {
             backlogInstance = alphaBacklog.createInstance("backlog3");
-            backlogInstance.setProperty("type", "Task");
-            backlogInstance.setProperty("parent", "backlog2");
+            backlogInstance.setAttribute("type", "Task");
+            backlogInstance.setAttribute("parent", "backlog2");
 
             pvv.setValue(backlogInstance);
         }
@@ -378,7 +378,7 @@ public class MethodEnactmentTest extends UEngineTest{
         ResultPayload resultPayload = new ResultPayload();
 
         LanguageElementInstance sprint1 = sprint.createInstance("sprint1");
-        sprint1.setProperty("iteration", 1);
+        sprint1.setAttribute("iteration", 1);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint1));
 
@@ -406,7 +406,7 @@ public class MethodEnactmentTest extends UEngineTest{
         resultPayload = new ResultPayload();
 
         LanguageElementInstance sprint2 = sprint.createInstance("sprint2");
-        sprint2.setProperty("iteration", 2);
+        sprint2.setAttribute("iteration", 2);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint2));
 
@@ -435,7 +435,7 @@ public class MethodEnactmentTest extends UEngineTest{
         resultPayload = new ResultPayload();
 
         LanguageElementInstance sprint3 = sprint.createInstance("sprint3");
-        sprint3.setProperty("iteration", 3);
+        sprint3.setAttribute("iteration", 3);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint3));
 
@@ -456,7 +456,7 @@ public class MethodEnactmentTest extends UEngineTest{
         List<? extends LanguageElementInstance> sprintInstances = sprint.getInstances(instance);
 
         for(LanguageElementInstance sprintInstance : sprintInstances){
-            System.out.println(sprintInstance.getId()+":  "+ sprintInstance.getProperty("iteration"));
+            System.out.println(sprintInstance.getId()+":  "+ sprintInstance.getAttribute("iteration"));
         }
 
 

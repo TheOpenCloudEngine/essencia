@@ -57,17 +57,17 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
         sprint = new WorkProduct();
         sprint.setName("Sprint");
-        sprint.addProperty("duration", Long.class);
-        sprint.addProperty("iteration", Integer.class);
-        sprint.addProperty("startDate", String.class);
-        sprint.addProperty("endDate", String.class);
+        sprint.addAttribute("duration", Long.class);
+        sprint.addAttribute("iteration", Integer.class);
+        sprint.addAttribute("startDate", String.class);
+        sprint.addAttribute("endDate", String.class);
 
 
 
         alphaBacklog = new Alpha();
         alphaBacklog.setName("Backlog");
-        alphaBacklog.addProperty("type", String.class);
-        alphaBacklog.addProperty("parent", String.class);
+        alphaBacklog.addAttribute("type", String.class);
+        alphaBacklog.addAttribute("parent", String.class);
 
         List<LanguageElement> childElements = new ArrayList<LanguageElement>();
         childElements.add(sprint);
@@ -226,8 +226,8 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         processDefinition.setId("scrum process");
 
         WorkProductInstance defaultSprint = sprint.createInstance("<id>");
-        defaultSprint.setProperty("iteration", new Integer(5));
-        defaultSprint.setProperty("startDate", "");
+        defaultSprint.setAttribute("iteration", new Integer(5));
+        defaultSprint.setAttribute("startDate", "");
         defaultSprint.setCurrentLevelOfDetailName("draft");
 //        defaultSprint.put("duration", 14);
 
@@ -239,7 +239,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         //alphaBacklog.getStates();
 
         AlphaInstance backlogInstance = alphaBacklog.createInstance("backlog");
-        backlogInstance.setProperty("type", "Backlog");
+        backlogInstance.setAttribute("type", "Backlog");
 
 
         ProcessVariable pvAlphaBacklog = new ProcessVariable(new Object[]{
@@ -412,17 +412,17 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         ProcessVariableValue pvvForSprints = new ProcessVariableValue();
         pvvForSprints.setName("sprint");
         LanguageElementInstance sprint1 = sprint.createInstance("sprint1");
-        sprint1.setProperty("iteration", 1);
+        sprint1.setAttribute("iteration", 1);
         pvvForSprints.setValue(sprint1);
 
         pvvForSprints.moveToAdd();
         LanguageElementInstance sprint2 = sprint.createInstance("sprint2");
-        sprint1.setProperty("iteration", 2);
+        sprint1.setAttribute("iteration", 2);
         pvvForSprints.setValue(sprint2);
 
         pvvForSprints.moveToAdd();
         LanguageElementInstance sprint3 = sprint.createInstance("sprint3");
-        sprint1.setProperty("iteration", 3);
+        sprint1.setAttribute("iteration", 3);
         pvvForSprints.setValue(sprint3);
 
 
@@ -462,7 +462,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         resultPayload = new ResultPayload();
 
         sprint1 = sprint.createInstance("sprint1");
-        sprint1.setProperty("iteration", 1);
+        sprint1.setAttribute("iteration", 1);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint1));
 
@@ -490,7 +490,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         resultPayload = new ResultPayload();
 
         sprint2 = sprint.createInstance("sprint2");
-        sprint2.setProperty("iteration", 2);
+        sprint2.setAttribute("iteration", 2);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint2));
 
@@ -519,7 +519,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         resultPayload = new ResultPayload();
 
         sprint3 = sprint.createInstance("sprint3");
-        sprint3.setProperty("iteration", 3);
+        sprint3.setAttribute("iteration", 3);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint3));
 
@@ -540,7 +540,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         List<? extends LanguageElementInstance> sprintInstances = sprint.getInstances(instance);
 
         for(LanguageElementInstance sprintInstance : sprintInstances){
-            System.out.println(sprintInstance.getId()+":  "+ sprintInstance.getProperty("iteration"));
+            System.out.println(sprintInstance.getId()+":  "+ sprintInstance.getAttribute("iteration"));
         }
 
 

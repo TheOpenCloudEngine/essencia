@@ -3,17 +3,16 @@ package org.uengine.essencia.enactment.face;
 import org.metaworks.Face;
 import org.metaworks.annotation.Hidden;
 import org.uengine.contexts.TextContext;
-import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.modeling.canvas.CardCanvas;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.Symbol;
+import org.uengine.uml.model.AttributeInstance;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 public class LanguageElementInstanceFace implements Card, Face<LanguageElementInstance> {
 
@@ -135,12 +134,12 @@ public class LanguageElementInstanceFace implements Card, Face<LanguageElementIn
 
     String id;
 
-    List<PropertyValue> propertyValueList;
-        public List<PropertyValue> getPropertyValueList() {
-            return propertyValueList;
+    List<AttributeInstance> attributeValueList;
+        public List<AttributeInstance> getAttributeValueList() {
+            return attributeValueList;
         }
-        public void setPropertyValueList(List<PropertyValue> propertyValueList) {
-            this.propertyValueList = propertyValueList;
+        public void setAttributeValueList(List<AttributeInstance> attributeValueList) {
+            this.attributeValueList = attributeValueList;
         }
 
     BasicElement languageElement;
@@ -155,7 +154,7 @@ public class LanguageElementInstanceFace implements Card, Face<LanguageElementIn
 
     @Override
     public void setValueToFace(LanguageElementInstance languageElementInstance) {
-        setPropertyValueList(languageElementInstance.getPropertyValues());
+        setAttributeValueList(languageElementInstance.getAttributeValues());
         setLanguageElement(languageElementInstance.getLanguageElement());
     }
 
