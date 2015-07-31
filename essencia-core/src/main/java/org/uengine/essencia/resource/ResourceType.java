@@ -3,6 +3,7 @@ package org.uengine.essencia.resource;
 import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.resources.MethodResource;
 import org.uengine.modeling.resource.resources.PracticeResource;
+import org.uengine.modeling.resource.resources.ProcessResource;
 
 public enum ResourceType {
 	PRACTICE_RESOURCE(PracticeResource.class, ".practice"),

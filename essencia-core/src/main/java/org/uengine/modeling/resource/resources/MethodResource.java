@@ -2,16 +2,13 @@ package org.uengine.modeling.resource.resources;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
-import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
-import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.resource.ModelResource;
-import org.uengine.essencia.resource.ProcessResource;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.common.DeployPanel;

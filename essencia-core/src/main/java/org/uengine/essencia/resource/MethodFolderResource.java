@@ -58,10 +58,18 @@ public class MethodFolderResource extends ContainerResource {
 	@Override
 	public List<IResource> list() {
 
-		List<IResource> resourceList = new ArrayList<>();
+		List<IResource> methodResourceList = new ArrayList<>();
 		try {
 			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
-			resourceList = resourceManager.getStorage().listFiles(this);
+			List<IResource> resourceList = resourceManager.getStorage().listFiles(this);
+
+			for(IResource resource : resourceList){
+				for(ResourceType resourceType : FolderResourceType.METHOD_FOLDER.getDisplayResources()){
+					if(resource.getType().equals(resourceType.getType().substring(1))){
+						methodResourceList.add(resource);
+					}
+				}
+			}
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -70,7 +78,7 @@ public class MethodFolderResource extends ContainerResource {
 			e.printStackTrace();
 		}
 
-		return resourceList;
+		return methodResourceList;
 		/*File currentFile = new File(this.getAbsolutePath());
 		File[] fileList = currentFile.listFiles();
 
