@@ -195,7 +195,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 			super.save();
 		}
 
-		commit();
+		//commit();
 	}
 
 	private void commit()throws Exception{

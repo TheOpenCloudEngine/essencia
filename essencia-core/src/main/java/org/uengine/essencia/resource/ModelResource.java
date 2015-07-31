@@ -17,6 +17,9 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.Clipboard;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.IUser;
 import org.uengine.essencia.Session;
 import org.uengine.essencia.common.*;
@@ -29,6 +32,8 @@ import org.uengine.essencia.resource.element.EssenciaResource;
 import org.uengine.essencia.resource.element.ThingsToDoResource;
 import org.uengine.essencia.resource.element.ThingsToWorkResource;
 import org.uengine.modeling.IModel;
+import org.uengine.modeling.resource.ResourceManager;
+import org.uengine.modeling.resource.Storage;
 import org.uengine.util.FileUtil;
 
 public class ModelResource extends Resource implements IModelResource, Lockable, Commitable {
@@ -136,13 +141,18 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	
 	@Override
 	public void saveResource(IModel model) throws Exception {
-		ObjectRepository.getInstance().put(this, model);
+		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+		resourceManager.getStorage().save(this,model);
+		//ObjectRepository.getInstance().put(this, model);
 	}
 
 	@Override
 	public IModel loadModel() throws Exception {
 		try {
-			IModel model =  (IModel)ObjectRepository.getInstance().get(this);
+			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			IModel model =  (IModel)resourceManager.getStorage().getObject(this);
+
+//			IModel model =  (IModel)ObjectRepository.getInstance().get(this);
 
 			return model;
 		} catch (Exception e) {

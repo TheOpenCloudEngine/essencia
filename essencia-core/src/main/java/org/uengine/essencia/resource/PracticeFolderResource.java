@@ -14,6 +14,7 @@ import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
+import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.dashboard.Dashboard;
@@ -25,6 +26,7 @@ import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.resource.IResource;
 
 import com.thoughtworks.xstream.XStream;
+import org.uengine.modeling.resource.ResourceManager;
 
 public class PracticeFolderResource extends ContainerResource {
 
@@ -58,36 +60,48 @@ public class PracticeFolderResource extends ContainerResource {
 
 	@Override
 	public List<IResource> list() {
-
-		File currentFile = new File(this.getAbsolutePath());
-		File[] fileList = currentFile.listFiles();
-
-		if (fileList == null) {
-			return new ArrayList<IResource>();
-		} else {
-			List<IResource> list = new ArrayList<IResource>();
-			for (File file : fileList) {
-				if (file.isDirectory()) {
-
-					IResource resource = (IResource) Resource.newPracticeFolderResource(file);
-					ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
-					resource.setParent(this);
-
-					list.add(resource);
-				} else {
-					for (ResourceType resourceType : FolderResourceType.PRACTICE_FOLDER.getDisplayResources()) {
-						if (file.getAbsolutePath().endsWith(resourceType.getType())) {
-							IResource resource = (IResource) Resource.newInstance(file);
-							ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
-							resource.setParent(this);
-
-							list.add(resource);
-						}
-					}
-				}
-			}
-			return orderByName(list);
+		List<IResource> resourceList = new ArrayList<>();
+		try {
+			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			resourceList = resourceManager.getStorage().listFiles(this);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+		return resourceList;
+//		File currentFile = new File(this.getAbsolutePath());
+//		File[] fileList = currentFile.listFiles();
+//
+//		if (fileList == null) {
+//			return new ArrayList<IResource>();
+//		} else {
+//			List<IResource> list = new ArrayList<IResource>();
+//			for (File file : fileList) {
+//				if (file.isDirectory()) {
+//
+//					IResource resource = (IResource) Resource.newPracticeFolderResource(file);
+//					ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
+//					resource.setParent(this);
+//
+//					list.add(resource);
+//				} else {
+//					for (ResourceType resourceType : FolderResourceType.PRACTICE_FOLDER.getDisplayResources()) {
+//						if (file.getAbsolutePath().endsWith(resourceType.getType())) {
+//							IResource resource = (IResource) Resource.newInstance(file);
+//							ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
+//							resource.setParent(this);
+//
+//							list.add(resource);
+//						}
+//					}
+//				}
+//			}
+//			return orderByName(list);
+//		}
 
 	}
 

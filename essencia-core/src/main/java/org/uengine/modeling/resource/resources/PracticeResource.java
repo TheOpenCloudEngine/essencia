@@ -1,7 +1,8 @@
-package org.uengine.essencia.resource;
+package org.uengine.modeling.resource.resources;
 
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.PracticeDefinerEditor;
+import org.uengine.essencia.resource.ModelResource;
 
 public class PracticeResource extends ModelResource {
 	

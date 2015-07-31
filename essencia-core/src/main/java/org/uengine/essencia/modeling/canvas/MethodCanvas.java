@@ -2,7 +2,6 @@ package org.uengine.essencia.modeling.canvas;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.Refresh;
@@ -19,7 +18,7 @@ import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.model.view.PracticeView;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.essencia.repository.ObjectRepository;
-import org.uengine.essencia.resource.PracticeResource;
+import org.uengine.modeling.resource.resources.PracticeResource;
 import org.uengine.essencia.resource.element.EssenciaElementResource;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
