@@ -10,11 +10,14 @@ import org.metaworks.widget.ModalWindow;
 import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
+import org.uengine.essencia.resource.FolderResourceType;
 import org.uengine.essencia.resource.ModelResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.common.DeployPanel;
+import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.ResourceManager;
 
 public class MethodResource extends ModelResource {
@@ -81,10 +84,15 @@ public class MethodResource extends ModelResource {
 
 		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
 
-		resourceManager.getStorage().copy(this, RepositoryFolderResource.getMethodsRepository() + getRecord().getResources()
+		resourceManager.getStorage().copy(this, RepositoryFolderResource.getRepository(FolderResourceType.METHOD_FOLDER)
+				+ getRecord().getResources()
 				+ "." + getRecord().getRevision() + ResourceType.REVISION_RESOURCE.getType());
 
-		resourceManager.getStorage().copy(this, RepositoryFolderResource.getMethodsRepository() + getRecord().getResources()
+		IResource resource = DefaultResource.createResource(this.getPath().replace(ResourceType.METHOD_RESOURCE.getType(),
+				ResourceType.PROCESS_RESOURCE.getType()));
+
+		resourceManager.getStorage().copy(resource, RepositoryFolderResource.getRepository(FolderResourceType.METHOD_FOLDER)
+				+ getRecord().getResources()
 				.replace(ResourceType.METHOD_RESOURCE.getType(), ResourceType.PROCESS_RESOURCE.getType())
 				+ "." + getRecord().getRevision() + ResourceType.REVISION_RESOURCE.getType());
 	}

@@ -3,6 +3,7 @@ package org.uengine.modeling.resource.resources;
 import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.PracticeDefinerEditor;
+import org.uengine.essencia.resource.FolderResourceType;
 import org.uengine.essencia.resource.ModelResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.ResourceType;
@@ -32,7 +33,8 @@ public class PracticeResource extends ModelResource {
 
 		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
 
-		resourceManager.getStorage().copy(this, RepositoryFolderResource.getPracticesRepository() + getRecord().getResources()
+		resourceManager.getStorage().copy(this, RepositoryFolderResource.getRepository(FolderResourceType.PRACTICE_FOLDER)
+				+ getRecord().getResources()
 				+ "." + getRecord().getRevision() + ResourceType.REVISION_RESOURCE.getType());
 	}
 }

@@ -15,8 +15,15 @@ import org.metaworks.component.SelectBox;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
+import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.codi.CodiProcessDefinitionFactory;
+import org.uengine.codi.mw3.model.ProcessDefinition;
 import org.uengine.codi.mw3.model.Session;
+import org.uengine.essencia.resource.FolderResourceType;
+import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.modeling.resource.IResource;
+import org.uengine.modeling.resource.ResourceManager;
+import org.uengine.modeling.resource.Serializer;
 import org.uengine.modeling.resource.resources.MethodResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.Resource;
@@ -87,34 +94,18 @@ public class DeployPanel {
 
     @ServiceMethod(callByContent = true)
     public void deploy() {
-        String exsistingFileName = RepositoryFolderResource.getMethodsRepository() + selectBox.getSelected();
-        String tenantId = TenantContext.getThreadLocalInstance().getTenantId();
-        tenantId = (tenantId == null ? "default" : tenantId);
-        String path = GlobalContext.getPropertyString("codebase") + File.separator + "codi" + File.separator + tenantId + File.separator + getResource().getProcessResource().getName();
+        String processResource = RepositoryFolderResource.getRepository(FolderResourceType.METHOD_FOLDER) + selectBox.getSelected();
+        try(OutputStream out = org.uengine.codi.mw3.resource.ResourceManager.
+                getTenantResourceAsOutputStream("codi", getResource().getProcessResource().getName())) {
 
+            IResource resource = DefaultResource.createResource(processResource);
+            ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+            Object object = resourceManager.getStorage().getObject(resource);
 
-        FileInputStream in = null;
-        FileOutputStream out = null;
-
-        try {
-            in = new FileInputStream(exsistingFileName);
-            out = new FileOutputStream(path);
-
-            UEngineUtil.copyStream(in, out);
+            Serializer.serialize(object, out);
         } catch (Exception e) {
-
-        } finally {
-//            try {
-//                if (in != null) {
-//                    in.close();
-//                }
-//                if (out != null) {
-//                    out.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
+            e.printStackTrace();
+        }finally {
             MetaworksRemoteService.wrapReturn(new Remover(new ModalWindow()));
         }
 
@@ -124,79 +115,6 @@ public class DeployPanel {
         }
 
         CodiProcessDefinitionFactory.getInstance(new DummyProcessTransactionContext(null)).removeFromCache(getResource().getName());
-
-		/*System.out.println();
-
-		HttpURLConnection conn = null;
-	    DataOutputStream dos = null;
-	    DataInputStream inStream = null;
-
-	    String exsistingFileName = RepositoryFolderResource.getMethodsRepository() + selectBox.getSelected();
-
-	    String lineEnd = "\r\n";
-	    String twoHyphens = "--";
-	    String boundary =  "*****";
-
-	    int bytesRead, bytesAvailable, bufferSize;
-	    byte[] buffer;
-	    int maxBufferSize = 1*1024*1024;
-	    String urlString = GlobalContext.getPropertyString("codi.deployServlet", "http://localhost:8080/uengine-web/DeployServlet");
-
-	    try{
-	      FileInputStream fileInputStream = new FileInputStream( new File(exsistingFileName) );
-	      URL url = new URL(urlString);
-	      conn = (HttpURLConnection) url.openConnection();
-	      conn.setDoInput(true);
-	      conn.setDoOutput(true);
-	      conn.setRequestMethod("POST");
-	      conn.setUseCaches(false);
-
-	      conn.setRequestProperty("Connection", "Keep-Alive");
-	      conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-
-	      dos = new DataOutputStream( conn.getOutputStream() );
-
-	      dos.writeBytes(twoHyphens + boundary + lineEnd);
-	      dos.writeBytes("Content-Disposition: form-data; name=\"pic\";" + " filename=\"" + exsistingFileName +"\"" + lineEnd);
-	      dos.writeBytes(lineEnd);
-
-	      bytesAvailable = fileInputStream.available();
-	      bufferSize = Math.min(bytesAvailable, maxBufferSize);
-	      buffer = new byte[bufferSize];
-
-	      bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-	      while (bytesRead > 0){
-	        dos.write(buffer, 0, bufferSize);
-	        bytesAvailable = fileInputStream.available();
-	        bufferSize = Math.min(bytesAvailable, maxBufferSize);
-	        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-	      }
-
-	      dos.writeBytes(lineEnd);
-	      dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-	      fileInputStream.close();
-	      dos.flush();
-	      dos.close();
-
-
-	    }catch (MalformedURLException ex){
-	      System.out.println("Error:"+ex);
-	    }catch (IOException ioe){
-	      System.out.println("Error:"+ioe);
-	    }
-
-	    try{
-	      inStream = new DataInputStream ( conn.getInputStream() );
-	      String str;
-	      while (( str = inStream.readLine()) != null){
-	        System.out.println(str);
-	      }
-	      inStream.close();
-	    }catch (IOException ioex){
-	      System.out.println("Error: "+ioex);
-	    }*/
     }
 
     class DummyProcessTransactionContext extends ProcessTransactionContext{

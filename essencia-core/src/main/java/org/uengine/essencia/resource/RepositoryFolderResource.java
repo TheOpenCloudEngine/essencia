@@ -23,11 +23,10 @@ public class RepositoryFolderResource extends ContainerResource{
         return FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + historyFile;
     }
 
-    public static String getPracticesRepository(){
-        return FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + FolderResourceType.PRACTICE_FOLDER.getName() + File.separator;
+    public static String getRepository(FolderResourceType folderResourceType){
+        return FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + folderResourceType.getName() + File.separator;
     }
 
-    public static String getMethodsRepository(){
-        return FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + FolderResourceType.METHOD_FOLDER.getName() + File.separator;
-    }
+
+
 }
