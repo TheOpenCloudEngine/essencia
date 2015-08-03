@@ -34,14 +34,9 @@ public class CommitHistory {
         this.records = records;
     }
 
-    public static CommitRecord getRecentResourceRecord(String resourceName) {
-        CommitHistory history = load();
-
-        if(history == null)
-            return null;
-
+    public CommitRecord getRecentResourceRecord(String resourceName) {
         CommitRecord record = null;
-        for(CommitRecord r : history.getRecords()){
+        for(CommitRecord r : getRecords()){
             if(r.getResources().equals(resourceName))
                 record = r;
         }
