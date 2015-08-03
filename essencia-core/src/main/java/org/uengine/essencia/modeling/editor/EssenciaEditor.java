@@ -195,7 +195,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 			super.save();
 		}
 
-		//commit();
+		commit();
 	}
 
 	private void commit()throws Exception{
@@ -262,7 +262,11 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 	private void renameChildResource() {
 		for (Editor editor : getItems()) {
-			editor.getResource().rename(getResource().getDisplayName());
+			try {
+				editor.getResource().rename(getResource().getDisplayName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

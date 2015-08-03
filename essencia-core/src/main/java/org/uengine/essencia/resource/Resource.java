@@ -232,15 +232,10 @@ public class Resource implements IResource, Comparable<IResource> {
 	}
 
 	public Object delete() {
-//		if (deleteAll(this.getAbsolutePath())) {
-//			return new Remover(this);
-//		}
-//		return null;
-
 		try {
 			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
 			resourceManager.getStorage().delete(this);
-		} catch (IllegalAccessException|InstantiationException e) {
+		} catch (Exception e) {
 			return null;
 		}
 		return new Remover(this);
@@ -390,7 +385,15 @@ public class Resource implements IResource, Comparable<IResource> {
 		}
 		return resource;
 	}
-	
+
+	/*
+
+	 */
+	public static void saveToStorage(IResource resource, Object object) throws Exception {
+		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+		resourceManager.getStorage().save(resource, object);
+	}
+
 	public static File makeFile(String resourceId) {
 		return new File(getCodebase() + resourceId);
 	}

@@ -51,7 +51,10 @@ public class DeployPanel {
     public DeployPanel(Resource resource) {
         setResource((MethodResource) resource);
         selectBox = new SelectBox();
-        List<CommitRecord> records = CommitUtils.getRecordsByFilename(resource.getName());
+
+        CommitHistory commitHistory = CommitHistory.load();
+        List<CommitRecord> records = commitHistory.getRecordsByFilename(resource.getName());
+
         String name = "";
         Iterator<CommitRecord> iterator = records.iterator();
         SimpleDateFormat df = new SimpleDateFormat("yy.MM.dd. a hh:mm");

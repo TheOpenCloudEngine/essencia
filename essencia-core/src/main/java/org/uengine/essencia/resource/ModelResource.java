@@ -34,6 +34,8 @@ import org.uengine.essencia.resource.element.ThingsToWorkResource;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.resource.ResourceManager;
 import org.uengine.modeling.resource.Storage;
+import org.uengine.modeling.resource.resources.HistoryResource;
+import org.uengine.modeling.resource.resources.RevResource;
 import org.uengine.util.FileUtil;
 
 public class ModelResource extends Resource implements IModelResource, Lockable, Commitable {
@@ -141,9 +143,7 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	
 	@Override
 	public void saveResource(IModel model) throws Exception {
-		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
-		resourceManager.getStorage().save(this,model);
-		//ObjectRepository.getInstance().put(this, model);
+		Resource.saveToStorage(this,model);
 	}
 
 	@Override
@@ -151,8 +151,6 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 		try {
 			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
 			IModel model =  (IModel)resourceManager.getStorage().getObject(this);
-
-//			IModel model =  (IModel)ObjectRepository.getInstance().get(this);
 
 			return model;
 		} catch (Exception e) {
@@ -203,21 +201,8 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	}
 
     public void commit() throws Exception {
-        CommitUtils.serializeRecord(record);
-
-        if(record.getResources().endsWith(ResourceType.PRACTICE_RESOURCE.getType())){
-            File source = new File(Resource.getCodebase() + FolderResourceType.PRACTICE_FOLDER.getName() + File.separator + record.getResources());
-            File dest = new File(RepositoryFolderResource.getRepositoryFilePath(record.getResources(), record.getRevision()));
-            FileUtil.copyFile(source, dest);
-        }else{
-            File source = new File(Resource.getCodebase() + FolderResourceType.METHOD_FOLDER.getName() + File.separator + record.getResources());
-            File dest = new File(RepositoryFolderResource.getRepositoryFilePath(record.getResources(), record.getRevision()));
-            FileUtil.copyFile(source, dest);
-
-            String resource = record.getResources().replaceFirst(ResourceType.METHOD_RESOURCE.getType(), ResourceType.PROCESS_RESOURCE.getType());
-            source = new File(Resource.getCodebase() + FolderResourceType.METHOD_FOLDER.getName() + File.separator + resource);
-            dest = new File(RepositoryFolderResource.getRepositoryFilePath(resource, record.getRevision()));
-            FileUtil.copyFile(source, dest);
-        }
+		CommitHistory commitHistory = CommitHistory.load();
+		commitHistory.addRecord(getRecord());
+		commitHistory.save();
     }
 }

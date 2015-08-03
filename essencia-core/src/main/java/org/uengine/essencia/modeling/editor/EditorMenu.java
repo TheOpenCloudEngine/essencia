@@ -20,7 +20,6 @@ import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.coverage.MethodCoverage;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
 
-import static org.uengine.essencia.common.CommitUtils.getHistoryByFilename;
 
 public class EditorMenu extends MainMenu {
 
@@ -100,8 +99,8 @@ public class EditorMenu extends MainMenu {
 	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
 	@ServiceMethod(target=ServiceMethodContext.TARGET_POPUP)
 	public Object History(){
-		CommitHistory history = new CommitHistory();
-		history = getHistoryByFilename(essenciaEditor.getResource().getName());
+		CommitHistory history = CommitHistory.load();
+		history.filterHistoryByFileName(essenciaEditor.getResource().getName());
 		
 		ModalWindow modalWindow = new ModalWindow();
 		modalWindow.setWidth(300);

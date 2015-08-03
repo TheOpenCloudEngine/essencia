@@ -11,6 +11,7 @@ import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.resource.ModelResource;
+import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.common.DeployPanel;
@@ -67,9 +68,24 @@ public class MethodResource extends ModelResource {
 			processResource.setPath(this.getPath().replace(ResourceType.METHOD_RESOURCE.getType(),
 					ResourceType.PROCESS_RESOURCE.getType()));
 			resourceManager.getStorage().delete(processResource);
-		} catch (IllegalAccessException|InstantiationException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 		return new Remover(this);
+	}
+
+	@Override
+	public void commit() throws Exception {
+		super.commit();
+
+		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+
+		resourceManager.getStorage().copy(this, RepositoryFolderResource.getMethodsRepository() + getRecord().getResources()
+				+ "." + getRecord().getRevision() + ResourceType.REVISION_RESOURCE.getType());
+
+		resourceManager.getStorage().copy(this, RepositoryFolderResource.getMethodsRepository() + getRecord().getResources()
+				.replace(ResourceType.METHOD_RESOURCE.getType(), ResourceType.PROCESS_RESOURCE.getType())
+				+ "." + getRecord().getRevision() + ResourceType.REVISION_RESOURCE.getType());
 	}
 }
