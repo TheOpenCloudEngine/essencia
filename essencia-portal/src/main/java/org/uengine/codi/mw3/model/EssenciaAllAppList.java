@@ -1,11 +1,11 @@
 package org.uengine.codi.mw3.model;
 
-import org.metaworks.*;
-import org.metaworks.annotation.AutowiredFromClient;
+import org.metaworks.EventContext;
+import org.metaworks.Refresh;
+import org.metaworks.ServiceMethodContext;
+import org.metaworks.ToEvent;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
-import org.uengine.codi.mw3.admin.TopPanel;
-import org.uengine.codi.mw3.widget.IFrame;
 import org.uengine.essencia.Essencia;
 import org.uengine.essencia.Loader;
 
