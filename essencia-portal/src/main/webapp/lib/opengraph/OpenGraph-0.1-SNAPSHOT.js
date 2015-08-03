@@ -4886,9 +4886,9 @@ window.Raphael.svg && function (R) {
 					"word-wrap: break-word"
 				].join(";") + ";";
 				*/
-				res.node.appendChild(div);				
-				res.attrs = {x: x, y: y, width: div.offsetWidth, height: div.offsetHeight};
-				$(el, res.attrs);
+                res.node.appendChild(div);
+                res.attrs = {x: x, y: y, width: div.offsetWidth, height: div.offsetHeight};
+                $(el, res.attrs);
 			}
 		}
 
