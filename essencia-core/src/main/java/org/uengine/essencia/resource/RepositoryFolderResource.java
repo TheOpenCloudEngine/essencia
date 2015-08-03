@@ -9,12 +9,7 @@ import java.io.File;
  */
 public class RepositoryFolderResource extends ContainerResource{
 
-    private static final String historyFile = "history.xml";
-
-    static{
-        FileUtil.createFolders(RepositoryFolderResource.getPracticesRepository());
-        FileUtil.createFolders(RepositoryFolderResource.getMethodsRepository());
-    }
+    private static final String historyFile = "repository.history";
 
     public RepositoryFolderResource() {
     }
@@ -25,18 +20,13 @@ public class RepositoryFolderResource extends ContainerResource{
     }
 
     public static String getHistoryPath() {
-        return Resource.getCodebase() + FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + historyFile;
+        return FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + historyFile;
     }
 
-    public static String getRepositoryFilePath(String resource, int revision){
-        return (resource.endsWith(ResourceType.PRACTICE_RESOURCE.getType())?getPracticesRepository():getMethodsRepository()) + resource + "." + revision + ResourceType.REVISION_RESOURCE.getType();
+    public static String getRepository(FolderResourceType folderResourceType){
+        return FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + folderResourceType.getName() + File.separator;
     }
 
-    public static String getPracticesRepository(){
-        return Resource.getCodebase() + FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + FolderResourceType.PRACTICE_FOLDER.getName() + File.separator;
-    }
 
-    public static String getMethodsRepository(){
-        return Resource.getCodebase() + FolderResourceType.REPOSITORY_FOLDER.getName() + File.separator + FolderResourceType.METHOD_FOLDER.getName() + File.separator;
-    }
+
 }
