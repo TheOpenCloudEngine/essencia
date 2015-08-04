@@ -1,6 +1,6 @@
 package org.uengine.essencia.modeling.editor;
 
-import org.uengine.essencia.resource.MethodResource;
+import org.uengine.modeling.resource.resources.MethodResource;
 import org.uengine.modeling.resource.IResource;
 
 

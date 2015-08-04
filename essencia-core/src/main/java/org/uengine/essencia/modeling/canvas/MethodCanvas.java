@@ -2,7 +2,6 @@ package org.uengine.essencia.modeling.canvas;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.Refresh;
@@ -11,6 +10,7 @@ import org.metaworks.ToAppend;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
+import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.BasicElement;
@@ -19,7 +19,8 @@ import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.model.view.PracticeView;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.essencia.repository.ObjectRepository;
-import org.uengine.essencia.resource.PracticeResource;
+import org.uengine.modeling.resource.ResourceManager;
+import org.uengine.modeling.resource.resources.PracticeResource;
 import org.uengine.essencia.resource.element.EssenciaElementResource;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
@@ -45,7 +46,6 @@ public class MethodCanvas extends EssenciaCanvas {
      * Practice Merge
      */
     public Object[] drop() {
-
         ElementView elementView = null;
 
         Object[] returnArr = initReturnArr();
@@ -132,7 +132,11 @@ public class MethodCanvas extends EssenciaCanvas {
             PracticeDefinition practice = null;
 
             try {
-                practice = (PracticeDefinition) ObjectRepository.getInstance().get(((PracticeResource) content).getPath());
+                ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+
+//                practice = (PracticeDefinition) ObjectRepository.getInstance().get(((PracticeResource) content).getPath());
+
+                practice = (PracticeDefinition)resourceManager.getStorage().getObject((PracticeResource)content);
 
                 reissueId(practice);
 

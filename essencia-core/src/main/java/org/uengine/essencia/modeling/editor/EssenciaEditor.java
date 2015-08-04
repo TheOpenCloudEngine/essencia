@@ -157,7 +157,6 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 
 		if(getItems().get(0) instanceof ComposerEditor){
-
 			/* Setting EssenceProcessDefinition */
 			{
 				ComposerEditor composerEditor = (ComposerEditor) getItems().get(0);
@@ -168,8 +167,6 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 				composerEditor.getModelResource().saveResource(practiceDefinition);
 				ContextUtil.setWhen((Resource) composerEditor.getResource(), EssenciaContext.WHEN_EDIT);
-
-
 
 				EssenciaProcessModeler processModeler = (EssenciaProcessModeler) processModelerEditor.getModeler();
 				MetaworksRemoteService.autowire(processModeler);
@@ -262,7 +259,11 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 	private void renameChildResource() {
 		for (Editor editor : getItems()) {
-			editor.getResource().rename(getResource().getDisplayName());
+			try {
+				editor.getResource().rename(getResource().getDisplayName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
