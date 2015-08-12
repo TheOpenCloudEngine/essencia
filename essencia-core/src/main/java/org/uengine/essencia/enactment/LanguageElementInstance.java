@@ -58,6 +58,9 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
 
     //only for serialization / deserialization
     public LanguageElementInstance(){
+
+
+
         //if(!DWR.inSerialization()) throw new IllegalStatusError('This constructor is only for DWR instantiation');
     }
 
@@ -109,24 +112,56 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
 
     @Override
     public void beforeSerialization() {
-        if(cachedMap==null) return;
+        if(cachedMap==null){
+            //create default values
+
+            if(attributeValues==null || attributeValues.size()==0) {
+                if (getLanguageElement().getAttributeList() != null) {
+                    cachedMap = new HashMap<String, Serializable>();
+
+                    for (Attribute property : getLanguageElement().getAttributeList()) {
+
+                        AttributeInstance defaultPropertyValue = null;
+                        try {
+                            defaultPropertyValue = property.createInstance();
+                        } catch (Exception e) {
+
+                        }
+
+                        if (defaultPropertyValue != null)
+                            setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
+                    }
+                }
+            }else{
+                return;
+            }
+        }
 
         List<AttributeInstance> values = new ArrayList<AttributeInstance>();
 
-        for(String key : cachedMap.keySet()){
-            AttributeInstance propertyValue = new AttributeInstance();
-            propertyValue.setName(key);
-            propertyValue.setValue(cachedMap.get(key));
+        if (getLanguageElement().getAttributeList() != null) {
+            for (Attribute property : getLanguageElement().getAttributeList()) {
+                AttributeInstance propertyValue = null;
 
-            values.add(propertyValue);
+                propertyValue = property.createInstance();
+                propertyValue.setName(property.getName());
+
+                if(cachedMap.containsKey(property.getName())) {
+                    propertyValue.setValue(cachedMap.get(property.getName()));
+
+                    values.add(propertyValue);
+                }
+            }
+
+            setAttributeValues(values);
         }
-
-        setAttributeValues(values);
     }
 
     @Override
     public void afterDeserialization() {
         if(cachedMap!=null) return;
+
+
 
         cachedMap = new HashMap<String, Serializable>();
 

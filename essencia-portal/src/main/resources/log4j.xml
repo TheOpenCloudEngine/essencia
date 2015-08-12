@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p %c{1} - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="dwrLogFile" class="org.apache.log4j.FileAppender">
+        <param name="File" value="C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps/dwr/log/dwrAccess.log"/>
+        <param name="Append" value="true"/>
+        <param name="Threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="otherFile" class="org.apache.log4j.FileAppender">
+        <param name="File" value="dwr/log/dwr.log"/>
+        <param name="Append" value="true"/>
+        <param name="Threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%c] %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- All application exceptions/errors will be written here -->
+    <category name="org.directwebremoting.log.accessLog">
+        <priority value="INFO"/>
+        <appender-ref ref="dwrLogFile" />
+    </category>
+
+    <!-- All DWR startup information will be written here -->
+    <category name="org.directwebremoting.log.startup">
+        <priority value="DEBUG"/>
+        <appender-ref ref="dwrLogFile" />
+    </category>
+
+    <!-- All DWR script information will be written here -->
+    <category name="org.directwebremoting.log.scripts">
+        <priority value="DEBUG"/>
+        <appender-ref ref="dwrLogFile" />
+    </category>
+
+    <!-- All DWR session information will be written here -->
+    <category name="org.directwebremoting.log.session">
+        <priority value="DEBUG"/>
+        <appender-ref ref="dwrLogFile" />
+    </category>
+
+    <!-- All other messages will be written here, including exceptions internal to DWR -->
+    <root>
+        <priority value="DEBUG" />
+        <appender-ref ref="otherFile" />
+    </root>
+
+</log4j:configuration>

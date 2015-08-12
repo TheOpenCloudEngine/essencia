@@ -37,6 +37,13 @@ public class ActivityCard extends BasicCard {
 
     protected void makeCard(BasicElement element) {
 
+        //TODO: costly
+        try {
+            element = (BasicElement) GlobalContext.deserialize(GlobalContext.serialize(element, String.class));
+        } catch (Exception e) {
+            throw new RuntimeException("Error when to clone Alpha element", e);
+        }
+
         setName(element.getName());
         String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<span>The activity is completed when:</span>";
         setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
@@ -71,7 +78,7 @@ public class ActivityCard extends BasicCard {
             getView().setElement(criterion.getState().getParentAlpha());
             getView().setId(String.valueOf(trcTag++));
 
-            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
+            ((BasicElement) getView().getElement()).setName(criterion.getName() + "(" + criterion.getState().getName()
                     + ")");
 
             getCanvas().getElementViewList().add(getView());
