@@ -3,6 +3,7 @@ package org.uengine.essencia.portal;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.uengine.codi.mw3.model.InstanceTooltip;
 import org.uengine.essencia.enactment.AlphaGameBoard;
@@ -11,6 +12,7 @@ import org.uengine.essencia.enactment.GameBoard;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.kernel.ProcessInstance;
 
+@Scope("prototype")
 @Component
 public class EssenciaInstanceTooltip extends InstanceTooltip{
     public EssenciaInstanceTooltip() throws Exception {
