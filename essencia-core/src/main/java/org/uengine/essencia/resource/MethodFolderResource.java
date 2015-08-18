@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.metaworks.Refresh;
 import org.metaworks.annotation.*;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.designer.Designer;
@@ -60,7 +60,7 @@ public class MethodFolderResource extends ContainerResource {
 
 		List<IResource> methodResourceList = new ArrayList<>();
 		try {
-			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			List<IResource> resourceList = resourceManager.getStorage().listFiles(this);
 
 			for(IResource resource : resourceList){

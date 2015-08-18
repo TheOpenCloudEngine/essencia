@@ -5,7 +5,7 @@ package org.uengine.essencia.common;
  */
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Face;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.modeling.resource.DefaultResource;
@@ -47,7 +47,7 @@ public class CommitHistory {
     public static CommitHistory load() {
         CommitHistory history = null;
         try {
-            ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+            ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
             history = (CommitHistory) resourceManager.getStorage().getObject(
                     DefaultResource.createResource(RepositoryFolderResource.getHistoryPath()));
         } catch (Exception e) {

@@ -22,11 +22,11 @@ import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Name;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Clipboard;
 import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.uengine.ConfirmPanel;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.designer.ResourceNavigator;
 import org.uengine.essencia.util.ContextUtil;
@@ -233,7 +233,7 @@ public class Resource implements IResource, Comparable<IResource> {
 
 	public Object delete() {
 		try {
-			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			resourceManager.getStorage().delete(this);
 		} catch (Exception e) {
 			return null;
@@ -390,7 +390,7 @@ public class Resource implements IResource, Comparable<IResource> {
 
 	 */
 	public static void saveToStorage(IResource resource, Object object) throws Exception {
-		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+		ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 		resourceManager.getStorage().save(resource, object);
 	}
 

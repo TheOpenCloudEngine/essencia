@@ -6,8 +6,8 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.resource.FolderResourceType;
@@ -45,27 +45,27 @@ public class MethodResource extends ModelResource {
 		ContextUtil.fillContext(resource, getMetaworksContext());
 		return resource;
 	}
-
-	@Face(displayName = "deploy")
-	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
-	@ServiceMethod(callByContent = true, inContextMenu = true, target = ServiceMethodContext.TARGET_APPEND)
-	public ModalWindow deploy() throws Exception {
-		DeployPanel deployPanel = new DeployPanel(this);
-		ModalWindow modalWindow = new ModalWindow();
-		deployPanel.setMetaworksContext(new MetaworksContext());
-		deployPanel.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
-		
-		modalWindow.setPanel(deployPanel);
-		modalWindow.setWidth(300);
-		modalWindow.setHeight(300);
-		modalWindow.setTitle("Deploy...");
-		return modalWindow;
-	}
+//
+//	@Face(displayName = "deploy")
+//	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
+//	@ServiceMethod(callByContent = true, inContextMenu = true, target = ServiceMethodContext.TARGET_APPEND)
+//	public ModalWindow deploy() throws Exception {
+//		DeployPanel deployPanel = new DeployPanel(this);
+//		ModalWindow modalWindow = new ModalWindow();
+//		deployPanel.setMetaworksContext(new MetaworksContext());
+//		deployPanel.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+//
+//		modalWindow.setPanel(deployPanel);
+//		modalWindow.setWidth(300);
+//		modalWindow.setHeight(300);
+//		modalWindow.setTitle("Deploy...");
+//		return modalWindow;
+//	}
 
 	@Override
 	public Object delete() {
 		try {
-			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			resourceManager.getStorage().delete(this);
 			ProcessResource processResource = new ProcessResource();
 			processResource.setPath(this.getPath().replace(ResourceType.METHOD_RESOURCE.getType(),
@@ -82,7 +82,7 @@ public class MethodResource extends ModelResource {
 	public void commit() throws Exception {
 		super.commit();
 
-		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+		ResourceManager resourceManager =MetaworksRemoteService.getComponent(ResourceManager.class);
 
 		resourceManager.getStorage().copy(this, RepositoryFolderResource.getRepository(FolderResourceType.METHOD_FOLDER)
 				+ getRecord().getResources()

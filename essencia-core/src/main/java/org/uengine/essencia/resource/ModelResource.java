@@ -16,10 +16,10 @@ import org.metaworks.annotation.Field;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Clipboard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.essencia.IUser;
 import org.uengine.essencia.Session;
 import org.uengine.essencia.common.*;
@@ -149,7 +149,7 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	@Override
 	public IModel loadModel() throws Exception {
 		try {
-			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			IModel model =  (IModel)resourceManager.getStorage().getObject(this);
 
 			return model;

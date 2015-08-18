@@ -15,11 +15,11 @@ import org.metaworks.component.SelectBox;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.codi.CodiProcessDefinitionFactory;
 import org.uengine.codi.mw3.model.ProcessDefinition;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.resource.FolderResourceType;
+import org.uengine.kernel.ProcessDefinitionFactory;
 import org.uengine.modeling.resource.DefaultResource;
 import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.ResourceManager;
@@ -91,31 +91,6 @@ public class DeployPanel {
         this.metaworksContext = metaworksContext;
     }
 
-
-    @ServiceMethod(callByContent = true)
-    public void deploy() {
-        String processResource = RepositoryFolderResource.getRepository(FolderResourceType.METHOD_FOLDER) + selectBox.getSelected();
-        try(OutputStream out = org.uengine.codi.mw3.resource.ResourceManager.
-                getTenantResourceAsOutputStream("codi", getResource().getProcessResource().getName())) {
-
-            IResource resource = DefaultResource.createResource(processResource);
-            ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
-            Object object = resourceManager.getStorage().getObject(resource);
-
-            Serializer.serialize(object, out);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            MetaworksRemoteService.wrapReturn(new Remover(new ModalWindow()));
-        }
-
-        String processId = getResource().getName();
-        if(processId.endsWith(".method")){
-            processId = processId.substring(0, processId.indexOf(".")) + ".process";
-        }
-
-        CodiProcessDefinitionFactory.getInstance(new DummyProcessTransactionContext(null)).removeFromCache(getResource().getName());
-    }
 
     class DummyProcessTransactionContext extends ProcessTransactionContext{
 

@@ -1,6 +1,6 @@
 package org.uengine.modeling.resource.resources;
 
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.PracticeDefinerEditor;
 import org.uengine.essencia.resource.FolderResourceType;
@@ -31,7 +31,7 @@ public class PracticeResource extends ModelResource {
 	public void commit() throws Exception {
 		super.commit();
 
-		ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+		ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 
 		resourceManager.getStorage().copy(this, RepositoryFolderResource.getRepository(FolderResourceType.PRACTICE_FOLDER)
 				+ getRecord().getResources()

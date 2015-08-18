@@ -13,8 +13,8 @@ import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.dashboard.Dashboard;
@@ -62,7 +62,7 @@ public class PracticeFolderResource extends ContainerResource {
 	public List<IResource> list() {
 		List<IResource> resourceList = new ArrayList<>();
 		try {
-			ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			resourceList = resourceManager.getStorage().listFiles(this);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();

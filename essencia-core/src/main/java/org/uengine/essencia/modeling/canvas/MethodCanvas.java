@@ -10,7 +10,7 @@ import org.metaworks.ToAppend;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
-import org.uengine.bean.factory.MetaworksSpringBeanFactory;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.BasicElement;
@@ -132,7 +132,7 @@ public class MethodCanvas extends EssenciaCanvas {
             PracticeDefinition practice = null;
 
             try {
-                ResourceManager resourceManager = MetaworksSpringBeanFactory.getBean(ResourceManager.class);
+                ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 
 //                practice = (PracticeDefinition) ObjectRepository.getInstance().get(((PracticeResource) content).getPath());
 
