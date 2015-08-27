@@ -60,10 +60,16 @@ public class PracticeFolderResource extends ContainerResource {
 
 	@Override
 	public List<IResource> list() {
-		List<IResource> resourceList = new ArrayList<>();
+
+		List<IResource> methodResourceList = new ArrayList<>();
 		try {
 			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
-			resourceList = resourceManager.getStorage().listFiles(this);
+			List<IResource> resourceList = resourceManager.getStorage().listFiles(this);
+
+			for(IResource resource : resourceList){
+				ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
+				methodResourceList.add(resource);
+			}
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -72,36 +78,7 @@ public class PracticeFolderResource extends ContainerResource {
 			e.printStackTrace();
 		}
 
-		return resourceList;
-//		File currentFile = new File(this.getAbsolutePath());
-//		File[] fileList = currentFile.listFiles();
-//
-//		if (fileList == null) {
-//			return new ArrayList<IResource>();
-//		} else {
-//			List<IResource> list = new ArrayList<IResource>();
-//			for (File file : fileList) {
-//				if (file.isDirectory()) {
-//
-//					IResource resource = (IResource) Resource.newPracticeFolderResource(file);
-//					ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
-//					resource.setParent(this);
-//
-//					list.add(resource);
-//				} else {
-//					for (ResourceType resourceType : FolderResourceType.PRACTICE_FOLDER.getDisplayResources()) {
-//						if (file.getAbsolutePath().endsWith(resourceType.getType())) {
-//							IResource resource = (IResource) Resource.newInstance(file);
-//							ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
-//							resource.setParent(this);
-//
-//							list.add(resource);
-//						}
-//					}
-//				}
-//			}
-//			return orderByName(list);
-//		}
+		return methodResourceList;
 
 	}
 

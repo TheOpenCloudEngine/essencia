@@ -66,6 +66,7 @@ public class MethodFolderResource extends ContainerResource {
 			for(IResource resource : resourceList){
 				for(ResourceType resourceType : FolderResourceType.METHOD_FOLDER.getDisplayResources()){
 					if(resource.getType().equals(resourceType.getType().substring(1))){
+						ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
 						methodResourceList.add(resource);
 					}
 				}
@@ -79,35 +80,6 @@ public class MethodFolderResource extends ContainerResource {
 		}
 
 		return methodResourceList;
-		/*File currentFile = new File(this.getAbsolutePath());
-		File[] fileList = currentFile.listFiles();
-
-		if (fileList == null){
-			return new ArrayList<IResource>();
-		} else {
-			List<IResource> list = new ArrayList<IResource>();
-			for (File file : fileList) {
-				if(file.isDirectory()){
-
-					IResource resource = (IResource) Resource.newMethodFolderResource(file);
-					ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
-					resource.setParent(this);
-
-					list.add(resource);
-				} else {
-					for(ResourceType resourceType : FolderResourceType.METHOD_FOLDER.getDisplayResources()){
-						if(file.getAbsolutePath().endsWith(resourceType.getType())){
-							IResource resource = (IResource) Resource.newInstance(file);
-							ContextUtil.setWhere(resource, this.getMetaworksContext().getWhere());
-							resource.setParent(this);
-
-							list.add(resource);
-						}
-					}
-				}
-			}
-			return orderByName(list);
-		}*/
 	}
 	
 	@Override

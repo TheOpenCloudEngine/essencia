@@ -1,42 +1,30 @@
 package org.uengine.essencia.resource;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.metaworks.EventContext;
 import org.metaworks.Refresh;
+import org.metaworks.Remover;
 import org.metaworks.ServiceMethodContext;
-import org.metaworks.annotation.AutowiredFromClient;
-import org.metaworks.annotation.Available;
-import org.metaworks.annotation.Children;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Field;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Order;
-import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Clipboard;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.metaworks.widget.Popup;
 import org.uengine.essencia.IUser;
 import org.uengine.essencia.Session;
 import org.uengine.essencia.common.*;
 import org.uengine.essencia.designer.EditorPanel;
+import org.uengine.essencia.marketplace.MarketplaceResource;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
 import org.uengine.essencia.modeling.editor.Editor;
-import org.uengine.essencia.repository.ObjectRepository;
 import org.uengine.essencia.resource.element.CompetenciesResource;
 import org.uengine.essencia.resource.element.EssenciaResource;
 import org.uengine.essencia.resource.element.ThingsToDoResource;
 import org.uengine.essencia.resource.element.ThingsToWorkResource;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.resource.ResourceManager;
-import org.uengine.modeling.resource.Storage;
-import org.uengine.modeling.resource.resources.HistoryResource;
-import org.uengine.modeling.resource.resources.RevResource;
-import org.uengine.util.FileUtil;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class ModelResource extends Resource implements IModelResource, Lockable, Commitable {
 	
@@ -48,6 +36,9 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 
 	@AutowiredFromClient
 	public org.uengine.codi.mw3.model.Session session;
+
+	@AutowiredFromClient
+	public MarketplaceResource marketplaceResource;
 
 	private boolean locked;
 
@@ -115,6 +106,13 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 		editorPanel.setEditor(createEditor());
 		
 		return new Refresh(editorPanel);
+	}
+
+	@Available(condition = "metaworksContext.where == 'marketplaceNavigator'")
+	@ServiceMethod(callByContent = true, except = "children", eventBinding=EventContext.EVENT_DBLCLICK, target=ServiceMethodContext.TARGET_APPEND)
+	public void selectResource() {
+		marketplaceResource.setModelResource(this);
+		MetaworksRemoteService.wrapReturn(new Refresh(marketplaceResource), new Remover(new Popup()));
 	}
 
 	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
@@ -188,13 +186,13 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 		this.locked = false;
 	}
 
-	@Available(condition="!locked")
+	@Available(condition="!locked && metaworksContext.where != 'marketplaceNavigator'")
 	@ServiceMethod(callByContent=true, inContextMenu=true)
 	public void checkOut() throws Exception {
 		this.lock(essenciaSession.getUser());
 	}
 
-	@Available(condition = "locked")
+	@Available(condition = "locked && metaworksContext.where != 'marketplaceNavigator'")
 	@ServiceMethod(callByContent = true, inContextMenu = true)
 	public void checkIn() throws Exception {
 		this.unlock(essenciaSession.getUser());

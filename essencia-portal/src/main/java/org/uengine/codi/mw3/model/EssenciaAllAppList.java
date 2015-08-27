@@ -6,6 +6,7 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.ToEvent;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
+import org.uengine.codi.mw3.marketplace.Marketplace;
 import org.uengine.essencia.Essencia;
 import org.uengine.essencia.Loader;
 
@@ -30,5 +31,13 @@ public class EssenciaAllAppList extends AllAppList {
 
         topPanel.setTopCenterTitle("$AppList.Essencia");
         return new Object[]{new Refresh(application), new Refresh(topPanel), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
+    }
+
+    @ServiceMethod(target = ServiceMethodContext.TARGET_APPEND)
+    public Object[] goMarketplace() throws Exception {
+        Marketplace essenciaMarketplace = new Marketplace(session);
+
+        topPanel.setTopCenterTitle("$AppList.Marketplace");
+        return new Object[]{new Refresh(essenciaMarketplace), new Refresh(topPanel), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
     }
 }
