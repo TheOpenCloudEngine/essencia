@@ -221,6 +221,7 @@ public class Resource implements IResource, Comparable<IResource> {
 
 	@Order(11)
 	@Face(displayName = "delete")
+	@Available(condition = "metaworksContext.where != 'marketplaceNavigator'")
 	@ServiceMethod(callByContent = true, inContextMenu = true, target = ServiceMethodContext.TARGET_POPUP)
 	public Object confirmDelete() throws Exception {
 		ContextUtil.setHow(this, HOW_DELETE);
@@ -258,7 +259,7 @@ public class Resource implements IResource, Comparable<IResource> {
 	
 	@Available(condition="metaworksContext.how == 'tree' && metaworksContext.where == 'explorer'")
 	@ServiceMethod(callByContent=true, eventBinding="mousedown", target=ServiceMethodContext.TARGET_STICK)
-	public Object select(){
+	public Refresh select(){
 		return new Refresh(new Clipboard(ResourceNavigator.NAVIGATOR_ID, this));
 	}
 
