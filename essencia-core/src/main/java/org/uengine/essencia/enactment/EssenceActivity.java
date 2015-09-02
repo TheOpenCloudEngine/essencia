@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class EssenceActivity extends HumanActivity implements NeedArrangementToSerialize {
+public class EssenceActivity extends HumanActivity {
 
     private org.uengine.essencia.model.Activity activityInEssenceDefinition;
         @Hidden
@@ -194,21 +194,6 @@ public class EssenceActivity extends HumanActivity implements NeedArrangementToS
         super.fireComplete(instance);
     }
 
-    @Override
-    public void beforeSerialization() {
 
-        if(getParameters()!=null)
-        for(ParameterContext parameterContext : getParameters()){
-            if(parameterContext.getVariable()!=null){
-                parameterContext.getVariable().setName(parameterContext.getArgument().getText());
-                ProcessVariable realPV = getProcessDefinition().getProcessVariable(parameterContext.getVariable().getName());
-                parameterContext.setVariable(realPV);
-            }
-        }
-    }
 
-    @Override
-    public void afterDeserialization() {
-
-    }
 }
