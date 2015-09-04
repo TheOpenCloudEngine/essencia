@@ -21482,8 +21482,15 @@ OG.handler.EventHandler.prototype = {
 
 					// group target 이 있는 경우 grouping 처리
 					if (groupTarget && OG.Util.isElement(groupTarget)) {
-						// grouping
-						//me._RENDERER.addToGroup(groupTarget, eleArray);
+						if(groupTarget.shape instanceof OG.shape.bpmn.A_Task){
+                            // grouping
+                            for(i=0; i<eleArray.length; i++){
+                                if(eleArray[i].shape instanceof OG.shape.bpmn.E_Start_Timer) {
+                                    groupTarget.appendChild(eleArray[i]);
+                                }
+                            }
+                            //me._RENDERER.addToGroup(groupTarget, eleArray);
+                        }
 						var i, elements=[], count=0, totalHeight=0, right=0, lower=0, titleSize;
 						
 						if(groupTarget.shape.geom.style.map['title-size'])
@@ -25699,7 +25706,7 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
 			EDGE_HIDDEN   : { stroke: "white", fill: "none", "fill-opacity": 0, "stroke-width": 10, "stroke-opacity": 0, cursor: "pointer"},
 			GROUP         : { stroke: "black", fill: "none", "fill-opacity": 0, "label-position": "bottom", "text-anchor": "middle", "vertical-align": "top" },
 			GROUP_HIDDEN  : { stroke: "black", fill: "white", "fill-opacity" :0 , "stroke-opacity": 0 , cursor: "move" },
-			GROUP_SHADOW  : { stroke: "white", fill: "none", "fill-opacity": 0, "stroke-width": 25, "stroke-opacity": 0, cursor: "pointer"},
+			GROUP_SHADOW  : { stroke: "white", fill: "none", "fill-opacity": 0, "stroke-width": 15, "stroke-opacity": 0, cursor: "pointer"},
 			GROUP_SHADOW_MAPPER  : { stroke: "white", fill: "none", "fill-opacity": 0, "stroke-width": 1, "stroke-opacity": 0, cursor: "pointer"},
 			GUIDE_BBOX    : { stroke: "#00FF00", fill: "white", "fill-opacity" :0, "stroke-dasharray": "- ", "shape-rendering": "crispEdges" , cursor: "move"},
 			GUIDE_UL      : { stroke: "#03689a", fill: "#03689a", "fill-opacity" :0.5, cursor: "nwse-resize", "shape-rendering": "crispEdges" },
