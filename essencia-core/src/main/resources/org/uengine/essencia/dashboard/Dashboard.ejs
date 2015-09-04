@@ -186,7 +186,56 @@ function monthDiff(d1, d2) {
 				              <div class="alpha-title">Stakeholders</div>
 				              <div id="alpha-1" class="alpha">
 				                <div id="state-0"></div>
-				                <% var stakeholder = value.alphas[0] %>
+				                <%
+								value.alphas = [{
+									states: {
+										states: ["Recognized", "Represented", "Involved"
+											, "In Agreement", "Satisified for Deployment", "Satisfied in Use"]
+									}
+								},
+									{
+										states: {
+											states: ["Conceived", "Bounded", "Coherent", "Acceptable"
+												, "Addressed", "Fulfilled"]
+										}
+									}
+									,
+									{
+										states: {
+											states: ["Identified", "Solution Needed", "Value Established",
+												"Viable", "Addressed", "Benefit Accrued"]
+										}
+									}
+									,
+									{
+										states: {
+											states: ["Architecture Selected", "Demonstrable", "Usable", "Ready"
+												, "Operational", "Retired"]
+										}
+									}
+									,
+									{
+										states: {
+											states: ["Seeded", "Formed", "Collaborating", "Performing", "Adjourned"]
+										}
+									}
+									,
+									{
+										states: {
+											states: ["Initiated", "Prepared", "Started", "Under Control", "Concluded", "Closed"]
+										}
+									}
+									,
+									{
+										states: {
+											states: ["Principles Established", "Foundation Established", "In Use", "In Place"
+												, "Working well", "Retired"]
+										}
+									}
+								];
+								var stakeholder = value.alphas[0]
+
+								%>
 				                 <% console.log(stakeholder); %>
 				                <% console.log(stakeholder.states); %>
 				                <% for(idx in stakeholder.states){ %>
@@ -197,7 +246,16 @@ function monthDiff(d1, d2) {
 				                <div id="state-7"></div>
 				              </div>
 				            </div>
-				            <div class="alpha-cover">
+							  <div id = "alpha" class="alpha">
+								  <% for(var i = 0; i < value.alphas.length-1; i++) { %>
+								  <div id="state-1" class="state" data-toggle="tooltip" title="2015-01-21"
+									   style='position:relative;  top:-42px;  cursor:pointer; cursor:hand; 'onmousedown='startDrag(event, this)'>
+
+									  <%=value.alphas[0].states.states[i]%></div>
+
+								  <% } %>
+							  </div>
+				            <!--<div class="alpha-cover">
 				              <div class="alpha-title">Opportunity</div>
 				              <div class="alpha">
 				                <div id="state-0"></div>
@@ -209,12 +267,11 @@ function monthDiff(d1, d2) {
 				                <% } %>
 				                <div id="state-7"></div>
 				              </div>
-				            </div>
+				            </div>-->
 				          </div>
 				        </div>
-
 				      </td>
-				      <td>
+				      <!--<td>
 
 				        <div class="concern-cover-2">
 				          <div class="concern-header">Solution</div>
@@ -296,7 +353,7 @@ function monthDiff(d1, d2) {
 				          </div>
 				        </div>
 
-				      </td>
+				      </td>-->
 				    </tr>
 				    </tbody>
 				  </table>
