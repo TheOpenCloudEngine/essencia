@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <style>
 
   .concern-cover-2 {
@@ -116,8 +117,61 @@ function monthDiff(d1, d2) {
     return months <= 0 ? 0 : months;
 }
 
+$('[data-toggle="tooltip"]').tooltip();
+
 
 </script>
+<%
+value.alphas = [{
+	states: {
+		states: ["Recognized", "Represented", "Involved"
+			, "In Agreement", "Satisified for Deployment", "Satisfied in Use"]
+	}
+},
+	{
+		states: {
+			states: ["Conceived", "Bounded", "Coherent", "Acceptable"
+				, "Addressed", "Fulfilled"]
+		}
+	}
+	,
+	{
+		states: {
+			states: ["Identified", "Solution Needed", "Value Established",
+				"Viable", "Addressed", "Benefit Accrued"]
+		}
+	}
+	,
+	{
+		states: {
+			states: ["Architecture Selected", "Demonstrable", "Usable", "Ready"
+				, "Operational", "Retired"]
+		}
+	}
+	,
+	{
+		states: {
+			states: ["Seeded", "Formed", "Collaborating", "Performing", "Adjourned"]
+		}
+	}
+	,
+	{
+		states: {
+			states: ["Initiated", "Prepared", "Started", "Under Control", "Concluded", "Closed"]
+		}
+	}
+	,
+	{
+		states: {
+			states: ["Principles Established", "Foundation Established", "In Use", "In Place"
+				, "Working well", "Retired"]
+		}
+	}
+
+
+];
+
+%>
 <!--
    <div>
   		<button>Planning</button>
@@ -168,200 +222,311 @@ function monthDiff(d1, d2) {
 
 				<div style="margin:auto;position:absolute;z-index:199;">
 				  <table cellpadding="5">
-				    <thead>
-				    <tr>
-				      <td></td>
-				      <td></td>
-				      <td></td>
-				    </tr>
-				    </thead>
-				    <tbody>
-				    <tr>
-				      <td>
 
-				        <div class="concern-cover-2">
-				          <div class="concern-header">Customer</div>
-				          <div class="concern-body">
-				            <div class="alpha-cover">
-				              <div class="alpha-title">Stakeholders</div>
-				              <div id="alpha-1" class="alpha">
-				                <div id="state-0"></div>
-				                <%
-								value.alphas = [{
-									states: {
-										states: ["Recognized", "Represented", "Involved"
-											, "In Agreement", "Satisified for Deployment", "Satisfied in Use"]
-									}
-								},
-									{
-										states: {
-											states: ["Conceived", "Bounded", "Coherent", "Acceptable"
-												, "Addressed", "Fulfilled"]
-										}
-									}
-									,
-									{
-										states: {
-											states: ["Identified", "Solution Needed", "Value Established",
-												"Viable", "Addressed", "Benefit Accrued"]
-										}
-									}
-									,
-									{
-										states: {
-											states: ["Architecture Selected", "Demonstrable", "Usable", "Ready"
-												, "Operational", "Retired"]
-										}
-									}
-									,
-									{
-										states: {
-											states: ["Seeded", "Formed", "Collaborating", "Performing", "Adjourned"]
-										}
-									}
-									,
-									{
-										states: {
-											states: ["Initiated", "Prepared", "Started", "Under Control", "Concluded", "Closed"]
-										}
-									}
-									,
-									{
-										states: {
-											states: ["Principles Established", "Foundation Established", "In Use", "In Place"
-												, "Working well", "Retired"]
-										}
-									}
-								];
-								var stakeholder = value.alphas[0]
 
-								%>
-				                 <% console.log(stakeholder); %>
-				                <% console.log(stakeholder.states); %>
-				                <% for(idx in stakeholder.states){ %>
-				                <div id="alpha-1-state-<%= idx %>" index="<%= idx %>" alapha-index="0" class="state" onclick="" data-toggle="tooltip"
-				                     onmouseover="$(this).tooltip('show')"
-				                     title="2015-01-21" plan-date="2015-01-21"><%= (stakeholder.states[idx].name) %></div>
-				                <% } %>
-				                <div id="state-7"></div>
-				              </div>
-				            </div>
-							  <div id = "alpha" class="alpha">
-								  <% for(var i = 0; i < value.alphas.length-1; i++) { %>
-								  <div id="state-1" class="state" data-toggle="tooltip" title="2015-01-21"
-									   style='position:relative;  top:-42px;  cursor:pointer; cursor:hand; 'onmousedown='startDrag(event, this)'>
 
-									  <%=value.alphas[0].states.states[i]%></div>
+					  <tr>
 
-								  <% } %>
+						  <td>
+							  <div class="concern-cover-2">
+								  <div class="concern-header">Customer</div>
+								  <div class="concern-body">
+									  <div class="alpha-cover">
+										  <div class="alpha-title">Stakeholders</div>
+										  <div class = "alpha">
+
+											  <div id="state-range-1-1">
+												  <div id="state-1-1" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative;cursor:pointer; cursor:hand; '>
+													  <%=value.alphas[0].states.states[0]%></div>
+												  `   </div>
+
+											  <div id="state-range-1-2">
+												  <div id="state-1-2" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative; cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[0].states.states[1]%></div>
+											  </div>
+
+											  <div id="state-range-1-3">
+												  <div id="state-1-3" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative;  cursor:pointer; cursor:hand; top:24px'>
+													  <%=value.alphas[0].states.states[2]%></div>
+											  </div>
+
+											  <div id="state-range-1-4">
+												  <div id="state-1-4" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative;  cursor:pointer; cursor:hand; top:33px'>
+													  <%=value.alphas[0].states.states[3]%></div>
+											  </div>
+
+											  <div id="state-range-1-5">
+												  <div id="state-1-5" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative; cursor:pointer; cursor:hand; top:-3px'>
+													  <%=value.alphas[0].states.states[4]%></div>
+											  </div>
+
+											  <div id="state-range-1-6">
+												  <div id="state-1-6" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative;  cursor:pointer; cursor:hand; top:20px'>
+													  <%=value.alphas[0].states.states[5]%></div>
+											  </div>
+
+										  </div>
+									  </div>
+									  <div class="alpha-cover">
+										  <div class="alpha-title">Opportunity</div>
+										  <div id="alpha-2" class="alpha">
+												  <div id="state-2-1" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative; cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[1].states.states[0]%></div>
+												  <div id="state-2-2" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative; cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[1].states.states[1]%></div>
+										  <div id="state-2-3" class="state" data-toggle="tooltip" title="2015-01-21"
+											   style='position:relative;   cursor:pointer; cursor:hand;'>
+											  <%=value.alphas[1].states.states[2]%></div>
+										  <div id="state-2-4" class="state" data-toggle="tooltip" title="2015-01-21"
+											   style='position:relative;   cursor:pointer; cursor:hand;'>
+											  <%=value.alphas[1].states.states[3]%></div>
+										  <div id="state-2-5" class="state" data-toggle="tooltip" title="2015-01-21"
+											   style='position:relative;  top:-42px; margin-top: 10px; cursor:pointer; cursor:hand;'>
+											  <%=value.alphas[1].states.states[4]%></div>
+										  <div id="state-2-6" class="state" data-toggle="tooltip" title="2015-01-21"
+											   style='position:relative;   cursor:pointer; cursor:hand;'>
+											  <%=value.alphas[1].states.states[5]%></div>
+										  </div>
+									  </div>
+								  </div>
 							  </div>
-				            <!--<div class="alpha-cover">
-				              <div class="alpha-title">Opportunity</div>
-				              <div class="alpha">
-				                <div id="state-0"></div>
-				                <% var stakeholder = value.alphas[1] %>
-				                <% console.log(stakeholder.states); %>
-				                <% for(idx in stakeholder.states){ %>
-				                <div id="alpha-2-state-<%= idx %>" index="<%= idx %>"
-				                     class="state"><%= (stakeholder.states[idx].name) %></div>
-				                <% } %>
-				                <div id="state-7"></div>
-				              </div>
-				            </div>-->
-				          </div>
-				        </div>
-				      </td>
-				      <!--<td>
+						  </td>
 
-				        <div class="concern-cover-2">
-				          <div class="concern-header">Solution</div>
-				          <div class="concern-body">
-				            <div class="alpha-cover">
-				              <div class="alpha-title">Requirements</div>
-				              <div class="alpha">
-				                <div id="state-0"></div>
-				                <% var stakeholder = value.alphas[2] %>
-				                <% console.log(stakeholder.states); %>
-				                <% for(idx in stakeholder.states){ %>
-				                <div id="alpha-3-state-<%= idx %>" index="<%= idx %>"
-				                     class="state"><%= (stakeholder.states[idx].name) %></div>
-				                <% } %>
-				                <div id="state-7"></div>
-				              </div>
-				            </div>
-				            <div class="alpha-cover">
-				              <div class="alpha-title">Software System</div>
-				              <div class="alpha">
-				                <div id="state-0"></div>
-				                <% var stakeholder = value.alphas[3] %>
-				                <% console.log(stakeholder.states); %>
-				                <% for(idx in stakeholder.states){ %>
-				                <div id="alpha-4-state-<%= idx %>" index="<%= idx %>"
-				                     class="state"><%= (stakeholder.states[idx].name) %></div>
-				                <% } %>
-				                <div id="state-7"></div>
-				              </div>
-				            </div>
-				          </div>
-				        </div>
+						  <td>
+							  <div class="concern-cover-2">
+								  <div class="concern-header">Solution</div>
+								  <div class="concern-body">
+									  <div class="alpha-cover">
+										  <div class="alpha-title">Requirements</div>
+										  <div class="alpha">
+											  <div id="state-3-1" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-45px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[2].states.states[0]%></div>
+											  <div id="state-3-2" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[2].states.states[1]%></div>
+											  <div id="state-3-3" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 10px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[2].states.states[2]%></div>
+											  <div id="state-3-4" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 30px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[2].states.states[3]%></div>
+											  <div id="state-3-5" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 50px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[2].states.states[4]%></div>
+											  <div id="state-3-6" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 55px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[2].states.states[5]%></div>
+										  </div>
+									  </div>
+									  <div class="alpha-cover">
+										  <div class="alpha-title">Software System</div>
+										  <div class="alpha">
+											  <div id="state-4-1" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-45px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[3].states.states[0]%></div>
+											  <div id="state-4-2" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[3].states.states[1]%></div>
+											  <div id="state-4-3" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 30px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[3].states.states[2]%></div>
+											  <div id="state-4-4" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 10px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[3].states.states[3]%></div>
+											  <div id="state-4-5" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 20px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[3].states.states[4]%></div>
+											  <div id="state-4-6" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 90px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[3].states.states[5]%></div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </td>
 
-				      </td>
-				      <td>
+						  <td>
+							  <div class="concern-cover-3">
+								  <div class="concern-header">Endeavour</div>
+								  <div class="concern-body">
+									  <div class="alpha-cover">
+										  <div class="alpha-title">Work</div>
+										  <div class="alpha">
+											  <div id="state-5-1" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-45px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[4].states.states[0]%></div>
+											  <div id="state-5-2" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-60px; margin-top: 70px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[4].states.states[1]%></div>
+											  <div id="state-5-3" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 22px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[4].states.states[2]%></div>
+											  <div id="state-5-4" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 20px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[4].states.states[3]%></div>
+											  <div id="state-5-5" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 50px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[4].states.states[4]%></div>
+										  </div>
+									  </div>
+									  <div class="alpha-cover">
+										  <div class="alpha-title">Team</div>
+										  <div class="alpha">
+											  <div id="state-range-6-1">
+												  <div id="state-6-1" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative  cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[5].states.states[0]%></div>
+											  </div>
 
-				        <div class="concern-cover-3">
-				          <div class="concern-header">Endeavour</div>
-				          <div class="concern-body">
-				            <div class="alpha-cover">
-				              <div class="alpha-title">Work</div>
-				              <div class="alpha">
-				                <div id="state-0"></div>
-				                <% var stakeholder = value.alphas[4] %>
-				                <% console.log(stakeholder.states); %>
-				                <% for(idx in stakeholder.states){ %>
-				                <div id="alpha-5-state-<%= idx %>" index="<%= idx %>"
-				                     class="state"><%= (stakeholder.states[idx].name) %></div>
-				                <% } %>
-				                <div id="state-7"></div>
-				              </div>
-				            </div>
-				            <div class="alpha-cover">
-				              <div class="alpha-title">Team</div>
-				              <div class="alpha">
-				                <div id="state-0"></div>
-				                <% var stakeholder = value.alphas[5] %>
-				                <% console.log(stakeholder.states); %>
-				                <% for(idx in stakeholder.states){ %>
-				                <div id="alpha-6-state-<%= idx %>" index="<%= idx %>"
-				                     class="state"><%= (stakeholder.states[idx].name) %></div>
-				                <% } %>
-				                <div id="state-7"></div>
-				              </div>
-				            </div>
-				            <div class="alpha-cover">
-				              <div class="alpha-title">Way-of-Working</div>
-				              <div class="alpha">
-				                <div id="state-0"></div>
-				                <% var stakeholder = value.alphas[6] %>
-				                <% console.log(stakeholder.states); %>
-				                <% for(idx in stakeholder.states){ %>
-				                <div id="alpha-7-state-<%= idx %>" index="<%= idx %>"
-				                     class="state"><%= (stakeholder.states[idx].name) %></div>
-				                <% } %>
-				                <div id="state-7"></div>
-				              </div>
-				            </div>
-				          </div>
-				        </div>
+											  <div id="state-range-6-2">
+												  <div id="state-6-2" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative;  cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[5].states.states[1]%></div>
+											  </div>
 
-				      </td>-->
-				    </tr>
-				    </tbody>
+											  <div id="state-range-6-3">
+												  <div id="state-6-3" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative; cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[5].states.states[2]%></div>
+											  </div>
+
+
+											  <div id="state-range-6-4">
+												  <div id="state-6-4" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative; cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[5].states.states[3]%></div>
+											  </div>
+
+											  <div id="state-range-6-5">
+												  <div id="state-6-5" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative;  cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[5].states.states[4]%></div>
+											  </div>
+
+											  <div id="state-range-6-6">
+												  <div id="state-6-6" class="state" data-toggle="tooltip" title="2015-01-21"
+													   style='position:relative;   cursor:pointer; cursor:hand;'>
+													  <%=value.alphas[5].states.states[5]%></div>
+											  </div>
+										  </div>
+									  </div>
+									  <div class="alpha-cover">
+										  <div class="alpha-title">Way-of-Working</div>
+										  <div class="alpha">
+											  <div id="state-7-1" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-45px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[6].states.states[0]%></div>
+											  <div id="state-7-2" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top:60px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[6].states.states[1]%></div>
+											  <div id="state-7-3" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 15px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[6].states.states[2]%></div>
+											  <div id="state-7-4" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px;  cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[6].states.states[3]%></div>
+											  <div id="state-7-5" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 60px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[6].states.states[4]%></div>
+											  <div id="state-7-6" class="state" data-toggle="tooltip" title="2015-01-21"
+												   style='position:relative;  top:-42px; margin-top: 15px; cursor:pointer; cursor:hand;'>
+												  <%=value.alphas[6].states.states[5]%></div>
+										  </div>
+									  </div>
+								  </div>
+							  </div>
+						  </td>
+					  </tr>
+
+
+
 				  </table>
+
 				</div>
 
 
 				<script>
 
+
+					$(function() {
+						//stateholders
+						$( "#state-1-1" ).droppable({drop: function( event, ui ) {}});
+						$( "#state-1-1" ).draggable({ revert: "valid", axis: "y"});
+						$( "#state-1-2" ).droppable({drop: function( event, ui ) {}});
+						$( "#state-1-2" ).draggable({ revert: "valid", axis: "y" });
+						$( "#state-1-3" ).droppable({drop: function( event, ui ) {}});
+						$( "#state-1-3" ).draggable({ revert: "valid", axis: "y" });
+						$( "#state-1-4" ).droppable({drop: function( event, ui ) {}});
+						$( "#state-1-4" ).draggable({ revert: "valid", axis: "y" });
+						$( "#state-1-5" ).droppable({drop: function( event, ui ) {}});
+						$( "#state-1-5" ).draggable({ revert: "valid", axis: "y"});
+						$( "#state-1-6" ).droppable({drop: function( event, ui ) {}});
+						$( "#state-1-6" ).draggable({ revert: "valid", axis: "y" });
+
+						//opportunity
+						$( "#state-2-1" ).draggable({ revert: "valid", axis: "y", containment: "#state-range-2-1" });
+						$( "#state-2-2" ).droppable({drop: function( event, ui ) {}});
+						$( "#state-2-2" ).draggable({ revert: "valid", axis: "y", containment: "#state-range-2-2" });
+						$( "#state-2-3" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-2-4" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-2-5" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-2-6" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+
+						//requirements
+						$( "#state-3-1" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-3" });
+						$( "#state-3-2" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-3" });
+						$( "#state-3-3" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-3" });
+						$( "#state-3-4" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-3" });
+						$( "#state-3-5" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-3" });
+						$( "#state-3-6" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-3" });
+
+						//software system
+						$( "#state-4-1" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-4-2" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-4-3" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-4-4" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-4-5" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+						$( "#state-4-6" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-2" });
+
+						//work
+						$( "#state-5-1" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-5" });
+						$( "#state-5-2" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-5" });
+						$( "#state-5-3" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-5" });
+						$( "#state-5-4" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-5" });
+						$( "#state-5-5" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-5" });
+
+						//team
+						$("#state-6-1").droppable({drop:function(event,ui){}});
+						$( "#state-6-1" ).draggable({ revert: "valid", axis: "y", containment: "#state-range-6-1" });
+
+						$("#state-6-2").droppable({drop: function( event, ui ){
+						}});
+						$( "#state-6-2" ).draggable({ revert: "valid", axis: "y", containment: "#state-range-6-2" });
+						$("#state-6-3").droppable({drop:function(event,ui){}});
+						$( "#state-6-3" ).draggable({ revert: "valid", axis: "y", containment: "#state-range-6-3" });
+						$("#state-6-4").droppable({drop:function(event,ui){}});
+						$( "#state-6-4" ).draggable({ revert: "valid", axis: "y", containment: "#state-range-6-4" });
+						$( "#state-6-5" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-6" });
+						$( "#state-6-6" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-6" });
+
+						//wayofworking
+						$( "#state-7-1" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-7" });
+						$( "#state-7-2" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-7" });
+						$( "#state-7-3" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-7" });
+						$( "#state-7-4" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-7" });
+						$( "#state-7-5" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-7" });
+						$( "#state-7-6" ).draggable({ revert: "valid", axis: "y", containment: "#alpha-7" });
+
+					});
 				  /* 대시보드 */
 				  // 대시보드 일정 기준은 1px = 1day
 				  // 대시보드 베이스라인 높이 + 1px 로 위치 계산
