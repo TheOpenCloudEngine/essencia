@@ -26,6 +26,7 @@ public class EssenciaAllAppList extends AllAppList {
         loader.setUserId(session.getUser().getUserId());
         Essencia essencia = (Essencia) loader.run();
 
+        
         EssenciaApplication application = new EssenciaApplication();
         application.setEssencia(essencia);
 

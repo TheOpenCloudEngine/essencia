@@ -50,7 +50,7 @@ public class Dashboard implements ContextAware {
 
 		//
 		List<Alpha> alphaList = new ArrayList<Alpha>();
-		List<IElement> list = practiceDefinition.getElementList();
+		List<IElement> list = this.practiceDefinition.getElementList();
 		for(IElement el : list){
 			if(el instanceof Alpha){
 				System.out.println("isAlpha=" + el.getName());
@@ -107,7 +107,7 @@ public class Dashboard implements ContextAware {
 	public PracticeDefinition getKernelDefinition() {
 		PracticeDefinition practice = null;
 		try {
-			InputStream is = getClass().getResourceAsStream("/org/uengine/essencia/model/kernel/kernel.practice");
+			InputStream is = getClass().getResourceAsStream("/org/uengine/essencia/model/kernel/sample.practice");
 			XStream x = new XStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			practice = (PracticeDefinition)x.fromXML(isr);
