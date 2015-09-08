@@ -1,6 +1,4 @@
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <style>
-
   .concern-cover-2 {
     width: 290px;
     height: 520px;
@@ -180,7 +178,7 @@ $('[data-toggle="tooltip"]').tooltip();
 									  for(var i = 0 ; i < 2; i++){ %>
 									  	<div class="alpha-cover">
 											<div class="alpha-title"><%=value.alphas[i].name%></div>
-											<div class = "alpha">
+											<div id="alpha-<%=i%>" class = "alpha">
 												<% for(var j = 0 ; j < value.alphas[i].states.length; j++){ %>
 													<div id="state-<%=i%>-<%=j%>" class="state" data-toggle="tooltip" title="2015-01-21"
 														 style='position:relative;cursor:pointer; cursor:hand; '>
