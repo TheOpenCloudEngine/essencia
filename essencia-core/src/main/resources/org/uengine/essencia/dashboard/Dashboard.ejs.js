@@ -4,13 +4,11 @@ var org_uengine_essencia_dashboard_Dashboard = function(objectId, className) {
 
     var value = mw3.getObject(objectId);
 
-    for(var i = 0; i < 2; i++){
+    for(var i = 0; i < value.alphas.length; i++){
         for(var j =0; j < value.alphas[i].states.length; j++){
             $( "#state-" + i + "-" + j ).droppable(
                 {
-                    drop: function( event, ui ) {
-
-                    }
+                    drop: function( event, ui ) {}
                 }
             );
 
