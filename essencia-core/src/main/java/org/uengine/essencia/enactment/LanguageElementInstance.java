@@ -147,7 +147,7 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
                 propertyValue.setName(property.getName());
 
                 if(cachedMap.containsKey(property.getName())) {
-                    propertyValue.setValue(cachedMap.get(property.getName()));
+                    propertyValue.setValueObject(cachedMap.get(property.getName()));
 
                     values.add(propertyValue);
                 }
