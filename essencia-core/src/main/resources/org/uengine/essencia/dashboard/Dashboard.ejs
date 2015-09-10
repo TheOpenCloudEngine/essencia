@@ -1,196 +1,88 @@
-<style>
-  .concern-cover-2 {
-    width: 290px;
-    height: 520px;
-    border: 2px solid #888;
-    border-radius: 10px;
-    margin-right: 5px;
-  }
+<%
+var concerns = [];
 
-  .concern-cover-3 {
-    width: 380px;
-    height: 520px;
-    border: 2px solid #888;
-    border-radius: 10px;
-    margin-right: 5px;
-  }
-
-  .concern-header {
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    padding: 5px;
-    border-bottom: 2px dotted #ccc;
-  }
-
-  .concern-body {
-    margin: auto;
-  }
-
-  .alpha-cover {
-    float: left;
-    padding: 10px;
-  }
-
-  .alpha-title {
-    text-align: center;
-    height: 20px;
-    font-size: 12px;
-  }
-
-  .alpha {
-    height: 435px;
-    padding-top: 45px;
-    padding-bottom: 45px;
-    background: url('./images/alpha-line.png') no-repeat top center;
-  }
-
-  .state {
-
-    background: #ddd;
-    font-size: 10px;
-    margin-bottom: 3px;
-    border: 1px solid #000;
-    border-radius: 5px;
-    padding: 5px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    cursor: hand;
-    /*margin-top:100px;*/
-  }
-
-  .plan-month {
-    border-bottom: 1px dashed #888;
-    margin-top: 30px;
-    text-align: right;
-    font-weight: bold;
-    font-size: 10px;
-  }
-
-  .plan-status {
-    border-bottom: 3px dashed blue;
-    margin-top: 180px;
-    text-align: right;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 10px;
-  }
-</style>
-<script>
-Date.prototype.format = function(f) {
-    if (!this.valueOf()) return " ";
-
-    var weekName = ["ì?¼ìš”ì?¼", "ì›”ìš”ì?¼", "í™”ìš”ì?¼", "ìˆ˜ìš”ì?¼", "ëª©ìš”ì?¼", "ê¸ˆìš”ì?¼", "í† ìš”ì?¼"];
-    var d = this;
-
-    return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
-        switch ($1) {
-            case "yyyy": return d.getFullYear();
-            case "yy": return (d.getFullYear() % 1000).zf(2);
-            case "MM": return (d.getMonth() + 1).zf(2);
-            case "dd": return d.getDate().zf(2);
-            case "E": return weekName[d.getDay()];
-            case "HH": return d.getHours().zf(2);
-            case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
-            case "mm": return d.getMinutes().zf(2);
-            case "ss": return d.getSeconds().zf(2);
-            case "a/p": return d.getHours() < 12 ? "ì˜¤ì „" : "ì˜¤í›„";
-            default: return $1;
+debugger;
+    for(var i = 0; i < value.alphas.length; i++){
+//        if(!(value.alphas[i].concern in concerns)){
+        if($.inArray(value.alphas[i].concern, concerns) < 0){
+            concerns.push(value.alphas[i].concern);
         }
-    });
-};
+    }
+%>
+<div id="plan-month" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
+    <div id="plan-month-start" class="plan-month"><span id="start-date"
+                                                        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">S</span>
+    </div>
+    <div id="plan-month-gen">
+    </div>
 
-String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
-String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
-Number.prototype.zf = function(len){return this.toString().zf(len);};
+    <div class="plan-month"><span
+                style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">06/2015</span>
+    </div>
+    <div class="plan-month"><span
+                style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">07/2015</span>
+    </div>
+    <div class="plan-month"><span
+                style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">08/2015</span>
+    </div>
+    <div class="plan-month">
+        <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">09/2015</span>
+    </div>
+    <div class="plan-month">
+        <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">10/2015</span>
+    </div>
 
-function monthDiff(d1, d2) {
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth() + 1;
-    months += d2.getMonth();
-    return months <= 0 ? 0 : months;
-}
+    <div class="plan-month">
+        <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">11/2015</span>
+    </div>
 
-$('[data-toggle="tooltip"]').tooltip();
+    <div id="plan-month-end" class="plan-month" stlye="margin-top:400px;"><span id="end-date"
+                                                                                style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">E</span>
+    </div>
+</div>
 
+<div id="plan-status" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
+    <div id="plan-status-now" class="plan-status"><span
+                style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">Now</span>
+    </div>
+    <div id="plan-status-todo" class="plan-status"><span
+                style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">To-Do</span>
+    </div>
+</div>
 
-</script>
-<!--
-   <div>
-  		<button>Planning</button>
-  		<button>Monitoring</button>
-	<div>
--->
-              <div id="plan-month" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
-				  <div id="plan-month-start" class="plan-month"><span id="start-date"
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">S</span>
-				  </div>
-				  <div id="plan-month-gen">
-				  </div>
+<div style="margin:auto;position:absolute;z-index:199;">
+    <table cellpadding="5">
+        <tr>
+            <%
+            debugger;
+            for(var concernIndex = 0; concernIndex < concerns.length; concernIndex++){
+            %>
+            <td>
+                <div class="concern-cover-2">
+                    <div class="concern-header"><%=concerns[concernIndex]%></div>
+                    <div class="concern-body">
+                        <%
+                        for(var i = 0 ; i < value.alphas.length; i++){
+                            if(value.alphas[i].concern != concerns[concernIndex]){
+                                continue;
+                            }
+                        %>
+                        <div class="alpha-cover">
+                            <div class="alpha-title"><%= value.alphas[i].name %></div>
+                            <div id="alpha-<%= i %>" class="alpha">
+                                <% for(var j = 0 ; j < value.alphas[i].states.length; j++){ %>
+                                <div id="state-<%= i %>-<%= j %>" class="state" data-toggle="tooltip" title="2015-01-21"
+                                     style='position:relative;cursor:pointer; cursor:hand; '>
+                                    <%= value.alphas[i].states[j].name %></div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </td>
+            <% } %>
 
-				  <div class="plan-month"><span
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">06/2015</span>
-				  </div>
-				  <div class="plan-month"><span
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">07/2015</span>
-				  </div>
-				  <div class="plan-month"><span
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">08/2015</span>
-				  </div>
-				  <div class="plan-month">
-				    <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">09/2015</span>
-                 </div>
-                 <div class="plan-month">
-                       <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">10/2015</span>
-                 </div>
-
-                 <div class="plan-month">
-                       <span style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">11/2015</span>
-                 </div>
-
-				  <div id="plan-month-end" class="plan-month" stlye="margin-top:400px;"><span id="end-date"
-				        style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">E</span>
-				  </div>
-				</div>
-
-				<div id="plan-status" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
-				  <div id="plan-status-now" class="plan-status"><span
-				        style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">Now</span>
-				  </div>
-				  <div id="plan-status-todo" class="plan-status"><span
-				        style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">To-Do</span>
-				  </div>
-				</div>
-
-
-				<div style="margin:auto;position:absolute;z-index:199;">
-				  <table cellpadding="5">
-					  <tr>
-						  <td>
-							  <div class="concern-cover-2">
-								  <div class="concern-header">Customer</div>
-								  <div class="concern-body">
-									  <%
-									  for(var i = 0 ; i < 2; i++){ %>
-									  	<div class="alpha-cover">
-											<div class="alpha-title"><%=value.alphas[i].name%></div>
-											<div id="alpha-<%=i%>" class = "alpha">
-												<% for(var j = 0 ; j < value.alphas[i].states.length; j++){ %>
-													<div id="state-<%=i%>-<%=j%>" class="state" data-toggle="tooltip" title="2015-01-21"
-														 style='position:relative;cursor:pointer; cursor:hand; '>
-														<%=value.alphas[i].states[j].name%></div>
-												<% } %>
-											</div>
-										</div>
-									  <% } %>
-								  </div>
-							  </div>
-						  </td>
-					  </tr>
-				  </table>
-				</div>
-
+        </tr>
+    </table>
+</div>
