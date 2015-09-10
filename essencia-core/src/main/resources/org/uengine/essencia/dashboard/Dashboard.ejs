@@ -9,7 +9,7 @@ debugger;
         }
     }
 %>
-<div id="plan-month" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
+<div id="plan-month" style="position:absolute;top:0;left:0;width:100%;height:600px;">
     <div id="plan-month-start" class="plan-month"><span id="start-date"
                                                         style="border:1px solid #555;background:#555;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">S</span>
     </div>
@@ -41,7 +41,7 @@ debugger;
     </div>
 </div>
 
-<div id="plan-status" style="position:absolute;z-index:100;top:0;left:0;width:100%;height:600px;">
+<div id="plan-status" style="position:absolute;top:0;left:0;width:100%;height:600px;">
     <div id="plan-status-now" class="plan-status"><span
                 style="border:1px solid blue;background:blue;color:#fff;border-top-left-radius:10px;border-top-right-radius:10px;padding:2px;padding-left:10px;padding-right:10px;">Now</span>
     </div>
@@ -50,7 +50,7 @@ debugger;
     </div>
 </div>
 
-<div style="margin:auto;position:absolute;z-index:199;">
+<div style="margin:auto;position:absolute;">
     <table cellpadding="5">
         <tr>
             <%
@@ -61,23 +61,30 @@ debugger;
                 <div class="concern-cover-2">
                     <div class="concern-header"><%=concerns[concernIndex]%></div>
                     <div class="concern-body">
+                        <table><tr>
                         <%
                         for(var i = 0 ; i < value.alphas.length; i++){
                             if(value.alphas[i].concern != concerns[concernIndex]){
                                 continue;
                             }
                         %>
+                        <td>
                         <div class="alpha-cover">
                             <div class="alpha-title"><%= value.alphas[i].name %></div>
                             <div id="alpha-<%= i %>" class="alpha">
+
                                 <% for(var j = 0 ; j < value.alphas[i].states.length; j++){ %>
                                 <div id="state-<%= i %>-<%= j %>" class="state" data-toggle="tooltip" title="2015-01-21"
-                                     style='position:relative;cursor:pointer; cursor:hand; '>
+                                     style='position:relative;cursor:pointer; cursor:hand; ' onClick="mw3.getFaceHelper('<%=objectId%>').showDetailState(this)">
                                     <%= value.alphas[i].states[j].name %></div>
                                 <% } %>
+
                             </div>
                         </div>
+                            </td>
                         <% } %>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </td>

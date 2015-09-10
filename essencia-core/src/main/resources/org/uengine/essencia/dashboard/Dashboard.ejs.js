@@ -45,8 +45,24 @@ org_uengine_essencia_dashboard_Dashboard.prototype={
     getValue : function() {
 
         //dashboard.alphaInstanceMap['a'].
-
         return this.dashboard;
+    },
+
+    showDetailState : function(stateElement){
+        var value = mw3.getObject(this.objectId);
+        var stateId = $(stateElement).attr("id");
+        var stateSplit = stateId.split("-");
+
+        debugger;
+
+        var state = value.alphas[stateSplit[1]].states[stateSplit[2]];
+        state.metaworksContext = {
+            when : "dashboard"
+        };
+
+        mw3.locateObject(state, state.className);
+        state.showDetailState()
     }
+
 };
 

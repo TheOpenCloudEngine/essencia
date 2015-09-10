@@ -12,6 +12,7 @@
         <module>essencia-core</module>
         <module>essence-model</module>
         <module>essencia-portal</module>
+        <module>essencia-marketplace</module>
     </modules>
 
     <distributionManagement>

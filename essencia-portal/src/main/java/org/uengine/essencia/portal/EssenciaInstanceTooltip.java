@@ -47,7 +47,7 @@ public class EssenciaInstanceTooltip extends InstanceTooltip{
 
         Dashboard dashboard = new Dashboard(pc);
 
-        ModalWindow modal = new ModalWindow(dashboard, 600, 700);
+        ModalWindow modal = new ModalWindow(dashboard, 900, 700);
 
         modal.setTitle("Alpha Dashboard");
 
