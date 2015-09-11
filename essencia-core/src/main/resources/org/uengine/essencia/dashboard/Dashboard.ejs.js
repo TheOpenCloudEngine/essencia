@@ -52,9 +52,7 @@ org_uengine_essencia_dashboard_Dashboard.prototype={
         var value = mw3.getObject(this.objectId);
         var stateId = $(stateElement).attr("id");
         var stateSplit = stateId.split("-");
-
-        debugger;
-
+        
         var state = value.alphas[stateSplit[1]].states[stateSplit[2]];
         state.metaworksContext = {
             when : "dashboard"

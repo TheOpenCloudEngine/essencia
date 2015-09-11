@@ -2,6 +2,7 @@ package org.uengine.essencia.model;
 
 import java.util.List;
 
+import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.dashboard.Dashboard;
@@ -158,9 +159,9 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     }
 
 
-    @ServiceMethod(callByContent = true, when = "dashboard")
+    @ServiceMethod(callByContent = true, when = "openDashboard", target = ServiceMethodContext.TARGET_POPUP)
     public ModalWindow showDetailState(){
-        ModalWindow modal = new ModalWindow(this, 900, 700);
+        ModalWindow modal = new ModalWindow(this, 600, 500);
 
         modal.setTitle("State Detail View!");
 
