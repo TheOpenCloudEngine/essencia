@@ -73,7 +73,7 @@ var concerns = [];
 
                                 <% for(var j = 0 ; j < value.alphas[i].states.length; j++){ %>
                                 <div id="state-<%= i %>-<%= j %>" class="state" data-toggle="tooltip" title="2015-01-21"
-                                     style='position:relative;cursor:pointer; cursor:hand; ' onClick="mw3.getFaceHelper('<%=objectId%>').showDetailState(this)">
+                                     style='position:relative;cursor:pointer; cursor:hand; ' ondblclick="mw3.getFaceHelper('<%=objectId%>').showDetailState(this)">
                                     <%= value.alphas[i].states[j].name %></div>
                                 <% } %>
 
