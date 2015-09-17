@@ -1,0 +1,81 @@
+.concern-cover-2 {
+    /*
+    width: 290px;
+    */
+    height: 520px;
+    border: 2px solid #888;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.concern-cover-3 {
+    width: 380px;
+    height: 520px;
+    border: 2px solid #888;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.concern-header {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    border-bottom: 2px dotted #ccc;
+}
+
+.concern-body {
+    margin: auto;
+}
+
+.alpha-cover {
+    float: left;
+    padding: 10px;
+}
+
+.alpha-title {
+    text-align: center;
+    height: 20px;
+    font-size: 12px;
+}
+
+.alpha {
+    height: 435px;
+    padding-top: 45px;
+    padding-bottom: 45px;
+    background: url('../../images/alpha-line.png') no-repeat top center;
+}
+
+.state {
+
+    background: #ddd;
+    font-size: 10px;
+    margin-bottom: 3px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    cursor: hand;
+    /*margin-top:100px;*/
+}
+
+.plan-month {
+    border-bottom: 1px dashed #888;
+    margin-top: 30px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.plan-status {
+    border-bottom: 3px dashed blue;
+    margin-top: 180px;
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 10px;
+}

@@ -1,0 +1,3046 @@
+<org.uengine.essencia.model.PracticeDefinition>
+  <name>
+    <text>sample</text>
+    <localedTexts/>
+  </name>
+  <elementList>
+    <org.uengine.essencia.model.Practice>
+      <name>
+        <text>sample</text>
+        <localedTexts/>
+      </name>
+      <description>
+        <text></text>
+      </description>
+      <resourceList/>
+      <tagList/>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text></text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.PracticeView">
+        <id>OG_3048_2</id>
+        <shapeId>OG.shape.essencia.Practice</shapeId>
+        <x>96</x>
+        <y>96</y>
+        <width>95.6</width>
+        <height>97</height>
+        <toEdge>OG_3048_32,OG_3048_153,OG_3048_288,OG_3048_555,OG_3048_2052,OG_3048_2508,OG_3048_2793,OG_3048_2944,OG_3048_3065</toEdge>
+        <label>sample</label>
+        <style>null</style>
+        <index>0</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+    </org.uengine.essencia.model.Practice>
+    <org.uengine.essencia.model.Alpha>
+      <name>
+        <text>Stakeholders</text>
+      </name>
+      <description>
+        <text>The stakeholders provide the opportunity,and are the source of the requirements for the software system. They are involved throughout the software engineering endeavor to support the team and ensure that an acceptable software system is produced.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>The people,groups,or organizations who affect or are affected by a software system. </text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.AlphaView">
+        <id>OG_3048_4</id>
+        <shapeId>OG.shape.essencia.Alpha</shapeId>
+        <x>480</x>
+        <y>104</y>
+        <width>128</width>
+        <height>48</height>
+        <fromEdge>OG_3048_32</fromEdge>
+        <label>Stakeholders</label>
+        <style>null</style>
+        <index>1</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Customer</concern>
+      <childElements/>
+      <states>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Recognized</text>
+          </name>
+          <description>
+            <text>Stakeholders have been identified.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>All the different groups of stakeholders that are,or will be,affected by the development and operation of the software system are identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>There is agreement on the stakeholder groups to be represented. At a minimum,the stakeholder groups that fund,use,support,and maintain the system have been considered.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The responsibilities of the stakeholder representatives have been defined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Represented</text>
+          </name>
+          <description>
+            <text>The mechanisms for involving the stakeholders are agreed and the stakeholder representatives have been appointed.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives have agreed to take on their responsibilities.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives are authorized to carry out their responsibilities.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The collaboration approach among the stakeholder representatives has been agreed.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives support and respect the team&apos;s way of working.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Involved</text>
+          </name>
+          <description>
+            <text>The stakeholder representatives are actively involved in the work and fulfilling their responsibilities.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives assist the team in accordance with their responsibilities.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives provide feedback and take part in decision making in a timely manner.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives promptly communicate changes that are relevant for their stakeholder groups.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>In Agreement</text>
+          </name>
+          <description>
+            <text>The stakeholder representatives are in agreement.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives have agreed upon their minimal expectations for the next deployment of the new system.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives are happy with their involvement in the work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives agree that their input is valued by the team and treated with respect.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team members agree that their input is valued by the stakeholder representatives and treated with respect.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives agree with how their different priorities and perspectives are being balanced to provide a clear direction for the team.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Satisfied for Deployment</text>
+          </name>
+          <description>
+            <text>The minimal expectations of the stakeholder representatives have been achieved.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives provide feedback on the system from their stakeholder group perspective.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives confirm that they agree that the system is ready for deployment.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Satisfied in Use</text>
+          </name>
+          <description>
+            <text>The system has met or exceeds the minimal stakeholder expectations.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Stakeholders are using the new system and providing feedback on their experiences.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders confirm that the new system meets their expectations.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+      </states>
+    </org.uengine.essencia.model.Alpha>
+    <org.uengine.essencia.model.Alpha>
+      <name>
+        <text>Opportunity</text>
+      </name>
+      <description>
+        <text>The opportunity articulates the reason for the creation of the new,or changed,software system. It represents the teamâ€™s shared understanding of the stakeholders&apos; needs,and helps shape the requirements for the new software system by providing justification for its development.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>The set of circumstances that makes it appropriate to develop or change a software system.</text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.AlphaView">
+        <id>OG_3048_8</id>
+        <shapeId>OG.shape.essencia.Alpha</shapeId>
+        <x>480</x>
+        <y>216</y>
+        <width>128</width>
+        <height>48</height>
+        <fromEdge>OG_3048_153</fromEdge>
+        <label>Opportunity</label>
+        <style>null</style>
+        <index>2</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Customer</concern>
+      <childElements/>
+      <states>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Identified</text>
+          </name>
+          <description>
+            <text>A commercial,social,or business opportunity has been identified that could be addressed by a software-based solution.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>An idea for a way of improving current ways of working,increasing market share,or applying a new or innovative software system has been identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>At least one of the stakeholders wishes to make an investment in better understanding the opportunity and the value associated with addressing it.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The other stakeholders who share the opportunity have been identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Solution Needed</text>
+          </name>
+          <description>
+            <text>The need for a software-based solution has been confirmed.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders in the opportunity and the proposed solution have been identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholdersâ€™ needs that generate the opportunity have been established.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Any underlying problems and their root causes have been identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>It has been confirmed that a software-based solution is needed.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>At least one software-based solution has been proposed.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Value Established</text>
+          </name>
+          <description>
+            <text>The value of a successful solution has been established.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The value of addressing the opportunity has been quantified either in absolute terms or in returns or savings per time period (e.g.,per annum).</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The impact of the solution on the stakeholders is understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The value that the software system offers to the stakeholders that fund and use the software system is understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The success criteria by which the deployment of the software system is to be judged are clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The desired outcomes required of the solution are clear and quantified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Viable </text>
+          </name>
+          <description>
+            <text>It is agreed that a solution can be produced quickly and cheaply enough to successfully address the opportunity.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>A solution has been outlined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The indications are that the solution can be developed and deployed within constraints.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The risks associated with the solution are acceptable and manageable.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The indicative (ball-park) costs of the solution are less than the anticipated value of the opportunity.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The reasons for the development of a software-based solution are understood by all members of the team.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>It is clear that the pursuit of the opportunity is viable.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Addressed </text>
+          </name>
+          <description>
+            <text>A solution has been produced that demonstrably addresses the opportunity.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>A usable system that demonstrably addresses the opportunity is available.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders agree that the available solution is worth deploying.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders are satisfied that the solution produced addresses the opportunity.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Benefit Accrued </text>
+          </name>
+          <description>
+            <text>The operational use or sale of the solution is creating tangible benefits.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The solution has started to accrue benefits for the stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The return-on-investment profile is at least as good as anticipated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+      </states>
+    </org.uengine.essencia.model.Alpha>
+    <org.uengine.essencia.model.Alpha>
+      <name>
+        <text>Requirements</text>
+      </name>
+      <description>
+        <text>It is important to discover what is needed from the software system,share this understanding among the stakeholders and the team members,and use it to drive the development and testing of the new system.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>What the software system must do to address the opportunity and satisfy the stakeholders.</text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.AlphaView">
+        <id>OG_3048_12</id>
+        <shapeId>OG.shape.essencia.Alpha</shapeId>
+        <x>488</x>
+        <y>336</y>
+        <width>128</width>
+        <height>48</height>
+        <fromEdge>OG_3048_288</fromEdge>
+        <label>Requirements</label>
+        <style>null</style>
+        <index>3</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Solution</concern>
+      <childElements/>
+      <states>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Conceived</text>
+          </name>
+          <description>
+            <text>The need for a new system has been agreed.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The initial set of stakeholders agrees that a system is to be produced.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders that will use the new system are identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders that will fund the initial work on the new system are identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>There is a clear opportunity for the new system to address.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Bounded</text>
+          </name>
+          <description>
+            <text>The purpose and extent of the new system are clear.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders involved in developing the new system are identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders agree on the purpose of the new system.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>It is clear what success is for the new system.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders have a shared understanding of the extent of the proposed solution.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The way the requirements will be described is agreed upon.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The mechanisms for managing the requirements are in place.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The prioritization scheme is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Constraints are identified and considered.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Assumptions are clearly stated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Coherent</text>
+          </name>
+          <description>
+            <text>The requirements provide a consistent description of the essential characteristics of the new system.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The requirements are captured and shared with the team and the stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The origin of the requirements is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The rationale behind the requirements is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Conflicting requirements are identified and attended to.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The requirements communicate the essential characteristics of the system to be delivered.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The most important usage scenarios for the system can be explained.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The priority of the requirements is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The impact of implementing the requirements is understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team understands what has to be delivered and agrees to deliver it.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Acceptable</text>
+          </name>
+          <description>
+            <text>The requirements describe a system that is acceptable to the stakeholders.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders accept that the requirements describe an acceptable solution.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The rate of change to the agreed requirements is relatively low and under control.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The value provided by implementing the requirements is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The parts of the opportunity satisfied by the requirements are clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The requirements are testable.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Addressed</text>
+          </name>
+          <description>
+            <text>Enough of the requirements have been addressed to satisfy the need for a new system in a way that is acceptable to the stakeholders.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Enough of the requirements are addressed for the resulting system to be acceptable to the stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders accept the requirements as accurately reflecting what the system does and does not do.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The set of requirement items implemented provide clear value to the stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system implementing the requirements is accepted by the stakeholders as worth making operational.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Fulfilled</text>
+          </name>
+          <description>
+            <text>The requirements that have been addressed fully satisfy the need for a new system.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders accept the requirements as accurately capturing what they require to fully satisfy the need for a new system.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>There are no outstanding requirement items preventing the system from being accepted as fully satisfying the requirements.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system is accepted by the stakeholders as fully satisfying the requirements.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+      </states>
+    </org.uengine.essencia.model.Alpha>
+    <org.uengine.essencia.model.Alpha>
+      <name>
+        <text>Software System</text>
+      </name>
+      <description>
+        <text>A software system can be part of a larger software,hardware,business,or social solution.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>A system made up of software,hardware,and data that provides its primary value by the execution of the software.</text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.AlphaView">
+        <id>OG_3048_16</id>
+        <shapeId>OG.shape.essencia.Alpha</shapeId>
+        <x>480</x>
+        <y>440</y>
+        <width>128</width>
+        <height>48</height>
+        <fromEdge>OG_3048_555</fromEdge>
+        <label>Software System</label>
+        <style>null</style>
+        <index>4</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Solution</concern>
+      <childElements/>
+      <states>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Architecture</text>
+          </name>
+          <description>
+            <text>Selected An architecture has been selected that addresses the key technical risks and any applicable organizational constraints.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The criteria to be used when selecting the architecture have been agreed on.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Hardware platforms have been identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Programming languages and technologies to be used have been selected.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>System boundary is known.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Significant decisions about the organization of the system have been made.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Buy,build,and reuse decisions have been made.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Key technical risks agreed to.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Demonstrable</text>
+          </name>
+          <description>
+            <text>An executable version of the system is available that demonstrates the architecture is fit for purpose and supports testing.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Key architectural characteristics have been demonstrated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system can be exercised and its performance can be measured.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Critical hardware configurations have been demonstrated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Critical interfaces have been demonstrated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The integration with other existing systems has been demonstrated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The relevant stakeholders agree that the demonstrated architecture is appropriate.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Usable</text>
+          </name>
+          <description>
+            <text>The system is usable and demonstrates all of the quality characteristics of an operational system.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system can be operated by stakeholders who use it.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The functionality provided by the system has been tested.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The performance of the system is acceptable to the stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Defect levels are acceptable to the stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system is fully documented.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Release content is known.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The added value provided by the system is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Ready</text>
+          </name>
+          <description>
+            <text>The system (as a whole) has been accepted for deployment in a live environment.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Installation and other user documentation are available.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives accept the system as fit-for-purpose.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder representatives want to make the system operational.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Operational support is in place.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Operational</text>
+          </name>
+          <description>
+            <text>The system is in use in an operational environment.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system has been made available to the stakeholders intended to use it.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>At least one example of the system is fully operational.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system is fully supported to the agreed service levels.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Retired</text>
+          </name>
+          <description>
+            <text>The system is no longer supported.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system has been replaced or discontinued.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The system is no longer supported.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>There are no â€œofficialâ€� stakeholders who still use the system.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Updates to the system will no longer be produced.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+      </states>
+    </org.uengine.essencia.model.Alpha>
+    <org.uengine.essencia.model.Alpha>
+      <name>
+        <text>Team</text>
+      </name>
+      <description>
+        <text>One or more teams plan and perform the work needed to create,update,and/or change the software system.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>A group of people actively engaged in the development,maintenance,delivery,or support of a specific software system.</text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.AlphaView">
+        <id>OG_3048_20</id>
+        <shapeId>OG.shape.essencia.Alpha</shapeId>
+        <x>480</x>
+        <y>544</y>
+        <width>128</width>
+        <height>48</height>
+        <fromEdge>OG_3048_2052</fromEdge>
+        <label>Team</label>
+        <style>null</style>
+        <index>5</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Endeavor</concern>
+      <childElements/>
+      <states>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Seeded</text>
+          </name>
+          <description>
+            <text>The team&apos;s mission is clear and the know-how needed to grow the team is in place.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team mission has been defined in terms of the opportunities and outcomes.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Constraints on the teamâ€™s operation are known.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Mechanisms to grow the team are in place.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The composition of the team is defined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Any constraints on where and how the work is carried out are defined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The teamâ€™s responsibilities are outlined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The level of team commitment is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Required competencies are identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team size is determined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Governance rules are defined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Leadership model is selected.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Formed</text>
+          </name>
+          <description>
+            <text>The team has been populated with enough committed people to start the mission.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Individual responsibilities are understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Enough team members have been recruited to enable the work to progress.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Every team member understands how the team is organized and what their individual role is.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>All team members understand how to perform their work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team members have met (perhaps virtually) and are beginning to get to know each other.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team members understand their responsibilities and how they align with their competencies.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Team members are accepting work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Any external collaborators (organizations,teams and individuals) are identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Team communication mechanisms have been defined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Each team member commits to working on the team as defined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Collaborating</text>
+          </name>
+          <description>
+            <text>The team members are working together as one unit.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team is working as one cohesive unit.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Communication within the team is open and honest.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team is focused on achieving the team mission.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team members know each other.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Performing</text>
+          </name>
+          <description>
+            <text>The team is working effectively and efficiently.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team consistently meets its commitments.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team continuously adapts to the changing context.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team identifies and addresses problems without outside help.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Effective progress is being achieved with minimal avoidable backtracking and reworking.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Wasted work,and the potential for wasted work are continuously eliminated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Adjourned</text>
+          </name>
+          <description>
+            <text>The team is no longer accountable for carrying out its mission.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team responsibilities have been handed over or fulfilled.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team members are available for assignment to other teams.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>No further effort is being put in by the team to complete the mission.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+      </states>
+    </org.uengine.essencia.model.Alpha>
+    <org.uengine.essencia.model.Alpha>
+      <name>
+        <text>Work</text>
+      </name>
+      <description>
+        <text>In the context of software engineering,work is everything that the team does to meet the goals of producing a software system matching the requirements and addressing the opportunity presented by the stakeholders. The work is guided by the practices that make up the teamâ€™s way-of-working.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>Activity involving mental or physical effort done in order to achieve a result.</text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.AlphaView">
+        <id>OG_3048_24</id>
+        <shapeId>OG.shape.essencia.Alpha</shapeId>
+        <x>472</x>
+        <y>648</y>
+        <width>128</width>
+        <height>48</height>
+        <fromEdge>OG_3048_2508</fromEdge>
+        <label>Work</label>
+        <style>null</style>
+        <index>6</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Endeavor</concern>
+      <childElements/>
+      <states>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Initiated</text>
+          </name>
+          <description>
+            <text>The work has been requested.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The result required of the work being initiated is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Any constraints on the workâ€™s performance are clearly identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders that will fund the work are known.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The initiator of the work is clearly identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholders that will accept the results are known.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The source of funding is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The priority of the work is clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Prepared</text>
+          </name>
+          <description>
+            <text>All pre-conditions for starting the work have been met.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Commitment is made.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Cost and effort of the work are estimated.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Resource availability is understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Governance policies and procedures are clear.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Risk exposure is understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Acceptance criteria are defined and agreed with client.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The work is broken down sufficiently for productive work to start.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Tasks have been identified and prioritized by the team and stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>A credible plan is in place.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Funding to start the work is in place.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team or at least some of the team members are ready to start the work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Integration and delivery points are defined.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Started</text>
+          </name>
+          <description>
+            <text>The work is proceeding.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Development work has been started.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Work progress is monitored.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The work is being broken down into actionable work items with clear definitions of done.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Team members are accepting and progressing tasks.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Under Control</text>
+          </name>
+          <description>
+            <text>The work is going well,risks are under control,and productivity levels are sufficient to achieve a satisfactory result.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Tasks are being completed.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Unplanned work is under control.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Risks are under control as the impact if they occur and the likelihood of them occurring have been</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>reduced to acceptable levels.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Estimates are revised to reflect the teamâ€™s performance.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Measures are available to show progress and velocity.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Re-work is under control.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Tasks are consistently completed on time and within their estimates.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Concluded</text>
+          </name>
+          <description>
+            <text>The work to produce the results has been concluded.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>All outstanding tasks are administrative housekeeping or related to preparing the next piece of</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Work results have been achieved.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The stakeholder(s) has accepted the resulting software system.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Closed</text>
+          </name>
+          <description>
+            <text>All remaining housekeeping tasks have been completed and the work has been officially closed.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Lessons learned have been itemized,recorded and discussed.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Metrics have been made available.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Everything has been archived.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The budget has been reconciled and closed.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team has been released.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>There are no outstanding,uncompleted tasks.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+      </states>
+    </org.uengine.essencia.model.Alpha>
+    <org.uengine.essencia.model.Alpha>
+      <name>
+        <text>Way-of-Working</text>
+      </name>
+      <description>
+        <text>The team evolves their way of working alongside their understanding of their mission and their working environment. As their work proceeds they continually reflect on their way of working and adapt it to their current context,if necessary.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>The tailored set of practices and tools used by a team to guide and support their work.</text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.AlphaView">
+        <id>OG_3048_28</id>
+        <shapeId>OG.shape.essencia.Alpha</shapeId>
+        <x>456</x>
+        <y>744</y>
+        <width>128</width>
+        <height>48</height>
+        <fromEdge>OG_3048_2793</fromEdge>
+        <label>Way-of-Working</label>
+        <style>null</style>
+        <index>7</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Endeavor</concern>
+      <childElements/>
+      <states>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Principles Established</text>
+          </name>
+          <description>
+            <text>The principles,and constraints,that shape the way-of-working are established.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Principles and constraints are committed to by the team.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Principles and constraints are agreed to by the stakeholders.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The tool needs of the work and its stakeholders are agreed.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>A recommendation for the approach to be taken is available.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The context within which the team will operate is understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The constraints that apply to the selection,acquisition and use of practices and tools are known.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Foundation Established</text>
+          </name>
+          <description>
+            <text>The key practices,and tools,that form the foundation of the way of working are selected and ready for use.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The key practices and tools that form the foundation of the way-of-working are selected.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Enough practices for work to start are agreed to by the team.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>All non-negotiable practices and tools have been identified.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The gaps that exist between the practices and tools that are needed and the practices and tools that are available have been analyzed and understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The capability gaps that exist between what is needed to execute the desired way of working and the capability levels of the team have been analyzed and understood.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The selected practices and tools have been integrated to form a usable way-of-working.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>In Use</text>
+          </name>
+          <description>
+            <text>Some members of the team are using,and adapting,the way-of-working.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The practices and tools are being used to do real work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The use of the practices and tools selected are regularly inspected.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The practices and tools are being adapted to the teamâ€™s context.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The use of the practices and tools is supported by the team.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Procedures are in place to handle feedback on the teamâ€™s way of working.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The practices and tools support team communication and collaboration.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>In Place</text>
+          </name>
+          <description>
+            <text>All team members are using the way of working to accomplish their work.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The practices and tools are being used by the whole team to perform their work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>All team members have access to the practices and tools required to do their work.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The whole team is involved in the inspection and adaptation of the way-of-working.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Working well</text>
+          </name>
+          <description>
+            <text>The team&apos;s way of working is working well for the team.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Team members are making progress as planned by using and adapting the way-of-working to suit their current context.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team naturally applies the practices without thinking about them</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The tools naturally support the way that the team works.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The team continually tunes their use of the practices and tools.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+        <org.uengine.essencia.model.State>
+          <name>
+            <text>Retired</text>
+          </name>
+          <description>
+            <text>The way of working is no longer in use by the team.</text>
+          </description>
+          <isSuppressable>true</isSuppressable>
+          <checkPoints>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>The teamâ€™s way of working is no longer being used.</name>
+            </org.uengine.essencia.model.CheckPoint>
+            <org.uengine.essencia.model.CheckPoint>
+              <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <name>Lessons learned are shared for future use.</name>
+            </org.uengine.essencia.model.CheckPoint>
+          </checkPoints>
+        </org.uengine.essencia.model.State>
+      </states>
+    </org.uengine.essencia.model.Alpha>
+    <org.uengine.essencia.model.Competency>
+      <name>
+        <text>Stakeholder Representation</text>
+      </name>
+      <description>
+        <text>The stakeholder representation competency is the empathic ability to stand in for and accurately reflect the opinions, rights, and obligations of other stakeholders.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription>
+        <text>This competency encapsulates the ability to gather, communicate, and balance the needs of other stakeholders and accurately represent their views.</text>
+      </briefDescription>
+      <elementView class="org.uengine.essencia.model.view.CompetencyView">
+        <id>OG_3048_2940</id>
+        <shapeId>OG.shape.essencia.Competency</shapeId>
+        <x>184</x>
+        <y>324</y>
+        <width>95.8</width>
+        <height>96.6</height>
+        <fromEdge>OG_3048_2944</fromEdge>
+        <label>Stakeholder Representation</label>
+        <style>null</style>
+        <index>15</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <concern>Customer</concern>
+      <competencyLevels>
+        <org.uengine.essencia.model.CompetencyLevel>
+          <name>
+            <text>Assists</text>
+          </name>
+          <description/>
+          <isSuppressable>true</isSuppressable>
+          <briefDescription>Demonstrates a basic understanding of the concepts and can follow instructions.</briefDescription>
+          <level>1</level>
+        </org.uengine.essencia.model.CompetencyLevel>
+        <org.uengine.essencia.model.CompetencyLevel>
+          <name>
+            <text>Applies</text>
+          </name>
+          <description/>
+          <isSuppressable>true</isSuppressable>
+          <briefDescription>Able to apply the concepts in simple contexts by routinely applying the experience gained so far.</briefDescription>
+          <level>2</level>
+        </org.uengine.essencia.model.CompetencyLevel>
+        <org.uengine.essencia.model.CompetencyLevel>
+          <name>
+            <text>Masters</text>
+          </name>
+          <description/>
+          <isSuppressable>true</isSuppressable>
+          <briefDescription>Able to apply the concepts in most contexts and has the experience to work without supervision.</briefDescription>
+          <level>3</level>
+        </org.uengine.essencia.model.CompetencyLevel>
+        <org.uengine.essencia.model.CompetencyLevel>
+          <name>
+            <text>Adapts</text>
+          </name>
+          <description/>
+          <isSuppressable>true</isSuppressable>
+          <briefDescription>Able to apply judgment on when and how to apply the concepts to more complex contexts. Can enable others to apply the concepts.</briefDescription>
+          <level>4</level>
+        </org.uengine.essencia.model.CompetencyLevel>
+        <org.uengine.essencia.model.CompetencyLevel>
+          <name>
+            <text>Innovates</text>
+          </name>
+          <description/>
+          <isSuppressable>true</isSuppressable>
+          <briefDescription>A recognized expert, able to extend the concepts to new contexts and inspire others.</briefDescription>
+          <level>5</level>
+        </org.uengine.essencia.model.CompetencyLevel>
+      </competencyLevels>
+    </org.uengine.essencia.model.Competency>
+    <org.uengine.essencia.model.ActivitySpace>
+      <name>
+        <text>Operate the System</text>
+      </name>
+      <description>
+        <text>Support the use of the software system in the live environment.</text>
+      </description>
+      <owner>
+        <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+        <isSuppressable>true</isSuppressable>
+        <name>
+          <text>essence_kernel</text>
+        </name>
+        <briefDescription/>
+        <description/>
+        <referredElements/>
+        <ownedElements/>
+      </owner>
+      <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+      <briefDescription/>
+      <elementView class="org.uengine.essencia.model.view.ActivitySpaceView">
+        <id>OG_3048_3063</id>
+        <shapeId>OG.shape.essencia.ActivitySpace</shapeId>
+        <x>712</x>
+        <y>120</y>
+        <width>96</width>
+        <height>64</height>
+        <fromEdge>OG_3048_3065</fromEdge>
+        <label>Operate the System</label>
+        <style>null</style>
+        <index>17</index>
+      </elementView>
+      <isSuppressable>true</isSuppressable>
+      <attributeList/>
+      <completionCriteria>
+        <org.uengine.essencia.model.CompletionCriterion>
+          <name/>
+          <description defined-in="org.uengine.essencia.model.LanguageElement"/>
+          <isSuppressable>true</isSuppressable>
+          <state>
+            <name>
+              <text>Retired</text>
+            </name>
+            <description>
+              <text></text>
+            </description>
+            <isSuppressable>true</isSuppressable>
+            <parentAlpha>
+              <name>
+                <text>Software System</text>
+              </name>
+              <description>
+                <text></text>
+              </description>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription>
+                <text></text>
+              </briefDescription>
+              <isSuppressable>true</isSuppressable>
+              <attributeList/>
+              <concern></concern>
+              <childElements/>
+            </parentAlpha>
+          </state>
+        </org.uengine.essencia.model.CompletionCriterion>
+      </completionCriteria>
+      <inputList>
+        <org.uengine.essencia.model.Alpha>
+          <name>
+            <text>Stakeholders</text>
+          </name>
+          <description>
+            <text></text>
+          </description>
+          <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+          <briefDescription>
+            <text></text>
+          </briefDescription>
+          <isSuppressable>true</isSuppressable>
+          <attributeList/>
+          <concern></concern>
+          <childElements/>
+        </org.uengine.essencia.model.Alpha>
+        <org.uengine.essencia.model.Alpha>
+          <name>
+            <text>Opportunity</text>
+          </name>
+          <description>
+            <text></text>
+          </description>
+          <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+          <briefDescription>
+            <text></text>
+          </briefDescription>
+          <isSuppressable>true</isSuppressable>
+          <attributeList/>
+          <concern></concern>
+          <childElements/>
+        </org.uengine.essencia.model.Alpha>
+        <org.uengine.essencia.model.Alpha>
+          <name>
+            <text>Requirements</text>
+          </name>
+          <description>
+            <text></text>
+          </description>
+          <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+          <briefDescription>
+            <text></text>
+          </briefDescription>
+          <isSuppressable>true</isSuppressable>
+          <attributeList/>
+          <concern></concern>
+          <childElements/>
+        </org.uengine.essencia.model.Alpha>
+        <org.uengine.essencia.model.Alpha>
+          <name>
+            <text>Software System</text>
+          </name>
+          <description>
+            <text></text>
+          </description>
+          <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+          <briefDescription>
+            <text></text>
+          </briefDescription>
+          <isSuppressable>true</isSuppressable>
+          <attributeList/>
+          <concern></concern>
+          <childElements/>
+        </org.uengine.essencia.model.Alpha>
+        <org.uengine.essencia.model.Alpha>
+          <name>
+            <text>Way-of-Working</text>
+          </name>
+          <description>
+            <text></text>
+          </description>
+          <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+          <briefDescription>
+            <text></text>
+          </briefDescription>
+          <isSuppressable>true</isSuppressable>
+          <attributeList/>
+          <concern></concern>
+          <childElements/>
+        </org.uengine.essencia.model.Alpha>
+      </inputList>
+      <concern>Solution</concern>
+    </org.uengine.essencia.model.ActivitySpace>
+  </elementList>
+  <relationList>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_32</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>280</x>
+        <y>100</y>
+        <width>272.2</width>
+        <height>8</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_4_TERMINAL_C_INOUT_0</to>
+        <value>[143.8,96],[416,104]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B143.8%2C96%5D%2C%5B280%2C96%5D%2C%5B280%2C104%5D%2C%5B416%2C104%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20c%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_153</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>280</x>
+        <y>156</y>
+        <width>272.2</width>
+        <height>120</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_8_TERMINAL_C_INOUT_0</to>
+        <value>[143.8,96],[416,216]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B143.8%2C96%5D%2C%5B280%2C96%5D%2C%5B280%2C216%5D%2C%5B416%2C216%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20c%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_288</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>284</x>
+        <y>216</y>
+        <width>280.2</width>
+        <height>240</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_12_TERMINAL_C_INOUT_0</to>
+        <value>[143.8,96],[424,336]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B143.8%2C96%5D%2C%5B284%2C96%5D%2C%5B284%2C336%5D%2C%5B424%2C336%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20c%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_555</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>280</x>
+        <y>268</y>
+        <width>272.2</width>
+        <height>344</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_16_TERMINAL_C_INOUT_0</to>
+        <value>[143.8,96],[416,440]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B143.8%2C96%5D%2C%5B280%2C96%5D%2C%5B280%2C440%5D%2C%5B416%2C440%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20c%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_2052</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>256</x>
+        <y>344</y>
+        <width>320</width>
+        <height>399.5</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_20_TERMINAL_W_INOUT_2</to>
+        <value>[96,144.5],[416,544]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B96%2C144.5%5D%2C%5B96%2C544%5D%2C%5B416%2C544%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20w%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_2508</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>252</x>
+        <y>396</y>
+        <width>312</width>
+        <height>503.5</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_24_TERMINAL_W_INOUT_2</to>
+        <value>[96,144.5],[408,648]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B96%2C144.5%5D%2C%5B96%2C648%5D%2C%5B408%2C648%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20w%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_2793</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>244</x>
+        <y>444</y>
+        <width>296</width>
+        <height>599.5</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_28_TERMINAL_W_INOUT_2</to>
+        <value>[96,144.5],[392,744]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B96%2C144.5%5D%2C%5B96%2C744%5D%2C%5B392%2C744%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20w%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_2944</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>140</x>
+        <y>210</y>
+        <width>88</width>
+        <height>131</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_2940_TERMINAL_C_INOUT_0</to>
+        <value>[96,144.5],[184,275.5]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B96%2C144.5%5D%2C%5B96%2C210%5D%2C%5B184%2C210%5D%2C%5B184%2C275.5%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20c%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+    <org.uengine.uml.model.CompositionRelation>
+      <relationView class="org.uengine.uml.ui.CompositionRelationView">
+        <TERMINAL__IN__OUT>_TERMINAL_C_INOUT_0</TERMINAL__IN__OUT>
+        <id>OG_3048_3065</id>
+        <shapeId>OG.shape.EdgeShape</shapeId>
+        <x>404</x>
+        <y>108</y>
+        <width>520.2</width>
+        <height>24</height>
+        <from>OG_3048_2_TERMINAL_C_OUT_0</from>
+        <to>OG_3048_3063_TERMINAL_C_INOUT_0</to>
+        <value>[143.8,96],[664,120]</value>
+        <geom>%7Btype%3A%27PolyLine%27%2Cvertices%3A%5B%5B143.8%2C96%5D%2C%5B404%2C96%5D%2C%5B404%2C120%5D%2C%5B664%2C120%5D%5D%7D</geom>
+        <style>%7B%22map%22%3A%7B%22stroke%22%3A%22black%22%2C%22fill-r%22%3A%22.5%22%2C%22fill-cx%22%3A%22.5%22%2C%22fill-cy%22%3A%22.5%22%2C%22fill%22%3A%22none%22%2C%22fill-opacity%22%3A0%2C%22label-position%22%3A%22center%22%2C%22stroke-width%22%3A1.5%2C%22stroke-opacity%22%3A1%2C%22cursor%22%3A%22pointer%22%2C%22edge-type%22%3A%22plain%22%2C%22edge-direction%22%3A%22c%20c%22%2C%22arrow-start%22%3A%22diamond%22%2C%22arrow-end%22%3A%22none%22%2C%22stroke-dasharray%22%3A%22%22%2C%22stroke-linejoin%22%3A%22round%22%7D%7D</style>
+      </relationView>
+    </org.uengine.uml.model.CompositionRelation>
+  </relationList>
+</org.uengine.essencia.model.PracticeDefinition>

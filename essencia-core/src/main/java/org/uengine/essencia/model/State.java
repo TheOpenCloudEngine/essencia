@@ -2,11 +2,10 @@ package org.uengine.essencia.model;
 
 import java.util.List;
 
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Id;
-import org.metaworks.annotation.Name;
-import org.metaworks.annotation.Order;
+import org.metaworks.ServiceMethodContext;
+import org.metaworks.annotation.*;
+import org.metaworks.widget.ModalWindow;
+import org.uengine.essencia.dashboard.Dashboard;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.model.card.DetailCard;
 import org.uengine.essencia.model.card.StateCard;
@@ -49,8 +48,6 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
         this.aggregationAlphaState = aggregationAlphaState;
     }
 
-
-    @Hidden
     public List<CheckPoint> getCheckPoints() {
         return checkPoints;
     }
@@ -159,5 +156,15 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
         }
 
         return true;
+    }
+
+
+    @ServiceMethod(callByContent = true, when = "openDashboard", target = ServiceMethodContext.TARGET_POPUP)
+    public ModalWindow showDetailState(){
+        ModalWindow modal = new ModalWindow(this, 600, 500);
+
+        modal.setTitle("State Detail View!");
+
+        return modal;
     }
 }

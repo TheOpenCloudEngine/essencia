@@ -7,6 +7,7 @@ import org.metaworks.component.SelectBox;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.website.MetaworksFile;
 import org.metaworks.widget.ModalPanel;
+import org.oce.garuda.multitenancy.Operation;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -152,13 +153,15 @@ public class EssenciaApp extends App {
 
         final Object tenantObject = resourceManager.getStorage().getObject(resource);
 
-        TenantContext.nonTenantSpecificOperation(new Runnable() {
+        TenantContext.nonTenantSpecificOperation(new Operation() {
             @Override
-            public void run() {
+            public Object run() {
                 try {
                     resourceManager.getStorage().save(resource, tenantObject);
+
+                    return null;
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -172,23 +175,21 @@ public class EssenciaApp extends App {
         final ModelResource modelResource = new ModelResource();
         modelResource.setPath(path);
 
-        final Object[] object = new Object[1];
-
-        TenantContext.nonTenantSpecificOperation(new Runnable() {
+        Object appObject = TenantContext.nonTenantSpecificOperation(new Operation() {
             @Override
-            public void run() {
+            public Object run() {
                 try {
-                    object[0] = resourceManager.getStorage().getObject(modelResource);
+                    return resourceManager.getStorage().getObject(modelResource);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         });
 
         try {
-            resourceManager.getStorage().save(modelResource, object[0]);
+            resourceManager.getStorage().save(modelResource, appObject);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }
