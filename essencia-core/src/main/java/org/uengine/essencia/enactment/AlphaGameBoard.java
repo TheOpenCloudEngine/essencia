@@ -17,27 +17,18 @@ import java.util.Map;
 
 public class AlphaGameBoard {
 
-//    PracticeDefinition practiceDefinition;
-//        public PracticeDefinition getPracticeDefinition() {
-//            return practiceDefinition;
-//        }
-//        public void setPracticeDefinition(PracticeDefinition practiceDefinition) {
-//            this.practiceDefinition = practiceDefinition;
-//        }
-
-    Map<String, List<? extends LanguageElementInstance>> alphaInstances;
-
     public AlphaGameBoard(Alpha alpha, Map<String, List<? extends LanguageElementInstance>> alphaInstancesMap) {
         setAlpha(alpha);
         setAlphaInstances(alphaInstancesMap);
     }
 
-    public Map<String, List<? extends LanguageElementInstance>> getAlphaInstances() {
-            return alphaInstances;
+    Map<String, List<? extends LanguageElementInstance>> alphaInstances;
+        public Map<String, List<? extends LanguageElementInstance>> getAlphaInstances() {
+                return alphaInstances;
+            }
+        public void setAlphaInstances(Map<String, List<? extends LanguageElementInstance>> alphaInstances) {
+            this.alphaInstances = alphaInstances;
         }
-    public void setAlphaInstances(Map<String, List<? extends LanguageElementInstance>> alphaInstances) {
-        this.alphaInstances = alphaInstances;
-    }
 
     Alpha alpha;
         public Alpha getAlpha() {
@@ -74,39 +65,5 @@ public class AlphaGameBoard {
 
     }
 
-//    public EnactmentGameBoard(PracticeDefinition practiceDefinition, ProcessInstance instance){
-////        setPracticeDefinition(practiceDefinition);
-//
-//        load(practiceDefinition, instance);
-//    }
-
-//    private void load(PracticeDefinition practiceDefinition, ProcessInstance instance) {
-//        alphaInstances = new HashMap<String, List<AlphaInstance>>();
-//
-//        for(IElement element : practiceDefinition.getElementList()){
-//
-//            if(element instanceof Alpha){
-//                Alpha alpha = (Alpha)element;
-//                List<AlphaInstance> instances = alpha.getInstances(instance);
-//
-//                if(instances!=null)
-//                    alphaInstances.put(alpha.getName(), instances);
-//            }
-//
-//        }
-//    }
-
-//    private void load(Alpha parentAlpha, ProcessInstance instance) {
-//        alphaInstances = new HashMap<String, List<AlphaInstance>>();
-//
-//        for(Alpha element : parentAlpha.getChildElements()){
-//
-//                List<AlphaInstance> instances = parentAlpha.getInstances(instance);
-//
-//                if(instances!=null)
-//                    alphaInstances.put(parentAlpha.getName(), instances);
-//
-//        }
-//    }
 
 }
