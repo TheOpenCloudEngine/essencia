@@ -151,6 +151,9 @@ public class EssenceActivity extends HumanActivity {
     @Override
     protected void beforeExecute(ProcessInstance instance) throws Exception {
 
+
+        //check for entry criteria
+
         if(getActivityInEssenceDefinition().getEntryCriteria()!=null)
         for(LanguageElement criterion1 : getActivityInEssenceDefinition().getEntryCriteria()){
             Criterion criterion = (Criterion)criterion1;   //TODO: why entrycriteria is not named as criterion and Criterion class.
@@ -159,6 +162,7 @@ public class EssenceActivity extends HumanActivity {
 
             List<AlphaInstance> alphaInstances =  alpha.getInstances(instance);
 
+            if(alphaInstances!=null)
             for(AlphaInstance alphaInstance : alphaInstances ){
                 if(!criterion.getState().equals(alphaInstance.getCurrentState())){
                     throw new IllegalStateException("Not reached to entry state '" + criterion.getState().getName() + "' to begin this activity" + getName());

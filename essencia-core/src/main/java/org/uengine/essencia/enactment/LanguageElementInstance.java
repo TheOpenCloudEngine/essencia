@@ -2,10 +2,15 @@ package org.uengine.essencia.enactment;
 
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
+import org.metaworks.annotation.Payload;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.dwr.SerializationSensitive;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.NeedArrangementToSerialize;
+import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.modeling.resource.ResourceManager;
 import org.uengine.uml.model.Attribute;
+import org.uengine.uml.model.ClassDefinition;
 import org.uengine.uml.model.ObjectInstance;
 
 import java.io.Serializable;
@@ -192,5 +197,30 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 //            if(propertyValue!=null)
 //                cachedMap.put(propertyValue.getName(), (Serializable) propertyValue.getValue());
 //        }
+    }
+
+
+    @Override
+    public ObjectInstance fillClassDefinition(@Payload("className") String className) throws Exception {
+
+        //className pattern defined:  codi/scrum.process#sprint
+
+        String[] processResourceNameAndLanguageElementName = className.split("\\#");
+
+        if(processResourceNameAndLanguageElementName.length < 2){
+            throw new IllegalArgumentException("ClassName should be defined like this : codi/processName.process#languageElement");
+        }
+
+        ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
+
+        DefaultResource classDefinitionResource = new DefaultResource( processResourceNameAndLanguageElementName[0]);
+        EssenceProcessDefinition definition = (EssenceProcessDefinition) resourceManager.getStorage().getObject(classDefinitionResource);
+
+        LanguageElement languageElement = (LanguageElement) definition.getPracticeDefinition().getElementByName(processResourceNameAndLanguageElementName[1]);
+
+        setClassDefinition(languageElement);
+
+
+        return this;
     }
 }

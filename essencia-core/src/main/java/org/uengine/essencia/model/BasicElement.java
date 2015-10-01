@@ -250,6 +250,9 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 		try {
 			ProcessVariableValue pvv = instance.getMultiple("", getName());
 
+			if(pvv==null)
+				return null;
+
 			pvv.beforeFirst();
 
 			List<LanguageElementInstance> elementInstanceList = new ArrayList<LanguageElementInstance>();

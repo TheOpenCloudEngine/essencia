@@ -1,6 +1,7 @@
 package org.uengine.essencia.modeling.editor;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.metaworks.MetaworksContext;
@@ -17,6 +18,7 @@ import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Download;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.ConfirmPanel;
+import org.uengine.codi.CodiProcessDefinitionFactory;
 import org.uengine.essencia.IUser;
 import org.uengine.essencia.Session;
 import org.uengine.essencia.common.CommitRecord;
@@ -26,6 +28,7 @@ import org.uengine.essencia.common.Lockable;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.context.EssenciaEventContext;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
+import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.modeler.EssenciaProcessModeler;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
@@ -34,11 +37,17 @@ import org.uengine.essencia.resource.IModelResource;
 import org.uengine.essencia.resource.LockResource;
 import org.uengine.essencia.resource.Resource;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.kernel.ProcessVariable;
 import org.uengine.kernel.UEngineException;
 import org.uengine.kernel.bpmn.face.ProcessVariablePanel;
 import org.uengine.kernel.bpmn.face.RolePanel;
 import org.uengine.modeling.ElementView;
+import org.uengine.modeling.resource.DefaultResource;
 import org.uengine.modeling.resource.IResource;
+import org.uengine.uml.model.ClassDefinition;
+import org.uengine.uml.model.ObjectInstance;
+
+import static org.metaworks.dwr.MetaworksRemoteService.autowire;
 
 public abstract class EssenciaEditor extends CompositeEditor {
 
@@ -158,36 +167,52 @@ public abstract class EssenciaEditor extends CompositeEditor {
 
 		if(getItems().get(0) instanceof ComposerEditor){
 			/* Setting EssenceProcessDefinition */
-			{
-				ComposerEditor composerEditor = (ComposerEditor) getItems().get(0);
-				ProcessModelerEditor processModelerEditor = (ProcessModelerEditor) getItems().get(1);
+			ComposerEditor composerEditor = (ComposerEditor) getItems().get(0);
+			ProcessModelerEditor processModelerEditor = (ProcessModelerEditor) getItems().get(1);
 
-				PracticeDefinition practiceDefinition =
-						(PracticeDefinition) composerEditor.takeEssenciaModeler().takeModel();
+			PracticeDefinition practiceDefinition =
+					(PracticeDefinition) composerEditor.takeEssenciaModeler().takeModel();
 
-				composerEditor.getModelResource().saveResource(practiceDefinition);
-				ContextUtil.setWhen((Resource) composerEditor.getResource(), EssenciaContext.WHEN_EDIT);
+			autowire(composerEditor.getModelResource());
+			composerEditor.getModelResource().saveResource(practiceDefinition);
+			ContextUtil.setWhen((Resource) composerEditor.getResource(), EssenciaContext.WHEN_EDIT);
 
-				EssenciaProcessModeler processModeler = (EssenciaProcessModeler) processModelerEditor.getModeler();
-				MetaworksRemoteService.autowire(processModeler);
+			EssenciaProcessModeler processModeler = (EssenciaProcessModeler) processModelerEditor.getModeler();
+			autowire(processModeler);
 
-				EssenceProcessDefinition processDefinition = (EssenceProcessDefinition) processModeler.getModel();
+			EssenceProcessDefinition processDefinition = (EssenceProcessDefinition) processModeler.getModel();
 
-				if (processDefinition == null) {
-					processDefinition = (EssenceProcessDefinition) processModeler.createModel();
+			if (processDefinition == null) {
+				processDefinition = (EssenceProcessDefinition) processModeler.createModel();
+			}
+
+			if (processDefinition != null) {
+				processDefinition.setPracticeDefinition(practiceDefinition);
+
+				practiceDefinition.overrideProcessVariablesTo(processDefinition);
+				//processModeler.setModel(processDefinition);
+			}
+
+			{//Extract Class Definitions and deploy them, and replace the class definition itself with a link
+
+				for (ProcessVariable processVariable : processDefinition.getProcessVariables()) {
+					if (processVariable.getDefaultValue() instanceof LanguageElementInstance) {
+						LanguageElementInstance languageElementInstance = (LanguageElementInstance) processVariable.getDefaultValue();
+						ClassDefinition classDefinition = languageElementInstance.getClassDefinition();
+
+						String classLinkName = processModelerEditor.getModelResource().getPath() + "#" + classDefinition.getName();
+
+						languageElementInstance.setClassName(classLinkName);
+
+					}
 				}
-
-				if (processDefinition != null) {
-					processDefinition.setPracticeDefinition(practiceDefinition);
-
-					practiceDefinition.overrideProcessVariablesTo(processDefinition);
-					//processModeler.setModel(processDefinition);
-				}
-
-				processModelerEditor.getModelResource().saveResource(processDefinition);
-				ContextUtil.setWhen((Resource) processModelerEditor.getResource(), EssenciaContext.WHEN_EDIT);
 
 			}
+
+			autowire(processModelerEditor.getModelResource());
+			processModelerEditor.getModelResource().saveResource(processDefinition);
+			ContextUtil.setWhen((Resource) processModelerEditor.getResource(), EssenciaContext.WHEN_EDIT);
+
 		} else {
 			super.save();
 		}
@@ -302,7 +327,7 @@ public abstract class EssenciaEditor extends CompositeEditor {
 			PracticeDefinition practiceDefinition = ( (MethodComposer)getEssenciaModelerEditor().getModeler() ).createPracticeDefinition();
 
 			EssenciaProcessModeler processModeler = (EssenciaProcessModeler) getProcessModelerEditor().getModeler();
-			MetaworksRemoteService.autowire(processModeler);
+			autowire(processModeler);
 
 			//getting existing process definition.
 
