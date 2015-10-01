@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import org.uengine.essencia.resource.ModelResource;
 import org.uengine.essencia.resource.element.EssenciaResource;
 
-public class ProcessResource extends ModelResource {
+public class EssenceProcessResource extends ModelResource {
 	
-	public ProcessResource() {
+	public EssenceProcessResource() {
 		setChildList(new ArrayList<EssenciaResource>());
 	}
 	
-	public ProcessResource(String path) {
+	public EssenceProcessResource(String path) {
 		this();
 		setPath(path);
 	}

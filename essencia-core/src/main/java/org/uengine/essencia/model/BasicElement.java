@@ -15,7 +15,6 @@ import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 import org.uengine.uml.model.Attribute;
-import org.uengine.uml.model.AttributeInstance;
 import org.uengine.uml.model.face.AttributeListFace;
 import org.uengine.util.UEngineUtil;
 
@@ -206,43 +205,38 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	//transient Map<String, Property> properties = new HashMap<String, Property>();
 
-	public void addAttribute(String id, Attribute property)
-	{
-		attributeList.add(property);
-	}
-	public void addAttribute(String id, Class type) {
-//		Property property = new Property();
-//		property.setKey(id);
-//		property.setType(type.getName());
+//	public void addAttribute(String id, Attribute property)
+//	{
+//		attributeList.add(property);
+//	}
+//	public void addAttribute(String id, Class type) {
 //
-//		properties.put(id, property);
+//		Attribute property = new Attribute();
+//		property.setName(id);
+//		property.setClassName(type.getName());
+//
+//		attributeList.add(property);
+//	}
 
-		Attribute property = new Attribute();
-		property.setName(id);
-		property.setType(type.getName());
-
-		attributeList.add(property);
-	}
-
-	List<Attribute> attributeList = new ArrayList<Attribute>();
-	@Face(faceClass = AttributeListFace.class)
-	public List<Attribute> getAttributeList() {
-		return attributeList;
-	}
-	public void setAttributeList(List<Attribute> attributeList) {
-		this.attributeList = attributeList;
-	}
-
-
-	public Map<String, Attribute> createAttributeMap(){
-		Map<String, Attribute> map = new HashMap<String, Attribute>();
-
-		for(Attribute property : attributeList){
-			map.put(property.getName(), property);
-		}
-
-		return map;
-	}
+//	List<Attribute> attributeList = new ArrayList<Attribute>();
+//	@Face(faceClass = AttributeListFace.class)
+//	public List<Attribute> getAttributeList() {
+//		return attributeList;
+//	}
+//	public void setAttributeList(List<Attribute> attributeList) {
+//		this.attributeList = attributeList;
+//	}
+//
+//
+//	public Map<String, Attribute> createAttributeMap(){
+//		Map<String, Attribute> map = new HashMap<String, Attribute>();
+//
+//		for(Attribute property : attributeList){
+//			map.put(property.getName(), property);
+//		}
+//
+//		return map;
+//	}
 
 
 	public LanguageElementInstance createInstance(String id) {

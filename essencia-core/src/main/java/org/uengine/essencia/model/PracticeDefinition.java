@@ -22,7 +22,6 @@ import org.uengine.kernel.*;
 import org.uengine.kernel.view.HumanActivityView;
 import org.uengine.modeling.*;
 import org.uengine.uml.model.Attribute;
-import org.uengine.uml.model.AttributeInstance;
 import org.uengine.util.ActivityFor;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware {

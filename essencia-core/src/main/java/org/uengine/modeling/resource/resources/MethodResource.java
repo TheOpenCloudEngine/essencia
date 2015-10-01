@@ -1,13 +1,8 @@
 package org.uengine.modeling.resource.resources;
 
-import org.metaworks.MetaworksContext;
 import org.metaworks.Remover;
-import org.metaworks.ServiceMethodContext;
-import org.metaworks.annotation.Available;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
-import org.metaworks.widget.ModalWindow;
+import org.uengine.codi.CodiProcessDefinitionFactory;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.resource.FolderResourceType;
@@ -15,7 +10,6 @@ import org.uengine.essencia.resource.ModelResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.essencia.common.DeployPanel;
 import org.uengine.modeling.resource.DefaultResource;
 import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.ResourceManager;
@@ -38,9 +32,10 @@ public class MethodResource extends ModelResource {
 		return editor; 
 	}
 	
-	public ProcessResource getProcessResource(){
-		ProcessResource resource = new ProcessResource();
-		resource.setPath(getPath());
+	public EssenceProcessResource getProcessResource(){
+		EssenceProcessResource resource = new EssenceProcessResource();
+		resource.setPath(CodiProcessDefinitionFactory.codiProcessDefinitionFolder + getPath().substring(FolderResourceType.METHOD_FOLDER.getName().length()));
+
 		resource.setType(ResourceType.PROCESS_RESOURCE.getType());
 		ContextUtil.fillContext(resource, getMetaworksContext());
 		return resource;
@@ -67,7 +62,7 @@ public class MethodResource extends ModelResource {
 		try {
 			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			resourceManager.getStorage().delete(this);
-			ProcessResource processResource = new ProcessResource();
+			EssenceProcessResource processResource = new EssenceProcessResource();
 			processResource.setPath(this.getPath().replace(ResourceType.METHOD_RESOURCE.getType(),
 					ResourceType.PROCESS_RESOURCE.getType()));
 			resourceManager.getStorage().delete(processResource);

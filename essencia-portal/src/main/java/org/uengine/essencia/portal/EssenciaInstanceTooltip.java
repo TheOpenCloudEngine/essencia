@@ -13,32 +13,33 @@ import org.uengine.essencia.enactment.GameBoard;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.social.SocialBPMInstanceTooltip;
 
 @Scope("prototype")
 @Component
-public class EssenciaInstanceTooltip extends InstanceTooltip{
+public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
     public EssenciaInstanceTooltip() throws Exception {
         super();
     }
 
-    @Override
-    @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)
-    public ModalWindow monitor() throws Exception{
-
-        ProcessInstance instance = processManager.getProcessInstance(""+getInstanceId());
-
-        if(!(instance.getProcessDefinition() instanceof EssenceProcessDefinition))
-            throw new RuntimeException("This instance is not an EssenceProcessDefinition's instance");
-
-        PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)instance.getProcessDefinition()).getPracticeDefinition();
-
-        ModalWindow modal = new ModalWindow(new GameBoard(practiceDefinition, instance), 600, 700);
-
-        modal.setTitle("Alpha Dashboard");
-
-
-        return modal;
-    }
+//    @Override
+//    @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)
+//    public ModalWindow monitor() throws Exception{
+//
+//        ProcessInstance instance = processManager.getProcessInstance(""+getInstanceId());
+//
+//        if(!(instance.getProcessDefinition() instanceof EssenceProcessDefinition))
+//            throw new RuntimeException("This instance is not an EssenceProcessDefinition's instance");
+//
+//        PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)instance.getProcessDefinition()).getPracticeDefinition();
+//
+//        ModalWindow modal = new ModalWindow(new GameBoard(practiceDefinition, instance), 600, 700);
+//
+//        modal.setTitle("Alpha Dashboard");
+//
+//
+//        return modal;
+//    }
 
     @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)
     public ModalWindow showDashBoard() throws Exception{

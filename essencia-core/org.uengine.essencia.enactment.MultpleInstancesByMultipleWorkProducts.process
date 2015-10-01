@@ -191,12 +191,12 @@
                       </org.uengine.essencia.model.State>
                     </list>
                   </languageElement>
-                  <propertyValues>
+                  <attributeValues>
                     <org.uengine.essencia.model.PropertyValue>
                       <key>type</key>
                       <value class="string">Backlog</value>
                     </org.uengine.essencia.model.PropertyValue>
-                  </propertyValues>
+                  </attributeValues>
                   <currentStateName>Identified</currentStateName>
                   <checkedCheckpointNames/>
                   <stateDetailsByStateName/>
@@ -221,7 +221,7 @@
                 <defaultValue class="org.uengine.essencia.enactment.WorkProductInstance">
                   <id>&lt;id&gt;</id>
                   <languageElement class="org.uengine.essencia.model.WorkProduct" reference="../../../../org.uengine.kernel.ParameterContext/variable/defaultValue/languageElement/childElements/org.uengine.essencia.model.WorkProduct"/>
-                  <propertyValues>
+                  <attributeValues>
                     <org.uengine.essencia.model.PropertyValue>
                       <key>startDate</key>
                       <value class="string"></value>
@@ -230,7 +230,7 @@
                       <key>iteration</key>
                       <value class="int">5</value>
                     </org.uengine.essencia.model.PropertyValue>
-                  </propertyValues>
+                  </attributeValues>
                   <currentLevelOfDetailName>draft</currentLevelOfDetailName>
                 </defaultValue>
                 <isVolatile>false</isVolatile>

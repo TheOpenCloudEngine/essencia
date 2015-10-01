@@ -4,15 +4,20 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.metaworks.ContextAware;
+import org.metaworks.FieldDescriptor;
 import org.metaworks.MetaworksContext;
+import org.metaworks.WebFieldDescriptor;
 import org.metaworks.annotation.*;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.face.list.ResourceListFace;
 import org.uengine.essencia.model.face.list.TagListFace;
 import org.uengine.kernel.GlobalContext;
+import org.uengine.uml.model.Attribute;
+import org.uengine.uml.model.ClassDefinition;
+import org.uengine.util.UEngineUtil;
 
 @Face(ejsPath = "dwr/metaworks/genericfaces/ElementFace.ejs")
-public abstract class LanguageElement implements ContextAware, Serializable, FaceTransformer {
+public abstract class LanguageElement extends ClassDefinition implements ContextAware, Serializable, FaceTransformer {
 
 	private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
 
@@ -20,6 +25,7 @@ public abstract class LanguageElement implements ContextAware, Serializable, Fac
 	@Order(1)
 	@Id
 	@Name
+	@Hidden(on=false)
 	public String getName() {
 		return name.getText();
 	}
@@ -174,5 +180,16 @@ public abstract class LanguageElement implements ContextAware, Serializable, Fac
 	}
 
 
+	public void addAttribute(String name, Class clazz) {
+		Attribute attribute = new Attribute();
 
+		attribute.setName(name);
+		attribute.setClassName(clazz.getName());
+
+		Attribute[] attributes = getFieldDescriptors();
+		attributes = (Attribute[]) UEngineUtil.addArrayElement(attributes, attribute);
+
+		setFieldDescriptors(attributes);
+
+	}
 }

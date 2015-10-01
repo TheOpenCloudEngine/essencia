@@ -34,7 +34,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
     public void setValueToFace(AlphaInstance value) {
         BeanUtils.copyProperties(value, this);
 
-        setAttributeValues(value.getAttributeValues());
+ //       setAttributeValues(value.getAttributeValues());
 
         setCheckPointInstanceList(new ArrayList<CheckPointInstance>());
 
@@ -58,7 +58,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
         AlphaInstance alphaInstance = new AlphaInstance();
         BeanUtils.copyProperties(this, alphaInstance);
 
-        alphaInstance.setAttributeValues(getAttributeValues());
+//        alphaInstance.setAttributeValues(getAttributeValues());
 
         if(alphaInstance.getCurrentState()!=null && getCheckPointInstanceList()!=null)
         for(CheckPointInstance checkPointInstance : getCheckPointInstanceList()){

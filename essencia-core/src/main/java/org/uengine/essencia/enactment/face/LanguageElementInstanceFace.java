@@ -9,7 +9,6 @@ import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.modeling.canvas.CardCanvas;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.Symbol;
-import org.uengine.uml.model.AttributeInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,13 +133,6 @@ public class LanguageElementInstanceFace implements Card, Face<LanguageElementIn
 
     String id;
 
-    List<AttributeInstance> attributeValueList;
-        public List<AttributeInstance> getAttributeValueList() {
-            return attributeValueList;
-        }
-        public void setAttributeValueList(List<AttributeInstance> attributeValueList) {
-            this.attributeValueList = attributeValueList;
-        }
 
     BasicElement languageElement;
         @Hidden
@@ -154,7 +146,7 @@ public class LanguageElementInstanceFace implements Card, Face<LanguageElementIn
 
     @Override
     public void setValueToFace(LanguageElementInstance languageElementInstance) {
-        setAttributeValueList(languageElementInstance.getAttributeValues());
+ //       setAttributeValueList(languageElementInstance.getAttributeValues());
         setLanguageElement(languageElementInstance.getLanguageElement());
     }
 

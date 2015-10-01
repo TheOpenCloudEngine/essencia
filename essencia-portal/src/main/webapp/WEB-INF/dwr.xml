@@ -57,6 +57,8 @@
 
         <convert converter="metaworks" match="org.uengine.codi.mw3.webProcessDesigner.*"/>
         <convert converter="metaworks" match="org.uengine.kernel.*"/>
+        <convert converter="metaworks" match="org.uengine.kernel.bpmn.*"/>
+        <convert converter="metaworks" match="org.uengine.kernel.bpmn.face.*"/>
         <convert converter="metaworks" match="org.uengine.kernel.view.*"/>
         <convert converter="metaworks" match="org.uengine.kernel.designer.*"/>
         <convert converter="metaworks" match="org.uengine.contexts.*"/>

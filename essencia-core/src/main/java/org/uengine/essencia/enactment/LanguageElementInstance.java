@@ -6,13 +6,13 @@ import org.metaworks.dwr.SerializationSensitive;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.NeedArrangementToSerialize;
 import org.uengine.uml.model.Attribute;
-import org.uengine.uml.model.AttributeInstance;
+import org.uengine.uml.model.ObjectInstance;
 
 import java.io.Serializable;
 import java.util.*;
 
 //@Face(faceClass=LanguageElementInstanceFace.class)
-public class LanguageElementInstance implements Serializable, NeedArrangementToSerialize, SerializationSensitive{
+public class LanguageElementInstance extends ObjectInstance implements Serializable, NeedArrangementToSerialize, SerializationSensitive{
 
     String id;
     @Id
@@ -34,17 +34,33 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
         }
 
 
-    transient
-    HashMap<String, Serializable> cachedMap;
-    @Hidden
-        private HashMap<String, Serializable> getCachedMap() {
-            return cachedMap;
-        }
+//    transient
+//    HashMap<String, Serializable> cachedMap;
+//    @Hidden
+//        private HashMap<String, Serializable> getCachedMap() {
+//            return cachedMap;
+//        }
+
+
+//    ObjectInstance propertyValues;
+//        public ObjectInstance getPropertyValues() {
+//            return propertyValues;
+//        }
+//
+//        public void setPropertyValues(ObjectInstance propertyValues) {
+//            this.propertyValues = propertyValues;
+//        }
 
 
     public LanguageElementInstance(BasicElement languageElement1, String id){
 
-        cachedMap = new HashMap<String, Serializable>();
+//        cachedMap = new HashMap<String, Serializable>();
+
+//        ObjectInstance propertyValues = new ObjectInstance();
+//        propertyValues.setClassDefinition(languageElement1.getAttributeList());
+//        setPropertyValues(propertyValues);
+
+        setClassDefinition(languageElement1);
 
         if(languageElement1 == null)
             throw new IllegalArgumentException("Alpha should be provided to instantiate an AlphaInstance");
@@ -66,43 +82,49 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
 
     public Serializable setAttribute(String key, Serializable value) {
 
-        Map<String, Attribute> propertyMap = getLanguageElement().createAttributeMap();
+        setBeanProperty(key, value);
 
-        if("id".equals(key)){
-            throw new IllegalArgumentException("Don't use 'put(\"id\", id)'. Use 'setId(id)' instead.");
-        }
+        return value;
 
-        if(!propertyMap.containsKey(key))
-            throw new IllegalArgumentException("No such property ["+key+"] is defined for this Alpha - " + getLanguageElement().getName());
-
-        if(value == null)
-            return getCachedMap().remove(key);
-
-        Class propertyType = null;
-        try {
-            propertyType = Class.forName(propertyMap.get(key).getType());
-        } catch (ClassNotFoundException e) {
-            throw new IllegalStateException(e);
-        }
-
-        if(!propertyType.isAssignableFrom(value.getClass())){
-            throw new IllegalArgumentException("Property [" + key + ":"+ propertyType + "] is not assignable with value " + value + " which is a " + value.getClass());
-        }
-
-        return getCachedMap().put(key, value);
+//        Map<String, Attribute> propertyMap = getLanguageElement().createAttributeMap();
+//
+//        if("id".equals(key)){
+//            throw new IllegalArgumentException("Don't use 'put(\"id\", id)'. Use 'setId(id)' instead.");
+//        }
+//
+//        if(!propertyMap.containsKey(key))
+//            throw new IllegalArgumentException("No such property ["+key+"] is defined for this Alpha - " + getLanguageElement().getName());
+//
+//        if(value == null)
+//            return getCachedMap().remove(key);
+//
+//        Class propertyType = null;
+//        try {
+//            propertyType = Class.forName(propertyMap.get(key).getClassName());
+//        } catch (ClassNotFoundException e) {
+//            throw new IllegalStateException(e);
+//        }
+//
+//        if(!propertyType.isAssignableFrom(value.getClass())){
+//            throw new IllegalArgumentException("Property [" + key + ":"+ propertyType + "] is not assignable with value " + value + " which is a " + value.getClass());
+//        }
+//
+//        return getCachedMap().put(key, value);
     }
 
     public Serializable getAttribute(String key){
-        return getCachedMap().get(key);
+        //return getCachedMap().get(key);
+
+        return (Serializable) getBeanProperty(key);
     }
 
-    List<AttributeInstance> attributeValues;
-        public List<AttributeInstance> getAttributeValues() {
-            return attributeValues;
-        }
-        public void setAttributeValues(List<AttributeInstance> attributeValues) {
-            this.attributeValues = attributeValues;
-        }
+//    List<AttributeInstance> attributeValues;
+//        public List<AttributeInstance> getAttributeValues() {
+//            return attributeValues;
+//        }
+//        public void setAttributeValues(List<AttributeInstance> attributeValues) {
+//            this.attributeValues = attributeValues;
+//        }
 
 
     @Override
@@ -112,63 +134,63 @@ public class LanguageElementInstance implements Serializable, NeedArrangementToS
 
     @Override
     public void beforeSerialization() {
-        if(cachedMap==null){
+//        if(cachedMap==null){
             //create default values
 
-            if(attributeValues==null || attributeValues.size()==0) {
-                if (getLanguageElement().getAttributeList() != null) {
-                    cachedMap = new HashMap<String, Serializable>();
+//            if(attributeValues==null || attributeValues.size()==0) {
+//                if (getLanguageElement().getAttributeList() != null) {
+//                    cachedMap = new HashMap<String, Serializable>();
+//
+//                    for (Attribute property : getLanguageElement().getAttributeList()) {
+//
+//                        AttributeInstance defaultPropertyValue = null;
+//                        try {
+//                            defaultPropertyValue = property.createInstance();
+//                        } catch (Exception e) {
+//
+//                        }
+//
+//                        if (defaultPropertyValue != null)
+//                            setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
+//                    }
+//                }
+//            }else{
+//                return;
+//            }
+//        }
 
-                    for (Attribute property : getLanguageElement().getAttributeList()) {
-
-                        AttributeInstance defaultPropertyValue = null;
-                        try {
-                            defaultPropertyValue = property.createInstance();
-                        } catch (Exception e) {
-
-                        }
-
-                        if (defaultPropertyValue != null)
-                            setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
-                    }
-                }
-            }else{
-                return;
-            }
-        }
-
-        List<AttributeInstance> values = new ArrayList<AttributeInstance>();
-
-        if (getLanguageElement().getAttributeList() != null) {
-            for (Attribute property : getLanguageElement().getAttributeList()) {
-                AttributeInstance propertyValue = null;
-
-                propertyValue = property.createInstance();
-                propertyValue.setName(property.getName());
-
-                if(cachedMap.containsKey(property.getName())) {
-                    propertyValue.setValueObject(cachedMap.get(property.getName()));
-
-                    values.add(propertyValue);
-                }
-            }
-
-            setAttributeValues(values);
-        }
+//        List<AttributeInstance> values = new ArrayList<AttributeInstance>();
+//
+//        if (getLanguageElement().getAttributeList() != null) {
+//            for (Attribute property : getLanguageElement().getAttributeList()) {
+//                AttributeInstance propertyValue = null;
+//
+//                propertyValue = property.createInstance();
+//                propertyValue.setName(property.getName());
+//
+//                if(cachedMap.containsKey(property.getName())) {
+//                    propertyValue.setValueObject(cachedMap.get(property.getName()));
+//
+//                    values.add(propertyValue);
+//                }
+//            }
+//
+//            setAttributeValues(values);
+//        }
     }
 
     @Override
     public void afterDeserialization() {
-        if(cachedMap!=null) return;
-
-
-
-        cachedMap = new HashMap<String, Serializable>();
-
-        if(attributeValues !=null)
-        for(AttributeInstance propertyValue : attributeValues){
-            if(propertyValue!=null)
-                cachedMap.put(propertyValue.getName(), (Serializable) propertyValue.getValue());
-        }
+//        if(cachedMap!=null) return;
+//
+//
+//
+//        cachedMap = new HashMap<String, Serializable>();
+//
+//        if(attributeValues !=null)
+//        for(AttributeInstance propertyValue : attributeValues){
+//            if(propertyValue!=null)
+//                cachedMap.put(propertyValue.getName(), (Serializable) propertyValue.getValue());
+//        }
     }
 }
