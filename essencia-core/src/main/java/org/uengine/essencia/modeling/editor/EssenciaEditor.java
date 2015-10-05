@@ -217,20 +217,20 @@ public abstract class EssenciaEditor extends CompositeEditor {
 			super.save();
 		}
 
-		commit();
+//		commit();
 	}
 
-	private void commit()throws Exception{
-		if(getResource() instanceof Commitable){
-			CommitRecord record = new CommitRecord();
-			record.setResources(getResource().getName());
-			record.setAuthor(essenciaSession.getUser().getEmpName());
-
-			Commitable commitable = (Commitable)getResource();
-			commitable.setRecord(record);
-			commitable.commit();
-		}
-	}
+//	private void commit()throws Exception{
+//		if(getResource() instanceof Commitable){
+//			CommitRecord record = new CommitRecord();
+//			record.setResources(getResource().getName());
+//			record.setAuthor(essenciaSession.getUser().getEmpName());
+//
+//			Commitable commitable = (Commitable)getResource();
+//			commitable.setRecord(record);
+//			commitable.commit();
+//		}
+//	}
 
 
 	@Available(condition="saveable")
