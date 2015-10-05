@@ -45,7 +45,7 @@ public class Dashboard implements ContextAware {
 		metaworksContext.setWhere("dashboard");
 		this.practiceDefinition = practiceDefinition;
 
-		this.practiceDefinition = getKernelDefinition(); //TODO example.practices 대입
+		//this.practiceDefinition = getKernelDefinition(); //TODO example.practices 대입
 
 
 		//

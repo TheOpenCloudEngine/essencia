@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
@@ -705,6 +706,49 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
     public void beforeSerialize() {
 
+    }
+
+    boolean arranged = false;
+    public void arrangeRelations(){
+
+        if(arranged) return;
+
+        Map<String, IElement> elementMap = new HashMap<String, IElement>();
+
+        for(IElement element : getElementList()){
+            elementMap.put(element.getElementView().getId(), element);
+        }
+
+
+        for(IRelation relation : getRelationList()){
+
+            String from = relation.getRelationView().getFrom();
+            String to = relation.getRelationView().getTo();
+
+            from = from.split("_TERMINAL")[0];
+            to = to.split("_TERMINAL")[0];
+
+            BasicElement sourceElem = (BasicElement) elementMap.get(from);
+            BasicElement targetElem = (BasicElement) elementMap.get(to);
+
+            Relation _relation = (Relation) relation;
+
+            _relation.setSourceElement(sourceElem);
+            _relation.setTargetElement(targetElem);
+
+            if(sourceElem.outgoingRelations==null)
+                sourceElem.outgoingRelations = new ArrayList<Relation>();
+
+            sourceElem.outgoingRelations.add(_relation);
+
+            if(targetElem.incomingRelations==null)
+                targetElem.incomingRelations = new ArrayList<Relation>();
+
+            targetElem.incomingRelations.add(_relation);
+
+        }
+
+        arranged = true;
     }
 
 }

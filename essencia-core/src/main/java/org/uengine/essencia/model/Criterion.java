@@ -4,6 +4,7 @@ import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.enactment.NotCompletableException;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.kernel.ValidationContext;
 
 import java.util.ArrayList;
@@ -86,11 +87,28 @@ public class Criterion extends LanguageElement {
 
             try {
                 for (AlphaInstance alphaInstance : alphaInstances) {
-                    if(alphaInstance!=null)
+                    if(alphaInstance!=null) {
                         alphaInstance.advanceState(instance);
+
+                    }
                 }
             }catch(NotCompletableException nce){
                 validationContext.add(nce.getMessage());
+            }
+
+
+            ProcessVariableValue pvv = new ProcessVariableValue();
+            pvv.setName(alpha.getName());
+
+            for (AlphaInstance alphaInstance : alphaInstances) {
+                pvv.setValue(alphaInstance);
+                pvv.moveToAdd();
+            }
+
+            try {
+                instance.set("", pvv);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
 
         }else if(getLevelOfDetail()!=null){ //means WorkProduct

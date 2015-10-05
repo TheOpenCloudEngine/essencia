@@ -2,6 +2,7 @@ package org.uengine.essencia.resource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
@@ -24,6 +25,7 @@ import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Clipboard;
+import org.metaworks.widget.Download;
 import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.uengine.ConfirmPanel;
@@ -232,15 +234,17 @@ public class Resource implements IResource, Comparable<IResource> {
 		return new ModalWindow(panel, 500, 500, "Delete");
 	}
 
-	public Object delete() {
+	public void delete() {
 		try {
 			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			resourceManager.getStorage().delete(this);
 		} catch (Exception e) {
-			return null;
+//			return null;
 		}
-		return new Remover(this);
+//		return new Remover(this);
 	}
+
+
 
 	public boolean deleteAll(String path) {
 		File file = new File(path);

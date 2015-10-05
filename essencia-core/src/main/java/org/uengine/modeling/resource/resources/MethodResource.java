@@ -58,7 +58,7 @@ public class MethodResource extends ModelResource {
 //	}
 
 	@Override
-	public Object delete() {
+	public void delete() {
 		try {
 			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 			resourceManager.getStorage().delete(this);
@@ -68,9 +68,9 @@ public class MethodResource extends ModelResource {
 			resourceManager.getStorage().delete(processResource);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+//			return null;
 		}
-		return new Remover(this);
+//		return new Remover(this);
 	}
 
 	@Override

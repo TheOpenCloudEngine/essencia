@@ -14,6 +14,7 @@ import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
+import org.uengine.modeling.Relation;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.face.AttributeListFace;
 import org.uengine.util.UEngineUtil;
@@ -299,4 +300,13 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 //		return attributeInstances;
 //	}
 
+	protected transient List<Relation> outgoingRelations;
+		public List<Relation> getOutgoingRelations() {
+			return outgoingRelations;
+		}
+
+	protected transient List<Relation> incomingRelations;
+		public List<Relation> getIncomingRelations() {
+			return incomingRelations;
+		}
 }

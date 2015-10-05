@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Payload;
@@ -28,7 +29,7 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
             this.id = id;
         }
 
-
+    //@XStreamOmitField
     BasicElement languageElement;
     @Hidden
         public BasicElement getLanguageElement() {

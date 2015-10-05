@@ -1,6 +1,7 @@
 package org.uengine.essencia.resource;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -115,6 +116,7 @@ public class ExportResource implements IModelResource {
 	public void save(Object editingObject) throws Exception {
 
 	}
+
 
 	@Override
 	public MetaworksContext getMetaworksContext() {

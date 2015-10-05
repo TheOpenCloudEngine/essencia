@@ -56,6 +56,7 @@ public class ContainerResource extends Resource implements IContainer {
 		this.children = children;
 	}
 
+
 	@Field(descriptor = "container")
 	public boolean isContainer() {
 		return isContainer;

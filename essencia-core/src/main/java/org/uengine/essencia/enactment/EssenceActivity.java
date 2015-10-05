@@ -164,8 +164,8 @@ public class EssenceActivity extends HumanActivity {
 
             if(alphaInstances!=null)
             for(AlphaInstance alphaInstance : alphaInstances ){
-                if(!criterion.getState().equals(alphaInstance.getCurrentState())){
-                    throw new IllegalStateException("Not reached to entry state '" + criterion.getState().getName() + "' to begin this activity" + getName());
+                if(!criterion.getState().getName().equals(alphaInstance.getCurrentState().getName())){
+                    throw new IllegalStateException("Not reached to entry state '" + criterion.getState().getParentAlpha().getName() + " : " + criterion.getState().getName() + "' to begin this activity '" + getName() + "'");
                 }
             }
         }

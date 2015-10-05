@@ -3,11 +3,9 @@ package org.uengine.essencia.enactment;
 import org.metaworks.annotation.Face;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace2;
-import org.uengine.essencia.model.Alpha;
-import org.uengine.essencia.model.LanguageElement;
-import org.uengine.essencia.model.State;
-import org.uengine.essencia.model.WorkProduct;
+import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.modeling.Relation;
 
 import java.util.*;
 
@@ -156,7 +154,12 @@ public class AlphaInstance extends LanguageElementInstance {
        // Map<String, Integer> runningCntByState = new HashMap<String, Integer>();
 
         int totalCount = 0;
-        for(LanguageElement element : getAlpha().getChildElements()){
+
+        if(getAlpha().getOutgoingRelations()!=null)
+        for(Relation relation : getAlpha().getOutgoingRelations()){
+
+            BasicElement element = (BasicElement) relation.getTargetElement();
+
             if(element instanceof Alpha){
                 Alpha subAlpha = (Alpha)element;
 

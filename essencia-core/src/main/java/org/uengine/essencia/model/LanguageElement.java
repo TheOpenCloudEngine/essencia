@@ -12,6 +12,7 @@ import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.face.list.ResourceListFace;
 import org.uengine.essencia.model.face.list.TagListFace;
 import org.uengine.kernel.GlobalContext;
+import org.uengine.modeling.Relation;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ClassDefinition;
 import org.uengine.util.UEngineUtil;
@@ -192,4 +193,6 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		setFieldDescriptors(attributes);
 
 	}
+
+
 }

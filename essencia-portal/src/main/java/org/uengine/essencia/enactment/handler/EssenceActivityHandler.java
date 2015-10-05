@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment.handler;
 
+import org.metaworks.annotation.Available;
 import org.metaworks.model.MetaworksElement;
 import org.uengine.codi.mw3.model.ParameterValue;
 import org.uengine.codi.mw3.model.ProcessVariableValueList;
@@ -20,14 +21,13 @@ import java.util.List;
 public class EssenceActivityHandler extends WorkItemHandler {
 
     ActivityCard activityCard;
-
-    public ActivityCard getActivityCard() {
-        return activityCard;
-    }
-
-    public void setActivityCard(ActivityCard activityCard) {
-        this.activityCard = activityCard;
-    }
+    @Available(where = "detail")
+        public ActivityCard getActivityCard() {
+            return activityCard;
+        }
+        public void setActivityCard(ActivityCard activityCard) {
+            this.activityCard = activityCard;
+        }
 
     @Override
     public void load() throws Exception {

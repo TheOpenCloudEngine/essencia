@@ -7,6 +7,7 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Clipboard;
+import org.metaworks.widget.Download;
 import org.metaworks.widget.Popup;
 import org.uengine.essencia.IUser;
 import org.uengine.essencia.Session;
@@ -22,6 +23,7 @@ import org.uengine.essencia.resource.element.ThingsToWorkResource;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.resource.ResourceManager;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -92,6 +94,7 @@ public class ModelResource extends Resource implements IModelResource, Lockable,
 	public boolean isContainer() {
 		return true;
 	}
+
 
 	public void setContainer(boolean container) {
 

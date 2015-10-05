@@ -54,24 +54,28 @@
 
     <%
 
-    if(alpha.childElements){
+    if(alpha.outgoingRelations){
 
-    %><ul><%
-        for(var i in alpha.childElements){
-            var childAlpha = alpha.childElements[i];
+    %><table height='10px'><td width=20px><div onclick="$(event.target).closest('table').css('height', '100%')"></div></td><td><%
+        for(var i in alpha.outgoingRelations){
 
-            var childGameBoard = {
-                __className: "org.uengine.essencia.enactment.AlphaGameBoard",
-                alphaInstances:  value.alphaInstances,
-                alpha: childAlpha
-            };
+            var outgoingRelation = alpha.outgoingRelations[i];
 
-            %><%=mw3.locateObject(childGameBoard)%><%
+            if(outgoingRelation.targetElement && mw3.isSuperClassOf('org.uengine.essencia.model.Alpha', outgoingRelation.targetElement.__className)){
+                var childAlpha = outgoingRelation.targetElement;
 
+                var childGameBoard = {
+                    __className: "org.uengine.essencia.enactment.AlphaGameBoard",
+                    alphaInstances:  value.alphaInstances,
+                    alpha: childAlpha
+                };
+
+                %><%=mw3.locateObject(childGameBoard)%><%
+            }
         }
 
 
-        %></ul><%
+        %></td></table><%
     }
 
 %>
