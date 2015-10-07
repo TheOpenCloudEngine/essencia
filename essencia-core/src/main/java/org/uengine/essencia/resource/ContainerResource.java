@@ -195,4 +195,9 @@ public class ContainerResource extends Resource implements IContainer {
 	public String getResourceType(){
 		return null;
 	}
+
+	@Override
+	public <T extends IResource> void filterResource(Class<T> clazz) {
+
+	}
 }

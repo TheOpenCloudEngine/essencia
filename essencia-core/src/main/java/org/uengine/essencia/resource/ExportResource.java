@@ -1,6 +1,7 @@
 package org.uengine.essencia.resource;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,6 +14,7 @@ import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.modeling.IModel;
 import org.uengine.modeling.resource.IContainer;
+import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.IResourceVisitor;
 
 public class ExportResource implements IModelResource {
@@ -117,14 +119,51 @@ public class ExportResource implements IModelResource {
 
 	}
 
-
-	@Override
 	public MetaworksContext getMetaworksContext() {
 		return null;
 	}
 
-	@Override
 	public void setMetaworksContext(MetaworksContext context) {
 
+	}
+
+	@Override
+	public void delete() {
+
+	}
+
+	@Override
+	public Download download(String fileName, String mimeType) throws Exception {
+		return null;
+	}
+
+	@Override
+	public void copy(String desPath) throws Exception {
+
+	}
+
+	@Override
+	public void upload(InputStream is) {
+
+	}
+
+	@Override
+	public void move(IContainer container) throws IOException {
+
+	}
+
+	@Override
+	public void newOpen() throws Exception {
+
+	}
+
+	@Override
+	public void reopen() throws Exception {
+
+	}
+
+	@Override
+	public int compareTo(IResource o) {
+		return 0;
 	}
 }

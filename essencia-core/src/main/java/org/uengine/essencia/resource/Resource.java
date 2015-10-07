@@ -2,6 +2,7 @@ package org.uengine.essencia.resource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -435,4 +436,36 @@ public class Resource implements IResource, Comparable<IResource> {
 //			e.printStackTrace();
 //		}
 	}
+
+	@Override
+	public Download download(String fileName, String mimeType) throws Exception {
+		return null;
+	}
+
+	@Override
+	public void copy(String desPath) throws Exception {
+
+	}
+
+	@Override
+	public void upload(InputStream is) {
+
+	}
+
+	@Override
+	public void move(IContainer container) throws IOException {
+
+	}
+
+	@Override
+	public void newOpen() throws Exception {
+
+	}
+
+	@Override
+	public void reopen() throws Exception {
+
+	}
+
+
 }
