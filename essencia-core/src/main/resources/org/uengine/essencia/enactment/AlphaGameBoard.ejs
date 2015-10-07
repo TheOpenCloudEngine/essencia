@@ -1,15 +1,24 @@
 <%var alpha = value.alpha;%>
 
-<li> <%=alpha.name%>
+<H1> <%=alpha.name%></h1>
 <%var alphaInstanceList = value.alphaInstances[alpha.name];%>
     <table class="table table-striped active">
         <tr>
             <td>Id</td>
         <%
-         for(var i in alpha.states){
-            var state = alpha.states[i];
-             %><td><%=state.name%></td><%
-         }
+            if(alpha.states){
+                for(var i in alpha.states){
+                    var state = alpha.states[i];
+                    %><td><%=state.name%></td><%
+
+                }
+            }else if(alpha.levelOfDetails){
+                for(var i in alpha.levelOfDetails){
+                    var levelOfDetail = alpha.levelOfDetails[i];
+                    %><td><%=levelOfDetail.name%></td><%
+
+                }
+            }
         %>
         </tr>
 
@@ -39,10 +48,12 @@
                     var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
                     if(stateDetails){
 
-                        %>(<%=stateDetails['WIPCount']%>/<%=alphaInstance.subAlphaInstanceCount%>)<%
+                       // var max = 256;
+
+
+                        %><font color="blue"><b><%=stateDetails['WIPCount']%>/<%=alphaInstance.subAlphaInstanceCount%></b></font><%
                     }
                 }
-
                 %></td><%
             }
 

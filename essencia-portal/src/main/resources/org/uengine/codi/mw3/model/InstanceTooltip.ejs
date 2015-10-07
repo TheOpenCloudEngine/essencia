@@ -4,7 +4,7 @@
 %>
 			<div class="icon_toolbar">
 				<div data-toggle="tooltip" data-placement="top" title="Alpha View" class="icon-rounded m-r-10 tooltip-top" onclick="<%=methods.showDashBoard.caller()%>">
-					<i class="glyphicon glyphicon-random  workitem_btn"></i>
+					<i class="glyphicon glyphicon-dashboard  workitem_btn"></i>
 				</div>
 
 				<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$process")%>" class="icon-rounded m-r-10 tooltip-top" onclick="<%=methods.monitor.caller()%>">
@@ -52,23 +52,25 @@
 					<i class="glyphicon glyphicon-ok workitem_btn current"></i>
 	            </div>
 
-	            <!-- Event Trigger -->
+				<!-- Event Trigger -->
 				<%
 				if( value.eventTriggers ){
-          			for(var i=0; i < value.eventTriggers.length; i++){
-						var options;
-						var eventTrigger = value.eventTriggers[i];
-						if(typeof options == 'undefined'){
-							  options = objectMetadata;
-						}
-						options['htmlTag'] =  'li';
+				for(var i=0; i < value.eventTriggers.length; i++){
+					var options;
+					var eventTrigger = value.eventTriggers[i];
+					if(typeof options == 'undefined'){
+						options = objectMetadata;
+					}
+					options['htmlTag'] =  'li';
 				%>
-				<div data-toggle="tooltip" data-placement="top" title="<%=eventTrigger.displayName%>" class="icon-rounded m-r-10 tooltip-top style="padding-top:15.5px">
-					<%=mw3.locateObject(eventTrigger, eventTrigger.__className, null , options, {objectId: objectId, name: '[' + i + ']'}) %>
+				<div data-toggle="tooltip" data-placement="top" title="eventTrigger" class="icon-rounded m-r-10 tooltip-top">
+					<i class="glyphicon glyphicon-triangle-top">
+						<%=mw3.locateObject(eventTrigger, eventTrigger.__className, null , options, {objectId: objectId, name: '[' + i + ']'}) %>
+					</i>
 				</div>
 				<%
-							}
-						}
+					}
+				}
 				%>
 <%
 		}else{

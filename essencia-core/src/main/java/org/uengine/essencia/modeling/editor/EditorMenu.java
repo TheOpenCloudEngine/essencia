@@ -29,21 +29,21 @@ public class EditorMenu extends MainMenu {
 	@AutowiredFromClient
 	public EssenciaCanvas essenciaCanvas;
 	
-	@Order(1)
-	@Face(displayName="Check Out")
-	@Available(when={MetaworksContext.WHEN_VIEW})
-	@ServiceMethod(target=ServiceMethodContext.TARGET_APPEND)
-	public Object[] checkOut(){
-		return new Object[]{new ToEvent(new EmptyEditor(), EditorContext.CHECK_OUT)};
-	}
-	
-	@Order(1)
-	@Face(displayName="Lock Info")
-	@Available(when={EssenciaContext.WHEN_VIEW_LOCK})
-	@ServiceMethod(target=ServiceMethodContext.TARGET_APPEND)
-	public Object[] lockInfo(){
-		return new Object[]{new ToEvent(new EmptyEditor(), EditorContext.LOCK_INFO)};
-	}
+//	@Order(1)
+//	@Face(displayName="Check Out")
+//	@Available(when={MetaworksContext.WHEN_VIEW})
+//	@ServiceMethod(target=ServiceMethodContext.TARGET_APPEND)
+//	public Object[] checkOut(){
+//		return new Object[]{new ToEvent(new EmptyEditor(), EditorContext.CHECK_OUT)};
+//	}
+//
+//	@Order(1)
+//	@Face(displayName="Lock Info")
+//	@Available(when={EssenciaContext.WHEN_VIEW_LOCK})
+//	@ServiceMethod(target=ServiceMethodContext.TARGET_APPEND)
+//	public Object[] lockInfo(){
+//		return new Object[]{new ToEvent(new EmptyEditor(), EditorContext.LOCK_INFO)};
+//	}
 
 	@Order(1)
 	@Face(displayName="Save")
@@ -62,13 +62,13 @@ public class EditorMenu extends MainMenu {
 //		return new Object[]{new ToEvent(new EmptyEditor(), EditorContext.CHECK_IN)};
 //	}
 	
-	@Order(3)
-	@Face(displayName="Edit")
-	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
-	@ServiceMethod(target=ServiceMethodContext.TARGET_STICK)
-	public SubMenu edit(){
-		return new EditorSubMenu();
-	}
+//	@Order(3)
+//	@Face(displayName="Edit")
+//	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
+//	@ServiceMethod(target=ServiceMethodContext.TARGET_STICK)
+//	public SubMenu edit(){
+//		return new EditorSubMenu();
+//	}
 
 	@Order(4)
 	@Face(displayName="Font")
@@ -86,30 +86,30 @@ public class EditorMenu extends MainMenu {
 		return new AlignElementSubMenu();
 	}
 	
-	@Order(7)
-	@Face(displayName="Zoom In/Out")
-	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
-	@ServiceMethod(target=ServiceMethodContext.TARGET_STICK)
-	public SubMenu scale(){
-		return new ScaleSubMenu();
-	}
+//	@Order(7)
+//	@Face(displayName="Zoom In/Out")
+//	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
+//	@ServiceMethod(target=ServiceMethodContext.TARGET_STICK)
+//	public SubMenu scale(){
+//		return new ScaleSubMenu();
+//	}
 
-	@Order(8)
-	@Face(displayName="History")
-	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
-	@ServiceMethod(target=ServiceMethodContext.TARGET_POPUP)
-	public Object History(){
-		CommitHistory history = CommitHistory.load();
-		history.filterHistoryByFileName(essenciaEditor.getResource().getName());
-		
-		ModalWindow modalWindow = new ModalWindow();
-		modalWindow.setWidth(300);
-		modalWindow.setHeight(500);
-		modalWindow.setTitle("History");
-		modalWindow.setPanel(history);
-		return modalWindow;
-	}
-	
+//	@Order(8)
+//	@Face(displayName="History")
+//	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
+//	@ServiceMethod(target=ServiceMethodContext.TARGET_POPUP)
+//	public Object History(){
+//		CommitHistory history = CommitHistory.load();
+//		history.filterHistoryByFileName(essenciaEditor.getResource().getName());
+//
+//		ModalWindow modalWindow = new ModalWindow();
+//		modalWindow.setWidth(300);
+//		modalWindow.setHeight(500);
+//		modalWindow.setTitle("History");
+//		modalWindow.setPanel(history);
+//		return modalWindow;
+//	}
+//
 	@Order(9)
 	@Face(displayName="Export")
 	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})

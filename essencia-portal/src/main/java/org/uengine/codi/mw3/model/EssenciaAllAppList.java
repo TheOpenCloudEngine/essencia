@@ -30,7 +30,7 @@ public class EssenciaAllAppList extends AllAppList {
         EssenciaApplication application = new EssenciaApplication();
         application.setEssencia(essencia);
 
-        topPanel.setTopCenterTitle("$AppList.Essencia");
+        topPanel.setTopCenterTitle("Composer");
         return new Object[]{new Refresh(application), new Refresh(topPanel), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
     }
 
@@ -38,7 +38,7 @@ public class EssenciaAllAppList extends AllAppList {
     public Object[] goMarketplace() throws Exception {
         Marketplace essenciaMarketplace = new Marketplace(session);
 
-        topPanel.setTopCenterTitle("$AppList.Marketplace");
+        topPanel.setTopCenterTitle("Marketplace");
         return new Object[]{new Refresh(essenciaMarketplace), new Refresh(topPanel), new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
     }
 }

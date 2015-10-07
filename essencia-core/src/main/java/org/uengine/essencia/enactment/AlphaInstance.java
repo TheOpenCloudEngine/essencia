@@ -165,44 +165,52 @@ public class AlphaInstance extends LanguageElementInstance {
 
                 List<AlphaInstance> subAlphaInstances = subAlpha.getInstances(instance);
 
-                totalCount += subAlphaInstances.size();
+                if(subAlphaInstances!=null){
+                    totalCount += subAlphaInstances.size();
 
-                for(AlphaInstance subAlphaInstance : subAlphaInstances){
+                    for(AlphaInstance subAlphaInstance : subAlphaInstances){
 
-                    String aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
+                        String aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
 
-                    getAlpha().findState(aggregationAlphaStateName);
+                        getAlpha().findState(aggregationAlphaStateName);
 
 
-                    int runningCntOfThisState = 0;
-                    Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
+                        int runningCntOfThisState = 0;
+                        Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
 
-                    if(wipCntObject!=null)
-                        runningCntOfThisState = (int)wipCntObject;
+                        if(wipCntObject!=null)
+                            runningCntOfThisState = (int)wipCntObject;
 
-                    setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
+                        setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
+                    }
+
                 }
+
             }else if(element instanceof WorkProduct){
                 WorkProduct subAlpha = (WorkProduct)element;
 
                 List<WorkProductInstance> subAlphaInstances = subAlpha.getInstances(instance);
 
-                totalCount += subAlphaInstances.size();
+                if(subAlphaInstances!=null) {
+                    totalCount += subAlphaInstances.size();
 
-                for(WorkProductInstance subAlphaInstance : subAlphaInstances){
+                    for (WorkProductInstance subAlphaInstance : subAlphaInstances) {
 
-                    String aggregationAlphaStateName = subAlphaInstance.getCurrentLevelOfDetail().getAggregationAlphaState();
+                        String aggregationAlphaStateName = subAlphaInstance.getCurrentLevelOfDetail().getAggregationAlphaState();
 
-                    getAlpha().findState(aggregationAlphaStateName);
+                        try {
+                            getAlpha().findState(aggregationAlphaStateName);
 
 
-                    int runningCntOfThisState = 0;
-                    Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
+                            int runningCntOfThisState = 0;
+                            Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
 
-                    if(wipCntObject!=null)
-                        runningCntOfThisState = (int)wipCntObject;
+                            if (wipCntObject != null)
+                                runningCntOfThisState = (int) wipCntObject;
 
-                    setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
+                            setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
+                        }catch(Exception e){}
+                    }
                 }
             }
 
@@ -219,5 +227,25 @@ public class AlphaInstance extends LanguageElementInstance {
         public void setSubAlphaInstanceCount(int subAlphaInstanceCount) {
             this.subAlphaInstanceCount = subAlphaInstanceCount;
         }
+
+    public boolean meetCriteria(Criterion criterion){
+
+        String currentStateName = getCurrentStateName();
+
+        boolean startCheck = false;
+        for(int i=0; i<getAlpha().getStates().size(); i++){
+            State state = getAlpha().getStates().get(i);
+            if(state.getName().equals(criterion.getState().getName())){
+                startCheck = true;
+            }
+
+            if(startCheck
+                    && state.getName().equals(currentStateName)){
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }
