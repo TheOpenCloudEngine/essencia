@@ -56,6 +56,21 @@ public class ContainerResource extends Resource implements IContainer {
 		this.children = children;
 	}
 
+	@Override
+	public <T extends IResource> void filterResources(Class<T> clazz) {
+
+	}
+
+	@Override
+	public void filterResources(List<IResource> resources) {
+
+	}
+
+	@Override
+	public void initMetaworksContext(MetaworksContext metaworksContext) {
+
+	}
+
 
 	@Field(descriptor = "container")
 	public boolean isContainer() {
@@ -196,8 +211,5 @@ public class ContainerResource extends Resource implements IContainer {
 		return null;
 	}
 
-	@Override
-	public <T extends IResource> void filterResource(Class<T> clazz) {
 
-	}
 }

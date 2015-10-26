@@ -222,6 +222,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             final String nameOfFindingActivity = ((Activity) element).getName();
 
 
+            //remove essence activities generated before in BPMN-side which is currently removed in the practice definition.
             new ActivityFor() {
                 @Override
                 public void logic(org.uengine.kernel.Activity activity) {
@@ -237,6 +238,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
 
 
+            //find existing BPMN activity to update
             final ActivityFor findingActivityByName = new ActivityFor(){
 
                 @Override
@@ -257,6 +259,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
             EssenceActivity essenceActivity = (EssenceActivity) findingActivityByName.getReturnValue();
 
+            //in case that newly added
             if(essenceActivity==null){
                 essenceActivity = new EssenceActivity();
 
@@ -289,7 +292,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
                 returnProcessDefinition.addChildActivity(essenceActivity);
 
-            }else{
+            }else{ //update
                 essenceActivity.setActivityInEssenceDefinition(activityInPracticeDefinition);
                 essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetencyName()));//TODO: should be getCompetency().getName()
 
