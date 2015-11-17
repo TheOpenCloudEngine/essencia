@@ -156,7 +156,6 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 		return elementView;
 	}
 
-	public abstract Object[] drop();
 
 	public List<IElement> takeElementList(){
 		return ElementUtil.convertToElementList(getSafeElementViewList());

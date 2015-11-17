@@ -5,6 +5,7 @@ import org.metaworks.ServiceMethodContext;
 import org.metaworks.ToAppend;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
@@ -28,7 +29,7 @@ public class PracticeCanvas extends EssenciaCanvas {
 	@Available(when={MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
 	@ServiceMethod(payload={"clipboard", "modelerType", "elementViewList"}, target=ServiceMethodContext.TARGET_APPEND, eventBinding=CANVAS_DROP)
 	@Override
-	public Object[] drop() {
+	public void drop() {
 		
 		ElementView elementView = null;	
 		
@@ -49,20 +50,20 @@ public class PracticeCanvas extends EssenciaCanvas {
 				throw e;
 			}
 
-			return returnArr;
+			MetaworksRemoteService.wrapReturn(returnArr);
 		}else if(content instanceof Symbol){
 			Symbol symbol = (Symbol)content;
 			
 			if("EDGE".equals(symbol.getShapeType())){
 				RelationView relationView = makeRelationViewFromSymbol((Symbol)content);
 				
-				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, relationView); 
-				return returnArr;
+				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, relationView);
+				MetaworksRemoteService.wrapReturn( returnArr);
 			}else{
 				elementView = makeElementViewFromSymbol((Symbol)content);
 				
-				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView); 
-				return returnArr;
+				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
+				MetaworksRemoteService.wrapReturn( returnArr);
 			}
 			
 			
@@ -72,11 +73,11 @@ public class PracticeCanvas extends EssenciaCanvas {
 			
 			if(validate(elementView)){
 				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
-			} 
-			
-			return returnArr;
+			}
+
+			MetaworksRemoteService.wrapReturn(returnArr);
 		}else{
-			return returnArr;
+			MetaworksRemoteService.wrapReturn( returnArr);
 		}
 	}
 	

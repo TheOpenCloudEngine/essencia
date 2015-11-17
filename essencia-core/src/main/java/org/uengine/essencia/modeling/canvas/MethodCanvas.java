@@ -3,6 +3,8 @@ package org.uengine.essencia.modeling.canvas;
 import java.util.Arrays;
 import java.util.List;
 
+import org.directwebremoting.ScriptSession;
+import org.directwebremoting.ScriptSessionFilter;
 import org.metaworks.MetaworksContext;
 import org.metaworks.Refresh;
 import org.metaworks.ServiceMethodContext;
@@ -11,6 +13,7 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.uengine.codi.mw3.Login;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
@@ -27,6 +30,8 @@ import org.uengine.essencia.resource.element.EssenciaElementResource;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.modeling.*;
+
+import static org.metaworks.dwr.MetaworksRemoteService.wrapReturn;
 
 public class MethodCanvas extends EssenciaCanvas {
 
@@ -47,7 +52,7 @@ public class MethodCanvas extends EssenciaCanvas {
     /**
      * Practice Merge
      */
-    public Object[] drop() {
+    public void drop() {
         ElementView elementView = null;
 
         Object[] returnArr = initReturnArr();
@@ -68,21 +73,39 @@ public class MethodCanvas extends EssenciaCanvas {
                 throw e;
             }
 
-            return returnArr;
+            wrapReturn(returnArr);
         } else if (content instanceof Symbol) {
             Symbol symbol = (Symbol) content;
+
 
             if ("EDGE".equals(symbol.getShapeType())) {
                 RelationView relationView = makeRelationViewFromSymbol((Symbol) content);
 
                 returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, relationView);
-                return returnArr;
+                wrapReturn (returnArr);
             } else {
                 elementView = makeElementViewFromSymbol((Symbol) content);
 
                 returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
-                return returnArr;
+
+                if(false) {  //turn on if you want to use broadcasting changes
+
+                    MethodCanvas lightMe = new MethodCanvas();
+                    lightMe.setModelerType(getModelerType());
+
+                    MetaworksRemoteService.pushClientObjectsFiltered(new ScriptSessionFilter() {
+                        @Override
+                        public boolean match(ScriptSession scriptSession) {
+                            return !(session != null && scriptSession.getId().equals(Login.getSessionIdWithUserId(session.getUser().getUserId())));
+
+                        }
+                    }, new Object[]{new ToAppend(lightMe, elementView)});
+                }
+
+                wrapReturn (returnArr);
             }
+
+
 
 
         } else if (content instanceof EssenciaElementResource) {
@@ -128,7 +151,7 @@ public class MethodCanvas extends EssenciaCanvas {
                 e.printStackTrace();
             }
             returnArr[1] = new Refresh(this);
-            return returnArr;
+            wrapReturn( returnArr);
         } else if (content instanceof MethodResource) {
 
             PracticeDefinition practice = null;
@@ -193,10 +216,10 @@ public class MethodCanvas extends EssenciaCanvas {
             ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
             getMetaworksContext().setWhen(EssenciaContext.WHEN_EDIT);
             returnArr[1] = new Refresh(this);
-            return returnArr;
+            wrapReturn(returnArr);
         }
 
-        return returnArr;
+        wrapReturn (returnArr);
     }
 
     private void autoRelocationFromPractice(List<ElementView> list) {
