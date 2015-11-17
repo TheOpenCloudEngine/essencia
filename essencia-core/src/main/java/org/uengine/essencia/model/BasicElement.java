@@ -61,6 +61,8 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 		this.briefDescription.setText(locale, description);
 	}
 
+
+
 //	@Order(3)
 //	public String getDescription() {
 //		return description.getText();

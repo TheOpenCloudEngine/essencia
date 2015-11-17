@@ -16,12 +16,12 @@ import org.uengine.modeling.*;
 /**
  * @author jyj
  */
-public class PracticeDefiner extends EssenciaModeler {
+public class PracticeDefiner extends DefaultModeler {
 
     public final static String SUFFIX = ".practice";
 
     public PracticeDefiner() {
-        setType(SUFFIX);
+//        setType(SUFFIX);
         setCanvas(new PracticeCanvas());
         setPalette(new EssenciaPalette());
     }

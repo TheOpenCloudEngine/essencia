@@ -1,8 +1,20 @@
 package org.uengine.modeling.resource.resources;
 
+import org.metaworks.Refresh;
 import org.metaworks.Remover;
+import org.metaworks.ServiceMethodContext;
+import org.metaworks.annotation.AutowiredFromClient;
+import org.metaworks.annotation.Available;
+import org.metaworks.annotation.Hidden;
+import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.widget.Clipboard;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.uengine.codi.CodiProcessDefinitionFactory;
+import org.uengine.codi.mw3.model.Session;
+import org.uengine.essencia.enactment.LanguageElementInstance;
+import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
 import org.uengine.essencia.modeling.editor.Editor;
 import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.resource.FolderResourceType;
@@ -10,85 +22,58 @@ import org.uengine.essencia.resource.ModelResource;
 import org.uengine.essencia.resource.RepositoryFolderResource;
 import org.uengine.essencia.resource.ResourceType;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.kernel.ProcessDefinition;
+import org.uengine.kernel.ProcessDefinitionFactory;
+import org.uengine.kernel.ProcessVariable;
 import org.uengine.modeling.resource.DefaultResource;
 import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.ResourceManager;
+import org.uengine.uml.model.ClassDefinition;
 
-public class MethodResource extends ModelResource {
+public class MethodResource extends DefaultResource {
 
-	public MethodResource() {
-		
-	}
-	
-	public MethodResource(String path) {
-		super(path);
-	}
 
-	@Override
-	public Editor createEditor() throws Exception {
-		MethodComposerEditor editor = new MethodComposerEditor();
-		editor.load(essenciaSession, this);
-		
-		return editor; 
-	}
-	
-	public EssenceProcessResource getProcessResource(){
-		EssenceProcessResource resource = new EssenceProcessResource();
-		resource.setPath(CodiProcessDefinitionFactory.codiProcessDefinitionFolder + getPath().substring(FolderResourceType.METHOD_FOLDER.getName().length()));
+	@AutowiredFromClient
+	public Session session;
 
-		resource.setType(ResourceType.PROCESS_RESOURCE.getType());
-		ContextUtil.fillContext(resource, getMetaworksContext());
-		return resource;
-	}
-//
-//	@Face(displayName = "deploy")
-//	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
-//	@ServiceMethod(callByContent = true, inContextMenu = true, target = ServiceMethodContext.TARGET_APPEND)
-//	public ModalWindow deploy() throws Exception {
-//		DeployPanel deployPanel = new DeployPanel(this);
-//		ModalWindow modalWindow = new ModalWindow();
-//		deployPanel.setMetaworksContext(new MetaworksContext());
-//		deployPanel.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
-//
-//		modalWindow.setPanel(deployPanel);
-//		modalWindow.setWidth(300);
-//		modalWindow.setHeight(300);
-//		modalWindow.setTitle("Deploy...");
-//		return modalWindow;
-//	}
+
+
+	@Autowired
+	public ProcessDefinitionFactory definitionFactory;
 
 	@Override
-	public void delete() {
-		try {
-			ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
-			resourceManager.getStorage().delete(this);
-			EssenceProcessResource processResource = new EssenceProcessResource();
-			processResource.setPath(this.getPath().replace(ResourceType.METHOD_RESOURCE.getType(),
-					ResourceType.PROCESS_RESOURCE.getType()));
-			resourceManager.getStorage().delete(processResource);
-		} catch (Exception e) {
-			e.printStackTrace();
-//			return null;
+	public void save(Object editingObject) throws Exception {
+
+		ProcessDefinition processDefinition = (ProcessDefinition) editingObject;
+
+		{//Extract Class Definitions and deploy them, and replace the class definition itself with a link
+
+			for (ProcessVariable processVariable : processDefinition.getProcessVariables()) {
+				if (processVariable.getDefaultValue() instanceof LanguageElementInstance) {
+					LanguageElementInstance languageElementInstance = (LanguageElementInstance) processVariable.getDefaultValue();
+					ClassDefinition classDefinition = languageElementInstance.getClassDefinition();
+
+					String classLinkName = getPath() + "#" + classDefinition.getName();
+
+					languageElementInstance.setClassName(classLinkName);
+
+				}
+			}
+
 		}
-//		return new Remover(this);
+
+		super.save(editingObject);
+
+		definitionFactory.removeFromCache(getPath().substring(CodiProcessDefinitionFactory.codiProcessDefinitionFolder.length() + 1));
 	}
 
-	@Override
-	public void commit() throws Exception {
-		super.commit();
 
-		ResourceManager resourceManager =MetaworksRemoteService.getComponent(ResourceManager.class);
-
-		resourceManager.getStorage().copy(this, RepositoryFolderResource.getRepository(FolderResourceType.METHOD_FOLDER)
-				+ getRecord().getResources()
-				+ "." + getRecord().getRevision() + ResourceType.REVISION_RESOURCE.getType());
-
-		IResource resource = DefaultResource.createResource(this.getPath().replace(ResourceType.METHOD_RESOURCE.getType(),
-				ResourceType.PROCESS_RESOURCE.getType()));
-
-		resourceManager.getStorage().copy(resource, RepositoryFolderResource.getRepository(FolderResourceType.METHOD_FOLDER)
-				+ getRecord().getResources()
-				.replace(ResourceType.METHOD_RESOURCE.getType(), ResourceType.PROCESS_RESOURCE.getType())
-				+ "." + getRecord().getRevision() + ResourceType.REVISION_RESOURCE.getType());
+	@Hidden
+	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
+	@ServiceMethod(mouseBinding = "drag", bindingHidden = true, target = ServiceMethodContext.TARGET_APPEND)
+	public Object drag() {
+		return new Refresh(new Clipboard(EssenciaCanvas.CANVAS_DROP, this),
+				true);
 	}
+
 }

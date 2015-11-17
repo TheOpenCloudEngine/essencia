@@ -49,6 +49,32 @@ public class EssenceActivity extends HumanActivity {
             parameterContextHashMap.put(parameterContext.getArgument().getText(), parameterContext);
         }
 
+        //Parameter settings for entry criteria --> Parameter in
+        if(getActivityInEssenceDefinition().getEntryCriteria()!=null && getActivityInEssenceDefinition().getEntryCriteria().size() > 0) {
+
+            for(LanguageElement entryCriterion : getActivityInEssenceDefinition().getEntryCriteria()){
+
+                Criterion criterion = (Criterion) entryCriterion;
+
+                String criterionName = criterion.getElement().getName();
+                ParameterContext existingParameterContext = null;
+
+                boolean newlyAddedParameterContext = !parameterContextHashMap.containsKey(criterionName);
+
+                if(!newlyAddedParameterContext){
+                    existingParameterContext = parameterContextHashMap.get(criterionName);
+                }
+
+                //if the parameter already exists, update them
+                ParameterContext parameterContext = createParameterContextFromCriterion(criterion, existingParameterContext);
+                parameterContext.setDirection(ParameterContext.DIRECTION_IN);
+
+                addingParameterContexts.add(parameterContext);
+            }
+
+        }
+
+        //Parameter settings for entry criteria --> Parameter out
         if(getActivityInEssenceDefinition().getCompletionCriteria()!=null && getActivityInEssenceDefinition().getCompletionCriteria().size() > 0) {
 
             //HashMap<String, Criterion> completionCriteriaByName = new HashMap<String, Criterion>();
@@ -66,59 +92,59 @@ public class EssenceActivity extends HumanActivity {
                     existingParameterContext = parameterContextHashMap.get(criterionName);
                 }
 
+                //if the parameter already exists, update them
                 ParameterContext parameterContext = createParameterContextFromCriterion(criterion, existingParameterContext);
 
                 addingParameterContexts.add(parameterContext);
-
-                //completionCriteriaByName.put(criterionName, criterion);
             }
 
 
-            for(int i=0; i<addingParameterContexts.size(); i++){
-                ParameterContext parameterContext = addingParameterContexts.get(i);
-
-                boolean found = false;
-                for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getCompletionCriteria()) {
-
-                    Criterion criterion = (Criterion) completionCriterion_;
-                    String criterionName = criterion.getElement().getName();
-
-                    if(parameterContext.getArgument().getText().equals(criterionName)){
-                        found = true;
-                        break;
-                    }
-                }
-
-                if(!found || !UEngineUtil.isNotEmpty(parameterContext.getArgument().getText())){
-                    addingParameterContexts.remove(parameterContext);
-                }
-            }
-
-            ParameterContext[] newParameterContexts = new ParameterContext[addingParameterContexts.size()];
-
-            newParameterContexts = addingParameterContexts.toArray(newParameterContexts);
-
-            setParameters(newParameterContexts);
         }
 
-        //TODO: disabled for now
-//
-//        if(getActivityInEssenceDefinition().getEntryCriteria()!=null && getActivityInEssenceDefinition().getEntryCriteria().size() > 0) {
-//
-//            for(LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getEntryCriteria()){
-//
-//                ParameterContext parameterContext = createParameterContextFromCriterion((Criterion) completionCriterion_);
-//                parameterContext.setDirection(ParameterContext.DIRECTION_IN);
-//                parameterContexts.add(parameterContext);
-//            }
-//
-//
-//        }
 
-        ParameterContext [] parameterContextsInArray = new ParameterContext[addingParameterContexts.size()];
-        addingParameterContexts.toArray(parameterContextsInArray);
+        //validate if the alpha names in the parametercontexts are available in the criteria again. Namely if the ParameterContext has alpha which is removed in the practice(method) definition, this parameterContext should be removed.
 
-        setParameters(parameterContextsInArray);
+        for(int i=0; i<addingParameterContexts.size(); i++){
+            ParameterContext parameterContext = addingParameterContexts.get(i);
+
+            boolean found = false;
+            for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getCompletionCriteria()) {
+
+                Criterion criterion = (Criterion) completionCriterion_;
+                String criterionName = criterion.getElement().getName();
+
+                if(parameterContext.getArgument().getText().equals(criterionName)){
+                    found = true;
+                    break;
+                }
+            }
+            for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getEntryCriteria()) {
+
+                Criterion criterion = (Criterion) completionCriterion_;
+                String criterionName = criterion.getElement().getName();
+
+                if(parameterContext.getArgument().getText().equals(criterionName)){
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found || !UEngineUtil.isNotEmpty(parameterContext.getArgument().getText())){
+                addingParameterContexts.remove(parameterContext);
+            }
+        }
+
+        ParameterContext[] newParameterContexts = new ParameterContext[addingParameterContexts.size()];
+
+        newParameterContexts = addingParameterContexts.toArray(newParameterContexts);
+
+        setParameters(newParameterContexts);
+
+//
+//        ParameterContext [] parameterContextsInArray = new ParameterContext[addingParameterContexts.size()];
+//        addingParameterContexts.toArray(parameterContextsInArray);
+//
+//        setParameters(parameterContextsInArray);
 
 
     }

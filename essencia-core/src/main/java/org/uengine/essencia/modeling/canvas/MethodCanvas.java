@@ -13,6 +13,7 @@ import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.context.EssenciaContext;
+import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.Practice;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -20,6 +21,7 @@ import org.uengine.essencia.model.view.PracticeView;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.essencia.repository.ObjectRepository;
 import org.uengine.modeling.resource.ResourceManager;
+import org.uengine.modeling.resource.resources.MethodResource;
 import org.uengine.modeling.resource.resources.PracticeResource;
 import org.uengine.essencia.resource.element.EssenciaElementResource;
 import org.uengine.essencia.util.ContextUtil;
@@ -127,7 +129,7 @@ public class MethodCanvas extends EssenciaCanvas {
             }
             returnArr[1] = new Refresh(this);
             return returnArr;
-        } else if (content instanceof PracticeResource) {
+        } else if (content instanceof MethodResource) {
 
             PracticeDefinition practice = null;
 
@@ -136,7 +138,9 @@ public class MethodCanvas extends EssenciaCanvas {
 
 //                practice = (PracticeDefinition) ObjectRepository.getInstance().get(((PracticeResource) content).getPath());
 
-                practice = (PracticeDefinition)resourceManager.getStorage().getObject((PracticeResource)content);
+                EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition)resourceManager.getStorage().getObject((MethodResource)content);
+
+                practice = essenceProcessDefinition.getPracticeDefinition();
 
                 reissueId(practice);
 

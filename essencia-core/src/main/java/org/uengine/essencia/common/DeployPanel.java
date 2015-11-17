@@ -56,7 +56,7 @@ public class DeployPanel {
     }
 
     public DeployPanel(Resource resource) {
-        setResource((MethodResource) resource);
+       // setResource((MethodResource) resource);
         selectBox = new SelectBox();
 
         CommitHistory commitHistory = CommitHistory.load();

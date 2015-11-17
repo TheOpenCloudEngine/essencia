@@ -35,7 +35,7 @@ public abstract class LanguageElementView extends ElementView {
     public Object showProperty() throws Exception {
         EssenciaPropertyPanel propertyPanel = new EssenciaPropertyPanel(this);
         ContextUtil.setHow(propertyPanel, "dynamicSize");
-        ModalWindow modal = new ModalWindow(propertyPanel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() + "]");
+        ModalWindow modal = new ModalWindow(propertyPanel, 900, 500, "Essencia Element Properties Editor [ " + getLabel() + "]");
         return modal;
     }
 

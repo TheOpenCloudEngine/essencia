@@ -1,84 +1,93 @@
 <%
-	if(value!=null){
-		if(mw3.how == 'action'){
+if(value!=null){
+if(mw3.how == 'action'){
 %>
-			<div class="icon_toolbar">
-				<div data-toggle="tooltip" data-placement="top" title="Alpha View" class="icon-rounded m-r-10 tooltip-top" onclick="<%=methods.showDashBoard.caller()%>">
-					<i class="glyphicon glyphicon-dashboard  workitem_btn"></i>
-				</div>
+<div class="icon_toolbar">
 
-				<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$process")%>" class="icon-rounded m-r-10 tooltip-top" onclick="<%=methods.monitor.caller()%>">
-					<i class="glyphicon glyphicon-random  workitem_btn"></i>
-	            </div>
 
-	            <div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$Schedule")%>" class="icon-rounded m-r-10 tooltip-top" onClick="<%=methods.schedule.caller()%>">
-					<i class="glyphicon glyphicon-info-sign workitem_btn"></i>
-	            </div>
-	            
-	            <div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$Delete")%>" class="icon-rounded m-r-10 tooltip-top"  onClick="<%=methods.remove.caller()%>">
-					<i class="glyphicon glyphicon-trash workitem_btn"></i> 
-	            </div>
 
-				<!-- 비밀글 공캐 -->
-				<%
-					if(value.secuopt == null || value.secuopt == '0'){
-				%>
-					<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$Privacy")%>" class="icon-rounded m-r-10 tooltip-top"
-						onClick="<%=methods.toggleSecurityConversation.caller()%>">
-                		<i class="glyphicon glyphicon-eye-close workitem_btn"></i>
-                	</div>
-        		<%
-        			}else{
-        		%>
-					<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$MakeItPrivacy")%>" class="icon-rounded m-r-10 tooltip-top"  onClick="<%=methods.toggleSecurityConversation.caller()%>"
-						onClick="<%=methods.toggleSecurityConversation.caller()%>">
-                		<i class="glyphicon glyphicon-eye-close workitem_btn"></i>
-                	</div>
-        		<%
-        			}
-        		%>
+	<div data-toggle="tooltip" data-placement="top" title="Alpha View" class="icon-rounded m-r-10 tooltip-top" onclick="<%=methods.showDashBoard.caller()%>">
+		<i class="glyphicon glyphicon-dashboard  workitem_btn"></i>
+	</div>
 
-	            <!-- 글 완료 -->
-	            <%
-                var isCompleted = false;
-                var enableComplete = !mw3.isHiddenMethod(methods.complete);
 
-                if(enableComplete)
-                	isCompleted = !(value.status != 'Stopped' && value.status != 'Completed');
-                %>
+	<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$process")%>" class="icon-rounded m-r-10 tooltip-top" onclick="<%=methods.monitor.caller()%>">
+		<i class="glyphicon glyphicon-random  workitem_btn"></i>
+	</div>
 
-	            <div data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="icon-rounded m-r-10 current tooltip-top <%=isCompleted?'toolbar_current':''%>"
-	            onClick="<%=enableComplete?methods.complete.caller():''%>">
-					<i class="glyphicon glyphicon-ok workitem_btn current"></i>
-	            </div>
+	<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$Schedule")%>" class="icon-rounded m-r-10 tooltip-top" onClick="<%=methods.schedule.caller()%>">
+		<i class="glyphicon glyphicon-info-sign workitem_btn"></i>
+	</div>
 
-				<!-- Event Trigger -->
-				<%
-				if( value.eventTriggers ){
-				for(var i=0; i < value.eventTriggers.length; i++){
-					var options;
-					var eventTrigger = value.eventTriggers[i];
-					if(typeof options == 'undefined'){
-						options = objectMetadata;
-					}
-					options['htmlTag'] =  'li';
-				%>
-				<div data-toggle="tooltip" data-placement="top" title="eventTrigger" class="icon-rounded m-r-10 tooltip-top">
-					<i class="glyphicon glyphicon-triangle-top">
-						<%=mw3.locateObject(eventTrigger, eventTrigger.__className, null , options, {objectId: objectId, name: '[' + i + ']'}) %>
-					</i>
-				</div>
-				<%
-					}
-				}
-				%>
-<%
-		}else{
-%>
+	<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$Delete")%>" class="icon-rounded m-r-10 tooltip-top"  onClick="<%=methods.remove.caller()%>">
+		<i class="glyphicon glyphicon-trash workitem_btn"></i>
+	</div>
+
+	<!-- ??? ?? -->
+	<%
+	if(value.secuopt == null || value.secuopt == '0'){
+	%>
+	<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$Privacy")%>" class="icon-rounded m-r-10 tooltip-top"
+		 onClick="<%=methods.toggleSecurityConversation.caller()%>">
+		<i class="glyphicon glyphicon-eye-close workitem_btn"></i>
+	</div>
+	<%
+	}else{
+	%>
+	<div data-toggle="tooltip" data-placement="top" title="<%=mw3.localize("$MakeItPrivacy")%>" class="icon-rounded m-r-10 tooltip-top"  onClick="<%=methods.toggleSecurityConversation.caller()%>"
+		 onClick="<%=methods.toggleSecurityConversation.caller()%>">
+		<i class="glyphicon glyphicon-eye-close workitem_btn"></i>
+	</div>
+	<%
+	}
+	%>
+
+	<!-- ? ?? -->
+	<%
+		var isCompleted = false;
+		var enableComplete = !mw3.isHiddenMethod(methods.complete);
+
+		if(enableComplete)
+			isCompleted = !(value.status != 'Stopped' && value.status != 'Completed');
+	%>
+
+	<div data-toggle="tooltip" data-placement="top" title="<%=isCompleted?mw3.localize('$Cancel'):mw3.localize('$Completing')%>" class="icon-rounded m-r-10 current tooltip-top <%=isCompleted?'toolbar_current':''%>"
+		 onClick="<%=enableComplete?methods.complete.caller():''%>">
+		<i class="glyphicon glyphicon-ok workitem_btn current"></i>
+	</div>
+
+	<!-- Event Trigger -->
+	<%
+	if( value.eventTriggers ){
+		for(var i=0; i < value.eventTriggers.length; i++){
+			var options;
+			var eventTrigger = value.eventTriggers[i];
+			if(typeof options == 'undefined'){
+				options = objectMetadata;
+			}
+			options['htmlTag'] =  'li';
+	%>
+
+
+	<div style="display:inline-block;border-radius: 25px;
+    border: 1px solid #AAAAAA;
+    padding: 15px;
+    height: 40px; line-height: 10px; margin:
+            0px;"><font color='#AAAAAA'><%=mw3.locateObject(eventTrigger, eventTrigger.__className, null , options, {objectId: objectId, name: '[' + i + ']'}) %></font></div>
+
+
+	<%
+		}
+	}
+	%>
+	<%
+	}else{
+	%>
 	<span onClick="<%=methods.schedule.caller()%>"><img src="images/waveStyle/i_gantt.png" title="schedule" /></span>
 	<span onClick="<%=methods.remove.caller()%>"><img src="images/waveStyle/i_delete.png" title="remove" /></span>
 	<span onClick="<%=methods.complete.caller()%>"><img src="images/waveStyle/i_complete.png" title="complete" /></span>
-<%		
+	<%
 		}
 	}
-%>
+	%>
+

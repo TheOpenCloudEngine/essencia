@@ -81,7 +81,7 @@ public class EssenciaPropertyPanel implements ContextAware {
     @Hidden(when = EssenciaContext.WHEN_VIEW)
     @Order(1)
     @Face(displayName = "Apply")
-    @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
+    @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND, keyBinding = "Enter")
     public Object[] apply() {
         if (getElement() instanceof FaceTransformer) {
             ((FaceTransformer) getElement()).beforeApply();// TODO

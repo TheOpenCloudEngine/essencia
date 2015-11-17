@@ -6,6 +6,7 @@ import org.uengine.essencia.enactment.NotCompletableException;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.kernel.ValidationContext;
+import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class Criterion extends LanguageElement {
 
         ValidationContext validationContext = new ValidationContext();
 
-        if(getState()!=null){ //means Alpha
+        if(getState()!=null && UEngineUtil.isNotEmpty(getState().getName())){ //means Alpha
 
             Alpha alpha = getState().getParentAlpha();
 
@@ -88,9 +89,13 @@ public class Criterion extends LanguageElement {
             try {
                 for (AlphaInstance alphaInstance : alphaInstances) {
                     if(alphaInstance!=null) {
-                        alphaInstance.advanceState(instance);
+                        alphaInstance.calculateState();
 
+                        if(getState().getName().equals(alphaInstance.getCurrentStateName())){
+                            throw new NotCompletableException("State of Alpha ["+ alpha.getName() + "] is not reached to [" + getState().getName() + "]");
+                        }
                     }
+
                 }
             }catch(NotCompletableException nce){
                 validationContext.add(nce.getMessage());

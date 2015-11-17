@@ -1,4 +1,4 @@
-<table width="90%"><td>
+<table width="100%"><td>
 <%
 	if(value){
 %>
@@ -9,23 +9,22 @@
 
 <%=fields.workItem.here({when:'view'})%>
 
-<%
-		if(mw3.when != 'view'){
-%>
-		<div id="btnline" style="padding:0 10px 30px 0">
-			<ul>
-<%if(!mw3.isHiddenMethod(methods.complete)){%>			<li><a id="wBtn" class="wBtn" href="#" onClick="<%=methods.complete.caller()%>"><span><%=mw3.localize('$Complete')%></span></a></li><%}%>
-<%if(!mw3.isHiddenMethod(methods.save)){%>				<li><a id="wBtn" class="wBtn" href="#" onClick="<%=methods.save.caller()%>"><span><%=mw3.localize('$Save')%></span></a></li><%}%>
-<%if(!mw3.isHiddenMethod(methods.cancel)){%>			<li><a id="wBtn" class="wBtn" href="#" onClick="<%=methods.cancel.caller()%>"><span><%=mw3.localize('$Cancel')%></span></a></li><%}%>
-<%if(!mw3.isHiddenMethod(methods.skip)){%>				<li><a id="wBtn" class="wBtn" href="#" onClick="<%=methods.skip.caller()%>"><span><%=mw3.localize('$Skip')%></span></a></li><%}%>
-<%if(!mw3.isHiddenMethod(methods.accept)){%>			<li><a id="wBtn" class="wBtn" href="#" onClick="<%=methods.accept.caller()%>"><span><%=mw3.localize('$Accept')%></span></a></li><%}%>
-				<div class="clear"></div>
-			</ul>
+		<%
+		if(mw3.when != 'view' && mw3.where =='detail'){
+		%>
+		<hr>
+		<div class="btn-group" role="group" align="right">
+			<%=methods.complete.here()%>
+			<%=methods.save.here()%>
+			<%=methods.cancel.here()%>
+			<%=methods.skip.here()%>
+			<%=methods.accept.here()%>
 		</div>
 
-<%
+		<%
 		}
-	}
-%>
+		}
+		%>
+
 
 	</td></table>

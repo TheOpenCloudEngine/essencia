@@ -181,9 +181,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
                 sprint3.setChecked(point.getName());
             }
 
-            sprint1.advanceState(instance);
-            sprint2.advanceState(instance);
-            sprint3.advanceState(instance);
+            sprint1.calculateState();
         }
 
         //advancing state to "z" for sprint 3 only
@@ -192,7 +190,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
                 sprint3.setChecked(point.getName());
             }
 
-            sprint3.advanceState(instance);
+            sprint3.calculateState();
         }
 
 

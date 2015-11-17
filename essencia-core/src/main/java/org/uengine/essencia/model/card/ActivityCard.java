@@ -45,7 +45,7 @@ public class ActivityCard extends BasicCard {
         }
 
         setName(element.getName());
-        String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<span>The activity is completed when:</span>";
+        String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<h3>The activity is completed when:</h3>";
         setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
 
         int elementIndex = 0;
@@ -136,7 +136,7 @@ public class ActivityCard extends BasicCard {
 
             BasicElement theElementForCriteria = criterion.getElement();
 
-            description += "<li>" + theElementForCriteria.getName() + ": "
+            description += "<h4>" + theElementForCriteria.getName() + ": "
 
                     + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
                     ;
@@ -174,8 +174,8 @@ public class ActivityCard extends BasicCard {
         if(workProductList!=null)
         for (LanguageElement e : workProductList) {
             Criterion criterion = (Criterion) e;
-            description += "<li>" + criterion.getLevelOfDetail().getParentWorkProduct().getName() + ": " + criterion.getLevelOfDetail().getName()
-                    + "</li>";
+            description += "<h4>" + criterion.getLevelOfDetail().getParentWorkProduct().getName() + ": " + criterion.getLevelOfDetail().getName()
+                    + "</h4>";
             setSymbol((new WorkProductView().createSymbol()));
             setView(new WorkProduct().createView());
 

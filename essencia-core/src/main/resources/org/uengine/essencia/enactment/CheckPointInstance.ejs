@@ -1,2 +1,7 @@
+<%
+ var inputId = mw3.createInputId(value.checkPoint.__objectId);
+ %>
 
-<table><td><%=fields.checked.here()%></td><td><%=value.checkPoint.name%></td></table>
+<div class="ui-checkbox">
+<label class="ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off" for="<%=inputId%>"><%=value.checkPoint.name%><%=fields.checked.here()%></label>
+</div>

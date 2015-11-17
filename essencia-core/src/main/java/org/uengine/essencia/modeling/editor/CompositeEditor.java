@@ -25,6 +25,9 @@ public abstract class CompositeEditor extends Editor {
 	}
 
 	public void add(Editor editor) {
+		if(this.items==null)
+			setItems(new ArrayList<Editor>());
+
 		this.items.add(editor);
 	}
 

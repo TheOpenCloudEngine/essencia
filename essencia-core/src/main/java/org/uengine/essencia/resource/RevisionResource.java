@@ -10,7 +10,7 @@ import org.uengine.modeling.resource.resources.MethodResource;
 public class RevisionResource extends MethodResource {
 	
 	public RevisionResource() {
-		setChildList(new ArrayList<EssenciaResource>());
+		//setChildList(new ArrayList<EssenciaResource>());
 	}
 	
 	public RevisionResource(String path) {
@@ -18,7 +18,7 @@ public class RevisionResource extends MethodResource {
 		setPath(path);
 	}
 	
-	@Override
+	//@Override
 	public EssenceProcessResource getProcessResource(){
 		EssenceProcessResource resource = new EssenceProcessResource();
 		resource.setPath(getPath());

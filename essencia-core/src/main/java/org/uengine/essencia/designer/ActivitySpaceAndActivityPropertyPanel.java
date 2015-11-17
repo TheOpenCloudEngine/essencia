@@ -57,7 +57,7 @@ public class ActivitySpaceAndActivityPropertyPanel extends EssenciaPropertyPanel
     }
 
     @Face(displayName = "Apply")
-    @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND)
+    @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND, keyBinding = "Enter")
     public Object[] apply() {
         ((AbstractActivity) getElement()).beforeApply();
         getElementView().setElement(getElement());

@@ -1,15 +1,17 @@
 <table style="
     width: 100%;
-    border: 2px;
+    border: 1px;
     border-color: #BBBBBB;
     border-style: solid;
 
     box-shadow: 5px 5px 5px #CCCCCC;
-">
+"
+		cellpadding="10px"
+		>
 	<tr>
 		<td>
-			<h1><img src="<%=value['img']%>">
-				<%=value.name%></h1>
+			<h2><img src="<%=value['img']%>">
+				<%=value.name%></h2>
 		</td>
 		<td style=" float : right; ">
 			<%=value.parentName%>
@@ -21,8 +23,8 @@
 			<%=fields.canvas.here()%>
 		</td>
 
-		<td style="width : 50%; overflow:auto;position: relative; border-top:1px solid; border-left:1px solid; border-color: #BBBBBB">
-			<%=value.description%>
+		<td valign="top" style="width : 50%; overflow:auto;position: relative; border-top:1px solid; border-left:1px solid; border-color: #BBBBBB">
+			<div style="padding: 10px"><%=value.description%></div>
 		</td>
 	</tr>
 </table>

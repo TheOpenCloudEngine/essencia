@@ -68,7 +68,7 @@
 	<div >
 		<div>
 			<div >
-				<div  style="border-style: solid;border-width: 1px;">
+
 		<%	
 				for (var i=0; i<fieldOrder.length; i++){
 					if(fieldOrder[i].length == 0)
@@ -99,7 +99,7 @@
 						if(!hideLabel){
 %>							
 		                <label class="form-label">
-		                	<strong><%=fd.displayName%></strong>
+		                	<h3><%=fd.displayName%></h3>
 							<span  class="ui-state-default ui-corner-all"  onClick="mw3.getFaceHelper('<%=objectId%>').toggleChild(this)" 
 		                	style="<%=fd.className.match('^org.uengine.essencia.model')?'':'display:none;'%>">▼</span>
 		                </label>
@@ -139,7 +139,6 @@
 		}
   	}
 %>
-			</div>
 			</div>
 		</div>
 	</div>

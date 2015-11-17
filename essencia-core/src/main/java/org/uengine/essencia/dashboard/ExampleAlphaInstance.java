@@ -150,9 +150,7 @@ public class ExampleAlphaInstance {
                 sprint3.setChecked(point.getName());
             }
 
-            sprint1.advanceState(processInstance);
-            sprint2.advanceState(processInstance);
-            sprint3.advanceState(processInstance);
+            sprint1.calculateState();
         }
 
         //advancing state to "z" for sprint 3 only
@@ -161,7 +159,7 @@ public class ExampleAlphaInstance {
                 sprint3.setChecked(point.getName());
             }
 
-            sprint3.advanceState(processInstance);
+            sprint3.calculateState();
         }
 
 

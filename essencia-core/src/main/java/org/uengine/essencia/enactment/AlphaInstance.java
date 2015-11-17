@@ -27,6 +27,9 @@ public class AlphaInstance extends LanguageElementInstance {
         }
 
         public State getCurrentState(){
+
+            if(getCurrentStateName()==null) return null;
+
             return getAlpha().findState(getCurrentStateName());
         }
 
@@ -73,52 +76,26 @@ public class AlphaInstance extends LanguageElementInstance {
 
 
     public boolean isCurrentStateCompletable() {
-        return getCurrentState().isAllChecked(this);
+        State currentState = getCurrentState();
+
+        if(currentState==null) return false;
+
+        return currentState.isAllChecked(this);
     }
 
 
-    public void advanceState(ProcessInstance instance){
+    public void calculateState(){
 
-        if(!isCurrentStateCompletable()){
-            throw new NotCompletableException("Not completable");
-        }else{
+        Alpha alpha = getAlpha();
 
+        alpha.getStates();
 
-            int currentStateIndex = getAlpha().getStates().indexOf(getCurrentState());
-
-            if(currentStateIndex < getAlpha().getStates().size() -1){
-                currentStateIndex ++;
-                State currentState = getAlpha().getStates().get(currentStateIndex);
-                setCurrentStateName(currentState.getName());
-            }
-
-//            //TODO: affect to related alphas:
-//            if(getCurrentState().getAggregationAlphaState()!=null){
-//
-//                String [] relatedAlphaAndStateName = getCurrentState().getAggregationAlphaState().split("\\.");
-//
-//                if(relatedAlphaAndStateName.length < 2){
-//                    throw new RuntimeException("Association reference expression is not properly defined: " + getCurrentState().getAggregationAlphaState() + ". [AlphaName].[StateName] is correnct.");
-//                }
-//
-//                String relatedAlphaName = relatedAlphaAndStateName[0];
-//                String relatedStateName = relatedAlphaAndStateName[1];//
-//
-//                AlphaInstance relatedAlphaInstance = null;
-//                try {
-//                    relatedAlphaInstance = (AlphaInstance) instance.get(relatedAlphaName);
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
-//
-//                if(relatedAlphaInstance==null)
-//                    throw new RuntimeException(getAlpha().getName() + " tries to affect state change to related (parent) Alpha [" + relatedAlphaName + "]. There's no mapped alpha or alpha instance: " + relatedAlphaName);
-//
-//                relatedAlphaInstance.advanceStateTo(relatedStateName);
-//            }
-
+        for(State state : alpha.getStates()){
+            if(state.isAllChecked(this))
+                setCurrentStateName(state.getName());
+            else
+                break;
         }
-
     }
 
     public void advanceStateTo(String stateName) {
