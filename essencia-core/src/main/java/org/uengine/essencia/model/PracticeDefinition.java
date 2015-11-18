@@ -466,7 +466,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
      */
     public IElement getElementByName(String name) {
         if ("".equals(name)) {
-            throw new NullPointerException();
+            return null;
         }
         IElement languageElement = null;
         for (IElement e : getElementList()) {

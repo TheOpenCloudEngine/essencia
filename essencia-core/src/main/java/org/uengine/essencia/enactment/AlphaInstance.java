@@ -65,7 +65,7 @@ public class AlphaInstance extends LanguageElementInstance {
 
         super(alpha, id);
 
-        if(getAlpha().getStates().size() > 0)
+        if(getAlpha().getStates()!=null && getAlpha().getStates().size() > 0)
             setCurrentStateName(getAlpha().getStates().get(0).getName());
     }
 

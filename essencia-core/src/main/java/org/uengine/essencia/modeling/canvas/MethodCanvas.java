@@ -103,6 +103,8 @@ public class MethodCanvas extends EssenciaCanvas {
                 }
 
                 wrapReturn (returnArr);
+
+                return;
             }
 
 
@@ -152,6 +154,8 @@ public class MethodCanvas extends EssenciaCanvas {
             }
             returnArr[1] = new Refresh(this);
             wrapReturn( returnArr);
+
+            return;
         } else if (content instanceof MethodResource) {
 
             PracticeDefinition practice = null;
