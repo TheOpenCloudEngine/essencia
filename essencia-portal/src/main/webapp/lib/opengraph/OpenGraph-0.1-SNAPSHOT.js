@@ -10798,6 +10798,9 @@ OG.shape.bpmn.A_Task.prototype.createTerminal = function(){
 OG.shape.bpmn.A_Task.prototype.drawCustomControl = function(handler, element){
 	if(!handler || !element) return;
 
+
+	handler._RENDERER.selectedElement = element;
+
 	var ur_x, ur_y
 		,task, end
 		,group
