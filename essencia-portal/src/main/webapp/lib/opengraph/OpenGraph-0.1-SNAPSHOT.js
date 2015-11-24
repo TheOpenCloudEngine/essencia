@@ -10794,272 +10794,7 @@ OG.shape.bpmn.A_Task.prototype.createTerminal = function(){
     ];
 };
 
-//TODO: 커스텀 컨트롤.. 구현 방식을 바꿔둬야 함 ( 함수 => 객체 )
-OG.shape.bpmn.A_Task.prototype.drawCustomControl = function(handler, element){
-	if(!handler || !element) return;
 
-
-	handler._RENDERER.selectedElement = element;
-
-	var ur_x, ur_y
-		,task, end
-		,group
-		,rElement = handler._RENDERER._getREleById(OG.Util.isElement(element) ? element.id : element)
-		
-	
-	// remove all custom control
-	$(handler._RENDERER.getRootElement()).find("[_type=CUSTOM_CONTROL]").each(function(n, selectedItem){
-		selectedItem.remove();
-	});
-	
-	if(element.shape instanceof OG.shape.bpmn.A_Task){
-		
-		//찍을 좌표 구하기
-		ur_x = element.shape.geom.boundary._upperLeft.x;
-		ur_y = element.shape.geom.boundary._upperLeft.y;
-		ur_x = element.shape.geom.boundary._width + ur_x;
-	
-		task = handler._RENDERER._PAPER.image("resources/images/symbol/guide_task.png", ur_x + 10, ur_y, 15, 15);
-		end = handler._RENDERER._PAPER.image("resources/images/symbol/guide_end.png", ur_x + 10, ur_y + 20, 15, 15);
-		task.attr({
-			cursor : "pointer"
-		});
-		end.attr({
-			cursor : "pointer"
-		});
-
-		task.setTooltip('task - Click or Drag');
-		end.setTooltip('end event - Click or Drag');
-		
-		group = handler._RENDERER._PAPER.group();
-		$(group.node).attr("_type","CUSTOM_CONTROL");
-		
-		group.appendChild(task);
-		group.appendChild(end);
-		
-		group.insertAfter(rElement);
-		
-		/********************************************
-			이벤트 설정 시작
-		********************************************/
-		$(task.node).draggable({
-			start: function (event) {
-				event.stopPropagation();
-				var eventOffset = handler._getOffset(event), guide;
-
-				// 선택되지 않은 Shape 을 drag 시 다른 모든 Shape 은 deselect 처리
-				if (handler._RENDERER.getElementById(element.id + OG.Constants.GUIDE_SUFFIX.GUIDE) === null) {
-					$(handler._RENDERER.getRootElement()).find("[_type=" + OG.Constants.NODE_TYPE.SHAPE + "][_selected=true]").each(function (index, item) {
-						if (OG.Util.isElement(item) && item.id) {
-							handler._RENDERER.removeGuide(item);
-						}
-					});
-					handler._RENDERER.removeTerminal(element);
-				}
-				$(handler._RENDERER.getRootElement()).data("bBoxArray", handler._getMoveTargets());
-				handler._RENDERER.removeRubberBand(handler._RENDERER.getRootElement());
-				handler._RENDERER.removeAllTerminal();
-			},
-			drag : function (event) {
-				event.stopPropagation();
-				var eventOffset = handler._getOffset(event),
-				bBoxArray = $(handler._RENDERER.getRootElement()).data("bBoxArray"),
-				dx = handler._grid(eventOffset.x - element.shape.geom.getBoundary().getCentroid().x, 'move'),
-				dy = handler._grid(eventOffset.y - element.shape.geom.getBoundary().getCentroid().y, 'move');
-
-				// Canvas 영역을 벗어나서 드래그되는 경우 Canvas 확장
-				handler._autoExtend(eventOffset.x, eventOffset.y);
-				$(task).css({"position": "", "left": "", "top": ""});
-				$.each(bBoxArray, function (k, item) {
-					handler._RENDERER.setAttr(item.box, {transform: "t" + dx + "," + dy});
-				});
-				handler._RENDERER.removeAllTerminal();
-			},
-			stop : function (event) {
-				event.stopPropagation();
-				var eventOffset = handler._getOffset(event)
-					//, shape, newElement
-					, boundary = element.shape.geom.getBoundary()
-					, bBoxArray = $(handler._RENDERER.getRootElement()).data("bBoxArray")
-					, boundary, clonedElement, clonedShape;
-				
-				//FIXME : element _shape_id로 부터 객체를 얻어오도록 하는데 이것을 
-				// 완벽한 객체 교환을 하도록 해야함... 보류 중..
-				clonedShape = element.shape.clone();
-				$(clonedShape).attr('auto_draw','yes');
-				
-				clonedElement = 
-					handler._RENDERER.drawShape(
-						[handler._grid(eventOffset.x, 'move'), handler._grid(eventOffset.y, 'move')]
-						, clonedShape
-						, [boundary.getWidth(), boundary.getHeight()]
-						, element.shapeStyle
-					);
-
-				// enable event
-				handler.setClickSelectable(clonedElement, handler._isSelectable(clonedElement.shape));
-				handler.setMovable(clonedElement, handler._isMovable(clonedElement.shape));
-				if (handler._CONFIG.GROUP_DROPABLE && clonedElement.shape.GROUP_DROPABLE) {
-					handler.enableDragAndDropGroup(clonedElement);
-				}
-				if (handler._CONFIG.GROUP_COLLAPSIBLE && clonedElement.shape.GROUP_COLLAPSIBLE) {
-					handler.enableCollapse(clonedElement);
-				}
-				if (handler._isConnectable(clonedElement.shape)) {
-					handler.enableConnect(clonedElement);
-				}
-				if (handler._isLabelEditable(clonedElement.shape)) {
-					handler.enableEditLabel(clonedElement);
-				}
-				
-				handler._RENDERER._CANVAS.connect(element, clonedElement);
-				handler.selectShape(clonedElement);
-				
-				$.each(bBoxArray, function (k, item) {
-					handler._RENDERER.remove(item.box);
-				});
-				$(handler._RENDERER.getRootElement()).removeData("bBoxArray");
-			}
-		});
-		$(task.node).bind({
-			click : function (event) {
-				event.stopPropagation();
-				var eventOffset = handler._getOffset(event)
-					//, shape, newElement
-					, boundary = element.shape.geom.getBoundary()
-					, clonedElement, clonedShape;
-				
-				//FIXME : element _shape_id로 부터 객체를 얻어오도록 하는데 이것을 
-				// 완벽한 객체 교환을 하도록 해야함... 보류 중..
-				clonedShape = element.shape.clone();
-				$(clonedShape).attr('auto_draw','yes');
-				
-				clonedElement = 
-					handler._RENDERER.drawShape(
-						[boundary.getCentroid().x + boundary.getWidth() + 50, boundary.getCentroid().y]
-						, clonedShape
-						, [boundary.getWidth(), boundary.getHeight()]
-						, element.shapeStyle
-					);
-
-				// enable event
-				handler.setClickSelectable(clonedElement, handler._isSelectable(clonedElement.shape));
-				handler.setMovable(clonedElement, handler._isMovable(clonedElement.shape));
-				if (handler._CONFIG.GROUP_DROPABLE && clonedElement.shape.GROUP_DROPABLE) {
-					handler.enableDragAndDropGroup(clonedElement);
-				}
-				if (handler._CONFIG.GROUP_COLLAPSIBLE && clonedElement.shape.GROUP_COLLAPSIBLE) {
-					handler.enableCollapse(clonedElement);
-				}
-				if (handler._isConnectable(clonedElement.shape)) {
-					handler.enableConnect(clonedElement);
-				}
-				if (handler._isLabelEditable(clonedElement.shape)) {
-					handler.enableEditLabel(clonedElement);
-				}
-				
-				handler._RENDERER._CANVAS.connect(element, clonedElement);
-				handler.selectShape(clonedElement);
-			
-				/*
-				var newElement, shape
-				//shape = new OG.shape.bpmn.A_Task(),
-				envelope = element.shape.geom.getBoundary();
-				
-				var shape_id = $(element).attr("_shape_id");
-				var evalObject = eval(shape_id);
-				shape = new evalObject();
-				
-				$(shape).attr('auto_draw', 'yes');
-				newElement = handler._RENDERER._CANVAS.drawShape([envelope.getCentroid().x + 100, envelope.getCentroid().y], shape, [70, 50]);
-				handler._RENDERER._CANVAS.connect(element, newElement);
-				handler.selectShape(newElement);
-				*/
-			},
-			mousedown : function (event) {
-				event.stopPropagation();
-			}
-		});
-		$(end.node).draggable({
-			start: function (event) {
-				var eventOffset = handler._getOffset(event), guide;
-
-				// 선택되지 않은 Shape 을 drag 시 다른 모든 Shape 은 deselect 처리
-				if (handler._RENDERER.getElementById(element.id + OG.Constants.GUIDE_SUFFIX.GUIDE) === null) {
-					$(handler._RENDERER.getRootElement()).find("[_type=" + OG.Constants.NODE_TYPE.SHAPE + "][_selected=true]").each(function (index, item) {
-						if (OG.Util.isElement(item) && item.id) {
-							handler._RENDERER.removeGuide(item);
-						}
-					});
-					handler._RENDERER.removeAllTerminal();
-				}
-
-				$(handler._RENDERER.getRootElement()).data("bBoxArray", handler._getMoveTargets());
-				handler._RENDERER.removeRubberBand(handler._RENDERER.getRootElement());
-				handler._RENDERER.removeAllTerminal();
-			},
-			drag : function (event) {
-				var eventOffset = handler._getOffset(event),
-				start = $(this).data("start"),
-				bBoxArray = $(handler._RENDERER.getRootElement()).data("bBoxArray"),
-				dx = handler._grid(eventOffset.x - element.shape.geom.getBoundary().getCentroid().x, 'move'),
-				dy = handler._grid(eventOffset.y - element.shape.geom.getBoundary().getCentroid().y, 'move');
-
-			// Canvas 영역을 벗어나서 드래그되는 경우 Canvas 확장
-				handler._autoExtend(eventOffset.x, eventOffset.y);
-
-				$(this).css({"position": "", "left": "", "top": ""});
-				$.each(bBoxArray, function (k, item) {
-					handler._RENDERER.setAttr(item.box, {transform: "t" + dx + "," + dy});
-				});
-				handler._RENDERER.removeAllTerminal();
-			},
-			stop : function (event) {
-				var eventOffset = handler._getOffset(event), shape, newElement,
-				bBoxArray = $(handler._RENDERER.getRootElement()).data("bBoxArray");
-				shape = new OG.shape.bpmn.E_End();
-				$(shape).attr('auto_draw', 'yes');
-				newElement = handler._RENDERER._CANVAS.drawShape([eventOffset.x, eventOffset.y], shape, [30, 30]);
-				handler._RENDERER._CANVAS.connect(element, newElement);
-				$.each(bBoxArray, function (k, item) {
-					handler._RENDERER.remove(item.box);
-				});
-				$(handler._RENDERER.getRootElement()).removeData("bBoxArray");
-				handler.selectShape(newElement);
-			}
-		});
-		$(end.node).bind({
-			mouseover: function (event) {
-
-			},
-			click : function (event) {
-				var newElement,
-				shape = new OG.shape.bpmn.E_End(),
-				envelope = element.shape.geom.getBoundary();
-				$(shape).attr('auto_draw', 'yes');
-				newElement = handler._RENDERER._CANVAS.drawShape([envelope.getUpperRight().x + 50, envelope.getCentroid().y], shape, [30, 30]);
-				handler._RENDERER._CANVAS.connect(element, newElement);
-			},
-			mouseout : function (event) {
-
-			}
-		});
-		/********************************************
-			이벤트 설정 종료
-		********************************************/
-		
-		//FIXME 삭제
-		$(group).bind({
-			remove: function(event){
-				element.shape.geom["custom_control"] = undefined;
-				handler._RENDERER._remove(group);
-			}
-		});
-		
-		// addto element
-		element.shape.geom["custom_control"] = group;
-	}
-};
 
 /**
  * BPMN : Alpha Event Shape
@@ -21380,7 +21115,8 @@ OG.handler.EventHandler.prototype = {
                 if(diffX < 5){
 					me._RENDERER.drawStickGuide(stickElement, element, true);
 
-                    dx = centerX - bBoxW / 2 - start.x + offset["x"];
+					
+                    dx = me._grid(centerX - bBoxW / 2 - start.x + offset["x"], 'move');
                     
                     neverStickX = false;
                  }
@@ -21388,7 +21124,7 @@ OG.handler.EventHandler.prototype = {
                  if(diffY < 5){
                      me._RENDERER.drawStickGuide(stickElement, element, false);
 
-                     dy = centerY - bBoxH / 2 - start.y + offset["y"];
+                     dy = me._grid(centerY - bBoxH / 2 - start.y + offset["y"], 'move');
                      
                     neverStickY = false;
                  }
@@ -21608,7 +21344,7 @@ OG.handler.EventHandler.prototype = {
 					//TODO : 이것 또한 없애야 할 것... 의존성을 가지면 안됨.
 					// remove custom control
 					if(me._getSelectedElement().length == 1){
-						//element.shape.drawCustomControl(me, element);
+						element.shape.drawCustomControl(me, element);
 						
 						//자동 붙이기...
 						if(isAttatched){
@@ -24335,7 +24071,7 @@ OG.handler.EventHandler.prototype = {
 			//하나만 선택된 경우 : 후행 처리 ( drawCustomControl );
 			if(me._getSelectedElement().length == 1){
 				if(me._CONFIG.MOVABLE){
-					//element.shape.drawCustomControl(this, element);
+					element.shape.drawCustomControl(this, element);
 				}
 			}else if(me._getSelectedElement().length > 1){
 				var i, n, selectedElements = me._getSelectedElement();
