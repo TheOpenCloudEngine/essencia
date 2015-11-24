@@ -20,6 +20,20 @@ public class ActivityCard extends BasicCard {
     protected final int X_START = 64;
     protected final int Y_START = 48;
 
+
+    static final int minWofElem = 90/4,
+            Wspacing = 3,
+            elementCntOfOneStack = 100 / (minWofElem + Wspacing),
+            minHofElem = 15,
+            Hspacing = 3,
+            canvasW = 400,
+            canvasH = 300,
+
+            w = canvasW * minWofElem / 100,
+            h = canvasH * minHofElem / 100;
+
+
+
     public ActivityCard() {
 
     }
@@ -44,6 +58,29 @@ public class ActivityCard extends BasicCard {
             throw new RuntimeException("Error when to clone Alpha element", e);
         }
 
+        /**
+         *
+         * +----------------+
+         * |       a        |
+         * +----------------+
+         * |       b        |
+         * +----------------+
+         * |       c        |
+         * +----------------+
+         *
+         * Area a stands for entry criteria
+         * Area b stands for competency arrow
+         * Area c stands for completion criteria
+         *
+         * constant minWofElem is minimum Width Of Element
+         *
+         * ha = height of a
+         * hb = height of b, hc is also.
+         */
+
+        int ha, hb, hc;
+
+
         setName(element.getName());
         String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<h3>The activity is completed when:</h3>";
         setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
@@ -59,29 +96,43 @@ public class ActivityCard extends BasicCard {
             entryCriteriaList = ((Activity) element).getEntryCriteria();
         }
 
-        if(entryCriteriaList!=null)
-        for (LanguageElement e : entryCriteriaList) {
-            Criterion criterion = (Criterion) e;
-            setSymbol((new AlphaView()).createSymbol());
-            setView(criterion.getState().getParentAlpha().createView());
-
-            x = getXCoordinate(elementIndex);
-            y = getYCoordinate(y, elementIndex);
 
 
-            getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
-            getView().setWidth(String.valueOf(64));
-            getView().setHeight(String.valueOf(24));
+        if(entryCriteriaList!=null) {
 
-            getView().setElement(criterion.getState().getParentAlpha());
-            getView().setId(String.valueOf(trcTag++));
+            // all following coordinate system is 100 percent (relative) system. not the absolute position.
+            int fullWidthOfEntryElements = entryCriteriaList.size() * (minWofElem + Wspacing);
+            int stackCntOfEntryElements = fullWidthOfEntryElements / 100;
+            int startXOfLastStack = 50 - (fullWidthOfEntryElements % 100) / 2;  //50 means 50% --> thus, means center.
 
-            ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName());// + "(" + criterion.getState().getName()+ ")");
+            for (LanguageElement e : entryCriteriaList) {
+                Criterion criterion = (Criterion) e;
+                setSymbol((new AlphaView()).createSymbol());
+                setView(criterion.getState().getParentAlpha().createView());
 
-            getCanvas().getElementViewList().add(getView());
-            elementIndex++;
+                int stack = elementIndex / elementCntOfOneStack;
+                boolean elementLocatesLastStack = (stack == stackCntOfEntryElements);
+                x = (elementLocatesLastStack ? startXOfLastStack : 0) + (elementIndex % elementCntOfOneStack * (minWofElem + Wspacing)) + minWofElem / 2;
+                y = stack * (minHofElem + Hspacing) + minHofElem / 2;  //since the coordinate system is center-aligned for any SVG elements.
+
+                x = getAbsoluteX(x);
+                y = getAbsoluteY(y);
+
+
+                getView().fill(getSymbol());
+                getView().setX(String.valueOf(x));
+                getView().setY(String.valueOf(y));
+                getView().setWidth(String.valueOf(w));
+                getView().setHeight(String.valueOf(h));
+
+                getView().setElement(criterion.getState().getParentAlpha());
+                getView().setId(String.valueOf(trcTag++));
+
+                ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName());// + "(" + criterion.getState().getName()+ ")");
+
+                getCanvas().getElementViewList().add(getView());
+                elementIndex++;
+            }
         }
         // Competency View
 
@@ -97,7 +148,7 @@ public class ActivityCard extends BasicCard {
         setView(competency.createView());
 
         getView().fill(getSymbol());
-        getView().setX(String.valueOf(110));
+        getView().setX(String.valueOf(canvasW / 2));
         getView().setY(String.valueOf(y));
         getView().setWidth(String.valueOf(56));
         getView().setHeight(String.valueOf(56));
@@ -110,7 +161,7 @@ public class ActivityCard extends BasicCard {
         setSymbol(getView().createSymbol());
 
         getView().fill(getSymbol());
-        getView().setX(String.valueOf(110));
+        getView().setX(String.valueOf(canvasW / 2));
         getView().setY(String.valueOf(y));
         getView().setWidth(String.valueOf(120));
         getView().setHeight(String.valueOf(100));
@@ -130,36 +181,52 @@ public class ActivityCard extends BasicCard {
             completionCriterionList = ((Activity) element).getCompletionCriteria();
         }
 
-        if(completionCriterionList!=null)
-        for (LanguageElement e : completionCriterionList) {
-            Criterion criterion = (Criterion) e;
+        if(completionCriterionList!=null) {
 
-            BasicElement theElementForCriteria = criterion.getElement();
+            int startY = y;
 
-            description += "<h4>" + theElementForCriteria.getName() + ": "
+            // all following coordinate system is 100 percent (relative) system. not the absolute position.
+            int fullWidthOfEntryElements = completionCriterionList.size() * (minWofElem + Wspacing);
+            int stackCntOfEntryElements = fullWidthOfEntryElements / 100;
+            int startXOfLastStack = 50 - (fullWidthOfEntryElements % 100) / 2;  //50 means 50% --> thus, means center.
 
-                    + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
-                    ;
 
-            setView(theElementForCriteria.createView());
+            for (LanguageElement e : completionCriterionList) {
+                Criterion criterion = (Criterion) e;
 
-            setSymbol(getView().createSymbol());
+                BasicElement theElementForCriteria = criterion.getElement();
 
-            x = getXCoordinate(elementIndex);
-            y = getYCoordinate(y, elementIndex);
+                description += "<h4>" + theElementForCriteria.getName() + ": "
 
-            ((BasicElement) getView().getElement()).setName(theElementForCriteria.getName() + "("
-                    + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
-                    + ")");
-            getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
-            getView().setWidth(String.valueOf(64));
-            getView().setHeight(String.valueOf(24));
-            getView().setId(String.valueOf(trcTag++));
+                        + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
+                ;
 
-            getCanvas().getElementViewList().add(getView());
-            elementIndex++;
+                setView(theElementForCriteria.createView());
+
+                setSymbol(getView().createSymbol());
+
+                int stack = elementIndex / elementCntOfOneStack;
+                boolean elementLocatesLastStack = (stack == stackCntOfEntryElements);
+                x = (elementLocatesLastStack ? startXOfLastStack : 0) + (elementIndex % elementCntOfOneStack * (minWofElem + Wspacing)) + minWofElem / 2;
+                y = stack * (minHofElem + Hspacing) + minHofElem / 2;  //since the coordinate system is center-aligned for any SVG elements.
+
+                x = getAbsoluteX(x);
+                y = getAbsoluteY(y) + startY;
+
+
+                ((BasicElement) getView().getElement()).setName(theElementForCriteria.getName() + "("
+                        + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
+                        + ")");
+                getView().fill(getSymbol());
+                getView().setX(String.valueOf(x));
+                getView().setY(String.valueOf(y));
+                getView().setWidth(String.valueOf(w));
+                getView().setHeight(String.valueOf(h));
+                getView().setId(String.valueOf(trcTag++));
+
+                getCanvas().getElementViewList().add(getView());
+                elementIndex++;
+            }
         }
 
         List<CompletionCriterion> workProductList;
@@ -195,6 +262,13 @@ public class ActivityCard extends BasicCard {
         }
         description += "</ul>";
         setDescription(description);
+    }
+
+    private int getAbsoluteX(int x) {
+        return canvasW * x / 100;
+    }
+    private int getAbsoluteY(int y) {
+        return canvasH * y / 100;
     }
 
     protected int getXCoordinate(int elementIndex) {
