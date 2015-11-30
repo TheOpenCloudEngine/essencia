@@ -35,15 +35,15 @@ public class EssenciaSelectBox extends SelectBox {
 
     }
     public void addActivitySpaceForCompletion(ActivitySpace activitySpace) {
-	// completion
-	defaultValueSetting();
-	if ("".equals(activitySpace.getName())) {
-	    return;
-	}
-	for (LanguageElement e : activitySpace.getCompletionCriteria()) {
-	    Criterion c = (Criterion)e;
-	    super.add(c.getState().getParentAlpha().getName(), c.getState().getParentAlpha().getName());
-	}
+        // completion
+        defaultValueSetting();
+        if ("".equals(activitySpace.getName())) {
+            return;
+        }
+        for (LanguageElement e : activitySpace.getCompletionCriteria()) {
+            Criterion c = (Criterion)e;
+            super.add(c.getState().getParentAlpha().getName(), c.getState().getParentAlpha().getName());
+        }
 	
     }
 
