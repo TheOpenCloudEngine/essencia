@@ -62,8 +62,8 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 		ElementView view = practice.createView();
 		Symbol symbol = (new PracticeView()).createSymbol();
 		view.fill(symbol);
-		view.setX("96");
-		view.setY("96");
+		view.setX(96);
+		view.setY(96);
 		view.setElement(practice);
 		view.setLabel("untitled");
 

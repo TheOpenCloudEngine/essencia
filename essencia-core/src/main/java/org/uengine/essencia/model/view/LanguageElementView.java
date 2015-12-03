@@ -33,6 +33,13 @@ public abstract class LanguageElementView extends ElementView {
 
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_STICK)
     public Object showProperty() throws Exception {
+
+        if(elementViewActionDelegate!=null){
+            elementViewActionDelegate.onDoubleClick(this);
+
+            return null;
+        }
+
         EssenciaPropertyPanel propertyPanel = new EssenciaPropertyPanel(this);
         ContextUtil.setHow(propertyPanel, "dynamicSize");
         ModalWindow modal = new ModalWindow(propertyPanel, 900, 500, "Essencia Element Properties Editor [ " + getLabel() + "]");

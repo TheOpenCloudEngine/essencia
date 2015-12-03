@@ -10841,7 +10841,7 @@ OG.shape.essencia.Alpha.prototype.createShape = function () {
 	
 	this.geom.style = new OG.geometry.Style({
 		'r' : 20,
-		'label-position': 'center',
+		'label-position': '40%',
         'stroke-width' : 2.5
 	});
 
@@ -11126,7 +11126,10 @@ OG.shape.essencia.Practice.prototype.createShape = function () {
 	
 	this.geom.style = new OG.geometry.Style({
 		'label-position': 'middle',
-        'stroke-width' : 2.5
+        'stroke-width' : 2.5,
+        'fill': '#9b59b6',
+        'stroke': '#8e44ad',
+        'fill-opacity': "1"
 	});
 
 	return this.geom;

@@ -349,8 +349,8 @@ public class EssenceXmiAPI {
 		for (int i = 0; i < elementList.size(); i++) {
 			if (elementList.get(i) instanceof Practice) {
 				IElement removedElement = pd.getElementList().remove(i);
-				removedElement.getElementView().setX("96");
-				removedElement.getElementView().setY("96");
+				removedElement.getElementView().setX(96);
+				removedElement.getElementView().setY(96);
 				String[] toEdges = removedElement.getElementView().getToEdge().split(",");
 				pd.setElementList(autoLocateElements(pd.getElementList(), toEdges, 1, 0));
 				pd.getElementList().add(removedElement);

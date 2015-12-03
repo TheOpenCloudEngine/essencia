@@ -37,7 +37,9 @@ public class EssenceActivityHandler extends WorkItemHandler {
         Long taskId = getTaskId();
         String tracingTag = getTracingTag();
 
-        EssenceActivity essenceActivity = (EssenceActivity) humanActivity;
+
+
+        EssenceActivity essenceActivity = (EssenceActivity) processManager.getProcessInstance(getInstanceId()).getProcessDefinition().getActivity(tracingTag);
 
         activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
     }

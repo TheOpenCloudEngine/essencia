@@ -141,8 +141,8 @@ public class MethodCanvas extends EssenciaCanvas {
 
                 elementView.setFromEdge(relationView.getId());
                 elementView.setToEdge("");
-                elementView.setX("");
-                elementView.setY("");
+                elementView.setX(0);
+                elementView.setY(0);
 
                 getElementViewList().add(elementView);
                 getRelationViewList().add(relationView);
@@ -230,8 +230,8 @@ public class MethodCanvas extends EssenciaCanvas {
 
         for (ElementView elementVeiw : list) {
             if (elementVeiw instanceof PracticeView) {
-                elementVeiw.setX("96");
-                elementVeiw.setY("96");
+                elementVeiw.setX(96);
+                elementVeiw.setY(96);
                 if (elementVeiw.getToEdge()!=null) {
                     String[] toEdges = elementVeiw.getToEdge().split(",");
                     firstLevel = Arrays.asList(toEdges);
@@ -242,22 +242,22 @@ public class MethodCanvas extends EssenciaCanvas {
     }
 
     List<String> firstLevel = null;
-    int x = 96;
-    int y = 96;
+    double x = 96;
+    double y = 96;
 
     private void autoRelocateByRelation(String[] edges, List<ElementView> list) {
         for (int i = 0; i < edges.length; i++) {
             for (ElementView view : list) {
                 if (edges[i].equals(view.getFromEdge())) {
                     if (firstLevel.contains(edges[i])) {
-                        x = 96 + 64 + Math.round(Float.valueOf(view.getWidth()));
+                        x = 96 + 64 + Math.round((view.getWidth()));
                         if (i > 0) {
-                            y = y + 32 + Math.round(Float.valueOf(view.getHeight()));
+                            y = y + 32 + Math.round((view.getHeight()));
                         }
                     } else if (i == 0) {
-                        x = x + 64 + Math.round(Float.valueOf(view.getWidth()));
+                        x = x + 64 + Math.round((view.getWidth()));
                     } else {
-                        y = y + 32 + Math.round(Float.valueOf(view.getHeight()));
+                        y = y + 32 + Math.round((view.getHeight()));
                     }
                     view.setX(x);
                     view.setY(y);

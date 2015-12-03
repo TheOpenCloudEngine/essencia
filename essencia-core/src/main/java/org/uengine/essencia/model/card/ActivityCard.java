@@ -1,5 +1,7 @@
 package org.uengine.essencia.model.card;
 
+import com.sun.tools.javac.comp.Flow;
+import org.metaworks.widget.grid.Grid;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.face.ActivityCompletionCriterionFace;
 import org.uengine.essencia.model.face.ActivityEntryCriterionFace;
@@ -9,11 +11,17 @@ import org.uengine.essencia.model.view.AlphaView;
 import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.WorkProductView;
 import org.uengine.kernel.GlobalContext;
+import org.uengine.modeling.ElementView;
+import org.uengine.modeling.layout.FlowLayout;
+import org.uengine.modeling.layout.GridLayout;
+import org.uengine.modeling.layout.LayoutGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityCard extends BasicCard {
 
+    public static final int competencyH = 100;
     protected final String NEXT_LINE = "<br/>";
     protected final int X_INTERVAL = 96;
     protected final int Y_INTERVAL = 70;
@@ -21,16 +29,8 @@ public class ActivityCard extends BasicCard {
     protected final int Y_START = 48;
 
 
-    static final int minWofElem = 90/4,
-            Wspacing = 3,
-            elementCntOfOneStack = 100 / (minWofElem + Wspacing),
-            minHofElem = 15,
-            Hspacing = 3,
-            canvasW = 400,
-            canvasH = 300,
+    public static final int canvasW = 400, canvasH = 300;
 
-            w = canvasW * minWofElem / 100,
-            h = canvasH * minHofElem / 100;
 
 
 
@@ -58,29 +58,6 @@ public class ActivityCard extends BasicCard {
             throw new RuntimeException("Error when to clone Alpha element", e);
         }
 
-        /**
-         *
-         * +----------------+
-         * |       a        |
-         * +----------------+
-         * |       b        |
-         * +----------------+
-         * |       c        |
-         * +----------------+
-         *
-         * Area a stands for entry criteria
-         * Area b stands for competency arrow
-         * Area c stands for completion criteria
-         *
-         * constant minWofElem is minimum Width Of Element
-         *
-         * ha = height of a
-         * hb = height of b, hc is also.
-         */
-
-        int ha, hb, hc;
-
-
         setName(element.getName());
         String description = element.getDescription() + NEXT_LINE + NEXT_LINE + "<h3>The activity is completed when:</h3>";
         setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
@@ -96,35 +73,18 @@ public class ActivityCard extends BasicCard {
             entryCriteriaList = ((Activity) element).getEntryCriteria();
         }
 
+        GridLayout gridLayout = new GridLayout();
 
+        List<ElementView> entryElementViews = new ArrayList<ElementView>();
 
         if(entryCriteriaList!=null) {
-
-            // all following coordinate system is 100 percent (relative) system. not the absolute position.
-            int fullWidthOfEntryElements = entryCriteriaList.size() * (minWofElem + Wspacing);
-            int stackCntOfEntryElements = fullWidthOfEntryElements / 100;
-            int startXOfLastStack = 50 - (fullWidthOfEntryElements % 100) / 2;  //50 means 50% --> thus, means center.
 
             for (LanguageElement e : entryCriteriaList) {
                 Criterion criterion = (Criterion) e;
                 setSymbol((new AlphaView()).createSymbol());
                 setView(criterion.getState().getParentAlpha().createView());
 
-                int stack = elementIndex / elementCntOfOneStack;
-                boolean elementLocatesLastStack = (stack == stackCntOfEntryElements);
-                x = (elementLocatesLastStack ? startXOfLastStack : 0) + (elementIndex % elementCntOfOneStack * (minWofElem + Wspacing)) + minWofElem / 2;
-                y = stack * (minHofElem + Hspacing) + minHofElem / 2;  //since the coordinate system is center-aligned for any SVG elements.
-
-                x = getAbsoluteX(x);
-                y = getAbsoluteY(y);
-
-
                 getView().fill(getSymbol());
-                getView().setX(String.valueOf(x));
-                getView().setY(String.valueOf(y));
-                getView().setWidth(String.valueOf(w));
-                getView().setHeight(String.valueOf(h));
-
                 getView().setElement(criterion.getState().getParentAlpha());
                 getView().setId(String.valueOf(trcTag++));
 
@@ -132,14 +92,22 @@ public class ActivityCard extends BasicCard {
 
                 getCanvas().getElementViewList().add(getView());
                 elementIndex++;
-            }
-        }
-        // Competency View
 
-        if(getView()!=null)
-            y = y + Integer.valueOf(getView().getHeight()) + Y_INTERVAL;
-        else
-            y = y + Y_INTERVAL;
+                entryElementViews.add(getView());
+            }
+
+            FlowLayout flowLayout = new FlowLayout();
+            flowLayout.setElementViews(entryElementViews);
+            gridLayout.add(flowLayout);
+
+        }
+
+
+        ////// center arrow
+
+        LayoutGroup centerArrow = new LayoutGroup();
+
+        y = competencyH / 2;
 
         String competencyName = ((Activity) element).getCompetency().getSelectedText();
         setSymbol(new CompetencyView().createSymbol());
@@ -148,31 +116,46 @@ public class ActivityCard extends BasicCard {
         setView(competency.createView());
 
         getView().fill(getSymbol());
-        getView().setX(String.valueOf(canvasW / 2));
-        getView().setY(String.valueOf(y));
-        getView().setWidth(String.valueOf(56));
-        getView().setHeight(String.valueOf(56));
+        getView().setX((canvasW / 2));
+        getView().setY((y));
+        getView().setWidth((56));
+        getView().setHeight((56));
 
         getView().setId(String.valueOf(trcTag++));
 
         getCanvas().getElementViewList().add(getView());
+
+        centerArrow.getElementViews().add(getView());
+
         // Competency Arrow View
         setView(new ActivityArrowView());
         setSymbol(getView().createSymbol());
 
         getView().fill(getSymbol());
-        getView().setX(String.valueOf(canvasW / 2));
-        getView().setY(String.valueOf(y));
-        getView().setWidth(String.valueOf(120));
-        getView().setHeight(String.valueOf(100));
+        getView().setX((canvasW / 2));
+        getView().setY((y));
+        getView().setWidth((120));
+        getView().setHeight((competencyH));
 
         getView().setId(String.valueOf(trcTag++));
 
+        centerArrow.getElementViews().add(getView());
+
+
         getCanvas().getElementViewList().add(getView());
-        y += 20;
+
+
+
         // Output Alpha View
         elementIndex = 0;
         description += "<ul>";
+
+
+        gridLayout.add(centerArrow);
+
+
+        /////////
+
 
         List<CompletionCriterion> completionCriterionList;
         if(((Activity) element).getCompletionCriterionFace()!=null){
@@ -181,15 +164,10 @@ public class ActivityCard extends BasicCard {
             completionCriterionList = ((Activity) element).getCompletionCriteria();
         }
 
+
+        List<ElementView> completionElementViews = new ArrayList<ElementView>();
+
         if(completionCriterionList!=null) {
-
-            int startY = y;
-
-            // all following coordinate system is 100 percent (relative) system. not the absolute position.
-            int fullWidthOfEntryElements = completionCriterionList.size() * (minWofElem + Wspacing);
-            int stackCntOfEntryElements = fullWidthOfEntryElements / 100;
-            int startXOfLastStack = 50 - (fullWidthOfEntryElements % 100) / 2;  //50 means 50% --> thus, means center.
-
 
             for (LanguageElement e : completionCriterionList) {
                 Criterion criterion = (Criterion) e;
@@ -205,28 +183,18 @@ public class ActivityCard extends BasicCard {
 
                 setSymbol(getView().createSymbol());
 
-                int stack = elementIndex / elementCntOfOneStack;
-                boolean elementLocatesLastStack = (stack == stackCntOfEntryElements);
-                x = (elementLocatesLastStack ? startXOfLastStack : 0) + (elementIndex % elementCntOfOneStack * (minWofElem + Wspacing)) + minWofElem / 2;
-                y = stack * (minHofElem + Hspacing) + minHofElem / 2;  //since the coordinate system is center-aligned for any SVG elements.
-
-                x = getAbsoluteX(x);
-                y = getAbsoluteY(y) + startY;
-
-
                 ((BasicElement) getView().getElement()).setName(theElementForCriteria.getName() + "("
                         + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
                         + ")");
                 getView().fill(getSymbol());
-                getView().setX(String.valueOf(x));
-                getView().setY(String.valueOf(y));
-                getView().setWidth(String.valueOf(w));
-                getView().setHeight(String.valueOf(h));
                 getView().setId(String.valueOf(trcTag++));
 
                 getCanvas().getElementViewList().add(getView());
+
+                completionElementViews.add(getView());
                 elementIndex++;
             }
+
         }
 
         List<CompletionCriterion> workProductList;
@@ -238,47 +206,64 @@ public class ActivityCard extends BasicCard {
         }
 
         // Output WorkProduct View
-        if(workProductList!=null)
-        for (LanguageElement e : workProductList) {
-            Criterion criterion = (Criterion) e;
-            description += "<h4>" + criterion.getLevelOfDetail().getParentWorkProduct().getName() + ": " + criterion.getLevelOfDetail().getName()
-                    + "</h4>";
-            setSymbol((new WorkProductView().createSymbol()));
-            setView(new WorkProduct().createView());
+        if(workProductList!=null) {
+            for (LanguageElement e : workProductList) {
+                Criterion criterion = (Criterion) e;
+                description += "<h4>" + criterion.getLevelOfDetail().getParentWorkProduct().getName() + ": " + criterion.getLevelOfDetail().getName()
+                        + "</h4>";
+                setSymbol((new WorkProductView().createSymbol()));
+                setView(new WorkProduct().createView());
 
-            x = getXCoordinate(elementIndex);
-            y = getYCoordinate(y, elementIndex);
+                ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
+                        + ")");
+                getView().fill(getSymbol());
 
-            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
-                    + ")");
-            getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
+                getView().setId(String.valueOf(trcTag++));
 
-            getView().setId(String.valueOf(trcTag++));
+                getCanvas().getElementViewList().add(getView());
+                elementIndex++;
 
-            getCanvas().getElementViewList().add(getView());
-            elementIndex++;
+                completionElementViews.add(getView());
+
+            }
         }
+
+        if(completionElementViews.size() > 0) {
+            FlowLayout flowLayout = new FlowLayout();
+            //flowLayout.setStartY(startY);
+            flowLayout.setElementViews(completionElementViews);
+
+            gridLayout.add(flowLayout);
+        }
+
         description += "</ul>";
         setDescription(description);
+
+
+
+        gridLayout.layout();
+
+//        //adjust the whole elements to be vertically middle.
+//
+//        int adjustY = (canvasH - y ) / 2;
+//
+//        for(ElementView elementView : getCanvas().getElementViewList()){
+//            //Integer.parseInt(elementView.getX());
+//            int currY = Integer.parseInt(elementView.getY());
+//            elementView.setY(currY + adjustY);
+//        }
+
     }
 
-    private int getAbsoluteX(int x) {
-        return canvasW * x / 100;
-    }
-    private int getAbsoluteY(int y) {
-        return canvasH * y / 100;
-    }
 
-    protected int getXCoordinate(int elementIndex) {
+    protected double getXCoordinate(double elementIndex) {
         if (elementIndex % 2 == 1) {
             return X_START + X_INTERVAL;
         }
         return X_START;
     }
 
-    protected int getYCoordinate(int y, int elementIndex) {
+    protected double getYCoordinate(double y, int elementIndex) {
         if (elementIndex % 2 == 0) {
             y += Y_INTERVAL;
         }

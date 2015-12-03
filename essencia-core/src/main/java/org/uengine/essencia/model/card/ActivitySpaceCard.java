@@ -44,10 +44,10 @@ public class ActivitySpaceCard extends BasicCard {
             y = getYCoordinate(y, elementIndex);
 
             getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
-            getView().setWidth(String.valueOf(64));
-            getView().setHeight(String.valueOf(24));
+            getView().setX((x));
+            getView().setY((y));
+            getView().setWidth((64));
+            getView().setHeight((24));
 
             getView().setElement(inputAlpha);
             getView().setId(String.valueOf(trcTag++));
@@ -56,15 +56,15 @@ public class ActivitySpaceCard extends BasicCard {
             elementIndex++;
         }
         // Competency Arrow View
-        y = y + Integer.valueOf(getView().getHeight()) + Y_INTERVAL;
+        y = y + getView().getHeight() + Y_INTERVAL;
         setView(new ActivityArrowView());
         setSymbol(getView().createSymbol());
 
         getView().fill(getSymbol());
-        getView().setX(String.valueOf(110));
-        getView().setY(String.valueOf(y));
-        getView().setWidth(String.valueOf(120));
-        getView().setHeight(String.valueOf(100));
+        getView().setX((110));
+        getView().setY((y));
+        getView().setWidth((120));
+        getView().setHeight((100));
 
         getView().setId(String.valueOf(trcTag++));
 
@@ -84,10 +84,10 @@ public class ActivitySpaceCard extends BasicCard {
 
             ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName() + ")");
             getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
-            getView().setWidth(String.valueOf(64));
-            getView().setHeight(String.valueOf(24));
+            getView().setX((x));
+            getView().setY((y));
+            getView().setWidth((64));
+            getView().setHeight((24));
             getView().setId(String.valueOf(trcTag++));
 
             getCanvas().getElementViewList().add(getView());
@@ -104,14 +104,14 @@ public class ActivitySpaceCard extends BasicCard {
         setDescription(description);
     }
 
-    private int getXCoordinate(int elementIndex) {
+    private double getXCoordinate(int elementIndex) {
         if (elementIndex % 2 == 1) {
             return X_START + X_INTERVAL;
         }
         return X_START;
     }
 
-    private int getYCoordinate(int y, int elementIndex) {
+    private double getYCoordinate(double y, int elementIndex) {
         if (elementIndex % 2 == 0) {
             y += Y_INTERVAL;
         }
