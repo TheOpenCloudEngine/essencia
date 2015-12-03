@@ -209,9 +209,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
                 roleView = role.createView();
 
                 roleView.setWidth(calculateLaneWidth(competency.getName()) + 40 + 192);
-                roleView.setHeight("128");
-                roleView.setX(48 + Integer.valueOf(roleView.getWidth()) / 2);
-                roleView.setY(40 + Integer.valueOf(roleView.getHeight()) / 2 + laneCnt * Integer.valueOf(roleView.getHeight()));
+                roleView.setHeight(128);
+                roleView.setX(48 + (roleView.getWidth()) / 2);
+                roleView.setY(40 + (roleView.getHeight()) / 2 + laneCnt * (roleView.getHeight()));
                 roleView.setShapeId("OG.shape.HorizontalLaneShape");
                 roleView.setLabel(role.getName());
 
@@ -269,15 +269,15 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
                 humanView.setLabel(element.getName());
                 humanView.setShapeId(HumanActivityView.SHAPE_ID_BPMN);
-                humanView.setHeight("96");
-                humanView.setWidth("96");
+                humanView.setHeight(96);
+                humanView.setWidth(96);
 
-                int laneX = Integer.valueOf(roleView.getX());
-                int laneHalfWidth = Integer.valueOf(roleView.getWidth()) / 2;
-                int prevActivitiesCnt = prevActivitiesCntWithSameCompetency(returnProcessDefinition.getChildActivities(), competency);
-                int humanX = Integer.valueOf(humanView.getWidth()) * prevActivitiesCnt;
+                double laneX = (roleView.getX());
+                double laneHalfWidth = (roleView.getWidth()) / 2;
+                double prevActivitiesCnt = prevActivitiesCntWithSameCompetency(returnProcessDefinition.getChildActivities(), competency);
+                double humanX = (humanView.getWidth()) * prevActivitiesCnt;
 
-                int rst = laneX - laneHalfWidth + humanX;
+                double rst = laneX - laneHalfWidth + humanX;
                 rst = rst + 64 * prevActivitiesCnt;
 
                 humanView.setX(rst);

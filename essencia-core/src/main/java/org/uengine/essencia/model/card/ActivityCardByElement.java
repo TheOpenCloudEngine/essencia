@@ -70,10 +70,10 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
                 y = getYCoordinate(y, elementIndex);
 
                 getView().fill(getSymbol());
-                getView().setX(String.valueOf(x));
-                getView().setY(String.valueOf(y));
-                getView().setWidth(String.valueOf(64));
-                getView().setHeight(String.valueOf(24));
+                getView().setX((x));
+                getView().setY((y));
+                getView().setWidth((64));
+                getView().setHeight((24));
 
                 getView().setElement(criterion.getState().getParentAlpha());
                 getCanvas().getElementViewList().add(getView());
@@ -81,7 +81,7 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
             }
         }
         // Competency View
-        y = y + Integer.valueOf(getView().getHeight()) + Y_INTERVAL;
+        y = y + (getView().getHeight()) + Y_INTERVAL;
         String competencyName = ((Activity) element).getCompetency().getSelectedText();
         setSymbol(new CompetencyView().createSymbol());
         Competency competency = new Competency();
@@ -89,10 +89,10 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
         setView(competency.createView());
 
         getView().fill(getSymbol());
-        getView().setX(String.valueOf(110));
-        getView().setY(String.valueOf(y));
-        getView().setWidth(String.valueOf(56));
-        getView().setHeight(String.valueOf(56));
+        getView().setX((110));
+        getView().setY((y));
+        getView().setWidth((56));
+        getView().setHeight((56));
 
         getView().setId(String.valueOf(trcTag++));
 
@@ -102,10 +102,10 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
         setSymbol(getView().createSymbol());
 
         getView().fill(getSymbol());
-        getView().setX(String.valueOf(110));
-        getView().setY(String.valueOf(y));
-        getView().setWidth(String.valueOf(120));
-        getView().setHeight(String.valueOf(100));
+        getView().setX((110));
+        getView().setY((y));
+        getView().setWidth((120));
+        getView().setHeight((100));
 
         getCanvas().getElementViewList().add(getView());
         y += 20;
@@ -125,10 +125,10 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
             ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName() + "(" + criterion.getState().getName()
                     + ")");
             getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
-            getView().setWidth(String.valueOf(64));
-            getView().setHeight(String.valueOf(24));
+            getView().setX((x));
+            getView().setY((y));
+            getView().setWidth((64));
+            getView().setHeight((24));
 
             getCanvas().getElementViewList().add(getView());
             elementIndex++;
@@ -147,8 +147,8 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
 //            ((BasicElement) getView().getElement()).setName(criterion.getLevelOfDetail().getName() + "(" + criterion.getLevelOfDetail().getName()
 //                    + ")");
             getView().fill(getSymbol());
-            getView().setX(String.valueOf(x));
-            getView().setY(String.valueOf(y));
+            getView().setX((x));
+            getView().setY((y));
 
             getCanvas().getElementViewList().add(getView());
             elementIndex++;

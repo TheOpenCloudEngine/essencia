@@ -89,8 +89,8 @@ public class PracticeCanvas extends EssenciaCanvas {
 			elementView = ((BasicElement)practice.getElementByName(resource.getDisplayName())).asView();
 			elementView.setFromEdge("");
 			elementView.setToEdge("");
-			elementView.setX("");
-			elementView.setY("");
+			elementView.setX(0);
+			elementView.setY(0);
 			elementView.setId("");
 			
 		} catch (Exception e) {

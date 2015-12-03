@@ -10,8 +10,8 @@ import org.uengine.modeling.*;
 
 public abstract class BasicCard implements Card{
 	
-	protected int x = 0;
-	protected int y = 0;
+	protected double x = 0;
+	protected double y = 0;
 	protected int trcTag = 0;
 	
 	protected Symbol symbol = null;
@@ -105,9 +105,9 @@ public abstract class BasicCard implements Card{
 	
 	protected void makeUpView(IElement element, int addedY){
 		getView().fill(getSymbol());
-		getView().setX(String.valueOf(x));
-		getView().setY(String.valueOf(y));
-		y = y + Integer.valueOf(getView().getHeight()) + addedY;
+		getView().setX((x));
+		getView().setY((y));
+		y = y + (getView().getHeight()) + addedY;
 		getView().setElement(element);
 		getView().setLabel(element.getName());
 	}

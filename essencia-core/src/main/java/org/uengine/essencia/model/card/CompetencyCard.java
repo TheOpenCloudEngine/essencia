@@ -34,7 +34,7 @@ public class CompetencyCard extends BasicCard{
 			
 			makeUpView(competencyLevel, 0);
 			
-			getView().setWidth(String.valueOf(Integer.valueOf(getView().getWidth()) + trcTag * addedWidth));
+			getView().setWidth(getView().getWidth() + trcTag * addedWidth);
 
 			getView().setId(String.valueOf(trcTag++));
 			

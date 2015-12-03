@@ -1,0 +1,44 @@
+package org.uengine.essencia.portal;
+
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.widget.ModalWindow;
+import org.uengine.essencia.enactment.EssenceActivity;
+import org.uengine.essencia.model.BasicElement;
+import org.uengine.essencia.model.CardViewable;
+import org.uengine.essencia.model.LanguageElement;
+import org.uengine.essencia.model.card.ActivityCard;
+import org.uengine.essencia.model.view.LanguageElementView;
+import org.uengine.kernel.view.ActivityView;
+import org.uengine.modeling.ElementView;
+import org.uengine.modeling.ElementViewActionDelegate;
+import org.uengine.social.ElementViewActionDelegateForInstanceMonitoring;
+import org.uengine.essencia.model.card.Card;
+
+
+/**
+ * Created by jjy on 2015. 11. 25..
+ */
+public class ElementViewActionDelegateForCardView extends ElementViewActionDelegateForInstanceMonitoring {
+    @Override
+    public void onDoubleClick(ElementView elementView) {
+        if(elementView instanceof ActivityView && ((ActivityView) elementView).getElement() instanceof EssenceActivity){
+            EssenceActivity essenceActivity = (EssenceActivity) ((ActivityView) elementView).getElement();
+            ActivityCard activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
+
+            MetaworksRemoteService.wrapReturn(new ModalWindow(activityCard));
+        }else if(elementView instanceof LanguageElementView) {
+            LanguageElementView languageElementView = (LanguageElementView) elementView;
+            BasicElement languageElement = (BasicElement) languageElementView.getElement();
+            if(languageElement instanceof CardViewable){
+                languageElement.setElementView(languageElementView);
+
+
+                Card card = ((CardViewable) languageElement).createCardView();
+
+                MetaworksRemoteService.wrapReturn(new ModalWindow(card));
+            }
+        }else{
+            super.onDoubleClick(elementView);
+        }
+    }
+}

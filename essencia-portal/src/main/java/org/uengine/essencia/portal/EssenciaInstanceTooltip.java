@@ -13,6 +13,8 @@ import org.uengine.essencia.enactment.GameBoard;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.social.ElementViewActionDelegateForInstanceMonitoring;
+import org.uengine.social.InstanceMonitorPanel;
 import org.uengine.social.SocialBPMInstanceTooltip;
 
 @Scope("prototype")
@@ -60,6 +62,11 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
         return modal;
     }
 
+    @Override
+    protected InstanceMonitorPanel createInstanceMonitorPanel() throws Exception {
+        InstanceMonitorPanel instanceMonitorPanel =  super.createInstanceMonitorPanel();
+        instanceMonitorPanel.setElementViewActionDelegate(new ElementViewActionDelegateForCardView());
 
-
+        return instanceMonitorPanel;
+    }
 }
