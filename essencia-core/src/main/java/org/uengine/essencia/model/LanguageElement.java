@@ -9,16 +9,19 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.WebFieldDescriptor;
 import org.metaworks.annotation.*;
 import org.uengine.contexts.TextContext;
+import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.face.list.ResourceListFace;
 import org.uengine.essencia.model.face.list.TagListFace;
+import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.GlobalContext;
+import org.uengine.modeling.IModelingTimeSensitive;
 import org.uengine.modeling.Relation;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ClassDefinition;
 import org.uengine.util.UEngineUtil;
 
 @Face(ejsPath = "dwr/metaworks/genericfaces/ElementFace.ejs")
-public abstract class LanguageElement extends ClassDefinition implements ContextAware, Serializable, FaceTransformer {
+public abstract class LanguageElement extends ClassDefinition implements ContextAware, Serializable, FaceTransformer, IModelingTimeSensitive {
 
 	private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
 
@@ -194,5 +197,26 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 
 	}
 
+	@Override
+	public void onModelingTime() {
+		setUpElement();
 
+
+		if (this instanceof ContextTransformer) {
+			((ContextTransformer) this).transformContext();
+		}
+
+		if (getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getOwner().getName())) {
+			ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
+		} else {
+			ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+		}
+
+
+	}
+
+	@Override
+	public void afterModelingTime() {
+		beforeApply();
+	}
 }

@@ -25,7 +25,7 @@ import org.uengine.modeling.*;
 import org.uengine.uml.model.Attribute;
 import org.uengine.util.ActivityFor;
 
-public class PracticeDefinition implements Serializable, IModel, ContextAware {
+public class PracticeDefinition implements Serializable, IModel, ContextAware, NeedArrangementToSerialize {
 
     private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
 
@@ -143,7 +143,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         int result = 0;
 
         for (IElement element : this.getElementList()) {
-            if (element instanceof Activity && competencyName.equals(((Activity) element).getCompetencyName())) {
+            if (element instanceof Activity && competencyName.equals(((Activity) element).getCompetency().getName())) {
                 result++;
             }
         }
@@ -174,6 +174,21 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
 
 
+        //remove essence activities generated before in BPMN-side which is currently removed in the practice definition.
+        new ActivityFor() {
+            @Override
+            public void logic(org.uengine.kernel.Activity activity) {
+                if(activity instanceof EssenceActivity) {
+                    EssenceActivity essenceActivity = (EssenceActivity) activity;
+
+                    if(essenceActivity.getActivityInEssenceDefinition()==null){
+                        ((ComplexActivity)essenceActivity.getParentActivity()).removeChildActivity(essenceActivity);
+                    }
+                }
+            }
+        }.run(returnProcessDefinition);
+
+
         for (IElement element : getElements(Activity.class)) {
             Role role = null;
             ElementView roleView = null;
@@ -181,7 +196,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
             ElementView humanView = null;
 
             Activity activityInPracticeDefinition = (Activity) element;
-            Competency competency = getElement(activityInPracticeDefinition.getCompetencyName(), Competency.class);
+            Competency competency = getElement(activityInPracticeDefinition.getCompetency().getName(), Competency.class);
 
             //finding role from the existing process definition first.
             if(returnProcessDefinition.getRoles()!=null)
@@ -220,22 +235,6 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
 
             //make essence activity
             final String nameOfFindingActivity = ((Activity) element).getName();
-
-
-            //remove essence activities generated before in BPMN-side which is currently removed in the practice definition.
-            new ActivityFor() {
-                @Override
-                public void logic(org.uengine.kernel.Activity activity) {
-                    if(activity instanceof EssenceActivity) {
-                        EssenceActivity essenceActivity = (EssenceActivity) activity;
-
-                        if(essenceActivity.getActivityInEssenceDefinition()==null){
-                            ((ComplexActivity)essenceActivity.getParentActivity()).removeChildActivity(essenceActivity);
-                        }
-                    }
-                }
-            }.run(returnProcessDefinition);
-
 
 
             //find existing BPMN activity to update
@@ -288,13 +287,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
                 essenceActivity.setElementView(humanView);
 
                 essenceActivity.setActivityInEssenceDefinition(activityInPracticeDefinition);
-                essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetencyName()));//TODO: should be getCompetency().getName()
+                essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetency().getName()));//TODO: should be getCompetency().getName()
 
                 returnProcessDefinition.addChildActivity(essenceActivity);
 
             }else{ //update
                 essenceActivity.setActivityInEssenceDefinition(activityInPracticeDefinition);
-                essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetencyName()));//TODO: should be getCompetency().getName()
+                essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetency().getName()));//TODO: should be getCompetency().getName()
 
                 essenceActivity.initInputOutputParameters(); //Refresh the parameters
 
@@ -450,7 +449,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
     private int prevActivitiesCntWithSameCompetency(List<org.uengine.kernel.Activity> list, Competency c) {
         int cnt = 1;
         for (org.uengine.kernel.Activity activity : list) {
-            if (activity instanceof EssenceActivity && ((EssenceActivity) activity).getActivityInEssenceDefinition().getCompetencyName().equals(c.getName())) {
+            if (activity instanceof EssenceActivity && ((EssenceActivity) activity).getActivityInEssenceDefinition().getCompetency().getName().equals(c.getName())) {
                 cnt++;
             }
         }
@@ -490,10 +489,10 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
      */
     public <T extends IElement> T getElement(String elementName, Class<T> clazz) {
         if (elementName == null || "".equals(elementName.trim())) {
-            throw new IllegalArgumentException("elementName argument is not fit");
+            return  null; //throw new IllegalArgumentException("element name is null");
         }
         if (clazz == null) {
-            throw new IllegalArgumentException("clazz argument can not be null");
+            throw new IllegalArgumentException("clazz argument cannot be null");
         }
         List<T> clazzList = getElements(clazz);
         for (T t : clazzList) {
@@ -754,4 +753,42 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware {
         arranged = true;
     }
 
+    @Override
+    public void beforeSerialization() {
+        for (IElement element : getElements(Activity.class)) {
+
+            Activity activityInPracticeDefinition = (Activity) element;
+
+            if(activityInPracticeDefinition.getCompetency()!=null) {
+                Competency competency = getElement(activityInPracticeDefinition.getCompetency().getName(), Competency.class);
+
+                activityInPracticeDefinition.setCompetency(competency);
+            }
+
+            for(EntryCriterion criterion : activityInPracticeDefinition.getEntryCriteria()){
+                refreshActivityCriteria(criterion);
+            }
+
+            for(CompletionCriterion criterion : activityInPracticeDefinition.getCompletionCriteria()){
+                refreshActivityCriteria(criterion);
+            }
+        }
+    }
+
+    private void refreshActivityCriteria(Criterion criterion) {
+        if(criterion.getState()!=null) {
+            Alpha realAlpha = getElement(criterion.getState().getParentAlpha().getName(), Alpha.class);
+            criterion.getState().setParentAlpha(realAlpha);
+        }
+
+        if(criterion.getLevelOfDetail()!=null){
+            WorkProduct realWorkProduct = getElement(criterion.getLevelOfDetail().getParentWorkProduct().getName(), WorkProduct.class);
+            criterion.getLevelOfDetail().setParentWorkProduct(realWorkProduct);
+        }
+    }
+
+    @Override
+    public void afterDeserialization() {
+
+    }
 }

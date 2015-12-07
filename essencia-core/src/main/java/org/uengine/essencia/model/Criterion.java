@@ -91,7 +91,7 @@ public class Criterion extends LanguageElement {
                     if(alphaInstance!=null) {
                         alphaInstance.calculateState();
 
-                        if(getState().getName().equals(alphaInstance.getCurrentStateName())){
+                        if(!isMet(alphaInstance)){
                             throw new NotCompletableException("State of Alpha ["+ alpha.getName() + "] is not reached to [" + getState().getName() + "]");
                         }
                     }
@@ -127,5 +127,22 @@ public class Criterion extends LanguageElement {
 
 
         return validationContext;
+    }
+
+    public boolean isMet(AlphaInstance alphaInstance) {
+
+        for(int i = getState().getParentAlpha().getStates().size() - 1; i>=0; i--){
+
+            State postState = getState().getParentAlpha().getStates().get(i);
+
+            if(postState.getName().equals(alphaInstance.getCurrentStateName())){
+                return true;
+            }
+
+            if(getState().getName().equals(postState.getName()))
+                break;
+        }
+
+        return false;
     }
 }

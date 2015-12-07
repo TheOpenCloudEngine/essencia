@@ -1,0 +1,22 @@
+<h4><%=value.state.description%></h4>
+
+<%
+    if(value.state.checkPoints){
+%>
+<h3>Checkpoints</h3>
+<ul>
+<%
+
+
+         for(var i in value.state.checkPoints){
+
+             var checkPoint = value.state.checkPoints[i];
+
+%>
+    <li><%=checkPoint.name%></li>
+<%
+         }
+%></ul><%
+    }
+
+%>

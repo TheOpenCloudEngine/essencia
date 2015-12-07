@@ -29,6 +29,8 @@ public class EssenceProcessDefinition extends ProcessDefinition{
                     languageElementInstance.setLanguageElement((BasicElement) getPracticeDefinition().getElementByName(languageElementInstance.getLanguageElement().getName()));
                 }
             }
+
+            practiceDefinition.beforeSerialization();
         }
 
         super.beforeSerialization();

@@ -151,8 +151,8 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         {
             sprintPlanningInEssenceDefinition = new org.uengine.essencia.model.Activity();
             sprintPlanningInEssenceDefinition.setName("Planning");
-            sprintPlanningInEssenceDefinition.setCompetency(new SelectBox());
-            sprintPlanningInEssenceDefinition.getCompetency().setSelectedText("Product Owner");
+            sprintPlanningInEssenceDefinition.setCompetency(new Competency());
+            sprintPlanningInEssenceDefinition.getCompetency().setName("Product Owner");
 
             List<CompletionCriterion> completionCriteria = new ArrayList<CompletionCriterion>();
 
@@ -185,8 +185,8 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
             activityInEssenceDefinition.setName("Working");
 
             //TODO:  problematic!
-            activityInEssenceDefinition.setCompetency(new SelectBox());
-            activityInEssenceDefinition.getCompetency().setSelectedText("Product Owner");
+            activityInEssenceDefinition.setCompetency(new Competency());
+            activityInEssenceDefinition.getCompetency().setName("Product Owner");
 
             EntryCriterion criterion = new EntryCriterion();
             criterion.setState(identified);
@@ -263,7 +263,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         });
 
         processDefinition.setRoles(new Role[]{
-                Role.forName(activityInEssenceDefinition.getCompetencyName())
+                Role.forName(activityInEssenceDefinition.getCompetency().getName())
         });
 
 
@@ -402,7 +402,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
 
 
-        instance.putRoleMapping(activityInEssenceDefinition.getCompetencyName(), "jane");
+        instance.putRoleMapping(activityInEssenceDefinition.getCompetency().getName(), "jane");
 
         instance.execute();
 

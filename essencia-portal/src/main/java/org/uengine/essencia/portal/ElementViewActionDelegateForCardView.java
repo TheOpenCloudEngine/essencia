@@ -1,13 +1,19 @@
 package org.uengine.essencia.portal;
 
+import Essence.Competency.Competency;
+import org.metaworks.Refresh;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.enactment.EssenceActivity;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.CardViewable;
 import org.uengine.essencia.model.LanguageElement;
+import org.uengine.essencia.model.State;
 import org.uengine.essencia.model.card.ActivityCard;
+import org.uengine.essencia.model.card.StateDetail;
+import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.LanguageElementView;
+import org.uengine.essencia.model.view.StateView;
 import org.uengine.kernel.view.ActivityView;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.ElementViewActionDelegate;
@@ -25,7 +31,13 @@ public class ElementViewActionDelegateForCardView extends ElementViewActionDeleg
             EssenceActivity essenceActivity = (EssenceActivity) ((ActivityView) elementView).getElement();
             ActivityCard activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
 
-            MetaworksRemoteService.wrapReturn(new ModalWindow(activityCard));
+            MetaworksRemoteService.wrapReturn(new ModalWindow(activityCard, 700, 500, "Card View"));
+        }else if(elementView instanceof StateView) {
+            State state = (State) ((StateView)elementView).getElement();
+            StateDetail stateDetail = new StateDetail();
+            stateDetail.setState(state);
+
+            MetaworksRemoteService.wrapReturn(new Refresh(stateDetail));
         }else if(elementView instanceof LanguageElementView) {
             LanguageElementView languageElementView = (LanguageElementView) elementView;
             BasicElement languageElement = (BasicElement) languageElementView.getElement();
@@ -35,10 +47,11 @@ public class ElementViewActionDelegateForCardView extends ElementViewActionDeleg
 
                 Card card = ((CardViewable) languageElement).createCardView();
 
-                MetaworksRemoteService.wrapReturn(new ModalWindow(card));
+                MetaworksRemoteService.wrapReturn(new ModalWindow(card, 500, 400, "Card View"));
             }
         }else{
             super.onDoubleClick(elementView);
         }
     }
 }
+

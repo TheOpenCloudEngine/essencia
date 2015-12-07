@@ -35,6 +35,8 @@ public class AlphaInstance extends LanguageElementInstance {
 
     Set<String> checkedCheckpointNames = new HashSet<String>();
         public boolean isChecked(String checkpointName){
+            checkpointName = String.valueOf(checkpointName.hashCode());
+
             return checkedCheckpointNames.contains(checkpointName);
         }
         public void setChecked(String checkpointName){
@@ -43,7 +45,9 @@ public class AlphaInstance extends LanguageElementInstance {
         public void setChecked(String checkpointName, boolean checked){
 
             //try to find the checkpoint is in the current state to prevent illegal checking
-            getCurrentState().findCheckpoint(checkpointName);
+            //getCurrentState().findCheckpoint(checkpointName);
+
+            checkpointName = String.valueOf(checkpointName.hashCode());
 
             if(checked)
                 checkedCheckpointNames.add(checkpointName);
@@ -98,10 +102,10 @@ public class AlphaInstance extends LanguageElementInstance {
         }
     }
 
-    public void advanceStateTo(String stateName) {
-        //TODO: implements
-        setCurrentStateName(stateName);
-    }
+//    public void advanceStateTo(String stateName) {
+//        //TODO: implements
+//        setCurrentStateName(stateName);
+//    }
 
     public Object getStateDetails(String stateName, String propName) {
 
@@ -205,24 +209,26 @@ public class AlphaInstance extends LanguageElementInstance {
             this.subAlphaInstanceCount = subAlphaInstanceCount;
         }
 
-    public boolean meetCriteria(Criterion criterion){
+    /** Rather use Criteria.isReachedToState() instead. **/
 
-        String currentStateName = getCurrentStateName();
-
-        boolean startCheck = false;
-        for(int i=0; i<getAlpha().getStates().size(); i++){
-            State state = getAlpha().getStates().get(i);
-            if(state.getName().equals(criterion.getState().getName())){
-                startCheck = true;
-            }
-
-            if(startCheck
-                    && state.getName().equals(currentStateName)){
-                return true;
-            }
-        }
-
-        return false;
-    }
+//    public boolean meetCriteria(Criterion criterion){
+//
+//        String currentStateName = getCurrentStateName();
+//
+//        boolean startCheck = false;
+//        for(int i=0; i<getAlpha().getStates().size(); i++){
+//            State state = getAlpha().getStates().get(i);
+//            if(state.getName().equals(criterion.getState().getName())){
+//                startCheck = true;
+//            }
+//
+//            if(startCheck
+//                    && state.getName().equals(currentStateName)){
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
 }

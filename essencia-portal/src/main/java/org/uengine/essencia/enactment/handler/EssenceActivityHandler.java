@@ -1,6 +1,8 @@
 package org.uengine.essencia.enactment.handler;
 
+import org.metaworks.annotation.AutowiredToClient;
 import org.metaworks.annotation.Available;
+import org.metaworks.annotation.Hidden;
 import org.metaworks.model.MetaworksElement;
 import org.uengine.codi.mw3.model.ParameterValue;
 import org.uengine.codi.mw3.model.ProcessVariableValueList;
@@ -10,8 +12,11 @@ import org.uengine.essencia.enactment.EssenceActivity;
 import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.model.card.ActivityCard;
 import org.uengine.essencia.model.card.Card;
+import org.uengine.essencia.portal.ElementViewActionDelegateForCardView;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.HumanActivity;
+import org.uengine.modeling.ElementViewActionDelegate;
+import org.uengine.modeling.modeler.DefaultElementViewActionDelegate;
 import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
@@ -19,6 +24,18 @@ import java.util.List;
 
 
 public class EssenceActivityHandler extends WorkItemHandler {
+
+
+    ElementViewActionDelegate elementViewActionDelegate;
+    @Hidden
+    @AutowiredToClient
+    public ElementViewActionDelegate getElementViewActionDelegate() {
+        return elementViewActionDelegate;
+    }
+    public void setElementViewActionDelegate(ElementViewActionDelegate elementViewActionDelegate) {
+        this.elementViewActionDelegate = elementViewActionDelegate;
+    }
+
 
     ActivityCard activityCard;
     @Available(where = "detail")
@@ -32,6 +49,9 @@ public class EssenceActivityHandler extends WorkItemHandler {
     @Override
     public void load() throws Exception {
         super.load();
+
+        setElementViewActionDelegate(new ElementViewActionDelegateForCardView());
+
 
         Long instanceId = new Long(getInstanceId());
         Long taskId = getTaskId();
@@ -48,3 +68,5 @@ public class EssenceActivityHandler extends WorkItemHandler {
 //TODO: checkpoint tools
 
 }
+
+

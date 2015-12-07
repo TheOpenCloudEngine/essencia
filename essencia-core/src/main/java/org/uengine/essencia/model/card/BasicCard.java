@@ -4,7 +4,6 @@ import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.modeling.canvas.CardCanvas;
 import org.uengine.kernel.bpmn.SequenceFlow;
-import org.uengine.kernel.bpmn.view.SequenceFlowView;
 import org.uengine.modeling.*;
 
 
@@ -75,9 +74,17 @@ public abstract class BasicCard implements Card{
 		public void setCanvas(CardCanvas canvas) {
 			this.canvas = canvas;
 		}
-	
-	
-	
+
+
+	Detail detail;
+		public Detail getDetail() {
+			return detail;
+		}
+		public void setDetail(Detail detail) {
+			this.detail = detail;
+		}
+
+
 	public BasicCard(){
 		this.name = new TextContext();
 		this.description = new TextContext();
@@ -98,7 +105,7 @@ public abstract class BasicCard implements Card{
 		
 		getCanvas().getRelationViewList().add(view);
 	}
-	
+
 	protected void makeUpView(IElement element){
 		makeUpView(element, 40);
 	}

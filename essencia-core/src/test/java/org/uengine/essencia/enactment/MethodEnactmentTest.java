@@ -135,8 +135,8 @@ public class MethodEnactmentTest extends UEngineTest{
         activityInEssenceDefinition.setName("Planning");
 
         //TODO:  problematic!
-        activityInEssenceDefinition.setCompetency(new SelectBox());
-        activityInEssenceDefinition.getCompetency().setSelectedText("Product Owner");
+        activityInEssenceDefinition.setCompetency(new Competency());
+        activityInEssenceDefinition.getCompetency().setName("Product Owner");
 
         EntryCriterion criterion = new EntryCriterion();
         criterion.setState(identified);
@@ -175,7 +175,7 @@ public class MethodEnactmentTest extends UEngineTest{
         });
 
         processDefinition.setRoles(new Role[]{
-                Role.forName(activityInEssenceDefinition.getCompetencyName())
+                Role.forName(activityInEssenceDefinition.getCompetency().getName())
         });
 
 
@@ -341,7 +341,7 @@ public class MethodEnactmentTest extends UEngineTest{
         }
 
         instance.set(alphaBacklog.getName(), pvv);
-        instance.putRoleMapping(activityInEssenceDefinition.getCompetencyName(), "jane");
+        instance.putRoleMapping(activityInEssenceDefinition.getCompetency().getName(), "jane");
 
         instance.execute();
 

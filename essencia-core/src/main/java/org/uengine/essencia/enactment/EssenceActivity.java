@@ -33,7 +33,7 @@ public class EssenceActivity extends HumanActivity {
     public EssenceActivity(org.uengine.essencia.model.Activity activityInEssenceDefinition){
         setActivityInEssenceDefinition(activityInEssenceDefinition);
         setName(activityInEssenceDefinition.getName());
-        setRole(Role.forName(activityInEssenceDefinition.getCompetencyName()));//TODO: should be getCompetency().getName()
+        setRole(Role.forName(activityInEssenceDefinition.getCompetency().getName()));//TODO: should be getCompetency().getName()
 
         initInputOutputParameters();
     }
@@ -191,7 +191,7 @@ public class EssenceActivity extends HumanActivity {
             if(alphaInstances!=null)
             for(AlphaInstance alphaInstance : alphaInstances ){
 
-                if(!alphaInstance.meetCriteria(criterion)){
+                if(!criterion.isMet(alphaInstance)){
                     throw new IllegalStateException("Not reached to entry state '" + criterion.getState().getParentAlpha().getName() + " : " + criterion.getState().getName() + "' to begin this activity '" + getName() + "'");
                 }
             }

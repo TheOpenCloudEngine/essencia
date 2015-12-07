@@ -14,15 +14,15 @@ public class CompetencySelectBoxFace extends CriterionSelectBoxFace {
 
     @Override
     public void selectBoxChanged() {
-	setSubSelectBox(new EssenciaSelectBox());
-	for (IElement e : essenciaCanvas.takeElementList()) {
-	    if (e instanceof Competency && getMainSelectBox().getSelectedText().equals(((Competency) e).getName())) {
-		for (CompetencyLevel l : ((Competency)e).getCompetencyLevels()) {
-		    getSubSelectBox().add(l.getName(), l.getName());
+		setSubSelectBox(new EssenciaSelectBox());
+		for (IElement e : essenciaCanvas.takeElementList()) {
+			if (e instanceof Competency && getMainSelectBox().getSelectedText().equals(((Competency) e).getName())) {
+			for (CompetencyLevel l : ((Competency)e).getCompetencyLevels()) {
+				getSubSelectBox().add(l.getName(), l.getName());
+			}
+			}
 		}
-	    }
-	}
-	ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+		ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.BeanUtils;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.CheckPointInstance;
 import org.uengine.essencia.model.CheckPoint;
+import org.uengine.essencia.model.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +39,17 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
 
         setCheckPointInstanceList(new ArrayList<CheckPointInstance>());
 
-        if(value.getCurrentState()!=null)
-        for(CheckPoint checkPoint : value.getCurrentState().getCheckPoints()){
-            CheckPointInstance checkPointInstance = new CheckPointInstance();
-            checkPointInstance.setCheckPoint(checkPoint);
-            checkPointInstance.setChecked(value.isChecked(checkPoint.getName()));
+        if(getAlpha()!=null && getAlpha().getStates()!=null)
+        for(State state : getAlpha().getStates()){
+           // if(value.getCurrentState()!=null)
+                for(CheckPoint checkPoint : state.getCheckPoints()){
+                    CheckPointInstance checkPointInstance = new CheckPointInstance();
+                    checkPointInstance.setCheckPoint(checkPoint);
+                    checkPointInstance.setChecked(value.isChecked(checkPoint.getName()));
 
-            getCheckPointInstanceList().add(checkPointInstance);
+                    getCheckPointInstanceList().add(checkPointInstance);
+                }
+
         }
     }
 
@@ -59,6 +64,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
         BeanUtils.copyProperties(this, alphaInstance);
 
 //        alphaInstance.setAttributeValues(getAttributeValues());
+
 
         if(alphaInstance.getCurrentState()!=null && getCheckPointInstanceList()!=null)
         for(CheckPointInstance checkPointInstance : getCheckPointInstanceList()){

@@ -11,11 +11,7 @@ import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.card.ActivityCard;
 import org.uengine.essencia.model.card.ActivityCardByElement;
 import org.uengine.essencia.model.card.Card;
-import org.uengine.essencia.model.face.ActivityCompletionCriterionFace;
-import org.uengine.essencia.model.face.ActivityEntryCriterionFace;
-import org.uengine.essencia.model.face.CriterionFace;
-import org.uengine.essencia.model.face.RequiredCompetencyLevelFace;
-import org.uengine.essencia.model.face.WorkProductFace;
+import org.uengine.essencia.model.face.*;
 import org.uengine.essencia.model.face.list.ActionListFace;
 import org.uengine.essencia.model.face.list.ApproachListFace;
 import org.uengine.essencia.util.ContextUtil;
@@ -29,7 +25,9 @@ public class Activity extends AbstractActivity {
 //    private List<LanguageElement> workProductList;
     private transient WorkProductFace workProductFace;
 
-    private SelectBox competency;
+//    private SelectBox competency;
+    Competency competency;
+
     private List<CompetencyLevel> requiredCompetencyLevel;
     private transient RequiredCompetencyLevelFace requiredCompetencyLevelFace;
 
@@ -84,13 +82,22 @@ public class Activity extends AbstractActivity {
     }
 
     @Order(4)
-    public SelectBox getCompetency() {
+    @Face(faceClass = CompetencySelector.class)
+    public Competency getCompetency() {
         return competency;
     }
-
-    public void setCompetency(SelectBox competency) {
+    public void setCompetency(Competency competency) {
         this.competency = competency;
     }
+
+    //    public SelectBox getCompetency() {
+//        return competency;
+//    }
+//
+//    public void setCompetency(SelectBox competency) {
+//        this.competency = competency;
+//    }
+
 
     @Face(displayName = "WorkProduct")
     public WorkProductFace getWorkProductFace() {
@@ -119,14 +126,14 @@ public class Activity extends AbstractActivity {
         this.requiredCompetencyLevelFace = requiredCompetencyLevelFace;
     }
 
-    public String getCompetencyName() {
-        if (getCompetency() == null) {
-            return null;
-        } else {
-            return getCompetency().getSelectedText();
-        }
-
-    }
+//    public String getCompetencyName() {
+//        if (getCompetency() == null) {
+//            return null;
+//        } else {
+//            return getCompetency().getSelectedText();
+//        }
+//
+//    }
 
     public Activity() {
 
@@ -137,7 +144,7 @@ public class Activity extends AbstractActivity {
         if (obj instanceof Competency) {
             Competency competency = (Competency) obj;
 
-            return getCompetency().getSelected().equals(competency.getName());
+            return getCompetency().getName().equals(competency.getName());
         }
         return false;
     }
@@ -146,24 +153,24 @@ public class Activity extends AbstractActivity {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((competency == null) ? 0 : competency.getSelected().hashCode());
+        result = prime * result + ((competency == null) ? 0 : competency.getName().hashCode());
         return result;
     }
 
     @Override
     public void setUpElement(List<IElement> elementList) {
         String temp = "";
-        if (getCompetency() != null) {
-            temp = getCompetency().getSelected();
-        }
-        setCompetency(new SelectBox());
-        for (IElement element : elementList) {
-            if (element instanceof Competency) {
-                Competency competency = (Competency) element;
-                getCompetency().add(competency.getName(), competency.getName());
-            }
-        }
-        getCompetency().setSelected(temp);
+//        if (getCompetency() != null) {
+//            temp = getCompetency().getSelected();
+//        }
+//        setCompetency(new SelectBox());
+//        for (IElement element : elementList) {
+//            if (element instanceof Competency) {
+//                Competency competency = (Competency) element;
+//                getCompetency().add(competency.getName(), competency.getName());
+//            }
+//        }
+//        getCompetency().setSelected(temp);
 
         setRequiredCompetencyLevelFace(new RequiredCompetencyLevelFace());
         getRequiredCompetencyLevelFace().fill(elementList);

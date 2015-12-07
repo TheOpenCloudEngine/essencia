@@ -1,10 +1,15 @@
 package org.uengine.essencia.modeling.modeler;
 
+import org.metaworks.annotation.AutowiredToClient;
+import org.metaworks.annotation.Hidden;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
 import org.uengine.essencia.modeling.canvas.MethodCanvas;
 import org.uengine.essencia.modeling.palette.EssenciaPalette;
 import org.uengine.essencia.util.ElementUtil;
+import org.uengine.modeling.ElementViewActionDelegate;
+import org.uengine.modeling.IModel;
+import org.uengine.modeling.modeler.DefaultElementViewActionDelegate;
 import org.uengine.util.UEngineUtil;
 
 public class MethodComposer extends PracticeDefiner {
@@ -15,6 +20,18 @@ public class MethodComposer extends PracticeDefiner {
         setType(SUFFIX);
         setCanvas(new MethodCanvas());
         setPalette(new EssenciaPalette());
+    }
+
+
+
+    ElementViewActionDelegate elementViewActionDelegate;
+    @Hidden
+    @AutowiredToClient
+    public ElementViewActionDelegate getElementViewActionDelegate() {
+        return elementViewActionDelegate;
+    }
+    public void setElementViewActionDelegate(ElementViewActionDelegate elementViewActionDelegate) {
+        this.elementViewActionDelegate = elementViewActionDelegate;
     }
 
     /**
@@ -107,5 +124,11 @@ public class MethodComposer extends PracticeDefiner {
         return false;
     }
 
+    @Override
+    public void setModel(IModel model) throws Exception {
 
+        setElementViewActionDelegate(new DefaultElementViewActionDelegate());
+
+        super.setModel(model);
+    }
 }

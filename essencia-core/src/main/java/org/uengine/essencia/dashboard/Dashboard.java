@@ -57,17 +57,17 @@ public class Dashboard implements ContextAware {
 				alphaList.add((Alpha)el);
 			}
 		}
-		alphas = new Alpha[alphaList.size()];
-		int ai = 0;
-		for(Alpha al : alphaList){
-			alphas[ai] = al;
-			
-			List<State> sts = al.getStates();
-			for(State st : sts){
-				System.out.println("concern=" + al.getConcern()+ ", al=" + al.getName() + ", st=" + st.getName());
-			}
-			ai++;
-		}
+//		alphas = new Alpha[alphaList.size()];
+//		int ai = 0;
+//		for(Alpha al : alphaList){
+//			alphas[ai] = al;
+//
+//			List<State> sts = al.getStates();
+//			for(State st : sts){
+//				System.out.println("concern=" + al.getConcern()+ ", al=" + al.getName() + ", st=" + st.getName());
+//			}
+//			ai++;
+//		}
 		
 	
 	}

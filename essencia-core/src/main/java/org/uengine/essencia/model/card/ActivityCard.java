@@ -67,9 +67,9 @@ public class ActivityCard extends BasicCard {
 
         List<EntryCriterion> entryCriteriaList;
 
-        if(((Activity) element).getEntryCriteriaPanel()!=null){
-            entryCriteriaList =((ActivityEntryCriterionFace)((Activity) element).getEntryCriteriaPanel()).createValue();
-        }else{
+        if (((Activity) element).getEntryCriteriaPanel() != null) {
+            entryCriteriaList = ((ActivityEntryCriterionFace) ((Activity) element).getEntryCriteriaPanel()).createValue();
+        } else {
             entryCriteriaList = ((Activity) element).getEntryCriteria();
         }
 
@@ -77,7 +77,7 @@ public class ActivityCard extends BasicCard {
 
         List<ElementView> entryElementViews = new ArrayList<ElementView>();
 
-        if(entryCriteriaList!=null) {
+        if (entryCriteriaList != null) {
 
             for (LanguageElement e : entryCriteriaList) {
                 Criterion criterion = (Criterion) e;
@@ -109,41 +109,40 @@ public class ActivityCard extends BasicCard {
 
         y = competencyH / 2;
 
-        String competencyName = ((Activity) element).getCompetency().getSelectedText();
-        setSymbol(new CompetencyView().createSymbol());
-        Competency competency = new Competency();
-        competency.setName(competencyName);
-        setView(competency.createView());
+        {
+            // Competency Arrow View
+            setView(new ActivityArrowView());
+            setSymbol(getView().createSymbol());
 
-        getView().fill(getSymbol());
-        getView().setX((canvasW / 2));
-        getView().setY((y));
-        getView().setWidth((56));
-        getView().setHeight((56));
+            getView().fill(getSymbol());
+            getView().setX((canvasW / 2));
+            getView().setY((y));
+            getView().setWidth((120));
+            getView().setHeight((competencyH));
 
-        getView().setId(String.valueOf(trcTag++));
+            getView().setId(String.valueOf(trcTag++));
 
-        getCanvas().getElementViewList().add(getView());
+            centerArrow.getElementViews().add(getView());
 
-        centerArrow.getElementViews().add(getView());
+            getCanvas().getElementViewList().add(getView());
+        }
 
-        // Competency Arrow View
-        setView(new ActivityArrowView());
-        setSymbol(getView().createSymbol());
+        {
+            Competency competency= ((Activity) element).getCompetency();
+            setSymbol(new CompetencyView().createSymbol());
+            setView(competency.createView());
 
-        getView().fill(getSymbol());
-        getView().setX((canvasW / 2));
-        getView().setY((y));
-        getView().setWidth((120));
-        getView().setHeight((competencyH));
+            getView().fill(getSymbol());
+            getView().setX((canvasW / 2));
+            getView().setY((y));
+            getView().setWidth((56));
+            getView().setHeight((56));
 
-        getView().setId(String.valueOf(trcTag++));
+            getView().setId(String.valueOf(trcTag++));
 
-        centerArrow.getElementViews().add(getView());
-
-
-        getCanvas().getElementViewList().add(getView());
-
+            getCanvas().getElementViewList().add(getView());
+            centerArrow.getElementViews().add(getView());
+        }
 
 
         // Output Alpha View

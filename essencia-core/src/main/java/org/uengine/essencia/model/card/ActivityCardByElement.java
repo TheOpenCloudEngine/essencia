@@ -82,10 +82,8 @@ public class ActivityCardByElement extends ActivityCard implements ContextAware 
         }
         // Competency View
         y = y + (getView().getHeight()) + Y_INTERVAL;
-        String competencyName = ((Activity) element).getCompetency().getSelectedText();
+        Competency competency = ((Activity) element).getCompetency();
         setSymbol(new CompetencyView().createSymbol());
-        Competency competency = new Competency();
-        competency.setName(competencyName);
         setView(competency.createView());
 
         getView().fill(getSymbol());
