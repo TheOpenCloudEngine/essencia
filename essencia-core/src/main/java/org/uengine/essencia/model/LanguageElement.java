@@ -18,6 +18,7 @@ import org.uengine.modeling.IModelingTimeSensitive;
 import org.uengine.modeling.Relation;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ClassDefinition;
+import org.uengine.uml.model.ObjectInstance;
 import org.uengine.util.UEngineUtil;
 
 @Face(ejsPath = "dwr/metaworks/genericfaces/ElementFace.ejs")
@@ -218,5 +219,10 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	@Override
 	public void afterModelingTime() {
 		beforeApply();
+	}
+
+	@Hidden
+	public ObjectInstance createObjectInstance() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+		return super.createObjectInstance();
 	}
 }

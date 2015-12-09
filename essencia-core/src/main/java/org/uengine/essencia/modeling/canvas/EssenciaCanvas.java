@@ -77,25 +77,25 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 			}
 		}
 
-		if(elementView instanceof ActivitySpaceView){
-			//if activitySpace's input alpha is not covered by the alphas in the canvas throw exception because it is essential condition.
-			ActivitySpace activitySpace = (ActivitySpace)elementView.getElement();
-			List<IElement> elementListFromCanvas = ElementUtil.convertToElementList(getSafeElementViewList());
-			for(LanguageElement tmpElement : activitySpace.getInputList()){
-				if(!elementListFromCanvas.contains(tmpElement)){
-					throw new RuntimeException(((BasicElement)tmpElement).getName() + " is an essential condition for input alpha. please draw it first. ");
-				}
-			}
-
-			for(LanguageElement tempLanguageElement : activitySpace.getCompletionCriteria()){
-				CompletionCriterion criterion = (CompletionCriterion)tempLanguageElement;
-				if( criterion.getState() != null){
-					if(!elementListFromCanvas.contains(criterion.getState().getParentAlpha())){
-						throw new RuntimeException(criterion.getState().getParentAlpha().getName() + " is an essential condition for completion criterion. please draw it first. ");
-					}
-				}
-			}
-		}
+//		if(elementView instanceof ActivitySpaceView){
+//			//if activitySpace's input alpha is not covered by the alphas in the canvas throw exception because it is essential condition.
+//			ActivitySpace activitySpace = (ActivitySpace)elementView.getElement();
+//			List<IElement> elementListFromCanvas = ElementUtil.convertToElementList(getSafeElementViewList());
+//			for(LanguageElement tmpElement : activitySpace.getInputList()){
+//				if(!elementListFromCanvas.contains(tmpElement)){
+//					throw new RuntimeException(((BasicElement)tmpElement).getName() + " is an essential condition for input alpha. please draw it first. ");
+//				}
+//			}
+//
+//			for(LanguageElement tempLanguageElement : activitySpace.getCompletionCriteria()){
+//				CompletionCriterion criterion = (CompletionCriterion)tempLanguageElement;
+//				if( criterion.getState() != null){
+//					if(!elementListFromCanvas.contains(criterion.getState().getParentAlpha())){
+//						throw new RuntimeException(criterion.getState().getParentAlpha().getName() + " is an essential condition for completion criterion. please draw it first. ");
+//					}
+//				}
+//			}
+//		}
 		return true;
 	}
 

@@ -1,9 +1,11 @@
 <br>
 
+<h3>Properties</h3>
+
 <%=include('dwr/metaworks/org/uengine/uml/model/ObjectInstance.ejs')%>
 
 
-<%if(mw3.when != 'edit' && value.checkPointInstanceList && value.checkPointInstanceList.length > 0){%>
+<%if(mw3.when == 'edit' && value.checkPointInstanceList && value.checkPointInstanceList.length > 0){%>
 
 <h3>Checkpoints</h3>
 

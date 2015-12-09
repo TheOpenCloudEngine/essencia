@@ -56,20 +56,8 @@ public class EssenceActivity extends HumanActivity {
 
                 Criterion criterion = (Criterion) entryCriterion;
 
-                String criterionName = criterion.getElement().getName();
-                ParameterContext existingParameterContext = null;
-
-                boolean newlyAddedParameterContext = !parameterContextHashMap.containsKey(criterionName);
-
-                if(!newlyAddedParameterContext){
-                    existingParameterContext = parameterContextHashMap.get(criterionName);
-                }
-
                 //if the parameter already exists, update them
-                ParameterContext parameterContext = createParameterContextFromCriterion(criterion, existingParameterContext);
-                parameterContext.setDirection(ParameterContext.DIRECTION_IN);
-
-                addingParameterContexts.add(parameterContext);
+                ParameterContext parameterContext = addParameterContextFromCriterion(criterion, parameterContextHashMap, addingParameterContexts, ParameterContext.DIRECTION_IN);
             }
 
         }
@@ -83,19 +71,8 @@ public class EssenceActivity extends HumanActivity {
 
                 Criterion criterion = (Criterion) completionCriterion_;
 
-                String criterionName = criterion.getElement().getName();
-                ParameterContext existingParameterContext = null;
-
-                boolean newlyAddedParameterContext = !parameterContextHashMap.containsKey(criterionName);
-
-                if(!newlyAddedParameterContext){
-                    existingParameterContext = parameterContextHashMap.get(criterionName);
-                }
-
                 //if the parameter already exists, update them
-                ParameterContext parameterContext = createParameterContextFromCriterion(criterion, existingParameterContext);
-
-                addingParameterContexts.add(parameterContext);
+                ParameterContext parameterContext = addParameterContextFromCriterion(criterion, parameterContextHashMap, addingParameterContexts, ParameterContext.DIRECTION_OUT);
             }
 
 
@@ -113,7 +90,7 @@ public class EssenceActivity extends HumanActivity {
                 Criterion criterion = (Criterion) completionCriterion_;
                 String criterionName = criterion.getElement().getName();
 
-                if(parameterContext.getArgument().getText().equals(criterionName)){
+                if(parameterContext.getVariable().getName().equals(criterionName)){
                     found = true;
                     break;
                 }
@@ -123,7 +100,7 @@ public class EssenceActivity extends HumanActivity {
                 Criterion criterion = (Criterion) completionCriterion_;
                 String criterionName = criterion.getElement().getName();
 
-                if(parameterContext.getArgument().getText().equals(criterionName)){
+                if(parameterContext.getVariable().getName().equals(criterionName)){
                     found = true;
                     break;
                 }
@@ -149,24 +126,41 @@ public class EssenceActivity extends HumanActivity {
 
     }
 
-    private ParameterContext createParameterContextFromCriterion(Criterion completionCriterion_, ParameterContext existingParameterContext) {
-        ParameterContext parameterContext = (existingParameterContext == null ? new ParameterContext() : existingParameterContext);
+    private ParameterContext addParameterContextFromCriterion(Criterion completionCriterion_, HashMap<String, ParameterContext> parameterContextHashMap, List<ParameterContext> addingParameterContexts, String direction) {
+
+        String criterionName = direction + "put "+ completionCriterion_.getElement().getName();
+        ParameterContext existingParameterContext = null;
+
+        boolean newlyAddedParameterContext = !parameterContextHashMap.containsKey(criterionName);
+
+        if(!newlyAddedParameterContext){
+            existingParameterContext = parameterContextHashMap.get(criterionName);
+        }
+
+
+        ParameterContext parameterContext;
+
+        if(existingParameterContext==null){
+            parameterContext = new ParameterContext();
+        }else{
+            parameterContext = existingParameterContext;
+        }
+
+        addingParameterContexts.add(parameterContext);
 
         Criterion completionCriterion = completionCriterion_;
 
 
         TextContext textContext = TextContext.createInstance();
 
-        textContext.setText(completionCriterion.getElement().getName());
+        textContext.setText(direction + "put " + completionCriterion.getElement().getName());
 
         parameterContext.setArgument(textContext);
 
         //workProducts should be accessed by global naming
-        parameterContext.setVariable(ProcessVariable.forName(parameterContext.getArgument().getText()));
+        parameterContext.setVariable(ProcessVariable.forName(completionCriterion.getElement().getName()));
 
-        if(existingParameterContext==null){
-            parameterContext.setDirection(ParameterContext.DIRECTION_INOUT);
-        }
+        parameterContext.setDirection(direction);
 
 
         return parameterContext;

@@ -6,6 +6,7 @@ import org.uengine.essencia.enactment.face.AlphaInstanceFace2;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.modeling.Relation;
+import org.uengine.util.UEngineUtil;
 
 import java.util.*;
 
@@ -153,8 +154,10 @@ public class AlphaInstance extends LanguageElementInstance {
 
                         String aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
 
-                        getAlpha().findState(aggregationAlphaStateName);
-
+                        //don't validate. sometimes there is nothing related between super and sub alpha
+                        //getAlpha().findState(aggregationAlphaStateName);
+                        if(!UEngineUtil.isNotEmpty(aggregationAlphaStateName))
+                            continue;
 
                         int runningCntOfThisState = 0;
                         Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'

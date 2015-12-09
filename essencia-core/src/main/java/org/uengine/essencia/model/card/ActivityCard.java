@@ -1,7 +1,5 @@
 package org.uengine.essencia.model.card;
 
-import com.sun.tools.javac.comp.Flow;
-import org.metaworks.widget.grid.Grid;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.face.ActivityCompletionCriterionFace;
 import org.uengine.essencia.model.face.ActivityEntryCriterionFace;

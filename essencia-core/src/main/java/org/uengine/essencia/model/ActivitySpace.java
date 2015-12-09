@@ -18,15 +18,12 @@ import org.uengine.essencia.model.view.ActivityView;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.IElement;
 
-public class ActivitySpace extends AbstractActivity implements Concernable {
+public class ActivitySpace extends AbstractActivity{
 
     private List<Activity> childActivities;
 
     private List<Alpha> inputList;
     private transient InputAlphaFace inputFace;
-
-    private String concern;
-    private transient SelectBox concernSelectBox;
 
     @Hidden
     public List<Alpha> getInputList() {
@@ -64,6 +61,8 @@ public class ActivitySpace extends AbstractActivity implements Concernable {
     @Override
     public void setUpElement(List<IElement> elementList) {
 
+        super.setUpElement(elementList);
+
         setInputFace(new InputAlphaFace());
         getInputFace().fill(elementList);
 
@@ -82,9 +81,6 @@ public class ActivitySpace extends AbstractActivity implements Concernable {
             getCompletionCriteria().clear();
         }
 
-        setConcernBox(new EssenciaConcernSelectBox());
-        getConcernBox().setSelected(getConcern());
-        setConcern("");
 
     }
 
@@ -92,34 +88,12 @@ public class ActivitySpace extends AbstractActivity implements Concernable {
     public void beforeApply() {
 
         super.beforeApply();
-        setInputList(getInputFace().createValue());
-        setCompletionCriteria(((ActivitySpaceCriterionFace)getCompletionCriterionFace()).createValue());
 
-        setConcern(getConcernBox().getSelected());
-        setConcernBox(null);
-    }
+        if(getInputFace()!=null)
+            setInputList(getInputFace().createValue());
 
-    @Hidden
-    @Override
-    public String getConcern() {
-        return concern;
-    }
-
-    @Override
-    public void setConcern(String concern) {
-        this.concern = concern;
-    }
-
-    @Face(displayName = "Concern")
-    @Order(4)
-    @Override
-    public SelectBox getConcernBox() {
-        return concernSelectBox;
-    }
-
-    @Override
-    public void setConcernBox(SelectBox concern) {
-        this.concernSelectBox = concern;
+        if(getCompletionCriterionFace()!=null)
+            setCompletionCriteria(((ActivitySpaceCriterionFace)getCompletionCriterionFace()).createValue());
     }
 
     @Override

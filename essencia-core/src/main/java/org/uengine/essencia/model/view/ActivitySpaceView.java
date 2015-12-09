@@ -51,17 +51,17 @@ public class ActivitySpaceView extends LanguageElementView implements KernelLang
 		return symbol;
 	}
 	
-	@Override
-	public Object showProperty() throws Exception {
-		List<ElementView> list = new ArrayList<ElementView>();
-		for(ElementView e : essenciaCanvas.getSafeElementViewList()){
-			if(e instanceof AlphaView){
-				list.add(e);
-			}
-		}
-		ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
-		ContextUtil.setHow(panel, "dynamicSize");
-		return new ModalWindow(panel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() +"]");
-	}
+//	@Override
+//	public Object showProperty() throws Exception {
+//		List<ElementView> list = new ArrayList<ElementView>();
+//		for(ElementView e : essenciaCanvas.getSafeElementViewList()){
+//			if(e instanceof AlphaView){
+//				list.add(e);
+//			}
+//		}
+//		ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
+//		ContextUtil.setHow(panel, "dynamicSize");
+//		return new ModalWindow(panel, 85, 85, "Essencia Element Properties Editor [ " + getLabel() +"]");
+//	}
 
 }

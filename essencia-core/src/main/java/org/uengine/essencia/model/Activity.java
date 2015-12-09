@@ -7,6 +7,7 @@ import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 import org.metaworks.component.SelectBox;
+import org.uengine.essencia.component.EssenciaConcernSelectBox;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.card.ActivityCard;
 import org.uengine.essencia.model.card.ActivityCardByElement;
@@ -136,6 +137,7 @@ public class Activity extends AbstractActivity {
 //    }
 
     public Activity() {
+        setConcernBox(new EssenciaConcernSelectBox());
 
     }
 
@@ -159,6 +161,8 @@ public class Activity extends AbstractActivity {
 
     @Override
     public void setUpElement(List<IElement> elementList) {
+        super.setUpElement(elementList);
+
         String temp = "";
 //        if (getCompetency() != null) {
 //            temp = getCompetency().getSelected();
