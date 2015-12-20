@@ -1,11 +1,38 @@
 <table width="100%"><td>
+
+
+
 <%
 	if(value){
 %>
-<%=fields.activityCard.here()%>
+
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#activityCard<%=objectId%>" aria-controls="home" role="tab" data-toggle="tab">Activity Card</a></li>
+    <li role="presentation"><a href="#input<%=objectId%>" aria-controls="profile" role="tab" data-toggle="tab">Inputs</a></li>
+    <li role="presentation"><a href="#output<%=objectId%>" aria-controls="profile" role="tab" data-toggle="tab">Outputs</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="activityCard<%=objectId%>">
+
+       <%=fields.activityCard.here()%>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="input<%=objectId%>">
+
 		<div>
 			<%=fields.parameters.here()%>
 		</div>
+
+    </div>
+  </div>
+
+</div>
 
 <%=fields.workItem.here({when:'view'})%>
 

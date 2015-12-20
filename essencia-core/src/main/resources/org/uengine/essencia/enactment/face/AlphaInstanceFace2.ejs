@@ -1,14 +1,31 @@
-<br>
+<h3><%=value.classDefinition.name%></h3>
 
-<h3>Properties</h3>
+<div>
 
-<%=include('dwr/metaworks/org/uengine/uml/model/ObjectInstance.ejs')%>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#properties<%=objectId%>" aria-controls="home" role="tab" data-toggle="tab">Properties</a></li>
+    <li role="presentation"><a href="#checkpoints<%=objectId%>" aria-controls="profile" role="tab" data-toggle="tab">Checkpoints</a></li>
+  </ul>
 
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="properties<%=objectId%>">
 
-<%if(mw3.when == 'edit' && value.checkPointInstanceList && value.checkPointInstanceList.length > 0){%>
+        <%=include('dwr/metaworks/org/uengine/uml/model/ObjectInstance.ejs')%>
 
-<h3>Checkpoints</h3>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="checkpoints<%=objectId%>">
 
-<%=fields.checkPointInstanceList.here()%>
+<%if(mw3.when == 'edit' && value.checkPointInstanceGroups && value.checkPointInstanceGroups.length > 0){%>
+
+<%=fields.checkPointInstanceGroups.here()%>
 
 <%}%>
+
+    </div>
+  </div>
+
+</div>
+
+

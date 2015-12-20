@@ -8,18 +8,23 @@ import org.uengine.codi.mw3.model.ParameterValue;
 import org.uengine.codi.mw3.model.ProcessVariableValueList;
 import org.uengine.codi.mw3.model.WorkItemHandler;
 import org.uengine.essencia.context.EssenciaContext;
+import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.EssenceActivity;
 import org.uengine.essencia.model.Activity;
+import org.uengine.essencia.model.Alpha;
+import org.uengine.essencia.model.Criterion;
 import org.uengine.essencia.model.card.ActivityCard;
 import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.portal.ElementViewActionDelegateForCardView;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.HumanActivity;
+import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.ElementViewActionDelegate;
 import org.uengine.modeling.modeler.DefaultElementViewActionDelegate;
 import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -62,6 +67,36 @@ public class EssenceActivityHandler extends WorkItemHandler {
         EssenceActivity essenceActivity = (EssenceActivity) processManager.getProcessInstance(getInstanceId()).getProcessDefinition().getActivity(tracingTag);
 
         activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
+
+        Activity activityInEssenceDefinition = essenceActivity.getActivityInEssenceDefinition();
+
+        HashMap<String, Criterion> criterionByElementName = new HashMap<String, Criterion>();
+        for(Criterion criterion : activityInEssenceDefinition.getCompletionCriteria()){
+            criterionByElementName.put(criterion.getElement().getName(), criterion);
+        }
+
+        for(ParameterValue parameterValue : getParameters()){
+
+
+            Object parameterValueValue = parameterValue.getValue();
+
+            if(parameterValue.getProcessVariableValueList()!=null){
+
+                parameterValueValue = parameterValue.getProcessVariableValueList().getDefaultValue();
+
+            }
+
+
+            if(parameterValueValue instanceof AlphaInstance){
+                AlphaInstance alphaInstance = (AlphaInstance) parameterValueValue;
+
+                if(criterionByElementName.containsKey(alphaInstance.getAlpha().getName())){
+                    Criterion criterion = criterionByElementName.get(alphaInstance.getAlpha().getName());
+
+                    alphaInstance.setTargetStateName(criterion.getState().getName());
+                }
+            }
+        }
     }
 
 

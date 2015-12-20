@@ -34,6 +34,15 @@ public class AlphaInstance extends LanguageElementInstance {
             return getAlpha().findState(getCurrentStateName());
         }
 
+    String targetStateName;
+        public String getTargetStateName() {
+            return targetStateName;
+        }
+        public void setTargetStateName(String targetStateName) {
+            this.targetStateName = targetStateName;
+        }
+
+
     Set<String> checkedCheckpointNames = new HashSet<String>();
         public boolean isChecked(String checkpointName){
             checkpointName = String.valueOf(checkpointName.hashCode());

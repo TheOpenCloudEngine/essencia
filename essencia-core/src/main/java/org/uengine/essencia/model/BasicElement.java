@@ -142,6 +142,13 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 //		this.description = new TextContext();
 		this.briefDescription = new TextContext();
 
+		Attribute attr_Id = new Attribute();
+		attr_Id.setName("Id");
+		attr_Id.setClassName("java.lang.String");
+
+
+		this.setFieldDescriptors(new Attribute[]{attr_Id});
+
 	}
 
 	@Override
