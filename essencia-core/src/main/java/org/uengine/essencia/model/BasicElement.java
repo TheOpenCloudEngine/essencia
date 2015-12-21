@@ -249,10 +249,10 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 //	}
 
 
-	public LanguageElementInstance createInstance(String id) {
-
-		return new LanguageElementInstance(this, id);
-	}
+//	public LanguageElementInstance createInstance(String id) {
+//
+//		return new LanguageElementInstance(this, id);
+//	}
 
 
 	public List<? extends LanguageElementInstance> getInstances(ProcessInstance instance) {

@@ -59,7 +59,7 @@ public class GameBoard {
 
                 if(alphaInstances==null){
                     alphaInstances = new ArrayList<AlphaInstance>();
-                    alphaInstances.add(alpha.createInstance(""));
+                    alphaInstances.add(alpha.createObjectInstance());
                 }
 
                 for(AlphaInstance alphaInstance : alphaInstances){

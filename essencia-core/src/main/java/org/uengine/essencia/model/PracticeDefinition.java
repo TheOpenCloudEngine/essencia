@@ -345,7 +345,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         for (Alpha alpha : getElements(Alpha.class)) {
             ProcessVariable pv = null;
 
-            AlphaInstance alphaInstance = alpha.createInstance(alpha.getName()); //reset the alphaInstance all the times.
+            AlphaInstance alphaInstance = null; //reset the alphaInstance all the times.
+            alphaInstance = (AlphaInstance) alpha.createObjectInstance();
 
             //여기서 property를 다 set 해주어야할듯
 
@@ -361,7 +362,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         for (WorkProduct workProduct : getElements(WorkProduct.class)) {
             ProcessVariable pv = null;
 
-            LanguageElementInstance workProductInstance = workProduct.createInstance(workProduct.getName());
+            LanguageElementInstance workProductInstance = workProduct.createObjectInstance();
+            workProductInstance.setId(workProduct.getName());
 
             pv = new ProcessVariable(new Object[]{
                     "name", workProduct.getName(),

@@ -1,7 +1,6 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.annotation.Face;
-import org.uengine.essencia.enactment.face.AlphaInstanceFace;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace2;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessInstance;
@@ -75,13 +74,13 @@ public class AlphaInstance extends LanguageElementInstance {
         }
 
 
-    public AlphaInstance(Alpha alpha, String id){
-
-        super(alpha, id);
-
-        if(getAlpha().getStates()!=null && getAlpha().getStates().size() > 0)
-            setCurrentStateName(getAlpha().getStates().get(0).getName());
-    }
+//    public AlphaInstance(Alpha alpha, String id){
+//
+//        super(alpha, id);
+//
+//        if(getAlpha().getStates()!=null && getAlpha().getStates().size() > 0)
+//            setCurrentStateName(getAlpha().getStates().get(0).getName());
+//    }
 
     //only for serialization / deserialization
     public AlphaInstance(){

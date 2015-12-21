@@ -16,6 +16,7 @@ import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.model.face.list.StateListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.uml.model.ObjectInstance;
 
 public class Alpha extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
 
@@ -150,9 +151,31 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
         setConcernBox(null);
     }
 
-    public AlphaInstance createInstance(String id) {
+//    public AlphaInstance createInstance(String id) {
+//
+//        try {
+//            AlphaInstance alphaInstance = (AlphaInstance) createObjectInstance();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return new AlphaInstance(this, id);
+//    }
 
-        return new AlphaInstance(this, id);
+    @Override
+    protected ObjectInstance newObjectInstance() {
+
+        return new AlphaInstance();
+
+    }
+
+    @Override
+    public AlphaInstance createObjectInstance() {
+        return (AlphaInstance) super.createObjectInstance();
     }
 
     @Override

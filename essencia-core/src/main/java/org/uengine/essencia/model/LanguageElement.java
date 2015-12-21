@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.metaworks.ContextAware;
-import org.metaworks.FieldDescriptor;
 import org.metaworks.MetaworksContext;
-import org.metaworks.WebFieldDescriptor;
 import org.metaworks.annotation.*;
+import org.metaworks.annotation.Face;
+import org.metaworks.website.MetaworksFile;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.face.list.ResourceListFace;
@@ -222,7 +222,27 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	}
 
 	@Hidden
-	public ObjectInstance createObjectInstance() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-		return super.createObjectInstance();
+	public ObjectInstance createObjectInstance() {
+		ObjectInstance instance =  super.createObjectInstance();
+
+//TODO generalize this.
+		for(Attribute attribute: getFieldDescriptors()){
+			if(MetaworksFile.class.getName().equals(attribute.getClassName())){
+				instance.setBeanProperty(attribute.getName(), new MetaworksFile());
+			}
+		}
+
+		return instance;
+	}
+
+	@Override
+	protected ObjectInstance newObjectInstance() {
+
+		ObjectInstance instance = super.newObjectInstance();
+
+
+
+		return instance;
+
 	}
 }

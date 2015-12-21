@@ -1,7 +1,6 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.annotation.Face;
-import org.uengine.essencia.enactment.face.AlphaInstanceFace;
 import org.uengine.essencia.enactment.face.LevelOfDetailNameSelector;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessInstance;
@@ -30,13 +29,13 @@ public class WorkProductInstance extends LanguageElementInstance {
         return getWorkProduct().findLevelOfDetail(getCurrentLevelOfDetailName());
     }
 
-    public WorkProductInstance(WorkProduct workProduct, String id){
-
-        super(workProduct, id);
-
-        if(getWorkProduct()!=null && getWorkProduct().getLevelOfDetails()!=null && getWorkProduct().getLevelOfDetails().size() > 0)
-            setCurrentLevelOfDetailName(getWorkProduct().getLevelOfDetails().get(0).getName());
-    }
+//    public WorkProductInstance(WorkProduct workProduct, String id){
+//
+//        super(workProduct, id);
+//
+//        if(getWorkProduct()!=null && getWorkProduct().getLevelOfDetails()!=null && getWorkProduct().getLevelOfDetails().size() > 0)
+//            setCurrentLevelOfDetailName(getWorkProduct().getLevelOfDetails().get(0).getName());
+//    }
 
     //only for serialization / deserialization
     public WorkProductInstance(){

@@ -293,7 +293,8 @@ public class MethodEnactmentTest extends UEngineTest{
         //where?
         //alphaBacklog.getStates();
 
-        AlphaInstance backlogInstance = alphaBacklog.createInstance("backlog1");
+        AlphaInstance backlogInstance = alphaBacklog.createObjectInstance();
+        backlogInstance.setId("backlog1");
         {
             backlogInstance.setAttribute("type", "Story");
 
@@ -323,7 +324,8 @@ public class MethodEnactmentTest extends UEngineTest{
         }
 
         {
-            backlogInstance = alphaBacklog.createInstance("backlog2");
+            backlogInstance = alphaBacklog.createObjectInstance();
+            backlogInstance.setId("backlog2");
             backlogInstance.setAttribute("type", "Epic");
             backlogInstance.setAttribute("parent", "backlog1");
 
@@ -333,7 +335,8 @@ public class MethodEnactmentTest extends UEngineTest{
 
 
         {
-            backlogInstance = alphaBacklog.createInstance("backlog3");
+            backlogInstance = alphaBacklog.createObjectInstance();
+            backlogInstance.setId("backlog3");
             backlogInstance.setAttribute("type", "Task");
             backlogInstance.setAttribute("parent", "backlog2");
 
@@ -377,7 +380,8 @@ public class MethodEnactmentTest extends UEngineTest{
 
         ResultPayload resultPayload = new ResultPayload();
 
-        LanguageElementInstance sprint1 = sprint.createInstance("sprint1");
+        LanguageElementInstance sprint1 = sprint.createObjectInstance();
+        sprint1.setId("sprint1");
         sprint1.setAttribute("iteration", 1);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint1));
@@ -405,7 +409,8 @@ public class MethodEnactmentTest extends UEngineTest{
 
         resultPayload = new ResultPayload();
 
-        LanguageElementInstance sprint2 = sprint.createInstance("sprint2");
+        LanguageElementInstance sprint2 = sprint.createObjectInstance();
+        sprint2.setId("sprint2");
         sprint2.setAttribute("iteration", 2);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint2));
@@ -434,7 +439,8 @@ public class MethodEnactmentTest extends UEngineTest{
 
         resultPayload = new ResultPayload();
 
-        LanguageElementInstance sprint3 = sprint.createInstance("sprint3");
+        LanguageElementInstance sprint3 = sprint.createObjectInstance();
+        sprint3.setId("sprint3");
         sprint3.setAttribute("iteration", 3);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint3));

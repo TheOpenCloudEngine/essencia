@@ -101,7 +101,7 @@ public class ExampleAlphaInstance {
 
         ProcessDefinition processDefinition = new ProcessDefinition();
 
-        LanguageElementInstance defaultWorkAlphaInstance = workAlpha.createInstance("main");
+        LanguageElementInstance defaultWorkAlphaInstance = workAlpha.createObjectInstance();
         ProcessVariable pvAlphaWork = new ProcessVariable(new Object[]{
                 "name", workAlpha.getName(),
                 "type", AlphaInstance.class,
@@ -126,9 +126,12 @@ public class ExampleAlphaInstance {
         ProcessVariableValue pvvForSprint = new ProcessVariableValue();
         pvvForSprint.setName(pvSprint.getName());
 
-        AlphaInstance sprint1 = sprintAlpha.createInstance("sprint1");
-        AlphaInstance sprint2 = sprintAlpha.createInstance("sprint2");
-        AlphaInstance sprint3 = sprintAlpha.createInstance("sprint3");
+        AlphaInstance sprint1 = sprintAlpha.createObjectInstance();
+        sprint1.setId("sprint1");
+        AlphaInstance sprint2 = sprintAlpha.createObjectInstance();
+        sprint2.setId("sprint2");
+        AlphaInstance sprint3 = sprintAlpha.createObjectInstance();
+        sprint3.setId("sprint3");
 
         pvvForSprint.setValue(sprint1);
         pvvForSprint.moveToAdd();

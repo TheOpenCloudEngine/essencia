@@ -8,7 +8,6 @@ import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.designer.EssenciaPropertyPanel;
 import org.uengine.essencia.enactment.AlphaInstance;
-import org.uengine.essencia.enactment.face.AlphaInstanceFace;
 import org.uengine.essencia.enactment.face.LanguageElementInstanceFace;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.CardViewable;

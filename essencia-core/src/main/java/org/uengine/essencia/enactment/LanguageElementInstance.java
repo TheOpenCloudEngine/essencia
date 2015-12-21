@@ -29,15 +29,16 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
             this.id = id;
         }
 
-    //@XStreamOmitField
-    BasicElement languageElement;
+//    //@XStreamOmitField
+//    BasicElement languageElement;
     @Hidden
         public BasicElement getLanguageElement() {
-            return languageElement;
+            return (BasicElement) getClassDefinition();
         }
         public void setLanguageElement(BasicElement languageElement) {
-            this.languageElement = languageElement;
+            setClassDefinition(languageElement);
         }
+
 
 
 //    transient
@@ -58,25 +59,20 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 //        }
 
 
-    public LanguageElementInstance(BasicElement languageElement1, String id){
-
-//        cachedMap = new HashMap<String, Serializable>();
-
-//        ObjectInstance propertyValues = new ObjectInstance();
-//        propertyValues.setClassDefinition(languageElement1.getAttributeList());
-//        setPropertyValues(propertyValues);
-
-        setClassDefinition(languageElement1);
-
-        if(languageElement1 == null)
-            throw new IllegalArgumentException("Alpha should be provided to instantiate an AlphaInstance");
-
-        if(id == null)
-            throw new IllegalArgumentException("Id should be provided to instantiate an AlphaInstance");
-
-        setLanguageElement(languageElement1);
-        setId(id);
-    }
+//    public LanguageElementInstance(BasicElement languageElement1, String id){
+//
+//
+//        setClassDefinition(languageElement1);
+//
+//        if(languageElement1 == null)
+//            throw new IllegalArgumentException("Alpha should be provided to instantiate an AlphaInstance");
+//
+//        if(id == null)
+//            throw new IllegalArgumentException("Id should be provided to instantiate an AlphaInstance");
+//
+//        setLanguageElement(languageElement1);
+//        setId(id);
+//    }
 
     //only for serialization / deserialization
     public LanguageElementInstance(){
