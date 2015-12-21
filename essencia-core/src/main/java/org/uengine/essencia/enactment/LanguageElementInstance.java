@@ -1,6 +1,8 @@
 package org.uengine.essencia.enactment;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.metaworks.AllChildFacesAreIgnored;
+import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Payload;
@@ -32,6 +34,7 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 //    //@XStreamOmitField
 //    BasicElement languageElement;
     @Hidden
+    @Face(faceClass=AllChildFacesAreIgnored.class)
         public BasicElement getLanguageElement() {
             return (BasicElement) getClassDefinition();
         }
