@@ -15,7 +15,6 @@ import org.uengine.essencia.model.face.list.TagListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.GlobalContext;
 import org.uengine.modeling.IModelingTimeSensitive;
-import org.uengine.modeling.Relation;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ClassDefinition;
 import org.uengine.uml.model.ObjectInstance;
@@ -223,16 +222,22 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 
 	@Hidden
 	public ObjectInstance createObjectInstance() {
-		ObjectInstance instance =  super.createObjectInstance();
+		ObjectInstance instance = null;
+		try{
+			instance =  super.createObjectInstance();
 
 //TODO generalize this.
-		for(Attribute attribute: getFieldDescriptors()){
-			if(MetaworksFile.class.getName().equals(attribute.getClassName())){
-				instance.setBeanProperty(attribute.getName(), new MetaworksFile());
+			for(Attribute attribute: getFieldDescriptors()){
+				if(MetaworksFile.class.getName().equals(attribute.getClassName())){
+					instance.setBeanProperty(attribute.getName(), new MetaworksFile());
+				}
 			}
-		}
 
-		return instance;
+			return instance;
+		}catch (Exception e){
+			e.printStackTrace();
+			return instance;
+		}
 	}
 
 	@Override

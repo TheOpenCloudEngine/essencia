@@ -27767,70 +27767,49 @@ OG.graph.Canvas.prototype = {
      * @param {String} label Label
      * @return {Element} 연결된 Edge 엘리먼트
      */
-    connectWithTerminalId: function (fromTerminal_Id, toTerminal_Id, style, label, id, shapeId) {
-        var me = this
-            , fromElement , toElement
-            , fromTerminal, toTerminal
-            , terminalGroup, childTerminals, i, edge, guide, _index
-            , getShapeFromTerminal = function (terminal) {
-                var terminalId = OG.Util.isElement(terminal) ? terminal.id : terminal;
-                if (terminalId) {
-                    return me.getRenderer().getElementById(terminalId.substring(0, terminalId.indexOf(OG.Constants.TERMINAL_SUFFIX.GROUP)));
-                } else {
-                    return null;
-                }
-            };
-        // from Shape 연결 터미널 찾기
-        fromElement = getShapeFromTerminal(fromTerminal_Id);
-        terminalGroup = this._RENDERER.drawTerminal(fromElement, OG.Constants.TERMINAL_TYPE.OUT);
-        childTerminals = terminalGroup.terminal.childNodes;
-        try{
-            _index = parseInt(fromTerminal_Id.substr(fromTerminal_Id.lastIndexOf("_")+1,fromTerminal_Id.length));
-            fromTerminal = childTerminals[_index];
-        }catch(e){
-            _index = 0;
-            fromTerminal = childTerminals[_index];
-        }
-        this._RENDERER.removeTerminal(fromElement);
-        // to Shape 연결 터미널 찾기
-        toElement = getShapeFromTerminal(toTerminal_Id);
-        terminalGroup = this._RENDERER.drawTerminal(toElement, OG.Constants.TERMINAL_TYPE.IN);
-        childTerminals = terminalGroup.terminal.childNodes;
+    connectWithTerminalId: function (fromTerminal, toTerminal, style, label, id, shapeId , geom) {
+        var vertices, edge, guide;
 
-        try{
-            _index = parseInt(toTerminal_Id.substr(toTerminal_Id.lastIndexOf("_")+1,toTerminal_Id.length));
-            toTerminal = childTerminals[_index];
-        }catch(e){
-            _index = 0;
-            toTerminal = childTerminals[_index];
-        }
-        this._RENDERER.removeTerminal(toElement);
+        var fromPosition = this._RENDERER._getPositionFromTerminal(fromTerminal);
+        fromPosition = [fromPosition.x, fromPosition.y];
+        var toPosition = this._RENDERER._getPositionFromTerminal(toTerminal);
+        toPosition = [toPosition.x, toPosition.y];
 
-        // draw edge
-        // put a style from edge because if style is null, they put a default style in line 26022 ( 2014. 9. 23 by ik )
-        if(shapeId == "OG.shape.EdgeShape"){
-            edge = this._RENDERER.drawShape(null, new OG.EdgeShape(fromTerminal.terminal.position, toTerminal.terminal.position), null, null, id);
-        } else {
-            edge = this._RENDERER.drawShape(null, new OG.shape.bpmn.C_Sequence(fromTerminal.terminal.position, toTerminal.terminal.position), null, null, id);
-            style = edge.shape.geom.style;
+
+        if(!geom){
+            vertices = [fromPosition,toPosition];
+        }else{
+            vertices = geom.vertices;
         }
+
+
+        var fromto = JSON.stringify(vertices[0]) + ',' + JSON.stringify(vertices[vertices.length - 1]);
+        var shape = eval('new ' + shapeId + '(' + fromto + ')');
+        if (label) {
+            shape.label = label;
+        }
+
+        if (geom) {
+            if (geom.type === OG.Constants.GEOM_NAME[OG.Constants.GEOM_TYPE.POLYLINE]) {
+                geom = new OG.geometry.PolyLine(geom.vertices);
+                shape.geom = geom;
+            } else if (geom.type === OG.Constants.GEOM_NAME[OG.Constants.GEOM_TYPE.CURVE]) {
+                geom = new OG.geometry.Curve(geom.controlPoints);
+                shape.geom = geom;
+            }
+        }
+        edge = this.drawShape(null, shape, null, style, id, null, false);
 
         // connect
         edge = this._RENDERER.connect(fromTerminal, toTerminal, edge, style, label, true);
 
         if (edge) {
-            guide = this._RENDERER.drawGuide(edge);
-            if (edge) {
-                // enable event
-                this._HANDLER.setClickSelectable(edge, this._CONFIG.SELECTABLE);
-                this._HANDLER.setResizable(edge, guide, this._CONFIG.SELECTABLE && edge.shape.RESIZABLE);
-                this._HANDLER.setConnectable(edge, guide, this._CONFIG.SELECTABLE && edge.shape.CONNECTABLE);
-                if (edge.shape.LABEL_EDITABLE) {
-                    this._HANDLER.enableEditLabel(edge);
-                }
-                this._RENDERER.toFront(guide.group);
+            this._HANDLER.setClickSelectable(edge, edge.shape.SELECTABLE);
+            this._HANDLER.setMovable(edge, edge.shape.SELECTABLE && edge.shape.MOVABLE);
+            this._HANDLER.setConnectGuide(edge, this._HANDLER._isConnectable(edge.shape));
+            if (edge.shape.LABEL_EDITABLE) {
+                this._HANDLER.enableEditLabel(edge);
             }
-            this._RENDERER.removeGuide(edge);
         }
 
         return edge;
