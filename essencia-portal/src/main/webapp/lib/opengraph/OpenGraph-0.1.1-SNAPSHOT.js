@@ -6797,20 +6797,6 @@ OG.common.Constants = {
 	},
 
 	/**
-	 * Shape - Edge 와의 연결 포인트 터미널 유형 정의
-	 */
-	TERMINAL_TYPE: {
-		C    : "C",
-		E    : "E",
-		W    : "W",
-		S    : "S",
-		N    : "N",
-		IN   : "IN",
-		OUT  : "OUT",
-		INOUT: "INOUT"
-	},
-
-	/**
 	 * Shape - Edge 와의 연결 포인트
 	 */
 	TERMINAL: "_TERMINAL",
@@ -6819,7 +6805,7 @@ OG.common.Constants = {
 	 * Element 의 커넥트 가이드 이벤트 보정영역의 정의
 	 */
 	CONNECT_GUIDE_EVENT_AREA: {
-		NAME  : "CONNECT_GUIDE",
+		NAME  : "CONNECT_GUIDE"
 	},
 	/**
 	 * Element 의 커넥트 가이드 suffix 정의
@@ -9156,9 +9142,9 @@ OG.geometry.Geometry.prototype = {
      * @return {OG.geometry.Coordinate[]}
      */
     shortestIntersectToLine: function (line) {
-        var startp = this.convertCoordinate(line[0]);
-        var intersects = this.intersectToLine(line);
-        var i, distance, shortestDistance = 0, shortestIntersection;
+        var startp, intersects, i, distance, shortestDistance = 0, shortestIntersection;
+        startp = this.convertCoordinate(line[0]);
+        intersects = this.intersectToLine(line);
 
         for (i = 0; i < intersects.length; i++) {
             distance =
@@ -9173,7 +9159,6 @@ OG.geometry.Geometry.prototype = {
                 }
             }
         }
-
         return shortestIntersection;
     },
 
@@ -10072,7 +10057,7 @@ OG.geometry.GeometryCollection.prototype.getVertices = function () {
 };
 OG.geometry.GeometryCollection.prototype.getVerticess = function(){
 	console.log(1231234);
-},
+};
 
 /**
  * 가로, 세로 Offset 만큼 좌표를 이동한다.
@@ -10224,7 +10209,7 @@ OG.geometry.Line = function (from, to, poi) {
 
 	OG.geometry.Line.superclass.call(this, [
 		[_from.x, _from.y],
-		[_to.x, _to.y],
+		[_to.x, _to.y]
 	], poi);
 
 	this.TYPE = OG.Constants.GEOM_TYPE.LINE;
@@ -10584,26 +10569,6 @@ OG.shape.IShape = function () {
 	this.exceptionType = '';
 };
 OG.shape.IShape.prototype = {
-	/**
-	 * Shape 간의 연결을 위한 Terminal 을 반환한다.
-	 *
-	 * @return {OG.Terminal[]} Terminal
-	 */
-	createTerminal: function () {
-		if (!this.geom) {
-			return [];
-		}
-
-		var envelope = this.geom.getBoundary();
-
-		return [
-			new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-			new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-			new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-			new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-			new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT)
-		];
-	},
 
 	/**
 	 * 드로잉할 Shape 를 생성하여 반환한다.
@@ -10633,39 +10598,6 @@ OG.shape.IShape.prototype = {
 };
 OG.shape.IShape.prototype.constructor = OG.shape.IShape;
 OG.IShape = OG.shape.IShape;
-/**
- * Shape 의 Edge 연결 포인트 정보
- *
- * @class
- * @requires OG.common.*, OG.geometry.*
- *
- * @param position {OG.geometry.Coordinate} 위치좌표값
- * @param direction {String} 연결위치 (C:Center, E:East, W:West, S:South, N:North)
- * @param inout {String} 연결모드 (IN, OUT, INOUT)
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
- */
-OG.shape.Terminal = function (position, direction, inout) {
-    /**
-     * 위치좌표값
-     * @type OG.geometry.Coordinate
-     */
-    this.position = position;
-
-    /**
-     * 연결위치 (C:Center, E:East, W:West, S:South, N:North)
-     * @type String
-     */
-    this.direction = direction || OG.Constants.TERMINAL_TYPE.E;
-
-    /**
-     * 연결모드 (IN, OUT, INOUT)
-     * @type String
-     */
-    this.inout = inout || OG.Constants.TERMINAL_TYPE.INOUT;
-};
-OG.shape.Terminal.prototype = new OG.shape.Terminal();
-OG.shape.Terminal.prototype.constructor = OG.shape.Terminal;
-OG.Terminal = OG.shape.Terminal;
 /**
  * Geometry Shape
  *
@@ -10738,16 +10670,6 @@ OG.TextShape = OG.shape.TextShape;
  */
 OG.shape.TextShape.prototype.createShape = function () {
 	return this.text;
-};
-
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.TextShape.prototype.createTerminal = function () {
-	return [];
 };
 
 /**
@@ -10886,16 +10808,6 @@ OG.shape.EdgeShape.prototype.createShape = function () {
 
 	this.geom = new OG.Line(this.from, this.to);
 	return this.geom;
-};
-
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.EdgeShape.prototype.createTerminal = function () {
-	return [];
 };
 
 /**
@@ -11440,27 +11352,6 @@ OG.shape.essencia.Activity.prototype.createShape = function () {
 };
 
 /**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.Activity.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT)
-    ];
-};
-/**
  * BPMN : ActivityArrow Shape for Activity Card
  * @class
  * @extends OG.shape.GeomShape
@@ -11633,27 +11524,6 @@ OG.shape.essencia.Alpha.prototype.createShape = function () {
 };
 
 /**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.Alpha.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT)
-    ];
-};
-/**
  * BPMN : Competency Event Shape
  *
  * @class
@@ -11708,27 +11578,6 @@ OG.shape.essencia.Competency.prototype.createShape = function () {
 };
 
 /**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.Competency.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT)
-    ];
-};
-/**
  * BPMN : CompetencyLevel Shape
  *
  * @class
@@ -11774,27 +11623,6 @@ OG.shape.essencia.CompetencyLevel.prototype.createShape = function () {
     return this.geom;
 };
 
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.CompetencyLevel.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.IN)
-    ];
-};
 /**
  * BPMN : LevelOfDetail Event Shape
  *
@@ -11843,27 +11671,6 @@ OG.shape.essencia.LevelOfDetail.prototype.createShape = function () {
     return this.geom;
 };
 
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.LevelOfDetail.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT)
-    ];
-};
 /**
  * BPMN : Practice Event Shape
  *
@@ -11918,27 +11725,6 @@ OG.shape.essencia.Practice.prototype.createShape = function () {
 };
 
 /**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.Practice.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.OUT),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.OUT),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.OUT),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.OUT),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.OUT)
-    ];
-};
-/**
  * BPMN : State Event Shape
  *
  * @class
@@ -11982,27 +11768,6 @@ OG.shape.essencia.State.prototype.createShape = function () {
     return this.geom;
 };
 
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.State.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT)
-    ];
-};
 /**
  * BPMN : WorkProduct Event Shape
  *
@@ -12052,27 +11817,6 @@ OG.shape.essencia.WorkProduct.prototype.createShape = function () {
     return this.geom;
 };
 
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.essencia.WorkProduct.prototype.createTerminal = function () {
-    if (!this.geom) {
-        return [];
-    }
-
-    var envelope = this.geom.getBoundary();
-
-    return [
-        new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.IN),
-        new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.IN)
-    ];
-};
 /**
  * BPMN : Task Activity Shape
  *
@@ -12127,42 +11871,6 @@ OG.shape.bpmn.A_Task.prototype.createShape = function () {
 
 	return this.geom;
 };
-
-OG.shape.bpmn.A_Task.prototype.createTerminal = function(){
-	if (!this.geom) {
-		return [];
-	}
-
-	var envelope = this.geom.getBoundary();
-
-	return [
-		new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getUpperLeft(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getUpperRight(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLowerLeft(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLowerRight(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperCenter().x - envelope.getUpperLeft().x) / 3) * 1) + envelope.getUpperLeft().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperCenter().x - envelope.getUpperLeft().x) / 3) * 2) + envelope.getUpperLeft().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperRight().x - envelope.getUpperCenter().x) / 3) * 1) + envelope.getUpperCenter().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperRight().x - envelope.getUpperCenter().x) / 3) * 2) + envelope.getUpperCenter().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerCenter().x - envelope.getLowerLeft().x) / 3) * 1) + envelope.getLowerLeft().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerCenter().x - envelope.getLowerLeft().x) / 3) * 2) + envelope.getLowerLeft().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerRight().x - envelope.getLowerCenter().x) / 3) * 1) + envelope.getLowerCenter().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerRight().x - envelope.getLowerCenter().x) / 3) * 2) + envelope.getLowerCenter().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLeftCenter().y - envelope.getUpperLeft().y) / 3) * 1) + envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLeftCenter().y - envelope.getUpperLeft().y) / 3) * 2) + envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLowerRight().y - envelope.getLeftCenter().y) / 3) * 1) + envelope.getLeftCenter().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLowerRight().y - envelope.getLeftCenter().y) / 3) * 2) + envelope.getLeftCenter().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getRightCenter().y - envelope.getUpperRight().y) / 3) * 1) + envelope.getUpperRight().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getRightCenter().y - envelope.getUpperRight().y) / 3) * 2) + envelope.getUpperRight().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getLowerRight().y - envelope.getRightCenter().y) / 3) * 1) + envelope.getRightCenter().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getLowerRight().y - envelope.getRightCenter().y) / 3) * 2) + envelope.getRightCenter().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT)
-	];
-};
 OG.shape.bpmn.Event = function (label) {
     OG.shape.bpmn.Event.superclass.call(this);
 
@@ -12213,28 +11921,6 @@ OG.shape.bpmn.E_End.prototype.createShape = function () {
 	});
 
 	return this.geom;
-};
-
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.bpmn.E_End.prototype.createTerminal = function () {
-	if (!this.geom) {
-		return [];
-	}
-
-	var envelope = this.geom.getBoundary();
-
-	return [
-		new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.IN),
-		new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.IN),
-		new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.IN),
-		new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.IN),
-		new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.IN)
-	];
 };
 /**
  * BPMN : Intermediate Event Shape
@@ -12319,28 +12005,6 @@ OG.shape.bpmn.E_Start.prototype.createShape = function () {
 	});
 
 	return this.geom;
-};
-
-/**
- * Shape 간의 연결을 위한 Terminal 을 반환한다.
- *
- * @return {OG.Terminal[]} Terminal
- * @override
- */
-OG.shape.bpmn.E_Start.prototype.createTerminal = function () {
-	if (!this.geom) {
-		return [];
-	}
-
-	var envelope = this.geom.getBoundary();
-
-	return [
-		new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.OUT),
-		new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.OUT),
-		new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.OUT),
-		new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.OUT),
-		new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.OUT)
-	];
 };
 /**
  * BPMN : Gateway Shape
@@ -14697,42 +14361,6 @@ OG.shape.bpmn.M_Group.prototype.createShape = function () {
 
 	return this.geom;
 };
-
-OG.shape.bpmn.M_Group.prototype.createTerminal = function(){
-	if (!this.geom) {
-		return [];
-	}
-
-	var envelope = this.geom.getBoundary();
-
-	return [
-		new OG.Terminal(envelope.getCentroid(), OG.Constants.TERMINAL_TYPE.C, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getRightCenter(), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLeftCenter(), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLowerCenter(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getUpperCenter(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getUpperLeft(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getUpperRight(), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLowerLeft(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(envelope.getLowerRight(), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperCenter().x - envelope.getUpperLeft().x) / 3) * 1) + envelope.getUpperLeft().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperCenter().x - envelope.getUpperLeft().x) / 3) * 2) + envelope.getUpperLeft().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperRight().x - envelope.getUpperCenter().x) / 3) * 1) + envelope.getUpperCenter().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getUpperRight().x - envelope.getUpperCenter().x) / 3) * 2) + envelope.getUpperCenter().x, envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.N, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerCenter().x - envelope.getLowerLeft().x) / 3) * 1) + envelope.getLowerLeft().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerCenter().x - envelope.getLowerLeft().x) / 3) * 2) + envelope.getLowerLeft().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerRight().x - envelope.getLowerCenter().x) / 3) * 1) + envelope.getLowerCenter().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate((((envelope.getLowerRight().x - envelope.getLowerCenter().x) / 3) * 2) + envelope.getLowerCenter().x, envelope.getLowerLeft().y), OG.Constants.TERMINAL_TYPE.S, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLeftCenter().y - envelope.getUpperLeft().y) / 3) * 1) + envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLeftCenter().y - envelope.getUpperLeft().y) / 3) * 2) + envelope.getUpperLeft().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLowerRight().y - envelope.getLeftCenter().y) / 3) * 1) + envelope.getLeftCenter().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperLeft().x, (((envelope.getLowerRight().y - envelope.getLeftCenter().y) / 3) * 2) + envelope.getLeftCenter().y), OG.Constants.TERMINAL_TYPE.W, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getRightCenter().y - envelope.getUpperRight().y) / 3) * 1) + envelope.getUpperRight().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getRightCenter().y - envelope.getUpperRight().y) / 3) * 2) + envelope.getUpperRight().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getLowerRight().y - envelope.getRightCenter().y) / 3) * 1) + envelope.getRightCenter().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT),
-		new OG.Terminal(new OG.geometry.Coordinate( envelope.getUpperRight().x, (((envelope.getLowerRight().y - envelope.getRightCenter().y) / 3) * 2) + envelope.getRightCenter().y), OG.Constants.TERMINAL_TYPE.E, OG.Constants.TERMINAL_TYPE.INOUT)
-	];
-};
 /**
  * BPMN : Text Shape
  *
@@ -15206,84 +14834,6 @@ OG.renderer.IRenderer.prototype = {
     },
 
     /**
-     * 시작, 끝 좌표에 따라 적절한 시작 터미널을 찾아 반환한다.
-     *
-     * @param {Element} element Shape 엘리먼트
-     * @param {Number[]} from 시작자표
-     * @param {Number[]} to 끝자표
-     * @return {Element} 터미널 엘리먼트
-     * @private
-     */
-    _findFromTerminal: function (element, from, to) {
-        // 적절한 연결 터미널 찾기
-        var fromXY = {x: from[0], y: from[1]}, toXY = {x: to[0], y: to[1]},
-            terminalGroup = this.drawTerminal(element),
-            childTerminals = terminalGroup.terminal.childNodes, fromDrct, fromTerminal, i;
-        if (Math.abs(toXY.x - fromXY.x) > Math.abs(toXY.y - fromXY.y)) {
-            if (toXY.x > fromXY.x) {
-                fromDrct = "e";
-            } else {
-                fromDrct = "w";
-            }
-        } else {
-            if (toXY.y > fromXY.y) {
-                fromDrct = "s";
-            } else {
-                fromDrct = "n";
-            }
-        }
-
-        fromTerminal = childTerminals[0];
-        for (i = 0; i < childTerminals.length; i++) {
-            if (childTerminals[i].terminal && childTerminals[i].terminal.direction.toLowerCase() === fromDrct) {
-                fromTerminal = childTerminals[i];
-                break;
-            }
-        }
-
-        return fromTerminal;
-    },
-
-    /**
-     * 시작, 끝 좌표에 따라 적절한 끝 터미널을 찾아 반환한다.
-     *
-     * @param {Element} element Shape 엘리먼트
-     * @param {Number[]} from 시작자표
-     * @param {Number[]} to 끝자표
-     * @return {Element} 터미널 엘리먼트
-     * @private
-     */
-    _findToTerminal: function (element, from, to) {
-        // 적절한 연결 터미널 찾기
-        var fromXY = {x: from[0], y: from[1]}, toXY = {x: to[0], y: to[1]},
-            terminalGroup = this.drawTerminal(element),
-            childTerminals = terminalGroup.terminal.childNodes, toDrct, toTerminal, i;
-        if (Math.abs(toXY.x - fromXY.x) > Math.abs(toXY.y - fromXY.y)) {
-            if (toXY.x > fromXY.x) {
-                toDrct = "w";
-            } else {
-                toDrct = "e";
-            }
-        } else {
-            if (toXY.y > fromXY.y) {
-                toDrct = "n";
-            } else {
-                toDrct = "s";
-            }
-        }
-
-        toTerminal = childTerminals[0];
-        for (i = 0; i < childTerminals.length; i++) {
-            if (childTerminals[i].terminal && childTerminals[i].terminal.direction.toLowerCase() === toDrct) {
-                toTerminal = childTerminals[i];
-                break;
-            }
-        }
-
-        return toTerminal;
-    },
-
-    /**
      * 터미널로부터 부모 Shape element 를 찾아 반환한다.
      *
      * @param {Element,String} terminal 터미널 Element or ID
@@ -15410,16 +14960,6 @@ OG.renderer.IRenderer.prototype = {
     },
 
     /**
-     * Edge Element 에 저장된 geom, style 정보로 Edge 를 redraw 한다.
-     * Edge 타입(straight, plain) 에 따른 경로를 새로 계산한다.
-     *
-     * @param {Element} edgeElement Edge Shape 엘리먼트
-     */
-    redrawEdge: function (edgeElement) {
-        throw new OG.NotImplementedException();
-    },
-
-    /**
      * Shape 의 연결된 Edge 를 redraw 한다.(이동 또는 리사이즈시)
      *
      * @param {Element} element
@@ -15518,33 +15058,6 @@ OG.renderer.IRenderer.prototype = {
         throw new OG.NotImplementedException();
     },
 
-    /**
-     * Edge 연결용 터미널을 드로잉한다.
-     *
-     * @param {Element} element DOM Element
-     * @param {String} terminalType 터미널 연결 유형(IN or OUT or INOUT)
-     * @return {Element} terminal group element
-     */
-    drawTerminal: function (element, terminalType) {
-
-        throw new OG.NotImplementedException();
-    },
-
-    /**
-     *  Edge 연결용 터미널을 remove 한다.
-     *
-     * @param {Element} element DOM Element
-     */
-    removeTerminal: function (element) {
-        throw new OG.NotImplementedException();
-    },
-
-    /**
-     *  모든 Edge 연결용 터미널을 remove 한다.
-     */
-    removeAllTerminal: function () {
-        throw new OG.NotImplementedException();
-    },
 
     /**
      * ID에 해당하는 Element 의 Draggable 가이드를 드로잉한다.
@@ -15967,94 +15480,6 @@ OG.renderer.IRenderer.prototype = {
      */
     resizeBox: function (element, size) {
         throw new OG.NotImplementedException();
-    },
-
-    /**
-     * Edge 유형에 따라 Shape 과의 연결 지점을 찾아 반환한다.
-     *
-     * @param {String} edgeType Edge 유형(straight, plain..)
-     * @param {Element} element 연결할 Shape 엘리먼트
-     * @param {Number[]} from 시작좌표
-     * @param {Number[]} to 끝좌표
-     * @param {Boolean} 시작 연결지점 여부
-     * @return {Object} {position, direction}
-     */
-    intersectionEdge: function (edgeType, element, from, to, isFrom) {
-        var me = this, terminal, position, direction, intersectPoints, i, minDistance = Number.MAX_VALUE, distance,
-            collapsedParents, collapsedEnvelope, collapsedUpperLeft, collapsedGeom, collapsedPosition;
-
-        // element 가 collapsed 인지 체크
-        if (element) {
-            collapsedParents = $(element).parents("[_collapsed=true]");
-            if (collapsedParents.length !== 0) {
-                // collapsed 인 경우
-                collapsedEnvelope = collapsedParents[collapsedParents.length - 1].shape.geom.getBoundary();
-                collapsedUpperLeft = collapsedEnvelope.getUpperLeft();
-                collapsedGeom = new OG.geometry.Rectangle(
-                    collapsedUpperLeft, me._CONFIG.COLLAPSE_SIZE * 3, me._CONFIG.COLLAPSE_SIZE * 2);
-            }
-        }
-        switch (edgeType) {
-            case OG.Constants.EDGE_TYPE.PLAIN:
-            case OG.Constants.EDGE_TYPE.BEZIER:
-
-                terminal = isFrom ? this._findFromTerminal(element, from, to) : this._findToTerminal(element, from, to);
-                position = [terminal.terminal.position.x, terminal.terminal.position.y];
-                direction = terminal.terminal.direction.toLowerCase();
-
-
-                if (collapsedGeom) {
-                    switch (terminal.terminal.direction) {
-                        case OG.Constants.TERMINAL_TYPE.E:
-                            collapsedPosition = collapsedGeom.getBoundary().getRightCenter();
-                            break;
-                        case OG.Constants.TERMINAL_TYPE.W:
-                            collapsedPosition = collapsedGeom.getBoundary().getLeftCenter();
-                            break;
-                        case OG.Constants.TERMINAL_TYPE.S:
-                            collapsedPosition = collapsedGeom.getBoundary().getLowerCenter();
-                            break;
-                        case OG.Constants.TERMINAL_TYPE.N:
-                            collapsedPosition = collapsedGeom.getBoundary().getUpperCenter();
-                            break;
-                    }
-                    if (collapsedPosition) {
-                        position = [collapsedPosition.x, collapsedPosition.y];
-                    }
-                }
-
-                break;
-            case OG.Constants.EDGE_TYPE.STRAIGHT:
-                if (collapsedGeom) {
-                    collapsedPosition = collapsedGeom.getBoundary().getCentroid();
-                    if (isFrom === true) {
-                        from = [collapsedPosition.x, collapsedPosition.y];
-                    } else {
-                        to = [collapsedPosition.x, collapsedPosition.y];
-                    }
-                    intersectPoints = collapsedGeom.intersectToLine([from, to]);
-                } else {
-                    intersectPoints = element.shape.geom.intersectToLine([from, to]);
-                }
-                position = isFrom ? from : to;
-                direction = "c";
-                for (i = 0; i < intersectPoints.length; i++) {
-                    distance = intersectPoints[i].distance(isFrom ? to : from);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        position = [intersectPoints[i].x, intersectPoints[i].y];
-                        direction = "c";
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
-        return {
-            position : position,
-            direction: direction
-        };
     },
 
     /**
@@ -18635,166 +18060,6 @@ OG.renderer.RaphaelRenderer.prototype.redrawShape = function (element, excludeEd
 };
 
 /**
- * Edge Element 에 저장된 geom, style 정보로 Edge 를 redraw 한다.
- * Edge 타입(straight, plain) 에 따른 경로를 새로 계산한다.
- *
- * @param {Element,String} edgeElement Element 또는 ID
- * @override
- */
-OG.renderer.RaphaelRenderer.prototype.redrawEdge = function (edgeElement) {
-    var me = this, edge, fromTerminalId, toTerminalId, fromShape, toShape, fromElement, toElement, fromParent, toParent, fromTerminalNum, toTerminalNum,
-        fromTerminal, toTerminal, vertices, fromDrct, toDrct, fromXY, toXY,
-        orgFromXY, orgToXY, orgFromDrct, orgToDrct, intersectionInfo, isSelf,
-        collapsedParents, collapsedEnvelope, collapsedUpperLeft, collapsedGeom, collapsedPosition;
-
-    edge = OG.Util.isElement(edgeElement) ? edgeElement : this.getElementById(edgeElement);
-    if (!edge)
-        return;
-
-    // ex) OG_3312_1_TERMINAL_E_INOUT_0
-    fromTerminalId = $(edge).attr("_from");
-    toTerminalId = $(edge).attr("_to");
-
-    if (fromTerminalId) {
-        fromShape = this._getShapeFromTerminal(fromTerminalId);
-        fromElement = me.getElementById(fromShape.id);
-        fromTerminalNum = parseInt(fromTerminalId.substring(fromTerminalId.lastIndexOf("_") + 1), 10);
-        fromTerminal = fromShape.shape.createTerminal()[fromTerminalNum];
-        fromDrct = fromTerminal.direction.toLowerCase();
-        fromXY = fromTerminal.position;
-    } else {
-        vertices = edge.shape.geom.getVertices();
-        fromDrct = "c";
-        fromXY = vertices[0];
-    }
-
-    if (toTerminalId) {
-        toShape = this._getShapeFromTerminal(toTerminalId);
-        toElement = me.getElementById(toShape.id);
-        toTerminalNum = parseInt(toTerminalId.substring(toTerminalId.lastIndexOf("_") + 1), 10);
-        toTerminal = toShape.shape.createTerminal()[toTerminalNum];
-        toDrct = toTerminal.direction.toLowerCase();
-        toXY = toTerminal.position;
-    } else {
-        vertices = edge.shape.geom.getVertices();
-        toDrct = "c";
-        toXY = vertices[vertices.length - 1];
-    }
-
-    // backup edge-direction
-    orgFromXY = fromXY;
-    orgToXY = toXY;
-    orgFromDrct = fromDrct;
-    orgToDrct = toDrct;
-
-    // direction 이 c 인 경우에 대한 처리(센터 연결)
-    if (fromShape && fromDrct === "c") {
-        intersectionInfo = this.intersectionEdge(
-            edge.shape.geom.style.get("edge-type"), fromShape, [orgFromXY.x, orgFromXY.y], [orgToXY.x, orgToXY.y], true
-        );
-        fromXY = intersectionInfo.position;
-        fromDrct = intersectionInfo.direction;
-    }
-    if (toShape && toDrct === "c") {
-        intersectionInfo = this.intersectionEdge(
-            edge.shape.geom.style.get("edge-type"), toShape, [orgFromXY.x, orgFromXY.y], [orgToXY.x, orgToXY.y], false
-        );
-        toXY = intersectionInfo.position;
-        toDrct = intersectionInfo.direction;
-    }
-
-    isSelf = fromShape && toShape && fromShape.id === toShape.id;
-    if (isSelf) {
-        fromXY = toXY = fromShape.shape.geom.getBoundary().getRightCenter();
-    } else {
-        // fromShape 이 collapsed 인지 체크
-        if (fromShape) {
-            collapsedParents = $(fromShape).parents("[_collapsed=true]");
-            if (collapsedParents.length !== 0 || $(fromShape).attr('_collapsed') === 'true') {
-                // collapsed 인 경우
-                if (collapsedParents.length === 0) {
-                    collapsedEnvelope = fromShape.shape.geom.getBoundary();
-                } else {
-                    collapsedEnvelope = collapsedParents[collapsedParents.length - 1].shape.geom.getBoundary();
-                }
-                collapsedUpperLeft = collapsedEnvelope.getUpperLeft();
-                collapsedGeom = new OG.geometry.Rectangle(
-                    collapsedUpperLeft, me._CONFIG.COLLAPSE_SIZE * 3, me._CONFIG.COLLAPSE_SIZE * 2);
-
-                switch (fromDrct.toUpperCase()) {
-                    case OG.Constants.TERMINAL_TYPE.E:
-                        collapsedPosition = collapsedGeom.getBoundary().getRightCenter();
-                        break;
-                    case OG.Constants.TERMINAL_TYPE.W:
-                        collapsedPosition = collapsedGeom.getBoundary().getLeftCenter();
-                        break;
-                    case OG.Constants.TERMINAL_TYPE.S:
-                        collapsedPosition = collapsedGeom.getBoundary().getLowerCenter();
-                        break;
-                    case OG.Constants.TERMINAL_TYPE.N:
-                        collapsedPosition = collapsedGeom.getBoundary().getUpperCenter();
-                        break;
-                }
-                if (collapsedPosition) {
-                    fromXY = [collapsedPosition.x, collapsedPosition.y];
-                }
-            }
-        }
-
-        // toShape 이 collapsed 인지 체크
-        if (toShape) {
-            collapsedParents = $(toShape).parents("[_collapsed=true]");
-            if (collapsedParents.length !== 0 || $(toShape).attr('_collapsed') === 'true') {
-                // collapsed 인 경우
-                if (collapsedParents.length === 0) {
-                    collapsedEnvelope = toShape.shape.geom.getBoundary();
-                } else {
-                    collapsedEnvelope = collapsedParents[collapsedParents.length - 1].shape.geom.getBoundary();
-                }
-                collapsedUpperLeft = collapsedEnvelope.getUpperLeft();
-                collapsedGeom = new OG.geometry.Rectangle(
-                    collapsedUpperLeft, me._CONFIG.COLLAPSE_SIZE * 3, me._CONFIG.COLLAPSE_SIZE * 2);
-
-                switch (toDrct.toUpperCase()) {
-                    case OG.Constants.TERMINAL_TYPE.E:
-                        collapsedPosition = collapsedGeom.getBoundary().getRightCenter();
-                        break;
-                    case OG.Constants.TERMINAL_TYPE.W:
-                        collapsedPosition = collapsedGeom.getBoundary().getLeftCenter();
-                        break;
-                    case OG.Constants.TERMINAL_TYPE.S:
-                        collapsedPosition = collapsedGeom.getBoundary().getLowerCenter();
-                        break;
-                    case OG.Constants.TERMINAL_TYPE.N:
-                        collapsedPosition = collapsedGeom.getBoundary().getUpperCenter();
-                        break;
-                }
-                if (collapsedPosition) {
-                    toXY = [collapsedPosition.x, collapsedPosition.y];
-                }
-            }
-        }
-    }
-
-    // issue: 유저가 선택한 변곡점은 계속 유지되어야 함
-    var pointOfInflection = null, _edgeElem = me._ELE_MAP.get(edgeElement);
-    if (_edgeElem.node.shape.geom) {
-        //보류
-        //pointOfInflection = me._getPointOfInflectionFromEdge(_edgeElem.node.shape.geom);
-    }
-    edge = this.drawEdge(new OG.Line(fromXY, toXY),
-        OG.Util.apply(edge.shape.geom.style.map, {"edge-direction": fromDrct + " " + toDrct}), edge.id, isSelf);
-
-    // Draw Label
-    this.drawLabel(edge);
-    this.drawEdgeLabel(edge, null, 'FROM');
-    this.drawEdgeLabel(edge, null, 'TO');
-
-    // restore edge-direction
-    OG.Util.apply(edge.shape.geom.style.map, {"edge-direction": orgFromDrct + " " + orgToDrct});
-};
-
-/**
  * Shape 의 연결된 Edge 를 redraw 한다.(이동 또는 리사이즈시)
  *
  * @param {Element} element
@@ -19689,129 +18954,6 @@ OG.renderer.RaphaelRenderer.prototype.removeRubberBand = function (root) {
 };
 
 /**
- * Edge 연결용 터미널을 드로잉한다.
- *
- * @param {Element} element DOM Element
- * @param {String} terminalType 터미널 연결 유형(IN or OUT or INOUT)
- * @return {Element} terminal group element
- * @override
- */
-OG.renderer.RaphaelRenderer.prototype.drawTerminal = function (element, terminalType) {
-    var me = this, rElement = this._getREleById(OG.Util.isElement(element) ? element.id : element),
-        terminals = rElement ? rElement.node.shape.createTerminal() : null,
-        envelope = rElement ? rElement.node.shape.geom.getBoundary() : null,
-        group, cross, rect, x, y, size = me._CONFIG.TERMINAL_SIZE, rect_gap = size * 2;
-
-    if (rElement && terminals && terminals.length > 0) {
-        group = this._getREleById(rElement.id + OG.Constants.TERMINAL_SUFFIX.GROUP);
-        rect = this._getREleById(rElement.id + OG.Constants.TERMINAL_SUFFIX.BOX);
-        if (group || rect) {
-            return {
-                bBox: rect.node,
-                terminal: group.node
-            };
-        }
-
-        // group
-        group = this._PAPER.group();
-
-        // hidden box
-        /*
-         rect = this._PAPER.rect(envelope.getUpperLeft().x - rect_gap, envelope.getUpperLeft().y - rect_gap,
-         envelope.getWidth() + rect_gap * 2, envelope.getHeight() + rect_gap * 2);
-         */
-        rect = this._PAPER.rect(envelope.getUpperLeft().x, envelope.getUpperLeft().y,
-            envelope.getWidth(), envelope.getHeight());
-
-        rect.attr(me._CONFIG.DEFAULT_STYLE.TERMINAL_BBOX);
-        if (element.shape instanceof OG.shape.GroupShape) {
-            rect.attr({"fill": "none"});
-        }
-        this._add(rect, rElement.id + OG.Constants.TERMINAL_SUFFIX.BOX);
-
-        // terminal
-        $.each(terminals, function (idx, item) {
-            if (!terminalType || item.inout.indexOf(terminalType) >= 0) {
-                x = item.position.x;
-                y = item.position.y;
-
-                cross = me._PAPER.circle(x, y, size);
-                cross.attr(me._CONFIG.DEFAULT_STYLE.TERMINAL);
-                cross.node.terminal = item;
-
-                group.appendChild(cross);
-                me._add(cross, rElement.id + OG.Constants.TERMINAL_SUFFIX.GROUP + "_" + item.direction + "_" + item.inout + "_" + idx);
-            }
-        });
-
-        this._add(group, rElement.id + OG.Constants.TERMINAL_SUFFIX.GROUP);
-
-
-        // layer 위치 조정
-        //rect.insertBefore(rElement);
-        group.insertAfter(rElement);
-        rect.insertAfter(rElement);
-        //rElement.appendChild(group);
-
-        $(rect.node).bind('mouseover', function (event, ui) {
-            event.stopPropagation();
-        });
-
-        return {
-            bBox: rect.node,
-            terminal: group.node
-        };
-    }
-
-    return null;
-};
-
-/**
- *  Edge 연결용 터미널을 remove 한다.
- *
- * @param {Element} element DOM Element
- * @override
- */
-OG.renderer.RaphaelRenderer.prototype.removeTerminal = function (element) {
-    var rElement = this._getREleById(OG.Util.isElement(element) ? element.id : element),
-        group, rect;
-
-    if (rElement) {
-        // group
-        group = this._getREleById(rElement.id + OG.Constants.TERMINAL_SUFFIX.GROUP);
-        if (group) {
-            this._remove(group);
-        }
-
-        rect = this._getREleById(rElement.id + OG.Constants.TERMINAL_SUFFIX.BOX);
-        if (rect) {
-            this._remove(rect);
-        }
-    }
-};
-
-/**
- *  모든 Edge 연결용 터미널을 remove 한다.
- *
- * @override
- */
-OG.renderer.RaphaelRenderer.prototype.removeAllTerminal = function (element) {
-    var elementId = $(element).attr("id")
-        , me = this;
-    $.each(this._ELE_MAP.keys(), function (idx, item) {
-        if (element) {
-            if (item.indexOf(elementId) > -1) {
-                // no operation
-            } else {
-                me.removeTerminal(item);
-            }
-        } else {
-            me.removeTerminal(item);
-        }
-    });
-};
-
-/**
  * ID에 해당하는 Element 의 Collapse 가이드를 드로잉한다.
  *
  * @param {Element,String} element Element 또는 ID
@@ -20550,7 +19692,6 @@ OG.renderer.RaphaelRenderer.prototype.removeShape = function (element) {
     }
 
     this.disconnect(rElement.node);
-    this.removeTerminal(rElement.node);
     this.removeGuide(rElement.node);
     this.removeCollapseGuide(rElement.node);
 
@@ -23341,7 +22482,6 @@ OG.handler.EventHandler.prototype = {
                                     // enable event
                                     me.setResizable(element, guide, me._isResizable(element.shape));
                                     me.setConnectable(element, guide, me._isConnectable(element.shape));
-                                    me._RENDERER.removeAllTerminal();
                                     me._RENDERER.toFront(guide.group);
                                 }
                             }
@@ -23457,7 +22597,6 @@ OG.handler.EventHandler.prototype = {
                         });
                         me.selectShapes(elements);
 
-                        me._RENDERER.removeAllTerminal();
                         $(this).data("dragBox", {"width": width, "height": height, "x": x, "y": y});
                     }
                     $(this).data("rubber_band_status", "none");
@@ -23761,51 +22900,6 @@ OG.handler.EventHandler.prototype = {
                                 if (e.target.value !== '') {
                                     me.setFillOpacitySelectedShape(e.target.value);
                                 }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-
-    makeLineType: function () {
-        var me = this;
-
-        return {
-            'lineType': {
-                name: '선 종류',
-                items: {
-                    'lineType_straight': {
-                        name: '직선',
-                        type: 'radio',
-                        radio: 'lineType',
-                        value: 'straight',
-                        events: {
-                            change: function (e) {
-                                me.setLineTypeSelectedShape(e.target.value);
-                            }
-                        }
-                    },
-                    'lineType_plain': {
-                        name: '꺾은선',
-                        type: 'radio',
-                        radio: 'lineType',
-                        value: 'plain',
-                        events: {
-                            change: function (e) {
-                                me.setLineTypeSelectedShape(e.target.value);
-                            }
-                        }
-                    },
-                    'lineType_bezier': {
-                        name: '곡선',
-                        type: 'radio',
-                        radio: 'lineType',
-                        value: 'bezier',
-                        events: {
-                            change: function (e) {
-                                me.setLineTypeSelectedShape(e.target.value);
                             }
                         }
                     }
@@ -24928,7 +24022,6 @@ OG.handler.EventHandler.prototype = {
                 format: {
                     name: '형식',
                     items: this.mergeContextMenu(
-                        this.makeLineType(),
                         this.makeLineStyle(),
                         this.makeLineColor(),
                         this.makeLineWidth()
@@ -24949,17 +24042,6 @@ OG.handler.EventHandler.prototype = {
                 }
             }
         }
-    },
-
-    makeEdgeContextMenu: function (isEdge) {
-        return this.mergeContextMenu(
-            this.makeDelete(),
-            this.makeCopy(),
-            this.makeFormat(isEdge),
-            this.makeFont(),
-            this.makeBring(),
-            this.makeSend()
-        )
     },
 
     makeTaskContextMenu: function () {
@@ -25068,7 +24150,7 @@ OG.handler.EventHandler.prototype = {
 
                 if (me._getSelectedElement().length == 1) {
                     if (me._getSelectedElement()[0].shape instanceof OG.shape.EdgeShape) {
-                        items = me.makeEdgeContextMenu(true);
+                        return;
                     } else if (me._getSelectedElement()[0].shape instanceof OG.shape.bpmn.G_Gateway) {
                         items = me.makeGatewayContextMenu();
                     } else if (me._getSelectedElement()[0].shape instanceof OG.shape.bpmn.Event) {
@@ -25131,7 +24213,6 @@ OG.handler.EventHandler.prototype = {
             // enable event
             me.setResizable(element, guide, me._isResizable(element.shape));
             me.setConnectable(element, guide, me._isConnectable(element.shape));
-            me._RENDERER.removeTerminal(element);
 
             //선택상태 설정
             $(element).attr("_selected", "true");
@@ -25207,7 +24288,6 @@ OG.handler.EventHandler.prototype = {
         if (OG.Util.isElement(element) && element.id) {
             $(element).attr("_selected", "");
             me._RENDERER.removeGuide(element);
-            me._RENDERER.removeTerminal(element);
 
             //선택요소배열 삭제
             me._delSelectedElement(element);
@@ -25243,7 +24323,6 @@ OG.handler.EventHandler.prototype = {
                     }
                 }
             );
-            me._RENDERER.removeAllTerminal();
 
             //선택요소배열 모두삭제 (초기화)
             me._removeAllSelectedElement();
@@ -25516,7 +24595,6 @@ OG.handler.EventHandler.prototype = {
                     me.enableDragAndDropGroup(groupElement);
                 }
 
-                me._RENDERER.removeAllTerminal();
                 me._RENDERER.toFront(guide.group);
             }
         }
@@ -25531,7 +24609,6 @@ OG.handler.EventHandler.prototype = {
         $.each(ungroupedElements, function (idx, item) {
             guide = me._RENDERER.drawGuide(item);
             if (guide) {
-                me._RENDERER.removeAllTerminal();
                 me._RENDERER.toFront(guide.group);
             }
         });
@@ -25582,28 +24659,6 @@ OG.handler.EventHandler.prototype = {
         var me = this;
         $(me._RENDERER.getRootElement()).find("[_type=" + OG.Constants.NODE_TYPE.SHAPE + "][_selected=true]").each(function (idx, item) {
             me._RENDERER.setShapeStyle(item, {"stroke": lineColor});
-        });
-    },
-
-    /**
-     * 메뉴 : 선택된 Shape 들의 Line Type 을 설정한다.
-     *
-     * @param {String} lineType ['straight' | 'plain' | 'bezier']
-     */
-    setLineTypeSelectedShape: function (lineType) {
-        var me = this, guide;
-        $(me._RENDERER.getRootElement()).find("[_type=" + OG.Constants.NODE_TYPE.SHAPE + "][_shape=" + OG.Constants.SHAPE_TYPE.EDGE + "][_selected=true]").each(function (idx, edge) {
-            OG.Util.apply(edge.shape.geom.style.map, {"edge-type": lineType});
-            edge.shapeStyle = edge.shapeStyle || {};
-            OG.Util.apply(edge.shapeStyle, {"edge-type": lineType});
-
-            me._RENDERER.redrawEdge(edge);
-
-            me._RENDERER.removeGuide(edge);
-            guide = me._RENDERER.drawGuide(edge);
-            me.setResizable(edge, guide, me._isResizable(edge.shape));
-            me.setConnectable(edge, guide, me._isConnectable(edge.shape));
-            me._RENDERER.toFront(guide.group);
         });
     },
 
@@ -27411,35 +26466,171 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
          * 디폴트 스타일 정의
          */
         DEFAULT_STYLE: {
-            SHAPE         : { cursor: "default" },
-            GEOM          : { stroke: "black", "fill-r": ".5", "fill-cx": ".5", "fill-cy": ".5", fill: "white", "fill-opacity": 0, "label-position": "center"  },
-            TEXT          : { stroke: "none", "text-anchor": "middle" },
-            HTML          : { "label-position": "bottom", "text-anchor": "middle", "vertical-align": "top" },
-            IMAGE         : { "label-position": "bottom", "text-anchor": "middle", "vertical-align": "top" },
-            EDGE          : { stroke: "black", fill: "none", "fill-opacity": 0, "stroke-width": 1.5, "stroke-opacity": 1, "edge-type": "plain", "edge-direction": "c c", "arrow-start": "diamond", "arrow-end": "none", "stroke-dasharray": "", "label-position": "center", "stroke-linejoin" : "round" ,cursor: "pointer"},
-            EDGE_SHADOW   : { stroke: "#00FF00", fill: "none", "fill-opacity": 0, "stroke-width": 1, "stroke-opacity": 1, "arrow-start": "none", "arrow-end": "none", "stroke-dasharray": "- ", "edge-type": "plain" ,cursor: "pointer"},
-            EDGE_HIDDEN   : { stroke: "white", fill: "none", "fill-opacity": 0, "stroke-width": 10, "stroke-opacity": 0, cursor: "pointer"},
-            GROUP         : { stroke: "black", fill: "none", "fill-opacity": 0, "label-position": "bottom", "text-anchor": "middle", "vertical-align": "top" },
-            GROUP_HIDDEN  : { stroke: "black", fill: "white", "fill-opacity" :0 , "stroke-opacity": 0 , cursor: "move" },
-            GROUP_SHADOW  : { stroke: "white", fill: "none", "fill-opacity": 0, "stroke-width": 15, "stroke-opacity": 0, cursor: "pointer"},
-            GROUP_SHADOW_MAPPER  : { stroke: "white", fill: "none", "fill-opacity": 0, "stroke-width": 1, "stroke-opacity": 0, cursor: "pointer"},
-            GUIDE_BBOX    : { stroke: "#00FF00", fill: "white", "fill-opacity" :0, "stroke-dasharray": "- ", "shape-rendering": "crispEdges" , cursor: "move"},
-            GUIDE_UL      : { stroke: "#03689a", fill: "#03689a", "fill-opacity" :0.5, cursor: "nwse-resize", "shape-rendering": "crispEdges" },
-            GUIDE_UR      : { stroke: "#03689a", fill: "#03689a", "fill-opacity" :0.5, cursor: "nesw-resize", "shape-rendering": "crispEdges" },
-            GUIDE_LL      : { stroke: "#03689a", fill: "#03689a", "fill-opacity" :0.5, cursor: "nesw-resize", "shape-rendering": "crispEdges" },
-            GUIDE_LR      : { stroke: "#03689a", fill: "#03689a", "fill-opacity" :0.5, cursor: "nwse-resize", "shape-rendering": "crispEdges" },
-            GUIDE_LC      : { stroke: "#03689a", fill: "#03689a", "fill-opacity" :0.5, cursor: "ew-resize", "shape-rendering": "crispEdges" },
-            GUIDE_UC      : { stroke: "black", fill: "#03689a", "fill-opacity" :0.5, cursor: "ns-resize", "shape-rendering": "crispEdges" },
-            GUIDE_RC      : { stroke: "black", fill: "#03689a", "fill-opacity" :0.5, cursor: "ew-resize", "shape-rendering": "crispEdges" },
-            GUIDE_LWC     : { stroke: "black", fill: "#03689a", "fill-opacity" :0.5, cursor: "ns-resize", "shape-rendering": "crispEdges" },
-            GUIDE_FROM    : { stroke: "black", fill: "#00FF00", cursor: "move", "shape-rendering": "crispEdges" },
-            GUIDE_TO      : { stroke: "black", fill: "#00FF00", cursor: "move", "shape-rendering": "crispEdges" },
-            GUIDE_CTL_H   : { stroke: "black", fill: "#00FF00", cursor: "ew-resize", "shape-rendering": "crispEdges" },
-            GUIDE_CTL_V   : { stroke: "black", fill: "#00FF00", cursor: "ns-resize", "shape-rendering": "crispEdges" },
-            GUIDE_SHADOW  : { stroke: "black", fill: "none", "stroke-dasharray": "- ", "shape-rendering": "crispEdges" },
-            GUIDE_LINE    : { stroke: "black", fill: "none", "fill-opacity": 0, "stroke-width": 1.2, "stroke-opacity": 1, "stroke-dasharray": "", "arrow-end": "block", "stroke-linejoin" : "round" ,cursor: "pointer"},
-            GUIDE_VIRTUAL_EDGE    : { stroke: "black", fill: "none", "fill-opacity": 0, "stroke-width": 1, "stroke-opacity": 1, "stroke-dasharray": "- ", "stroke-linejoin" : "round", "arrow-start": "none", "arrow-end": "none"},
-            GUIDE_LINE_AREA : {
+            SHAPE: {cursor: "default"},
+            GEOM: {
+                stroke: "black",
+                "fill-r": ".5",
+                "fill-cx": ".5",
+                "fill-cy": ".5",
+                fill: "white",
+                "fill-opacity": 0,
+                "label-position": "center"
+            },
+            TEXT: {stroke: "none", "text-anchor": "middle"},
+            HTML: {"label-position": "bottom", "text-anchor": "middle", "vertical-align": "top"},
+            IMAGE: {"label-position": "bottom", "text-anchor": "middle", "vertical-align": "top"},
+            EDGE: {
+                stroke: "black",
+                fill: "none",
+                "fill-opacity": 0,
+                "stroke-width": 1.5,
+                "stroke-opacity": 1,
+                "edge-type": "plain",
+                "edge-direction": "c c",
+                "arrow-start": "diamond",
+                "arrow-end": "none",
+                "stroke-dasharray": "",
+                "label-position": "center",
+                "stroke-linejoin": "round",
+                cursor: "pointer"
+            },
+            EDGE_SHADOW: {
+                stroke: "#00FF00",
+                fill: "none",
+                "fill-opacity": 0,
+                "stroke-width": 1,
+                "stroke-opacity": 1,
+                "arrow-start": "none",
+                "arrow-end": "none",
+                "stroke-dasharray": "- ",
+                "edge-type": "plain",
+                cursor: "pointer"
+            },
+            EDGE_HIDDEN: {
+                stroke: "white",
+                fill: "none",
+                "fill-opacity": 0,
+                "stroke-width": 10,
+                "stroke-opacity": 0,
+                cursor: "pointer"
+            },
+            GROUP: {
+                stroke: "black",
+                fill: "none",
+                "fill-opacity": 0,
+                "label-position": "bottom",
+                "text-anchor": "middle",
+                "vertical-align": "top"
+            },
+            GROUP_HIDDEN: {stroke: "black", fill: "white", "fill-opacity": 0, "stroke-opacity": 0, cursor: "move"},
+            GROUP_SHADOW: {
+                stroke: "white",
+                fill: "none",
+                "fill-opacity": 0,
+                "stroke-width": 15,
+                "stroke-opacity": 0,
+                cursor: "pointer"
+            },
+            GROUP_SHADOW_MAPPER: {
+                stroke: "white",
+                fill: "none",
+                "fill-opacity": 0,
+                "stroke-width": 1,
+                "stroke-opacity": 0,
+                cursor: "pointer"
+            },
+            GUIDE_BBOX: {
+                stroke: "#00FF00",
+                fill: "white",
+                "fill-opacity": 0,
+                "stroke-dasharray": "- ",
+                "shape-rendering": "crispEdges",
+                cursor: "move"
+            },
+            GUIDE_UL: {
+                stroke: "#03689a",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "nwse-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_UR: {
+                stroke: "#03689a",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "nesw-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_LL: {
+                stroke: "#03689a",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "nesw-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_LR: {
+                stroke: "#03689a",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "nwse-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_LC: {
+                stroke: "#03689a",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "ew-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_UC: {
+                stroke: "black",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "ns-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_RC: {
+                stroke: "black",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "ew-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_LWC: {
+                stroke: "black",
+                fill: "#03689a",
+                "fill-opacity": 0.5,
+                cursor: "ns-resize",
+                "shape-rendering": "crispEdges"
+            },
+            GUIDE_FROM: {stroke: "black", fill: "#00FF00", cursor: "move", "shape-rendering": "crispEdges"},
+            GUIDE_TO: {stroke: "black", fill: "#00FF00", cursor: "move", "shape-rendering": "crispEdges"},
+            GUIDE_CTL_H: {stroke: "black", fill: "#00FF00", cursor: "ew-resize", "shape-rendering": "crispEdges"},
+            GUIDE_CTL_V: {stroke: "black", fill: "#00FF00", cursor: "ns-resize", "shape-rendering": "crispEdges"},
+            GUIDE_SHADOW: {stroke: "black", fill: "none", "stroke-dasharray": "- ", "shape-rendering": "crispEdges"},
+            GUIDE_LINE: {
+                stroke: "black",
+                fill: "none",
+                "fill-opacity": 0,
+                "stroke-width": 1.2,
+                "stroke-opacity": 1,
+                "stroke-dasharray": "",
+                "arrow-end": "block",
+                "stroke-linejoin": "round",
+                cursor: "pointer"
+            },
+            GUIDE_VIRTUAL_EDGE: {
+                stroke: "black",
+                fill: "none",
+                "fill-opacity": 0,
+                "stroke-width": 1,
+                "stroke-opacity": 1,
+                "stroke-dasharray": "- ",
+                "stroke-linejoin": "round",
+                "arrow-start": "none",
+                "arrow-end": "none"
+            },
+            GUIDE_LINE_AREA: {
                 stroke: "#ffffff",
                 fill: "#ffffff",
                 "fill-opacity": 0.1,
@@ -27447,16 +26638,32 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
                 "stroke-opacity": 0.2,
                 cursor: "pointer"
             },
-            RUBBER_BAND   : { stroke: "#0000FF", opacity: 0.2, fill: "#0077FF" },
-            TERMINAL      : { stroke: "#03689A", "stroke-width": 0, fill: "r(0.5, 0.5)#FFFFFF-#03689A", "fill-opacity": 0.4, cursor: "pointer" },
-            TERMINAL_OVER : { stroke: "#0077FF", "stroke-width": 0, fill: "r(0.5, 0.5)#FFFFFF-#0077FF", "fill-opacity": 1, cursor: "pointer" },
-            TERMINAL_BBOX : { stroke: "none", fill: "white", "fill-opacity": 0 },
-            DROP_OVER_BBOX: { stroke: "#0077FF", fill: "none", opacity: 0.3, "shape-rendering": "crispEdges" },
-            LABEL         : { "font-size": 12, "font-color": "black", "fill": "white" },
-            LABEL_EDITOR  : { position: "absolute", overflow: "visible", resize: "none", "text-align": "center", display: "block", padding: 0 },
-            COLLAPSE      : { stroke: "black", fill: "none", "fill-opacity": 0, cursor: "pointer", "shape-rendering": "crispEdges" },
-            COLLAPSE_BBOX : { stroke: "none", fill: "none", "fill-opacity": 0 },
-            BUTTON        : { stroke: "#9FD7FF", fill: "white", "fill-opacity": 0, cursor: "pointer", "shape-rendering": "crispEdges" },
+            RUBBER_BAND: {stroke: "#0000FF", opacity: 0.2, fill: "#0077FF"},
+            DROP_OVER_BBOX: {stroke: "#0077FF", fill: "none", opacity: 0.3, "shape-rendering": "crispEdges"},
+            LABEL: {"font-size": 12, "font-color": "black", "fill": "white"},
+            LABEL_EDITOR: {
+                position: "absolute",
+                overflow: "visible",
+                resize: "none",
+                "text-align": "center",
+                display: "block",
+                padding: 0
+            },
+            COLLAPSE: {
+                stroke: "black",
+                fill: "none",
+                "fill-opacity": 0,
+                cursor: "pointer",
+                "shape-rendering": "crispEdges"
+            },
+            COLLAPSE_BBOX: {stroke: "none", fill: "none", "fill-opacity": 0},
+            BUTTON: {
+                stroke: "#9FD7FF",
+                fill: "white",
+                "fill-opacity": 0,
+                cursor: "pointer",
+                "shape-rendering": "crispEdges"
+            },
             CONNECT_GUIDE_EVENT_AREA: {
                 stroke: "#ffffff",
                 fill: "none",
@@ -27489,12 +26696,12 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
                 h: 10
             },
             CONNECTABLE_HIGHLIGHT: {
-                "stroke-width": 2,
+                "stroke-width": 2
             },
             NOT_CONNECTABLE_HIGHLIGHT: {
                 fill: "#FAAFBE",
                 "fill-opacity": 0.5
-            },
+            }
         }
     };
 
@@ -27640,7 +26847,7 @@ OG.graph.Canvas.prototype = {
             this._HANDLER.enableDragAndDropGroup(element);
         }
 
-        if(element.shape.HaveButton){   // + 버튼을 만들기 위해서
+        if (element.shape.HaveButton) {   // + 버튼을 만들기 위해서
             this._HANDLER.enableButton(element);
         }
 
@@ -27658,21 +26865,21 @@ OG.graph.Canvas.prototype = {
         element = me.drawShape(position, shape, [90, 22 + (input * 20)], style, id);
         envelope = element.shape.geom.getBoundary();
 
-        for(i=0; i<input; i++){
+        for (i = 0; i < input; i++) {
             textShape = new OG.shape.bpmn.M_Text('in' + (i + 1));
             textElement = me.drawShape([envelope.getUpperLeft().x + 25, envelope.getUpperLeft().y + (i * 20) + 30], textShape, [50, 20]);
             element.appendChild(textElement);
             toShape = new OG.shape.To();
-            toElement = me.drawShape([envelope.getUpperLeft().x + 10, envelope.getUpperLeft().y + (i * 20) + 30], toShape, [5, 5], {"r":5});
+            toElement = me.drawShape([envelope.getUpperLeft().x + 10, envelope.getUpperLeft().y + (i * 20) + 30], toShape, [5, 5], {"r": 5});
             element.appendChild(toElement);
         }
 
-        for(i=0; i<output; i++){
+        for (i = 0; i < output; i++) {
             textShape = new OG.shape.bpmn.M_Text('out' + (i + 1));
             textElement = me.drawShape([envelope.getUpperRight().x - 30, envelope.getUpperRight().y + (i * 20) + 30], textShape, [50, 20]);
             element.appendChild(textElement);
             fromShape = new OG.shape.From();
-            fromElement = me.drawShape([envelope.getUpperRight().x - 10, envelope.getUpperRight().y + (i * 20) + 30], fromShape, [5, 5], {"r":5});
+            fromElement = me.drawShape([envelope.getUpperRight().x - 10, envelope.getUpperRight().y + (i * 20) + 30], fromShape, [5, 5], {"r": 5});
             element.appendChild(fromElement);
         }
     },
@@ -27728,16 +26935,16 @@ OG.graph.Canvas.prototype = {
      * @return {Element} 연결된 Edge 엘리먼트
      */
     connect: function (fromElement, toElement, style, label) {
-        var fromTerminal, toTerminal, edge, guide;
+        var fromTerminal, toTerminal, edge, fromPosition, toPosition;
 
         // from Shape 디폴트 터미널
         fromTerminal = this._RENDERER.createDefaultTerminalString(fromElement);
 
         toTerminal = this._RENDERER.createDefaultTerminalString(toElement);
 
-        var fromPosition = this._RENDERER._getPositionFromTerminal(fromTerminal);
+        fromPosition = this._RENDERER._getPositionFromTerminal(fromTerminal);
         fromPosition = [fromPosition.x, fromPosition.y];
-        var toPosition = this._RENDERER._getPositionFromTerminal(toTerminal);
+        toPosition = this._RENDERER._getPositionFromTerminal(toTerminal);
         toPosition = [toPosition.x, toPosition.y];
 
         // draw edge
@@ -27767,24 +26974,24 @@ OG.graph.Canvas.prototype = {
      * @param {String} label Label
      * @return {Element} 연결된 Edge 엘리먼트
      */
-    connectWithTerminalId: function (fromTerminal, toTerminal, style, label, id, shapeId , geom) {
-        var vertices, edge, guide;
+    connectWithTerminalId: function (fromTerminal, toTerminal, style, label, id, shapeId, geom) {
+        var vertices, edge, fromPosition, toPosition, fromto, shape;
 
-        var fromPosition = this._RENDERER._getPositionFromTerminal(fromTerminal);
+        fromPosition = this._RENDERER._getPositionFromTerminal(fromTerminal);
         fromPosition = [fromPosition.x, fromPosition.y];
-        var toPosition = this._RENDERER._getPositionFromTerminal(toTerminal);
+        toPosition = this._RENDERER._getPositionFromTerminal(toTerminal);
         toPosition = [toPosition.x, toPosition.y];
 
 
-        if(!geom){
-            vertices = [fromPosition,toPosition];
-        }else{
+        if (!geom) {
+            vertices = [fromPosition, toPosition];
+        } else {
             vertices = geom.vertices;
         }
 
 
-        var fromto = JSON.stringify(vertices[0]) + ',' + JSON.stringify(vertices[vertices.length - 1]);
-        var shape = eval('new ' + shapeId + '(' + fromto + ')');
+        fromto = JSON.stringify(vertices[0]) + ',' + JSON.stringify(vertices[vertices.length - 1]);
+        shape = eval('new ' + shapeId + '(' + fromto + ')');
         if (label) {
             shape.label = label;
         }
@@ -28354,9 +27561,10 @@ OG.graph.Canvas.prototype = {
                     cell: []
                 }
             },
-            childShape;
+            childShape, NodeToCell, i,
+            groupNodes, cellMap;
 
-        var NodeToCell = function(item){
+        NodeToCell = function (item) {
             var shape = item.shape,
                 style = item.shapeStyle,
                 geom = shape.geom,
@@ -28425,7 +27633,7 @@ OG.graph.Canvas.prototype = {
             } else if (shape instanceof OG.shape.EdgeShape) {
                 vertices = geom.getVertices();
                 cell['@value'] = '';
-                for (var i = 0; i < vertices.length; i++) {
+                for (i = 0; i < vertices.length; i++) {
                     cell['@value'] = cell['@value'] + vertices[i];
                     if (i < vertices.length - 1) {
                         cell['@value'] = cell['@value'] + ','
@@ -28456,17 +27664,18 @@ OG.graph.Canvas.prototype = {
             return cell;
         };
 
-        var groupNodes = [], cellMap = {};
+        groupNodes = [];
+        cellMap = {};
 
         // check scope activity
-        var CheckParentFromArea = function(groupNodes){
+        var CheckParentFromArea = function (groupNodes) {
             //get area
             var groupNode, groupId,
                 childNodes, childNode, childGroupNode,
                 filteredChildNode, filteredChildNodes
-            i=0,n=groupNodes.length;
+            i = 0, n = groupNodes.length;
 
-            for(;i<n;i++){
+            for (; i < n; i++) {
 
 
                 groupNode = groupNodes[i];
@@ -28480,11 +27689,11 @@ OG.graph.Canvas.prototype = {
                     groupNode.shape.geom.getBoundary());
                 delete childNodes[groupId];
 
-                for(var childNodeKey in childNodes){
+                for (var childNodeKey in childNodes) {
 
                     childNode = childNodes[childNodeKey];
 
-                    if(childNode.shape instanceof OG.shape.bpmn.ScopeActivity){
+                    if (childNode.shape instanceof OG.shape.bpmn.ScopeActivity) {
                         childGroupNode = childNode;
 
                         filteredChildNodes = CANVAS._RENDERER.getElementMapByBBox(
@@ -28495,27 +27704,26 @@ OG.graph.Canvas.prototype = {
                 }
 
                 //remove filterd child nodes from child node
-                for(var fcKey in filteredChildNodes){
+                for (var fcKey in filteredChildNodes) {
                     filteredChildNode = filteredChildNodes[fcKey];
                     delete childNodes[$(filteredChildNode).attr('id')];
                 }
 
                 //set child parent
-                for(var childNodeKey in childNodes){
+                for (var childNodeKey in childNodes) {
                     childNode = childNodes[childNodeKey];
 
-                    if(childNode.shape instanceof OG.shape.HorizontalLaneShape
-                        || childNode.shape instanceof OG.shape.VerticalLaneShape){
+                    if (childNode.shape instanceof OG.shape.HorizontalLaneShape
+                        || childNode.shape instanceof OG.shape.VerticalLaneShape) {
                         // no operation
-                    }else{
-                        if(childNode.shape instanceof OG.shape.EdgeShape){
-                            if( ($(childNode).attr("_from") + "").indexOf(groupId) < 0
-                                && ($(childNode).attr("_to") + "").indexOf(groupId) < 0 )
-                            {
+                    } else {
+                        if (childNode.shape instanceof OG.shape.EdgeShape) {
+                            if (($(childNode).attr("_from") + "").indexOf(groupId) < 0
+                                && ($(childNode).attr("_to") + "").indexOf(groupId) < 0) {
                                 cellMap[$(childNode).attr('id')]['@parent'] = groupId;
                                 cellMap[groupId]['@childs'].push($(childNode).attr('id'));
                             }
-                        }else{
+                        } else {
                             cellMap[$(childNode).attr('id')]['@parent'] = groupId;
                             cellMap[groupId]['@childs'].push($(childNode).attr('id'));
                         }
@@ -28525,13 +27733,13 @@ OG.graph.Canvas.prototype = {
         };
 
         var swimlaneNodes = [];
-        var CheckRoleFromArea = function(swimlaneNodes){
+        var CheckRoleFromArea = function (swimlaneNodes) {
             //get area
             var swimlaneNode, swimlaneId,
                 childNodes, childNode,
-                i=0,n=swimlaneNodes.length;
+                i = 0, n = swimlaneNodes.length;
 
-            for(;i<n;i++){
+            for (; i < n; i++) {
                 swimlaneNode = swimlaneNodes[i];
                 swimlaneId = $(swimlaneNode).attr('id');
 
@@ -28540,9 +27748,9 @@ OG.graph.Canvas.prototype = {
 
                 delete childNodes[swimlaneId];
 
-                for(var childNodeKey in childNodes){
+                for (var childNodeKey in childNodes) {
                     childNode = childNodes[childNodeKey];
-                    if(childNode.shape instanceof OG.shape.bpmn.A_Task){
+                    if (childNode.shape instanceof OG.shape.bpmn.A_Task) {
                         cellMap[$(childNode).attr('id')]['@swimlane'] = swimlaneId;
                     }
                 }
@@ -28563,12 +27771,12 @@ OG.graph.Canvas.prototype = {
                     nextShapeIds;
 
                 // gathering Group
-                if(item.shape instanceof OG.shape.bpmn.ScopeActivity){
+                if (item.shape instanceof OG.shape.bpmn.ScopeActivity) {
                     groupNodes.push(item);
                 }
 
-                if(item.shape instanceof OG.shape.HorizontalLaneShape
-                    || item.shape instanceof OG.shape.VerticalLaneShape){
+                if (item.shape instanceof OG.shape.HorizontalLaneShape
+                    || item.shape instanceof OG.shape.VerticalLaneShape) {
                     swimlaneNodes.push(item);
                 }
 
@@ -28639,7 +27847,7 @@ OG.graph.Canvas.prototype = {
         var canvasWidth, canvasHeight, rootGroup,
             minX = Number.MAX_VALUE, minY = Number.MAX_VALUE, maxX = Number.MIN_VALUE, maxY = Number.MIN_VALUE,
             i, cell, shape, id, parent, shapeType, shapeId, x, y, width, height, style, geom, from, to,
-            fromEdge, toEdge, label, fromLabel, toLabel, angle, value, data, dataExt, element,loopType, taskType, swimlane;
+            fromEdge, toEdge, label, fromLabel, toLabel, angle, value, data, dataExt, element, loopType, taskType, swimlane;
 
         this._RENDERER.clear();
 
@@ -28701,13 +27909,13 @@ OG.graph.Canvas.prototype = {
                             shape.label = label;
                         }
                         element = this.drawShape([x, y], shape, [width, height], OG.JSON.decode(style), id, null, false);
-                        if(element.shape instanceof OG.shape.bpmn.A_Task){
+                        if (element.shape instanceof OG.shape.bpmn.A_Task) {
                             element.shape.LoopType = loopType;
                             element.shape.TaskType = taskType;
                         }
                         break;
                     case OG.Constants.SHAPE_TYPE.EDGE:
-                        var list = JSON.parse('[' + value+ ']');
+                        var list = JSON.parse('[' + value + ']');
                         var fromto = JSON.stringify(list[0]) + ',' + JSON.stringify(list[list.length - 1]);
                         shape = eval('new ' + shapeId + '(' + fromto + ')');
                         if (label) {
