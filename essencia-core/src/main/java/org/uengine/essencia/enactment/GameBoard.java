@@ -42,8 +42,10 @@ public class GameBoard {
 
                 alpha1 = alphaInstance.getLanguageElement();
 
-                if(alphaInstance instanceof AlphaInstance)
-                    ((AlphaInstance)alphaInstance).aggregateStateDetails(instance);
+                if(alphaInstance instanceof AlphaInstance) {
+                    ((AlphaInstance) alphaInstance).aggregateStateDetails(instance);
+                    ((AlphaInstance) alphaInstance).calculateState();
+                }
 
                 alphaInstancesMap.put(pv.getName(), alpha1.getInstances(instance));
 

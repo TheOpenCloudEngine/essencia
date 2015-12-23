@@ -87,6 +87,7 @@ public class Criterion extends LanguageElement {
             List<AlphaInstance> alphaInstances =  alpha.getInstances(instance);
 
             try {
+                if(alphaInstances!=null)
                 for (AlphaInstance alphaInstance : alphaInstances) {
                     if(alphaInstance!=null) {
                         alphaInstance.calculateState();
@@ -105,6 +106,7 @@ public class Criterion extends LanguageElement {
             ProcessVariableValue pvv = new ProcessVariableValue();
             pvv.setName(alpha.getName());
 
+            if(alphaInstances!=null)
             for (AlphaInstance alphaInstance : alphaInstances) {
                 pvv.setValue(alphaInstance);
                 pvv.moveToAdd();

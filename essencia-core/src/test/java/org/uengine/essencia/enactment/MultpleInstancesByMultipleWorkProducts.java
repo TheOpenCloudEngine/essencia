@@ -450,15 +450,15 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
 
         //checking checkpoints currently reached state
-        {
-            AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
-
-            for(CheckPoint point : alphaBacklog.getStates().get(0).getCheckPoints()){
-                alphaInstanceOfSub1.setChecked(point.getName());
-
-                //point.setChecked(alphaInstanceOfSub1);
-            }
-        }
+//        {
+//            AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
+//
+//            for(CheckPoint point : alphaBacklog.getStates().get(0).getCheckPoints()){
+//                alphaInstanceOfSub1.setChecked(point.getName());
+//
+//                //point.setChecked(alphaInstanceOfSub1);
+//            }
+//        }
 
 
         //Now, it should be completable
@@ -468,7 +468,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
         sprint1 = sprint.createObjectInstance();
         sprint1.setId("sprint1");
-        sprint1.setAttribute("iteration", 1);
+        sprint1.setAttribute("iteration", 11);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint1));
 
@@ -483,21 +483,21 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         instance.setExecutionScope("1");
 
         //checking checkpoints currently reached state
-        {
-            AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
-
-            for(CheckPoint point : alphaBacklog.getStates().get(1).getCheckPoints()){
-                alphaInstanceOfSub1.setChecked(point.getName());
-
-                //point.setChecked(alphaInstanceOfSub1);
-            }
-        }
+//        {
+//            AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
+//
+//            for(CheckPoint point : alphaBacklog.getStates().get(1).getCheckPoints()){
+//                alphaInstanceOfSub1.setChecked(point.getName());
+//
+//                //point.setChecked(alphaInstanceOfSub1);
+//            }
+//        }
 
         resultPayload = new ResultPayload();
 
         sprint2 = sprint.createObjectInstance();
         sprint2.setId("sprint2");
-        sprint2.setAttribute("iteration", 2);
+        sprint2.setAttribute("iteration", 12);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint2));
 
@@ -513,21 +513,21 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         instance.setExecutionScope("2");
 
         //checking checkpoints currently reached state
-        {
-            AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
-
-            for (CheckPoint point : alphaBacklog.getStates().get(2).getCheckPoints()) {
-                alphaInstanceOfSub1.setChecked(point.getName());
-
-                //point.setChecked(alphaInstanceOfSub1);
-            }
-        }
+//        {
+//            AlphaInstance alphaInstanceOfSub1 = alphaBacklog.getInstances(instance).get(0);
+//
+//            for (CheckPoint point : alphaBacklog.getStates().get(2).getCheckPoints()) {
+//                alphaInstanceOfSub1.setChecked(point.getName());
+//
+//                //point.setChecked(alphaInstanceOfSub1);
+//            }
+//        }
 
         resultPayload = new ResultPayload();
 
         sprint3 = sprint.createObjectInstance();
         sprint3.setId("sprint3");
-        sprint3.setAttribute("iteration", 3);
+        sprint3.setAttribute("iteration", 13);
 
         resultPayload.setProcessVariableChange(new KeyedParameter(sprint.getName(), sprint3));
 
@@ -539,16 +539,24 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         }, instance);
 
 
-        List<AlphaInstance> alphaInstanceList = alphaBacklog.getInstances(instance);
+        instance.setExecutionScope(null);
 
-        for(AlphaInstance alphaInstance : alphaInstanceList){
-            System.out.println(alphaInstance.getId()+":  "+ alphaInstance.getCurrentStateName());
-        }
+
+//        List<AlphaInstance> alphaInstanceList = alphaBacklog.getInstances(instance);
+//
+//        for(AlphaInstance alphaInstance : alphaInstanceList){
+//            System.out.println(alphaInstance.getId()+":  "+ alphaInstance.getCurrentStateName());
+//        }
+
+        int[] mustBeIterationValues = {11,12,13};
+        int i = 0;
 
         List<? extends LanguageElementInstance> sprintInstances = sprint.getInstances(instance);
 
         for(LanguageElementInstance sprintInstance : sprintInstances){
             System.out.println(sprintInstance.getId()+":  "+ sprintInstance.getAttribute("iteration"));
+
+            assertEquals(sprintInstance.getAttribute("iteration"), mustBeIterationValues[i++]);
         }
 
 

@@ -88,7 +88,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
 //        alphaInstance.setAttributeValues(getAttributeValues());
 
 
-        if(alphaInstance.getCurrentState()!=null && getCheckPointInstanceGroups()!=null){
+        if(getCheckPointInstanceGroups()!=null){
             for(CheckPointInstanceGroup group : getCheckPointInstanceGroups()) {
                 for (CheckPointInstance checkPointInstance : group.getCheckPointInstanceList()) {
                     alphaInstance.setChecked(checkPointInstance.getCheckPoint().getName(), checkPointInstance.isChecked());
