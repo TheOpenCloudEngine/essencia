@@ -85,6 +85,8 @@ public class EssenceActivity extends HumanActivity {
             ParameterContext parameterContext = addingParameterContexts.get(i);
 
             boolean found = false;
+
+            if(getActivityInEssenceDefinition().getCompletionCriteria()!=null)
             for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getCompletionCriteria()) {
 
                 Criterion criterion = (Criterion) completionCriterion_;
@@ -95,6 +97,8 @@ public class EssenceActivity extends HumanActivity {
                     break;
                 }
             }
+
+            if(getActivityInEssenceDefinition().getEntryCriteria()!=null)
             for (LanguageElement completionCriterion_ : getActivityInEssenceDefinition().getEntryCriteria()) {
 
                 Criterion criterion = (Criterion) completionCriterion_;

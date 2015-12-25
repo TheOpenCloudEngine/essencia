@@ -1,92 +1,21 @@
 <%var alpha = value.alpha;%>
 
 <H1> <%=alpha.name%></h1>
-<%var alphaInstanceList = value.alphaInstances[alpha.name];%>
-    <table class="table table-striped active">
-        <tr>
-            <td>Id</td>
-        <%
-            if(alpha.states){
-                for(var i in alpha.states){
-                    var state = alpha.states[i];
-                    %><td><%=state.name%></td><%
-
-                }
-            }else if(alpha.levelOfDetails){
-                for(var i in alpha.levelOfDetails){
-                    var levelOfDetail = alpha.levelOfDetails[i];
-                    %><td><%=levelOfDetail.name%></td><%
-
-                }
-            }
-        %>
-        </tr>
 
 
-        <%
 
-        for(var i in alphaInstanceList){
-            var alphaInstance = alphaInstanceList[i];
-
-            if(alphaInstance && alphaInstance.alphaInstance){
-                alphaInstance = alphaInstance.alphaInstance;
-            }
-
-            %><tr><td><%=alphaInstance.id%></td><%
-
-            for(var j in alpha.states){
-
-                var state = alpha.states[j];
-
-                if(alphaInstance.currentStateName == state.name){
-                    %><td><div class="icon-rounded m-r-10 current tooltip-top"><i class="glyphicon glyphicon-ok workitem_btn current"></i></div><%
-                }else{
-                    %><td><%
-                }
-
-                if(alphaInstance.subAlphaInstanceCount>1){
-                    var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
-                    if(stateDetails){
-
-                       // var max = 256;
-
-
-                        %><font color="blue"><b><%=stateDetails['WIPCount']%>/<%=alphaInstance.subAlphaInstanceCount%></b></font><%
-                    }
-                }
-                %></td><%
-            }
-
-            %></tr><%
-        }
-        %>
-    </table>
+<%=fields.alphaInstances.here()%>
 
 
     <%
 
     if(alpha.outgoingRelations){
 
-    %><table height='10px'><td width=20px><div onclick="$(event.target).closest('table').css('height', '100%')"></div></td><td><%
-        for(var i in alpha.outgoingRelations){
+    %><table height='10px'><td width=20px><div onclick="$(event.target).closest('table').css('height', '100%')"></div></td><td>
 
-            var outgoingRelation = alpha.outgoingRelations[i];
+        <%=fields.childAlphaGameBoards.here()%>
 
-            if(outgoingRelation.targetElement && mw3.isSuperClassOf('org.uengine.essencia.model.Alpha', outgoingRelation.targetElement.__className)){
-                var childAlpha = outgoingRelation.targetElement;
-
-                var childGameBoard = {
-                    __className: "org.uengine.essencia.enactment.AlphaGameBoard",
-                    alphaInstances:  value.alphaInstances,
-                    alpha: childAlpha
-                };
-
-                %><%=mw3.locateObject(childGameBoard)%><%
-            }
-        }
-
-
-        %></td></table><%
+    </td></table><%
     }
 
 %>

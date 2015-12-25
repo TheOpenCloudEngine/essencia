@@ -29,7 +29,7 @@ public class GameBoard {
 
         ProcessDefinition processDefinition = instance.getProcessDefinition();
         setAlphaGameBoards(new ArrayList<AlphaGameBoard>());
-        Map<String, List<? extends LanguageElementInstance>> alphaInstancesMap = new HashMap<String, List<? extends LanguageElementInstance>>();
+        Map<String, List<AlphaInstanceInList>> alphaInstancesMap = new HashMap<String, List<AlphaInstanceInList>>();
 
         for(ProcessVariable pv : processDefinition.getProcessVariables()){
 
@@ -42,10 +42,12 @@ public class GameBoard {
 
                 alpha1 = alphaInstance.getLanguageElement();
 
-                if(alphaInstance instanceof AlphaInstance)
-                    ((AlphaInstance)alphaInstance).aggregateStateDetails(instance);
+                if(alphaInstance instanceof AlphaInstance) {
+                    ((AlphaInstance) alphaInstance).aggregateStateDetails(instance);
+                    ((AlphaInstance) alphaInstance).calculateState();
+                }
 
-                alphaInstancesMap.put(pv.getName(), alpha1.getInstances(instance));
+                alphaInstancesMap.put(pv.getName(), alpha1.getInstanceInLists(instance));
 
             }
         }
@@ -53,23 +55,29 @@ public class GameBoard {
 
         for(IElement element : practiceDefinition.getElementList()){
 
+
             if(element instanceof Alpha){
                 Alpha alpha = (Alpha)element;
-                List<AlphaInstance> alphaInstances = alpha.getInstances(instance);
+                List<AlphaInstanceInList> alphaInstanceInLists = alpha.getInstanceInLists(instance);
 
-                if(alphaInstances==null){
-                    alphaInstances = new ArrayList<AlphaInstance>();
-                    alphaInstances.add(alpha.createObjectInstance());
+                if(alphaInstanceInLists==null){
+                    alphaInstanceInLists = new ArrayList<AlphaInstanceInList>();
+                    alphaInstanceInLists.add(new AlphaInstanceInList(alpha.createObjectInstance(), instance, 0));
                 }
 
-                for(AlphaInstance alphaInstance : alphaInstances){
-                    alphaInstance.aggregateStateDetails(instance);
+                for(AlphaInstanceInList alphaInstanceInList : alphaInstanceInLists){
+                    ((AlphaInstance)alphaInstanceInList.getLanguageElementInstance()).aggregateStateDetails(instance);
                 }
 
 
-                alphaInstancesMap.put(alpha.getName(), alphaInstances);
+                alphaInstancesMap.put(alpha.getName(), alphaInstanceInLists);
 
             }
+
+        }
+
+
+        for(IElement element : practiceDefinition.getElementList()){
 
             if(element instanceof Practice){
 

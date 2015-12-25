@@ -1,6 +1,7 @@
 <org.uengine.essencia.enactment.EssenceProcessDefinition>
   <name>
     <text>이름없음</text>
+    <localedTexts/>
   </name>
   <cost>0</cost>
   <retryLimit>0</retryLimit>
@@ -12,10 +13,12 @@
   <childActivities>
     <org.uengine.kernel.bpmn.SubProcess>
       <parentActivity class="org.uengine.essencia.enactment.EssenceProcessDefinition" reference="../../.."/>
-      <name/>
+      <name>
+        <text>Sub</text>
+        <localedTexts/>
+      </name>
       <description>
         <text></text>
-        <localedTexts/>
       </description>
       <tracingTag>sub</tracingTag>
       <cost>0</cost>
@@ -44,10 +47,10 @@
           <parentActivity class="org.uengine.kernel.bpmn.SubProcess" reference="../../.."/>
           <name>
             <text>Working</text>
+            <localedTexts/>
           </name>
           <description>
             <text></text>
-            <localedTexts/>
           </description>
           <tracingTag>a2</tracingTag>
           <cost>0</cost>
@@ -62,7 +65,7 @@
             <org.uengine.kernel.ParameterContext>
               <multipleInput>false</multipleInput>
               <argument>
-                <text>Backlog</text>
+                <text>input Backlog</text>
                 <localedTexts/>
               </argument>
               <variable>
@@ -71,133 +74,199 @@
                 <typeClassName>org.uengine.essencia.enactment.AlphaInstance</typeClassName>
                 <askWhenInit>false</askWhenInit>
                 <defaultValue class="org.uengine.essencia.enactment.AlphaInstance">
-                  <id>backlog</id>
-                  <languageElement class="org.uengine.essencia.model.Alpha">
-                    <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+                  <classDefinition class="org.uengine.essencia.model.Alpha">
+                    <isInterface>false</isInterface>
+                    <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                    <designable>false</designable>
+                    <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+                      <org.uengine.uml.model.Attribute>
+                        <name>Id</name>
+                        <className>java.lang.String</className>
+                      </org.uengine.uml.model.Attribute>
+                      <org.uengine.uml.model.Attribute>
+                        <name>type</name>
+                        <className>java.lang.String</className>
+                      </org.uengine.uml.model.Attribute>
+                      <org.uengine.uml.model.Attribute>
+                        <name>parent</name>
+                        <className>java.lang.String</className>
+                      </org.uengine.uml.model.Attribute>
+                    </fieldDescriptors>
                     <name>
                       <text>Backlog</text>
                       <localedTexts/>
                     </name>
-                    <briefDescription/>
                     <description/>
+                    <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+                    <briefDescription/>
                     <isSuppressable>true</isSuppressable>
-                    <propertyList>
-                      <org.uengine.essencia.model.Property>
-                        <key>type</key>
-                        <type>java.lang.String</type>
-                      </org.uengine.essencia.model.Property>
-                      <org.uengine.essencia.model.Property>
-                        <key>parent</key>
-                        <type>java.lang.String</type>
-                      </org.uengine.essencia.model.Property>
-                    </propertyList>
                     <childElements>
                       <org.uengine.essencia.model.WorkProduct>
-                        <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+                        <isInterface>false</isInterface>
+                        <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                        <designable>false</designable>
+                        <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+                          <org.uengine.uml.model.Attribute>
+                            <name>Id</name>
+                            <className>java.lang.String</className>
+                          </org.uengine.uml.model.Attribute>
+                          <org.uengine.uml.model.Attribute>
+                            <name>duration</name>
+                            <className>java.lang.Long</className>
+                          </org.uengine.uml.model.Attribute>
+                          <org.uengine.uml.model.Attribute>
+                            <name>iteration</name>
+                            <className>java.lang.Integer</className>
+                          </org.uengine.uml.model.Attribute>
+                          <org.uengine.uml.model.Attribute>
+                            <name>startDate</name>
+                            <className>java.lang.String</className>
+                          </org.uengine.uml.model.Attribute>
+                          <org.uengine.uml.model.Attribute>
+                            <name>endDate</name>
+                            <className>java.lang.String</className>
+                          </org.uengine.uml.model.Attribute>
+                        </fieldDescriptors>
                         <name>
                           <text>Sprint</text>
                           <localedTexts/>
                         </name>
-                        <briefDescription/>
                         <description/>
+                        <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+                        <briefDescription/>
                         <isSuppressable>true</isSuppressable>
-                        <propertyList>
-                          <org.uengine.essencia.model.Property>
-                            <key>duration</key>
-                            <type>java.lang.Long</type>
-                          </org.uengine.essencia.model.Property>
-                          <org.uengine.essencia.model.Property>
-                            <key>iteration</key>
-                            <type>java.lang.Integer</type>
-                          </org.uengine.essencia.model.Property>
-                          <org.uengine.essencia.model.Property>
-                            <key>startDate</key>
-                            <type>java.lang.String</type>
-                          </org.uengine.essencia.model.Property>
-                          <org.uengine.essencia.model.Property>
-                            <key>endDate</key>
-                            <type>java.lang.String</type>
-                          </org.uengine.essencia.model.Property>
-                        </propertyList>
-                        <list>
+                        <levelOfDetails>
                           <org.uengine.essencia.model.LevelOfDetail>
-                            <isSuppressable>true</isSuppressable>
-                            <parentWorkProduct reference="../../.."/>
+                            <isInterface>false</isInterface>
+                            <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                            <designable>false</designable>
                             <name>
                               <text>draft</text>
-                              <localedTexts/>
                             </name>
+                            <description/>
+                            <isSuppressable>true</isSuppressable>
+                            <parentWorkProduct reference="../../.."/>
                             <isSufficientLevel>false</isSufficientLevel>
                           </org.uengine.essencia.model.LevelOfDetail>
                           <org.uengine.essencia.model.LevelOfDetail>
-                            <isSuppressable>true</isSuppressable>
-                            <parentWorkProduct reference="../../.."/>
+                            <isInterface>false</isInterface>
+                            <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                            <designable>false</designable>
                             <name>
                               <text>done</text>
                             </name>
+                            <description/>
+                            <isSuppressable>true</isSuppressable>
+                            <parentWorkProduct reference="../../.."/>
                             <isSufficientLevel>false</isSufficientLevel>
                           </org.uengine.essencia.model.LevelOfDetail>
-                        </list>
+                        </levelOfDetails>
                       </org.uengine.essencia.model.WorkProduct>
                     </childElements>
-                    <list>
+                    <states>
                       <org.uengine.essencia.model.State>
+                        <isInterface>false</isInterface>
+                        <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                        <designable>false</designable>
+                        <name>
+                          <text>Identified</text>
+                        </name>
+                        <description/>
                         <isSuppressable>true</isSuppressable>
-                        <name>Identified</name>
                         <parentAlpha reference="../../.."/>
-                        <list>
+                        <checkPoints>
                           <org.uengine.essencia.model.CheckPoint>
+                            <isInterface>false</isInterface>
+                            <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                            <designable>false</designable>
+                            <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+                              <org.uengine.uml.model.Attribute>
+                                <name>Id</name>
+                                <className>java.lang.String</className>
+                              </org.uengine.uml.model.Attribute>
+                            </fieldDescriptors>
+                            <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+                            <description defined-in="org.uengine.essencia.model.LanguageElement"/>
                             <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
-                            <name defined-in="org.uengine.essencia.model.BasicElement"/>
                             <briefDescription/>
-                            <description defined-in="org.uengine.essencia.model.BasicElement"/>
                             <isSuppressable>true</isSuppressable>
-                            <propertyList/>
                             <name>checkpoint1 of Identified</name>
                           </org.uengine.essencia.model.CheckPoint>
-                        </list>
+                        </checkPoints>
                       </org.uengine.essencia.model.State>
                       <org.uengine.essencia.model.State>
+                        <isInterface>false</isInterface>
+                        <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                        <designable>false</designable>
+                        <name>
+                          <text>Selected</text>
+                        </name>
+                        <description/>
                         <isSuppressable>true</isSuppressable>
-                        <name>Selected</name>
                         <parentAlpha reference="../../.."/>
-                        <list>
+                        <checkPoints>
                           <org.uengine.essencia.model.CheckPoint>
+                            <isInterface>false</isInterface>
+                            <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                            <designable>false</designable>
+                            <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+                              <org.uengine.uml.model.Attribute>
+                                <name>Id</name>
+                                <className>java.lang.String</className>
+                              </org.uengine.uml.model.Attribute>
+                            </fieldDescriptors>
+                            <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+                            <description defined-in="org.uengine.essencia.model.LanguageElement"/>
                             <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
-                            <name defined-in="org.uengine.essencia.model.BasicElement"/>
                             <briefDescription/>
-                            <description defined-in="org.uengine.essencia.model.BasicElement"/>
                             <isSuppressable>true</isSuppressable>
-                            <propertyList/>
                             <name>checkpoint1 of Selected</name>
                           </org.uengine.essencia.model.CheckPoint>
-                        </list>
+                        </checkPoints>
                       </org.uengine.essencia.model.State>
                       <org.uengine.essencia.model.State>
+                        <isInterface>false</isInterface>
+                        <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                        <designable>false</designable>
+                        <name>
+                          <text>Done</text>
+                        </name>
+                        <description/>
                         <isSuppressable>true</isSuppressable>
-                        <name>Done</name>
                         <parentAlpha reference="../../.."/>
-                        <list>
+                        <checkPoints>
                           <org.uengine.essencia.model.CheckPoint>
+                            <isInterface>false</isInterface>
+                            <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                            <designable>false</designable>
+                            <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+                              <org.uengine.uml.model.Attribute>
+                                <name>Id</name>
+                                <className>java.lang.String</className>
+                              </org.uengine.uml.model.Attribute>
+                            </fieldDescriptors>
+                            <name defined-in="org.uengine.essencia.model.LanguageElement"/>
+                            <description defined-in="org.uengine.essencia.model.LanguageElement"/>
                             <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
-                            <name defined-in="org.uengine.essencia.model.BasicElement"/>
                             <briefDescription/>
-                            <description defined-in="org.uengine.essencia.model.BasicElement"/>
                             <isSuppressable>true</isSuppressable>
-                            <propertyList/>
                             <name>checkpoint1 of Done</name>
                           </org.uengine.essencia.model.CheckPoint>
-                        </list>
+                        </checkPoints>
                       </org.uengine.essencia.model.State>
-                    </list>
-                  </languageElement>
-                  <attributeValues>
-                    <org.uengine.essencia.model.PropertyValue>
-                      <key>type</key>
-                      <value class="string">Backlog</value>
-                    </org.uengine.essencia.model.PropertyValue>
-                  </attributeValues>
-                  <currentStateName>Identified</currentStateName>
+                    </states>
+                  </classDefinition>
+                  <className>Backlog</className>
+                  <valueMap>
+                    <entry>
+                      <string>type</string>
+                      <string>Backlog</string>
+                    </entry>
+                  </valueMap>
+                  <metaworksContext>
+                    <when>edit</when>
+                  </metaworksContext>
+                  <id>backlog</id>
                   <checkedCheckpointNames/>
                   <stateDetailsByStateName/>
                   <subAlphaInstanceCount>0</subAlphaInstanceCount>
@@ -205,12 +274,21 @@
                 <isVolatile>false</isVolatile>
                 <isDatabaseSynchronized>false</isDatabaseSynchronized>
               </variable>
-              <direction>in-out</direction>
+              <direction>in</direction>
             </org.uengine.kernel.ParameterContext>
             <org.uengine.kernel.ParameterContext>
               <multipleInput>false</multipleInput>
               <argument>
-                <text>Sprint</text>
+                <text>output Backlog</text>
+                <localedTexts/>
+              </argument>
+              <variable reference="../../org.uengine.kernel.ParameterContext/variable"/>
+              <direction>out</direction>
+            </org.uengine.kernel.ParameterContext>
+            <org.uengine.kernel.ParameterContext>
+              <multipleInput>false</multipleInput>
+              <argument>
+                <text>output Sprint</text>
                 <localedTexts/>
               </argument>
               <variable>
@@ -219,24 +297,27 @@
                 <typeClassName>org.uengine.essencia.enactment.LanguageElementInstance</typeClassName>
                 <askWhenInit>false</askWhenInit>
                 <defaultValue class="org.uengine.essencia.enactment.WorkProductInstance">
+                  <className>Sprint</className>
+                  <valueMap>
+                    <entry>
+                      <string>startDate</string>
+                      <string></string>
+                    </entry>
+                    <entry>
+                      <string>iteration</string>
+                      <int>5</int>
+                    </entry>
+                  </valueMap>
+                  <metaworksContext>
+                    <when>edit</when>
+                  </metaworksContext>
                   <id>&lt;id&gt;</id>
-                  <languageElement class="org.uengine.essencia.model.WorkProduct" reference="../../../../org.uengine.kernel.ParameterContext/variable/defaultValue/languageElement/childElements/org.uengine.essencia.model.WorkProduct"/>
-                  <attributeValues>
-                    <org.uengine.essencia.model.PropertyValue>
-                      <key>startDate</key>
-                      <value class="string"></value>
-                    </org.uengine.essencia.model.PropertyValue>
-                    <org.uengine.essencia.model.PropertyValue>
-                      <key>iteration</key>
-                      <value class="int">5</value>
-                    </org.uengine.essencia.model.PropertyValue>
-                  </attributeValues>
                   <currentLevelOfDetailName>draft</currentLevelOfDetailName>
                 </defaultValue>
                 <isVolatile>false</isVolatile>
                 <isDatabaseSynchronized>false</isDatabaseSynchronized>
               </variable>
-              <direction>in-out</direction>
+              <direction>out</direction>
             </org.uengine.kernel.ParameterContext>
           </parameters>
           <role>
@@ -244,10 +325,12 @@
             <dispatchingOption>0</dispatchingOption>
             <isHumanWorker>false</isHumanWorker>
             <askWhenInit>true</askWhenInit>
-            <displayName/>
+            <displayName>
+              <text>Product Owner</text>
+            </displayName>
             <dontPersistResolutionResult>false</dontPersistResolutionResult>
           </role>
-          <tool>mw3.org.uengine.essencia.enactment.handler.EssenceActivityHandler</tool>
+          <tool>defaultHandler</tool>
           <isSendEmailWorkitem>true</isSendEmailWorkitem>
           <isNotificationWorkitem>false</isNotificationWorkitem>
           <isAllowAnonymous>true</isAllowAnonymous>
@@ -258,46 +341,83 @@
           <instruction/>
           <keyword/>
           <activityInEssenceDefinition>
-            <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+            <isInterface>false</isInterface>
+            <isAlwaysSubmitted>false</isAlwaysSubmitted>
+            <designable>false</designable>
+            <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+              <org.uengine.uml.model.Attribute>
+                <name>Id</name>
+                <className>java.lang.String</className>
+              </org.uengine.uml.model.Attribute>
+            </fieldDescriptors>
             <name>
               <text>Working</text>
               <localedTexts/>
             </name>
-            <briefDescription/>
             <description/>
+            <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+            <briefDescription/>
             <isSuppressable>true</isSuppressable>
-            <propertyList/>
             <completionCriteria>
-              <org.uengine.essencia.model.Criterion>
+              <org.uengine.essencia.model.CompletionCriterion>
+                <isInterface>false</isInterface>
+                <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                <designable>false</designable>
+                <name/>
+                <description defined-in="org.uengine.essencia.model.LanguageElement"/>
                 <isSuppressable>true</isSuppressable>
-                <state reference="../../../../parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/languageElement/list/org.uengine.essencia.model.State[2]"/>
-              </org.uengine.essencia.model.Criterion>
-              <org.uengine.essencia.model.Criterion>
+                <state reference="../../../../parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/classDefinition/states/org.uengine.essencia.model.State[2]"/>
+              </org.uengine.essencia.model.CompletionCriterion>
+              <org.uengine.essencia.model.CompletionCriterion>
+                <isInterface>false</isInterface>
+                <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                <designable>false</designable>
+                <name/>
+                <description defined-in="org.uengine.essencia.model.LanguageElement"/>
                 <isSuppressable>true</isSuppressable>
                 <levelOfDetail>
-                  <isSuppressable>true</isSuppressable>
-                  <parentWorkProduct reference="../../../../../parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/languageElement/childElements/org.uengine.essencia.model.WorkProduct"/>
+                  <isInterface>false</isInterface>
+                  <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                  <designable>false</designable>
                   <name>
                     <text>done</text>
                   </name>
+                  <description/>
+                  <isSuppressable>true</isSuppressable>
+                  <parentWorkProduct reference="../../../../../parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/classDefinition/childElements/org.uengine.essencia.model.WorkProduct"/>
                   <isSufficientLevel>false</isSufficientLevel>
                 </levelOfDetail>
-              </org.uengine.essencia.model.Criterion>
+              </org.uengine.essencia.model.CompletionCriterion>
             </completionCriteria>
             <entryCriteria>
-              <org.uengine.essencia.model.Criterion>
+              <org.uengine.essencia.model.EntryCriterion>
+                <isInterface>false</isInterface>
+                <isAlwaysSubmitted>false</isAlwaysSubmitted>
+                <designable>false</designable>
+                <name/>
+                <description defined-in="org.uengine.essencia.model.LanguageElement"/>
                 <isSuppressable>true</isSuppressable>
-                <state reference="../../../../parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/languageElement/list/org.uengine.essencia.model.State"/>
-              </org.uengine.essencia.model.Criterion>
+                <state reference="../../../../parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/classDefinition/states/org.uengine.essencia.model.State"/>
+              </org.uengine.essencia.model.EntryCriterion>
             </entryCriteria>
             <competency>
-              <metaworksContext/>
-              <optionValues/>
-              <optionNames/>
-              <selectedText>Product Owner</selectedText>
-              <disabled>false</disabled>
-              <selectSize>1</selectSize>
-              <selectStyle></selectStyle>
+              <isInterface>false</isInterface>
+              <isAlwaysSubmitted>false</isAlwaysSubmitted>
+              <designable>false</designable>
+              <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+                <org.uengine.uml.model.Attribute>
+                  <name>Id</name>
+                  <className>java.lang.String</className>
+                </org.uengine.uml.model.Attribute>
+              </fieldDescriptors>
+              <name>
+                <text>Product Owner</text>
+                <localedTexts/>
+              </name>
+              <description/>
+              <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+              <briefDescription/>
+              <isSuppressable>true</isSuppressable>
             </competency>
           </activityInEssenceDefinition>
         </org.uengine.essencia.enactment.EssenceActivity>
@@ -345,7 +465,7 @@
           <argument>
             <text>Sprint</text>
           </argument>
-          <variable reference="../../../childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[2]/variable"/>
+          <variable reference="../../../childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[3]/variable"/>
           <direction>in-out</direction>
           <split>true</split>
         </org.uengine.kernel.SubProcessParameterContext>
@@ -353,7 +473,7 @@
       <runAndForget>false</runAndForget>
       <createAsRootProcess>false</createAsRootProcess>
       <multipleInstanceLabel/>
-      <forEachVariable reference="../childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[2]/variable"/>
+      <forEachVariable reference="../childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[3]/variable"/>
     </org.uengine.kernel.bpmn.SubProcess>
     <org.uengine.kernel.DefaultActivity>
       <parentActivity class="org.uengine.essencia.enactment.EssenceProcessDefinition" reference="../../.."/>
@@ -429,10 +549,10 @@
       <parentActivity class="org.uengine.essencia.enactment.EssenceProcessDefinition" reference="../../.."/>
       <name>
         <text>Planning</text>
+        <localedTexts/>
       </name>
       <description>
         <text></text>
-        <localedTexts/>
       </description>
       <tracingTag>a9</tracingTag>
       <cost>0</cost>
@@ -447,11 +567,11 @@
         <org.uengine.kernel.ParameterContext>
           <multipleInput>false</multipleInput>
           <argument>
-            <text>Sprint</text>
+            <text>output Sprint</text>
             <localedTexts/>
           </argument>
-          <variable reference="../../../../org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[2]/variable"/>
-          <direction>in-out</direction>
+          <variable reference="../../../../org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[3]/variable"/>
+          <direction>out</direction>
         </org.uengine.kernel.ParameterContext>
       </parameters>
       <role>
@@ -459,10 +579,12 @@
         <dispatchingOption>0</dispatchingOption>
         <isHumanWorker>false</isHumanWorker>
         <askWhenInit>true</askWhenInit>
-        <displayName/>
+        <displayName>
+          <text>Product Owner</text>
+        </displayName>
         <dontPersistResolutionResult>false</dontPersistResolutionResult>
       </role>
-      <tool>mw3.org.uengine.essencia.enactment.handler.EssenceActivityHandler</tool>
+      <tool>defaultHandler</tool>
       <isSendEmailWorkitem>true</isSendEmailWorkitem>
       <isNotificationWorkitem>false</isNotificationWorkitem>
       <isAllowAnonymous>true</isAllowAnonymous>
@@ -473,29 +595,52 @@
       <instruction/>
       <keyword/>
       <activityInEssenceDefinition>
-        <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+        <isInterface>false</isInterface>
+        <isAlwaysSubmitted>false</isAlwaysSubmitted>
+        <designable>false</designable>
+        <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+          <org.uengine.uml.model.Attribute>
+            <name>Id</name>
+            <className>java.lang.String</className>
+          </org.uengine.uml.model.Attribute>
+        </fieldDescriptors>
         <name>
           <text>Planning</text>
           <localedTexts/>
         </name>
-        <briefDescription/>
         <description/>
+        <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+        <briefDescription/>
         <isSuppressable>true</isSuppressable>
-        <propertyList/>
         <completionCriteria>
-          <org.uengine.essencia.model.Criterion>
+          <org.uengine.essencia.model.CompletionCriterion>
+            <isInterface>false</isInterface>
+            <isAlwaysSubmitted>false</isAlwaysSubmitted>
+            <designable>false</designable>
+            <name/>
+            <description defined-in="org.uengine.essencia.model.LanguageElement"/>
             <isSuppressable>true</isSuppressable>
-            <levelOfDetail reference="../../../../../org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/languageElement/childElements/org.uengine.essencia.model.WorkProduct/list/org.uengine.essencia.model.LevelOfDetail[2]"/>
-          </org.uengine.essencia.model.Criterion>
+            <levelOfDetail reference="../../../../../org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/classDefinition/childElements/org.uengine.essencia.model.WorkProduct/levelOfDetails/org.uengine.essencia.model.LevelOfDetail[2]"/>
+          </org.uengine.essencia.model.CompletionCriterion>
         </completionCriteria>
         <competency>
-          <metaworksContext/>
-          <optionValues/>
-          <optionNames/>
-          <selectedText>Product Owner</selectedText>
-          <disabled>false</disabled>
-          <selectSize>1</selectSize>
-          <selectStyle></selectStyle>
+          <isInterface>false</isInterface>
+          <isAlwaysSubmitted>false</isAlwaysSubmitted>
+          <designable>false</designable>
+          <fieldDescriptors class="org.uengine.uml.model.Attribute-array">
+            <org.uengine.uml.model.Attribute>
+              <name>Id</name>
+              <className>java.lang.String</className>
+            </org.uengine.uml.model.Attribute>
+          </fieldDescriptors>
+          <name>
+            <text>Product Owner</text>
+            <localedTexts/>
+          </name>
+          <description/>
+          <isSuppressable defined-in="org.uengine.essencia.model.LanguageElement">false</isSuppressable>
+          <briefDescription/>
+          <isSuppressable>true</isSuppressable>
         </competency>
       </activityInEssenceDefinition>
     </org.uengine.essencia.enactment.EssenceActivity>
@@ -647,7 +792,9 @@
       <dispatchingOption>0</dispatchingOption>
       <isHumanWorker>false</isHumanWorker>
       <askWhenInit>true</askWhenInit>
-      <displayName/>
+      <displayName>
+        <text>Product Owner</text>
+      </displayName>
       <dontPersistResolutionResult>false</dontPersistResolutionResult>
     </org.uengine.kernel.Role>
   </roles>
@@ -663,7 +810,7 @@
   </sequenceFlows>
   <processVariableDescriptors>
     <org.uengine.kernel.ProcessVariable reference="../../childActivities/org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext/variable"/>
-    <org.uengine.kernel.ProcessVariable reference="../../childActivities/org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[2]/variable"/>
+    <org.uengine.kernel.ProcessVariable reference="../../childActivities/org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext[3]/variable"/>
   </processVariableDescriptors>
   <leaveEventListenersEvenIfOutOfScope>false</leaveEventListenersEvenIfOutOfScope>
   <isCollapsed>false</isCollapsed>
@@ -685,7 +832,8 @@
   <activitySequence>0</activitySequence>
   <practiceDefinition>
     <elementList>
-      <org.uengine.essencia.model.Alpha reference="../../../childActivities/org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/languageElement"/>
+      <org.uengine.essencia.model.Alpha reference="../../../childActivities/org.uengine.kernel.bpmn.SubProcess/childActivities/org.uengine.essencia.enactment.EssenceActivity/parameters/org.uengine.kernel.ParameterContext/variable/defaultValue/classDefinition"/>
     </elementList>
+    <arranged>false</arranged>
   </practiceDefinition>
 </org.uengine.essencia.enactment.EssenceProcessDefinition>

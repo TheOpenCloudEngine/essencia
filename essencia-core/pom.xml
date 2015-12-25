@@ -21,6 +21,12 @@
         <aopalliance.version>1.0</aopalliance.version>
         <cglib.version>2.2</cglib.version>
         <aspectj.version>1.7.4</aspectj.version>
+
+            <uengine.processcodi.version>1.1.1-SNAPSHOT</uengine.processcodi.version>
+            <uengine.metaworks3.version>1.2.1-SNAPSHOT</uengine.metaworks3.version>
+            <uengine.uengine-bpm.version>4.0.1-SNAPSHOT</uengine.uengine-bpm.version>
+
+
     </properties>
 
 
@@ -30,7 +36,7 @@
             <groupId>org.uengine</groupId>
             <artifactId>processcodi</artifactId>
             <classifier>classes</classifier>
-            <version>1.1-SNAPSHOT</version>
+            <version>${uengine.processcodi.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -38,7 +44,7 @@
         <dependency>
             <groupId>org.uengine.metaworks</groupId>
             <artifactId>metaworks3</artifactId>
-            <version>1.2-SNAPSHOT</version>
+            <version>${uengine.metaworks3.version}</version>
 
             <exclusions>
                 <exclusion>
@@ -68,7 +74,7 @@
         <dependency>
             <groupId>org.uengine</groupId>
             <artifactId>uengine-resource-manager</artifactId>
-            <version>4.0-SNAPSHOT</version>
+            <version>${uengine.uengine-bpm.version}</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>org.uengine</groupId>-->
@@ -78,13 +84,13 @@
         <dependency>
             <groupId>org.uengine</groupId>
             <artifactId>uengine-bpmn-modeler</artifactId>
-            <version>4.0-SNAPSHOT</version>
+            <version>${uengine.uengine-bpm.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.uengine</groupId>
             <artifactId>uengine-core</artifactId>
-            <version>4.0-SNAPSHOT</version>
+            <version>${uengine.uengine-bpm.version}</version>
 
             <exclusions>
                 <exclusion>

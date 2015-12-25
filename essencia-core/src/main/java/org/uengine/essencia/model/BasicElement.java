@@ -7,14 +7,22 @@ import java.util.Map;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.*;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.dwr.SerializationSensitive;
 import org.uengine.contexts.TextContext;
+import org.uengine.essencia.enactment.AlphaInstance;
+import org.uengine.essencia.enactment.AlphaInstanceInList;
+import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
+import org.uengine.kernel.VariablePointer;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.Relation;
+import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.modeling.resource.ResourceManager;
+import org.uengine.uml.ClassSystemMode;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.face.AttributeListFace;
 import org.uengine.util.UEngineUtil;
@@ -46,6 +54,30 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	@Order(2)
 	public String getBriefDescription() {
+
+//		if(!ClassSystemMode.getThreadLocalInstance().isDesignTime()){
+//			if(getSuperClasses()!=null && !UEngineUtil.isNotEmpty(briefDescription.getText())){
+//				String superClassName = getSuperClasses().get(0);
+//
+//				String[] processResourceNameAndLanguageElementName = superClassName.split("\\#");
+//
+//				ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
+//
+//				DefaultResource classDefinitionResource = new DefaultResource( processResourceNameAndLanguageElementName[0]);
+//				EssenceProcessDefinition definition = null;
+//				try {
+//					definition = (EssenceProcessDefinition) resourceManager.getStorage().getObject(classDefinitionResource);
+//
+//					BasicElement languageElement = (BasicElement) definition.getPracticeDefinition().getElementByName(processResourceNameAndLanguageElementName[1]);
+//
+//					languageElement.getBriefDescription();
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//
+//			}
+//		}
+
 		return briefDescription.getText();
 	}
 
@@ -278,6 +310,25 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+
+	public List<AlphaInstanceInList> getInstanceInLists(ProcessInstance instance) {
+
+		List<? extends LanguageElementInstance> alphaInstances = getInstances(instance);
+		List<AlphaInstanceInList> alphaInstanceInLists = new ArrayList<AlphaInstanceInList>();
+
+		if(alphaInstances==null) return null;
+
+		int i=0;
+		for (LanguageElementInstance alphaInstance : alphaInstances) {
+			AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, i++);
+
+			alphaInstanceInLists.add(alphaInstanceInList);
+		}
+
+		return alphaInstanceInLists;
+
 	}
 
 	@Override

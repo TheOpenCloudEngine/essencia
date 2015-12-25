@@ -1,6 +1,9 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace2;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessInstance;

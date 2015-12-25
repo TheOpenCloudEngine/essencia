@@ -226,6 +226,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		ObjectInstance instance =  super.createObjectInstance();
 
 //TODO generalize this.
+		if(getFieldDescriptors()!=null)
 		for(Attribute attribute: getFieldDescriptors()){
 			if(MetaworksFile.class.getName().equals(attribute.getClassName())){
 				instance.setBeanProperty(attribute.getName(), new MetaworksFile());
