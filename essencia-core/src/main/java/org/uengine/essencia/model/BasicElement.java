@@ -10,10 +10,13 @@ import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.dwr.SerializationSensitive;
 import org.uengine.contexts.TextContext;
+import org.uengine.essencia.enactment.AlphaInstance;
+import org.uengine.essencia.enactment.AlphaInstanceInList;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
+import org.uengine.kernel.VariablePointer;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.Relation;
@@ -307,6 +310,25 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+
+	public List<AlphaInstanceInList> getInstanceInLists(ProcessInstance instance) {
+
+		List<? extends LanguageElementInstance> alphaInstances = getInstances(instance);
+		List<AlphaInstanceInList> alphaInstanceInLists = new ArrayList<AlphaInstanceInList>();
+
+		if(alphaInstances==null) return null;
+
+		int i=0;
+		for (LanguageElementInstance alphaInstance : alphaInstances) {
+			AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, i++);
+
+			alphaInstanceInLists.add(alphaInstanceInList);
+		}
+
+		return alphaInstanceInLists;
+
 	}
 
 	@Override

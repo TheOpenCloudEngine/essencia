@@ -1,6 +1,8 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.Instance;
+import org.metaworks.MetaworksContext;
+import org.metaworks.annotation.Hidden;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -9,25 +11,69 @@ import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariable;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.IElement;
+import org.uengine.modeling.Relation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AlphaGameBoard {
+public class AlphaGameBoard extends MetaworksContext {
 
-    public AlphaGameBoard(Alpha alpha, Map<String, List<? extends LanguageElementInstance>> alphaInstancesMap) {
+    public AlphaGameBoard(Alpha alpha, Map<String, List<AlphaInstanceInList>> alphaInstancesMap) {
         setAlpha(alpha);
-        setAlphaInstances(alphaInstancesMap);
+        setAlphaInstancesMap(alphaInstancesMap);
+
+        setMetaworksContext(new MetaworksContext());
+        getMetaworksContext().setWhere("gameboard");
+
+        setAlphaInstances(getAlphaInstancesMap().get(alpha.getName()));
+
+
+        setChildAlphaGameBoards(new ArrayList<AlphaGameBoard>());
+        if(alpha.getOutgoingRelations()!=null)
+        for(Relation relation : alpha.getOutgoingRelations()){
+
+            LanguageElement childAlpha = (LanguageElement) relation.getTargetElement();
+
+            if(childAlpha instanceof Alpha){
+
+                AlphaGameBoard alphaGameBoard = new AlphaGameBoard((Alpha)childAlpha, alphaInstancesMap);
+
+                getChildAlphaGameBoards().add(alphaGameBoard);
+            }
+        }
+
+
     }
 
-    Map<String, List<? extends LanguageElementInstance>> alphaInstances;
-        public Map<String, List<? extends LanguageElementInstance>> getAlphaInstances() {
-                return alphaInstances;
-            }
-        public void setAlphaInstances(Map<String, List<? extends LanguageElementInstance>> alphaInstances) {
+    Map<String, List<AlphaInstanceInList>> alphaInstancesMap;
+        public Map<String, List<AlphaInstanceInList>> getAlphaInstancesMap() {
+            return alphaInstancesMap;
+        }
+
+        public void setAlphaInstancesMap(Map<String, List<AlphaInstanceInList>> alphaInstancesMap) {
+            this.alphaInstancesMap = alphaInstancesMap;
+        }
+
+
+    List<AlphaInstanceInList> alphaInstances;
+        public List<AlphaInstanceInList> getAlphaInstances() {
+            return alphaInstances;
+        }
+
+        public void setAlphaInstances(List<AlphaInstanceInList> alphaInstances) {
             this.alphaInstances = alphaInstances;
+        }
+
+
+    List<AlphaGameBoard> childAlphaGameBoards;
+        public List<AlphaGameBoard> getChildAlphaGameBoards() {
+            return childAlphaGameBoards;
+        }
+
+        public void setChildAlphaGameBoards(List<AlphaGameBoard> childAlphaGameBoards) {
+            this.childAlphaGameBoards = childAlphaGameBoards;
         }
 
     Alpha alpha;
@@ -64,6 +110,17 @@ public class AlphaGameBoard {
         setAlpha(exampleAlphaInstance.getAlphaInstance().getAlpha());*/
 
     }
+
+
+    MetaworksContext metaworksContext;
+        public MetaworksContext getMetaworksContext() {
+            return metaworksContext;
+        }
+
+        public void setMetaworksContext(MetaworksContext metaworksContext) {
+            this.metaworksContext = metaworksContext;
+        }
+
 
 
 }

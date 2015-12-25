@@ -1,0 +1,27 @@
+<table class="table table-striped active">
+
+		<tr>
+			<td>Id</td>
+			<td>State</td>
+			<td></td>
+		</tr>
+
+
+<%
+	if(value != null && typeof value != 'undefined'){
+		if(value.length > 0){
+			if(typeof options == 'undefined') 
+				options = objectMetadata;
+			
+			options['htmlTag'] = 'tr';
+
+			for(var i=0; i<value.length; i++){
+%>
+	<%=mw3.locateObject(value[i], value[i].__className, null, options, {objectId: objectId, name: '[' + i + ']'})%>
+<%
+			}
+			
+		}
+	}		
+%>
+</table>
