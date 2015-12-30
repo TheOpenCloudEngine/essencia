@@ -2,13 +2,12 @@ package org.uengine.essencia.designer;
 
 import java.util.List;
 
-import org.metaworks.EventContext;
-import org.metaworks.Refresh;
-import org.metaworks.ServiceMethodContext;
-import org.metaworks.ToEvent;
+import org.metaworks.*;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.uengine.contexts.TextContext;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.AbstractActivity;
 import org.uengine.essencia.model.ActivitySpace;
@@ -60,6 +59,7 @@ public class ActivitySpaceAndActivityPropertyPanel extends EssenciaPropertyPanel
     @ServiceMethod(callByContent = true, target = ServiceMethodContext.TARGET_APPEND, keyBinding = "Enter")
     public Object[] apply() {
         ((AbstractActivity) getElement()).beforeApply();
+
         getElementView().setElement(getElement());
         return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(getElementView(), true)};
     }

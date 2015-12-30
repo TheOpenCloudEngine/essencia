@@ -1,10 +1,14 @@
 package org.uengine.essencia.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
+import org.metaworks.i18n.MultilingualBundle;
+import org.metaworks.i18n.MultilingualSupport;
 import org.metaworks.annotation.*;
 import org.metaworks.annotation.Face;
 import org.metaworks.website.MetaworksFile;
@@ -15,14 +19,13 @@ import org.uengine.essencia.model.face.list.TagListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.GlobalContext;
 import org.uengine.modeling.IModelingTimeSensitive;
-import org.uengine.modeling.Relation;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ClassDefinition;
 import org.uengine.uml.model.ObjectInstance;
 import org.uengine.util.UEngineUtil;
 
 @Face(ejsPath = "dwr/metaworks/genericfaces/ElementFace.ejs")
-public abstract class LanguageElement extends ClassDefinition implements ContextAware, Serializable, FaceTransformer, IModelingTimeSensitive {
+public abstract class LanguageElement extends ClassDefinition implements ContextAware, Serializable, FaceTransformer, IModelingTimeSensitive, MultilingualSupport {
 
 	private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
 
@@ -31,35 +34,35 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	@Id
 	@Name
 	@Hidden(on=false)
+	@Multilingual
 	public String getName() {
 		return name.getText();
 	}
 	public void setName(String name) {
 		this.name.setText(name);
 	}
-	public String getName(String locale) {
-		return name.getText(locale);
-	}
-	public void setName(String locale, String name) {
-		this.name.setText(locale, name);
-	}
+//	public String getName(String locale) {
+//		return name.getText(locale);
+//	}
+//	public void setName(String locale, String name) {
+//		this.name.setText(locale, name);
+//	}
+
 
 	protected TextContext description;
-	public String getDescription() {
-		return description.getText();
-	}
-
-	public void setDescription(String description) {
-		this.description.setText(description);
-	}
-
-	public String getDescription(String locale) {
-		return description.getText(locale);
-	}
-
-	public void setDescription(String locale, String description) {
-		this.description.setText(locale, description);
-	}
+	@Multilingual
+		public String getDescription() {
+			return description.getText();
+		}
+		public void setDescription(String description) {
+			this.description.setText(description);
+		}
+//		public String getDescription(String locale) {
+//			return description.getText(locale);
+//		}
+//		public void setDescription(String locale, String description) {
+//			this.description.setText(locale, description);
+//		}
 
 
 	private List<Resource> resourceList;
@@ -245,5 +248,38 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 
 		return instance;
 
+	}
+
+
+	MultilingualBundle multilingualBundle;
+		public MultilingualBundle getMultilingualBundle() {
+			return multilingualBundle;
+		}
+
+		public void setMultilingualBundle(MultilingualBundle multilingualBundle) {
+			this.multilingualBundle = multilingualBundle;
+		}
+
+
+
+
+	@Override
+	public void putMultilingualText(String language, String propertyName, String value) {
+		if(multilingualBundle==null){
+			multilingualBundle = new MultilingualBundle();
+
+		}
+
+		multilingualBundle.putMultilingualText(language, propertyName, value);
+
+
+
+	}
+
+	@Override
+	public String getMultilingualText(String language, String propertyName) {
+		if(multilingualBundle==null) return null;
+
+		return multilingualBundle.getMultilingualText(language, propertyName);
 	}
 }
