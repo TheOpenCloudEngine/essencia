@@ -1,3 +1,51 @@
-<td><%=value.languageElementInstance.id%></td>
-<td><%=value.languageElementInstance.currentStateName%></td>
-<td><%=methods.edit.here()%></td>
+<!--replace-->
+<tr id="objDiv_<%=objectId%>" onclick="<%=methods.edit.caller()%>">
+
+<% if (value && !value.deleted) {
+
+    var alphaInstance = value.languageElementInstance;
+    var alpha = mw3.uengineUML.classDefinitions[alphaInstance.classDefinition.name];
+
+
+    if(alpha.fieldDescriptors){
+
+        for (var i=0; i<alpha.fieldDescriptors.length; i++) {
+
+            var fd = alpha.fieldDescriptors[i];
+
+            if (fd.name == 'metaworksContext') continue;
+
+            %>
+    <td><%=alphaInstance.valueMap[fd.name]%></td>
+            <%
+        }
+    }
+
+    for(var j in alpha.states){
+
+        var state = alpha.states[j];
+
+        if(alphaInstance.currentStateName == state.name){
+            %><td><div class="icon-rounded m-r-10 current tooltip-top"><i class="glyphicon glyphicon-ok workitem_btn current"></i></div><%
+        }else{
+            %><td><%
+        }
+
+        if(alphaInstance.subAlphaInstanceCount>1){
+            var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
+
+            if(stateDetails && stateDetails['WIPCount'] > 0){
+
+            // var max = 256;
+
+
+                %><font color="blue"><b><%=stateDetails['WIPCount']%>/<%=alphaInstance.subAlphaInstanceCount%></b></font><%
+            }
+        }
+        %></td><%
+    }
+}
+%>
+
+
+</tr>

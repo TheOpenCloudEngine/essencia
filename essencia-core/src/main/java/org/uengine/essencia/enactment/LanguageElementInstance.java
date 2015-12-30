@@ -139,64 +139,30 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 
     @Override
     public void beforeSerialization() {
-//        if(cachedMap==null){
-            //create default values
 
-//            if(attributeValues==null || attributeValues.size()==0) {
-//                if (getLanguageElement().getAttributeList() != null) {
-//                    cachedMap = new HashMap<String, Serializable>();
-//
-//                    for (Attribute property : getLanguageElement().getAttributeList()) {
-//
-//                        AttributeInstance defaultPropertyValue = null;
-//                        try {
-//                            defaultPropertyValue = property.createInstance();
-//                        } catch (Exception e) {
-//
-//                        }
-//
-//                        if (defaultPropertyValue != null)
-//                            setAttribute(property.getName(), (Serializable) defaultPropertyValue.getValue());
-//                    }
-//                }
-//            }else{
-//                return;
-//            }
-//        }
+        //exchange the classDefinition object itself with a link info to avoid the huge serialization of definition-side object (also it eager to be an old value).
 
-//        List<AttributeInstance> values = new ArrayList<AttributeInstance>();
-//
-//        if (getLanguageElement().getAttributeList() != null) {
-//            for (Attribute property : getLanguageElement().getAttributeList()) {
-//                AttributeInstance propertyValue = null;
-//
-//                propertyValue = property.createInstance();
-//                propertyValue.setName(property.getName());
-//
-//                if(cachedMap.containsKey(property.getName())) {
-//                    propertyValue.setValueObject(cachedMap.get(property.getName()));
-//
-//                    values.add(propertyValue);
-//                }
-//            }
-//
-//            setAttributeValues(values);
-//        }
+        if(getClassName()==null && getLanguageElement()!=null){
+            String classLinkName = /*getLanguageElement().getResourcePath() + "#" + */ getLanguageElement().getName();
+
+            setClassName(classLinkName);
+
+            setClassDefinition(null);
+        }
+
     }
 
     @Override
     public void afterDeserialization() {
-//        if(cachedMap!=null) return;
-//
-//
-//
-//        cachedMap = new HashMap<String, Serializable>();
-//
-//        if(attributeValues !=null)
-//        for(AttributeInstance propertyValue : attributeValues){
-//            if(propertyValue!=null)
-//                cachedMap.put(propertyValue.getName(), (Serializable) propertyValue.getValue());
-//        }
+
+        if(getClassName()!=null && getClassName().indexOf("#") > 0 && getClassDefinition()==null) {
+
+            try {
+                fillClassDefinition(getClassName());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 

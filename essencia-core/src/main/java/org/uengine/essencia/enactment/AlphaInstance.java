@@ -132,7 +132,6 @@ public class AlphaInstance extends LanguageElementInstance {
     public Object setStateDetails(String stateName, String propName, Object value) {
 
         try {
-
             if(!stateDetailsByStateName.containsKey(stateName))
                 stateDetailsByStateName.put(stateName, new HashMap<String, Object>());
 
@@ -145,6 +144,17 @@ public class AlphaInstance extends LanguageElementInstance {
 
     public void aggregateStateDetails(ProcessInstance instance){
        // Map<String, Integer> runningCntByState = new HashMap<String, Integer>();
+
+        PracticeDefinition practiceDefinition;
+        try {
+            practiceDefinition = ((EssenceProcessDefinition)instance.getProcessDefinition()).getPracticeDefinition();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        //replace alpha with actual one
+        setClassDefinition((Alpha) practiceDefinition.getElementByName(getAlpha().getName()));
+
 
         int totalCount = 0;
 
@@ -159,11 +169,33 @@ public class AlphaInstance extends LanguageElementInstance {
                 List<AlphaInstance> subAlphaInstances = subAlpha.getInstances(instance);
 
                 if(subAlphaInstances!=null){
-                    totalCount += subAlphaInstances.size();
+
+                    //reset state details first.
+                    for(State state : getAlpha().getStates()){
+                        setStateDetails(state.getName(), STATE_PROP_KEY_WorkInProgressCount, null);
+
+
+                    }
+
+
+
+
 
                     for(AlphaInstance subAlphaInstance : subAlphaInstances){
+                        String aggregationAlphaStateName = null;
 
-                        String aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
+                        if(subAlphaInstance==null) continue; //ignore deleted ones
+
+                        totalCount++;
+
+                        if(subAlphaInstance.getCurrentState()!=null) {
+                            Alpha realAlpha = (Alpha) practiceDefinition.getElementByName(subAlphaInstance.getAlpha().getName());
+
+                            subAlphaInstance.setLanguageElement(realAlpha);
+
+                            aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
+
+                        }
 
                         //don't validate. sometimes there is nothing related between super and sub alpha
                         //getAlpha().findState(aggregationAlphaStateName);

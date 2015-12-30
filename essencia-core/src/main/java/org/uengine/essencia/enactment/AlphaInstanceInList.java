@@ -1,14 +1,12 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.MetaworksContext;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Payload;
-import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.processmanager.ProcessManagerRemote;
 
@@ -17,7 +15,7 @@ import org.uengine.processmanager.ProcessManagerRemote;
  * Created by jjy on 2015. 12. 23..
  */
 
-@Face(options = {"htmlTag"}, values={"tr"}, ejsPathForArray = "dwr/metaworks/org/uengine/essencia/enactment/AlphaInstanceTableFace.ejs")
+@Face(ejsPathForArray = "dwr/metaworks/org/uengine/essencia/enactment/AlphaInstanceTableFace.ejs")
 public class AlphaInstanceInList {
 
     public AlphaInstanceInList(LanguageElementInstance objectInstance, ProcessInstance instance, int index) {
@@ -55,6 +53,7 @@ public class AlphaInstanceInList {
 
     LanguageElementInstance languageElementInstance;
     @Hidden
+    @Id
         public LanguageElementInstance getLanguageElementInstance() {
             return languageElementInstance;
         }
@@ -65,7 +64,7 @@ public class AlphaInstanceInList {
     @Autowired
     public ProcessManagerRemote processManagerRemote;
 
-    @ServiceMethod(target=ServiceMethod.TARGET_POPUP)
+    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true)
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
 
         AlphaInstanceInEditor alphaInstanceInEditor = new AlphaInstanceInEditor();
@@ -81,4 +80,33 @@ public class AlphaInstanceInList {
         modalWindow.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
         MetaworksRemoteService.wrapReturn(modalWindow);
     }
+
+    @ServiceMethod(target=ServiceMethod.TARGET_SELF, inContextMenu = true, needToConfirm = true)
+    public void delete(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
+
+        ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
+
+        ProcessVariableValue processVariableValue = instance.getMultiple("", variablePointer.getKey());
+
+        processVariableValue.setCursor(variablePointer.getIndex());
+        processVariableValue.setValue(null);
+
+        instance.set("",  processVariableValue);
+
+        processManagerRemote.applyChanges();
+
+
+        setDeleted(true);
+    }
+
+    boolean deleted;
+    @Hidden
+        public boolean isDeleted() {
+            return deleted;
+        }
+        public void setDeleted(boolean deleted) {
+            this.deleted = deleted;
+        }
+
+
 }

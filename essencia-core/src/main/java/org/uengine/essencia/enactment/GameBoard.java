@@ -23,34 +23,44 @@ public class GameBoard {
             this.alphaGameBoards = alphaGameBoards;
         }
 
+    Map<String, List<AlphaInstanceInList>> alphaInstancesMap;
+        public Map<String, List<AlphaInstanceInList>> getAlphaInstancesMap() {
+            return alphaInstancesMap;
+        }
+
+        public void setAlphaInstancesMap(Map<String, List<AlphaInstanceInList>> alphaInstancesMap) {
+            this.alphaInstancesMap = alphaInstancesMap;
+        }
+
 
     public GameBoard(PracticeDefinition practiceDefinition, ProcessInstance instance) throws Exception {
         practiceDefinition.arrangeRelations();
 
         ProcessDefinition processDefinition = instance.getProcessDefinition();
         setAlphaGameBoards(new ArrayList<AlphaGameBoard>());
-        Map<String, List<AlphaInstanceInList>> alphaInstancesMap = new HashMap<String, List<AlphaInstanceInList>>();
 
-        for(ProcessVariable pv : processDefinition.getProcessVariables()){
+        alphaInstancesMap = new HashMap<String, List<AlphaInstanceInList>>();
 
-            ProcessVariableValue pvv = pv.getMultiple(instance, "");
-            BasicElement alpha1 = null;
-            if(pvv!=null && pvv.size() > 0){
-                LanguageElementInstance alphaInstance = (LanguageElementInstance) pvv.getValue();
-
-                if(alphaInstance==null) continue;
-
-                alpha1 = alphaInstance.getLanguageElement();
-
-                if(alphaInstance instanceof AlphaInstance) {
-                    ((AlphaInstance) alphaInstance).aggregateStateDetails(instance);
-                    ((AlphaInstance) alphaInstance).calculateState();
-                }
-
-                alphaInstancesMap.put(pv.getName(), alpha1.getInstanceInLists(instance));
-
-            }
-        }
+//        for(ProcessVariable pv : processDefinition.getProcessVariables()){
+//
+//            ProcessVariableValue pvv = pv.getMultiple(instance, "");
+//            BasicElement alpha1 = null;
+//            if(pvv!=null && pvv.size() > 0){
+//                LanguageElementInstance alphaInstance = (LanguageElementInstance) pvv.getValue();
+//
+//                if(alphaInstance==null) continue;
+//
+//                alpha1 = alphaInstance.getLanguageElement();
+//
+//                if(alphaInstance instanceof AlphaInstance) {
+//                    ((AlphaInstance) alphaInstance).aggregateStateDetails(instance);
+//                    ((AlphaInstance) alphaInstance).calculateState();
+//                }
+//
+//                alphaInstancesMap.put(pv.getName(), alpha1.getInstanceInLists(instance));
+//
+//            }
+//        }
 
 
         for(IElement element : practiceDefinition.getElementList()){
@@ -60,9 +70,13 @@ public class GameBoard {
                 Alpha alpha = (Alpha)element;
                 List<AlphaInstanceInList> alphaInstanceInLists = alpha.getInstanceInLists(instance);
 
-                if(alphaInstanceInLists==null){
+                if(alphaInstanceInLists==null || alphaInstanceInLists.size()==0){
                     alphaInstanceInLists = new ArrayList<AlphaInstanceInList>();
-                    alphaInstanceInLists.add(new AlphaInstanceInList(alpha.createObjectInstance(), instance, 0));
+
+                    AlphaInstance alphaInstance = alpha.createObjectInstance();
+                    alphaInstance.setId(alpha.getName());
+
+                    alphaInstanceInLists.add(new AlphaInstanceInList(alphaInstance, instance, 0));
                 }
 
                 for(AlphaInstanceInList alphaInstanceInList : alphaInstanceInLists){
@@ -85,7 +99,7 @@ public class GameBoard {
 
                 for(Relation relation : practice.getOutgoingRelations()){
                     if(relation.getTargetElement() instanceof Alpha){
-                        AlphaGameBoard alphaGameBoard = new AlphaGameBoard((Alpha)relation.getTargetElement(), alphaInstancesMap);
+                        AlphaGameBoard alphaGameBoard = new AlphaGameBoard(instance.getInstanceId(), (Alpha)relation.getTargetElement(), alphaInstancesMap);
                         getAlphaGameBoards().add(alphaGameBoard);
                     }
                 }

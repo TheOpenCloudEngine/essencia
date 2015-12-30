@@ -320,9 +320,13 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 		if(alphaInstances==null) return null;
 
-		int i=0;
+		int i=-1;
 		for (LanguageElementInstance alphaInstance : alphaInstances) {
-			AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, i++);
+			i++;
+
+			if(alphaInstance==null) continue;
+
+			AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, i);
 
 			alphaInstanceInLists.add(alphaInstanceInList);
 		}
@@ -333,16 +337,10 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	@Override
 	public void afterDeserialization() {
-//		properties = new HashMap<String, Property>();
-//
-//		for(Property property : getPropertyList()){
-//			properties.put(property.getKey(), property);
-//		}
 	}
 
 	@Override
 	public void beforeSerialization() {
-
 	}
 
 //	public List<AttributeInstance> createDefaultPropertyValues() {

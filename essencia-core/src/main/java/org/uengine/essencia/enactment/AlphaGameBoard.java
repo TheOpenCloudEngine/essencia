@@ -1,8 +1,13 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.Instance;
 import org.metaworks.MetaworksContext;
+import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
+import org.metaworks.annotation.Payload;
+import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -12,7 +17,9 @@ import org.uengine.kernel.ProcessVariable;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.Relation;
+import org.uengine.processmanager.ProcessManagerRemote;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,12 +27,18 @@ import java.util.Map;
 
 public class AlphaGameBoard extends MetaworksContext {
 
-    public AlphaGameBoard(Alpha alpha, Map<String, List<AlphaInstanceInList>> alphaInstancesMap) {
+    public AlphaGameBoard(String instanceId, Alpha alpha, Map<String, List<AlphaInstanceInList>> alphaInstancesMap) {
         setAlpha(alpha);
         setAlphaInstancesMap(alphaInstancesMap);
+        setInstanceId(instanceId);
 
         setMetaworksContext(new MetaworksContext());
         getMetaworksContext().setWhere("gameboard");
+
+//        AlphaInstanceList alphaInstanceList = new AlphaInstanceList();
+//        alphaInstanceList.setLanguageElementType(alpha);
+//        alphaInstanceList.addAll(getAlphaInstancesMap().get(alpha.getName()));
+//        setAlphaInstances(alphaInstanceList);
 
         setAlphaInstances(getAlphaInstancesMap().get(alpha.getName()));
 
@@ -38,7 +51,7 @@ public class AlphaGameBoard extends MetaworksContext {
 
             if(childAlpha instanceof Alpha){
 
-                AlphaGameBoard alphaGameBoard = new AlphaGameBoard((Alpha)childAlpha, alphaInstancesMap);
+                AlphaGameBoard alphaGameBoard = new AlphaGameBoard(instanceId, (Alpha)childAlpha, alphaInstancesMap);
 
                 getChildAlphaGameBoards().add(alphaGameBoard);
             }
@@ -57,14 +70,32 @@ public class AlphaGameBoard extends MetaworksContext {
         }
 
 
+//    AlphaInstanceList alphaInstances;
+//        public AlphaInstanceList getAlphaInstances() {
+//            return alphaInstances;
+//        }
+//
+//        public void setAlphaInstances(AlphaInstanceList alphaInstances) {
+//            this.alphaInstances = alphaInstances;
+//        }
+
     List<AlphaInstanceInList> alphaInstances;
         public List<AlphaInstanceInList> getAlphaInstances() {
             return alphaInstances;
         }
-
         public void setAlphaInstances(List<AlphaInstanceInList> alphaInstances) {
             this.alphaInstances = alphaInstances;
         }
+
+    String instanceId;
+        public String getInstanceId() {
+            return instanceId;
+        }
+        public void setInstanceId(String instanceId) {
+            this.instanceId = instanceId;
+        }
+
+
 
 
     List<AlphaGameBoard> childAlphaGameBoards;
@@ -77,6 +108,7 @@ public class AlphaGameBoard extends MetaworksContext {
         }
 
     Alpha alpha;
+    @Face(faceClass= AllChildFacesAreIgnored.class)
         public Alpha getAlpha() {
             return alpha;
         }
@@ -122,5 +154,38 @@ public class AlphaGameBoard extends MetaworksContext {
         }
 
 
+    @ServiceMethod(inContextMenu = true, target = ServiceMethod.TARGET_SELF)
+    public AlphaGameBoard addAlphaInstance(@Payload("instanceId") String instanceId, @Payload("alpha") Alpha alpha) throws Exception {
+        LanguageElementInstance alphaInstance = alpha.createObjectInstance();
+        alphaInstance.setBeanProperty("id", "New " + alpha.getName());
+
+        ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
+
+        ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
+
+        ProcessVariableValue processVariableValue = instance.getMultiple("", alpha.getName());
+
+        if(processVariableValue==null){
+            processVariableValue = new ProcessVariableValue();
+            processVariableValue.setName(alpha.getName());
+        }
+        processVariableValue.moveToAdd();
+        processVariableValue.setValue(alphaInstance);
+
+        instance.set("",  processVariableValue);
+
+        processManagerRemote.applyChanges();
+
+
+        EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition) instance.getProcessDefinition();
+        PracticeDefinition practiceDefinition = essenceProcessDefinition.getPracticeDefinition();
+        GameBoard gameBoard = new GameBoard(practiceDefinition, instance);
+
+        AlphaGameBoard alphaGameBoard = new AlphaGameBoard(getInstanceId(), (Alpha) practiceDefinition.getElementByName(alpha.getName()), gameBoard.getAlphaInstancesMap());
+
+        //MetaworksRemoteService.wrapReturn(alphaGameBoard);
+
+        return alphaGameBoard;
+    }
 
 }

@@ -2,10 +2,64 @@
 
 <H1> <%=alpha.name%></h1>
 
+<table class="table table-striped active">
+<%
+
+    if(!mw3.uengineUML){
+        mw3.uengineUML = {classDefinitions:{}};
+    }
+
+    mw3.uengineUML.classDefinitions[alpha.name] = alpha;
 
 
-<%=fields.alphaInstances.here()%>
 
+
+    if(alpha.fieldDescriptors){
+
+        for (var i=0; i<alpha.fieldDescriptors.length; i++) {
+
+            var fd = alpha.fieldDescriptors[i];
+
+            if (fd.name == 'metaworksContext') continue;
+
+            %><th rowspan="2"><%=fd.displayName ? fd.displayName : fd.name%></th><%
+        }
+    }
+
+    var lengthOfLevels = 0;
+
+    if(alpha.states){
+        lengthOfLevels = alpha.states.length;
+    }else if(alpha.levelOfDetails){
+        lengthOfLevels = alpha.levelOfDetails.length;
+    }
+
+%>
+    <th colspan="<%=lengthOfLevels%>">State</th>
+</tr>
+
+<tr>
+
+<%
+
+    if(alpha.states){
+        for(var i in alpha.states){
+            var state = alpha.states[i];
+            %><td><%=state.name%></td><%
+
+        }
+    }else if(alpha.levelOfDetails){
+        for(var i in alpha.levelOfDetails){
+            var levelOfDetail = alpha.levelOfDetails[i];
+            %><td><%=levelOfDetail.name%></td><%
+
+        }
+    }
+    %>
+
+    <%=fields.alphaInstances.here()%>
+
+</table>
 
     <%
 
