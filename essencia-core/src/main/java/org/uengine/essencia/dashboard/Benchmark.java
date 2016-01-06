@@ -1,7 +1,11 @@
 package org.uengine.essencia.dashboard;
 
+import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.component.MultiSelectBox;
+import org.metaworks.component.SelectBox;
 import org.metaworks.widget.chart.Radar;
 import org.metaworks.widget.chart.RadarData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,7 @@ import java.util.List;
 @Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class Benchmark {
 
+    private static final int DEFAULT_LOAD_INSTANCE_CNT = 5;
     static String[] colors = {
             "rgba(192, 57, 43,1.0)",
             "rgba(41, 128, 185,1.0)",
@@ -35,6 +40,14 @@ public class Benchmark {
             "rgba(155, 89, 182,1.0)",
             "rgba(52, 73, 94,1.0)}",
     };
+
+    SelectBox targetInstances;
+        public SelectBox getTargetInstances() {
+            return targetInstances;
+        }
+        public void setTargetInstances(SelectBox targetInstances) {
+            this.targetInstances = targetInstances;
+        }
 
     Radar chart;
         public Radar getChart() {
@@ -53,6 +66,7 @@ public class Benchmark {
     public Benchmark() {
     }
 
+    @ServiceMethod(payload = "targetInstances")
     public void load() throws Exception {
 
         //session.getUser();
@@ -62,16 +76,39 @@ public class Benchmark {
         navigation.setPerspectiveType(Perspective.TYPE_FOLLOWING);
         navigation.setPerspectiveValue("2"); //why 2?
 
-        IInstance instances = Instance.load(navigation, 0, 10);
+        String[] instanceIds;
+        if(getTargetInstances()!=null){
+            instanceIds = getTargetInstances().getSelected().split(", ");
+        }else{
+            setTargetInstances(new MultiSelectBox());
+            getTargetInstances().getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+
+
+            IInstance instances = Instance.load(navigation, 0, 50);
+            instanceIds = new String[instances.size() < DEFAULT_LOAD_INSTANCE_CNT ? instances.size() : DEFAULT_LOAD_INSTANCE_CNT];
+            int i=0;
+
+            while(instances.next()){
+
+                if(i < DEFAULT_LOAD_INSTANCE_CNT)
+                    instanceIds[i++] = instances.getInstId().toString();
+
+                getTargetInstances().getOptionValues().add(instances.getInstId().toString());
+                getTargetInstances().getOptionNames().add(instances.getName());
+
+            }
+        }
 
         String[] alphas = {"Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"};
 
         setChart(new Radar());
         getChart().setRadarData(new ArrayList<RadarData>());
 
+
         int i=0;
-        while(instances.next() && i++ < 4){
-            ProcessInstance instance = processManagerRemote.getProcessInstance(instances.getInstId().toString());
+        for(String instanceId : instanceIds){
+
+            ProcessInstance instance = processManagerRemote.getProcessInstance(instanceId);
 
             org.uengine.kernel.ProcessDefinition processDefinition = instance.getProcessDefinition();
 
@@ -82,7 +119,7 @@ public class Benchmark {
 
             RadarData pointOfEachAlphas = new RadarData();
             pointOfEachAlphas.setLabel(instance.getName());
-            pointOfEachAlphas.setColor(colors[i]);
+            pointOfEachAlphas.setColor(colors[i++]);
             getChart().getRadarData().add(pointOfEachAlphas);
 
             for(String alpha : alphas) {

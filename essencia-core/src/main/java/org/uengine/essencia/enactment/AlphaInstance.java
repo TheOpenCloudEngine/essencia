@@ -179,7 +179,7 @@ public class AlphaInstance extends LanguageElementInstance {
 
 
 
-                    boolean stateHasBeenChanged = false;
+                    int minStateOrder = 1000;
 
                     for(AlphaInstance subAlphaInstance : subAlphaInstances){
                         String aggregationAlphaStateName = null;
@@ -210,9 +210,19 @@ public class AlphaInstance extends LanguageElementInstance {
 
                         setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
 
-                        if(!stateHasBeenChanged) {
+
+                        int order = 0;
+                        for(State state : getAlpha().getStates()){
+                            if(state.getName().equals(aggregationAlphaStateName)){
+                                break;
+                            }
+                            order ++;
+                        }
+
+                        if(minStateOrder > order) {
+
                             setCurrentStateName(aggregationAlphaStateName);
-                            stateHasBeenChanged = true;
+                            minStateOrder = order;
                         }
                     }
 
