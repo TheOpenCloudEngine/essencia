@@ -5,11 +5,20 @@
     <parent>
         <artifactId>essencia</artifactId>
         <groupId>org.uengine</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>essence-model</artifactId>
+
+    <properties>
+        <uengine.processcodi.version>1.1.1-SNAPSHOT</uengine.processcodi.version>
+        <uengine.metaworks3.version>1.2.1-SNAPSHOT</uengine.metaworks3.version>
+        <uengine.uengine-bpm.version>4.0.1-SNAPSHOT</uengine.uengine-bpm.version>
+    </properties>
+
+
+
 
     <dependencies>
         <!-- emf -->
