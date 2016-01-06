@@ -71,14 +71,23 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
                     List<AlphaInstance> parentAlphaInstances = parentAlpha.getInstances(instance);
                     int i = -1;
-                    for(AlphaInstance alphaInstance : parentAlphaInstances){
-                        i++;
 
-                        if(alphaInstance==null) continue;
+                    if(parentAlphaInstances==null){  //parent alpha should be a kernel alpha, and it never have a instance value or just have single instance.
+                        AlphaInstance parentAlphaObjectInstance = (AlphaInstance) parentAlpha.createObjectInstance();
 
-                        alphaInstance.aggregateStateDetails(instance);
+                        parentAlphaObjectInstance.aggregateStateDetails(instance);
 
-                        alphaInstanceListToRefresh = new AlphaInstanceInList(alphaInstance, instance, i);
+                        alphaInstanceListToRefresh = new AlphaInstanceInList(parentAlphaObjectInstance, instance, 0);
+                    }else {
+                        for(AlphaInstance alphaInstance : parentAlphaInstances){
+                            i++;
+
+                            if(alphaInstance==null) continue;
+
+                            alphaInstance.aggregateStateDetails(instance);
+
+                            alphaInstanceListToRefresh = new AlphaInstanceInList(alphaInstance, instance, i);
+                        }
                     }
 
                 }

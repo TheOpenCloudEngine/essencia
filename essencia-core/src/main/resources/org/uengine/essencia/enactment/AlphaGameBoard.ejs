@@ -45,7 +45,7 @@
     if(alpha.states){
         for(var i in alpha.states){
             var state = alpha.states[i];
-            %><td><%=state.name%></td><%
+            %><td><%=state.name%><%=(state.aggregationAlphaState ? "(" + state.aggregationAlphaState + ")" : "")%></td><%
 
         }
     }else if(alpha.levelOfDetails){

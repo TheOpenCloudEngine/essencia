@@ -14,6 +14,7 @@ import org.metaworks.annotation.Face;
 import org.metaworks.website.MetaworksFile;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.context.EssenciaContext;
+import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.face.list.ResourceListFace;
 import org.uengine.essencia.model.face.list.TagListFace;
 import org.uengine.essencia.util.ContextUtil;
@@ -225,8 +226,8 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	}
 
 	@Hidden
-	public ObjectInstance createObjectInstance() {
-		ObjectInstance instance =  super.createObjectInstance();
+	public LanguageElementInstance createObjectInstance() {
+		LanguageElementInstance instance = (LanguageElementInstance) super.createObjectInstance();
 
 //TODO generalize this.
 		if(getFieldDescriptors()!=null)
@@ -235,6 +236,8 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 				instance.setBeanProperty(attribute.getName(), new MetaworksFile());
 			}
 		}
+
+		instance.setId(getName());
 
 		return instance;
 	}

@@ -179,7 +179,7 @@ public class AlphaInstance extends LanguageElementInstance {
 
 
 
-
+                    boolean stateHasBeenChanged = false;
 
                     for(AlphaInstance subAlphaInstance : subAlphaInstances){
                         String aggregationAlphaStateName = null;
@@ -209,6 +209,11 @@ public class AlphaInstance extends LanguageElementInstance {
                             runningCntOfThisState = (int)wipCntObject;
 
                         setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
+
+                        if(!stateHasBeenChanged) {
+                            setCurrentStateName(aggregationAlphaStateName);
+                            stateHasBeenChanged = true;
+                        }
                     }
 
                 }

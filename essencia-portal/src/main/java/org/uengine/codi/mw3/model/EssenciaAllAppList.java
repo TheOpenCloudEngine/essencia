@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.uengine.codi.mw3.marketplace.Marketplace;
 import org.uengine.essencia.Essencia;
 import org.uengine.essencia.Loader;
+import org.uengine.essencia.dashboard.Benchmark;
 import org.uengine.social.SocialBPMAppList;
 
 /**
@@ -52,7 +53,12 @@ public class EssenciaAllAppList extends SocialBPMAppList {
 
 
     @ServiceMethod(target=ServiceMethod.TARGET_POPUP)
-    public void showDashboard(){
-        MetaworksRemoteService.wrapReturn(new ModalWindow(new Radar(), 800, 700, "Alpha Status Comparison"));
+    public void showDashboard() throws Exception {
+
+        Benchmark benchmark = new Benchmark();
+        MetaworksRemoteService.autowire(benchmark);
+        benchmark.load();
+
+        MetaworksRemoteService.wrapReturn(new ModalWindow(benchmark, 800, 700, "Alpha Status Comparison"));
     }
 }

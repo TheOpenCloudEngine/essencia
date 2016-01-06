@@ -198,6 +198,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             Activity activityInPracticeDefinition = (Activity) element;
             Competency competency = getElement(activityInPracticeDefinition.getCompetency().getName(), Competency.class);
 
+            if(competency==null) continue;
+
             //finding role from the existing process definition first.
             if(returnProcessDefinition.getRoles()!=null)
             for(int i=0; i<returnProcessDefinition.getRoles().length; i++){
@@ -676,6 +678,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         }
     }
 
+    //TODO:  remove this method and implement properly.
     private void addCheckpointToState() {
         List<Activity> activityList = this.getElements(Activity.class);
         for (Activity activity : activityList) {
@@ -684,10 +687,14 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
                     Criterion criterion = (Criterion) e;
                     if (criterion.getState() != null) {
                         State state = criterion.getState();
-                        State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
-                        if (fullState != null) {
-                            state.setCheckPoints(fullState.getCheckPoints());
-                        }
+
+                        try {
+
+                            State fullState = getState(criterion.getState().getParentAlpha().getName(), state.getName());
+                            if (fullState != null) {
+                                state.setCheckPoints(fullState.getCheckPoints());
+                            }
+                        }catch (Exception ex){}
 
                     }
                 }
@@ -740,15 +747,19 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             _relation.setSourceElement(sourceElem);
             _relation.setTargetElement(targetElem);
 
-            if(sourceElem.outgoingRelations==null)
-                sourceElem.outgoingRelations = new ArrayList<Relation>();
+            if(sourceElem!=null) {
+                if (sourceElem.outgoingRelations == null)
+                    sourceElem.outgoingRelations = new ArrayList<Relation>();
 
-            sourceElem.outgoingRelations.add(_relation);
+                sourceElem.outgoingRelations.add(_relation);
+            }
 
-            if(targetElem.incomingRelations==null)
-                targetElem.incomingRelations = new ArrayList<Relation>();
+            if(targetElem != null){ //TODO: need to rosolve why this happen
+                if(targetElem.incomingRelations==null)
+                    targetElem.incomingRelations = new ArrayList<Relation>();
 
-            targetElem.incomingRelations.add(_relation);
+                targetElem.incomingRelations.add(_relation);
+            }
 
         }
 
