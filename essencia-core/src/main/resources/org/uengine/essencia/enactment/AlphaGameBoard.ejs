@@ -3,6 +3,7 @@
 <H1> <%=alpha.name%></h1>
 
 <table class="table table-striped active">
+    <tr>
 <%
 
     if(!mw3.uengineUML){
@@ -22,7 +23,7 @@
 
             if (fd.name == 'metaworksContext') continue;
 
-            %><th rowspan="2"><%=fd.displayName ? fd.displayName : fd.name%></th><%
+            %><th><%=fd.displayName ? fd.displayName : fd.name%></th><%
         }
     }
 
@@ -35,27 +36,26 @@
     }
 
 %>
-    <th colspan="<%=lengthOfLevels%>">State</th>
-</tr>
 
-<tr>
 
 <%
 
     if(alpha.states){
         for(var i in alpha.states){
             var state = alpha.states[i];
-            %><td><%=state.name%><%=(state.aggregationAlphaState ? "(" + state.aggregationAlphaState + ")" : "")%></td><%
+            %><th><%=state.name%><%=(state.aggregationAlphaState ? "(" + state.aggregationAlphaState + ")" : "")%></th><%
 
         }
     }else if(alpha.levelOfDetails){
         for(var i in alpha.levelOfDetails){
             var levelOfDetail = alpha.levelOfDetails[i];
-            %><td><%=levelOfDetail.name%></td><%
+            %><th><%=levelOfDetail.name%></th><%
 
         }
     }
     %>
+
+    </tr>
 
     <%=fields.alphaInstances.here()%>
 

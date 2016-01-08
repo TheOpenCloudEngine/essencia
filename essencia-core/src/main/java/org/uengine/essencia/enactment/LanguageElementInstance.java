@@ -8,6 +8,7 @@ import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Payload;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.dwr.SerializationSensitive;
+import org.metaworks.website.AbstractMetaworksFile;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.NeedArrangementToSerialize;
 import org.uengine.modeling.resource.DefaultResource;
@@ -154,6 +155,16 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 
     @Override
     public void afterDeserialization() {
+
+        for(Object fieldValue : getValueMap().values()){
+            if(fieldValue instanceof AbstractMetaworksFile && ((AbstractMetaworksFile) fieldValue).getUploadedPath()==null){
+                try {
+                    ((AbstractMetaworksFile) fieldValue).upload();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         if(getClassName()!=null && getClassName().indexOf("#") > 0 && getClassDefinition()==null) {
 

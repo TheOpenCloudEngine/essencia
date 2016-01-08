@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by jjy on 2016. 1. 3..
  */
-@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
+//@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class Benchmark {
 
     private static final int DEFAULT_LOAD_INSTANCE_CNT = 5;
@@ -85,18 +85,23 @@ public class Benchmark {
 
 
             IInstance instances = Instance.load(navigation, 0, 50);
-            instanceIds = new String[instances.size() < DEFAULT_LOAD_INSTANCE_CNT ? instances.size() : DEFAULT_LOAD_INSTANCE_CNT];
-            int i=0;
+            List instanceIdList = new ArrayList<String>();
 
             while(instances.next()){
 
-                if(i < DEFAULT_LOAD_INSTANCE_CNT)
-                    instanceIds[i++] = instances.getInstId().toString();
+                if(instances.getDefVerId()!=null && instances.getDefVerId().endsWith(".method")){
+                    if(instanceIdList.size() < DEFAULT_LOAD_INSTANCE_CNT ) {
+                        instanceIdList.add(instances.getInstId().toString());
+                    }
 
-                getTargetInstances().getOptionValues().add(instances.getInstId().toString());
-                getTargetInstances().getOptionNames().add(instances.getName());
+                    getTargetInstances().getOptionValues().add(instances.getInstId().toString());
+                    getTargetInstances().getOptionNames().add(instances.getName());
+                }
 
             }
+
+            instanceIds = new String[instanceIdList.size()];
+            instanceIdList.toArray(instanceIds);
         }
 
         String[] alphas = {"Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"};

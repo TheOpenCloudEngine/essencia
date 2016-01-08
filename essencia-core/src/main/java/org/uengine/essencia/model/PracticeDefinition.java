@@ -16,7 +16,6 @@ import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.EssenceActivity;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.enactment.LanguageElementInstance;
-import org.uengine.essencia.model.adapter.EssenceXmiAPI;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.*;
@@ -663,8 +662,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
     }
 
     public void toXmi() {
-        EssenceXmiAPI essenceXmiAPI = new EssenceXmiAPI(this);
-        essenceXmiAPI.toXmi();
+//        EssenceXmiAPI essenceXmiAPI = new EssenceXmiAPI(this);
+//        essenceXmiAPI.toXmi();
     }
 
     public void afterDeserialize() {

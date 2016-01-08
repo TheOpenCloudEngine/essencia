@@ -1,6 +1,7 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.MetaworksContext;
+import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
@@ -64,7 +65,7 @@ public class AlphaInstanceInList {
     @Autowired
     public ProcessManagerRemote processManagerRemote;
 
-    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true)
+    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true, mouseBinding = ServiceMethodContext.MOUSEBINDING_LEFTCLICK)
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
 
         AlphaInstanceInEditor alphaInstanceInEditor = new AlphaInstanceInEditor();

@@ -107,52 +107,6 @@ public class MethodCanvas extends EssenciaCanvas {
 
 
 
-        } else if (content instanceof EssenciaElementResource) {
-
-            EssenciaElementResource resource = ((EssenciaElementResource) content);
-            PracticeDefinition practice = null;
-            RelationView relationView = null;
-            ElementView tempElementView = null;
-
-            try {
-                practice = (PracticeDefinition) ObjectRepository.getInstance().get(resource.getPath());
-
-                String elementId = createId();
-
-                practice.getElementByName(resource.getDisplayName()).getElementView().setId(elementId);
-                tempElementView = (ElementView) practice.getElementByName(resource.getDisplayName()).getElementView().clone();
-
-                ElementView parentView = findDuplicatedParentElement(practice.findParentElements(tempElementView));
-
-                IRelation relation = practice.findFromRelation(tempElementView);
-                relation.getRelationView().setId(createId());
-
-
-                elementView = ((BasicElement) practice.getElementByName(resource.getDisplayName())).asView();
-                relationView = relation.asView();
-
-                parentView.addToEdge(relationView.getId());
-
-                relationView.setFromWithTerminal(parentView.getId());
-                relationView.setToWithTerminal(elementId);
-
-                elementView.setFromEdge(relationView.getId());
-                elementView.setToEdge("");
-                elementView.setX(0);
-                elementView.setY(0);
-
-                getElementViewList().add(elementView);
-                getRelationViewList().add(relationView);
-
-                autoRelocationFromPractice(getElementViewList());
-                ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            returnArr[1] = new Refresh(this);
-            wrapReturn( returnArr);
-
-            return;
         } else if (content instanceof MethodResource) {
 
             PracticeDefinition practice = null;

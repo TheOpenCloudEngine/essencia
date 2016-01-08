@@ -6,12 +6,7 @@ import org.metaworks.ToAppend;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
-import org.uengine.essencia.model.BasicElement;
-import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
-import org.uengine.essencia.repository.ObjectRepository;
-import org.uengine.essencia.resource.element.EssenciaElementResource;
-import org.uengine.essencia.resource.element.EssenciaResource;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.RelationView;
 import org.uengine.modeling.Symbol;
@@ -68,35 +63,11 @@ public class PracticeCanvas extends EssenciaCanvas {
 			
 			
 			
-		}else if(content instanceof EssenciaElementResource){
-			elementView = makeElementViewFromResource(((EssenciaResource) content));
-			
-			if(validate(elementView)){
-				returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
-			}
-
-			MetaworksRemoteService.wrapReturn(returnArr);
 		}else{
 			MetaworksRemoteService.wrapReturn( returnArr);
 		}
 	}
 	
-	private ElementView makeElementViewFromResource(EssenciaResource resource){
-		PracticeDefinition practice = null;
-		ElementView elementView = null;
-		try {
-			practice = (PracticeDefinition)ObjectRepository.getInstance().get(resource.getPath());
-			elementView = ((BasicElement)practice.getElementByName(resource.getDisplayName())).asView();
-			elementView.setFromEdge("");
-			elementView.setToEdge("");
-			elementView.setX(0);
-			elementView.setY(0);
-			elementView.setId("");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return elementView;
-	}
+
 	
 }

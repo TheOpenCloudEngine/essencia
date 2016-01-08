@@ -7,17 +7,9 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.designer.EssenciaPropertyPanel;
-import org.uengine.essencia.enactment.AlphaInstance;
-import org.uengine.essencia.enactment.face.LanguageElementInstanceFace;
-import org.uengine.essencia.model.Alpha;
-import org.uengine.essencia.model.CardViewable;
-import org.uengine.essencia.model.card.Card;
-import org.uengine.essencia.modeling.canvas.CardCanvas;
-import org.uengine.essencia.modeling.canvas.MethodCanvas;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
-import org.uengine.modeling.Symbol;
 
 public abstract class LanguageElementView extends ElementView {
 
