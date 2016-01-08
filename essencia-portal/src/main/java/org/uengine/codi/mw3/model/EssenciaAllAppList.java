@@ -11,9 +11,6 @@ import org.metaworks.widget.ModalWindow;
 import org.metaworks.widget.chart.Radar;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.uengine.codi.mw3.marketplace.Marketplace;
-import org.uengine.essencia.Essencia;
-import org.uengine.essencia.Loader;
 import org.uengine.essencia.dashboard.Benchmark;
 import org.uengine.social.SocialBPMAppList;
 
@@ -59,6 +56,6 @@ public class EssenciaAllAppList extends SocialBPMAppList {
         MetaworksRemoteService.autowire(benchmark);
         benchmark.load();
 
-        MetaworksRemoteService.wrapReturn(new ModalWindow(benchmark, 800, 700, "Alpha Status Comparison"));
+        MetaworksRemoteService.wrapReturn(new ModalWindow(benchmark, 700, 700, "Alpha Status Comparison"));
     }
 }

@@ -3,7 +3,6 @@ package org.uengine.modeling.resource.editor;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.PracticeDefinition;
-import org.uengine.essencia.modeling.editor.MethodComposerEditor;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.ProcessVariable;
