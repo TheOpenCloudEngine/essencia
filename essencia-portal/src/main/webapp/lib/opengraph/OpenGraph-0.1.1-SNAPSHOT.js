@@ -10952,7 +10952,7 @@ OG.shape.GroupShape.prototype.createShape = function () {
 	this.geom = new OG.geometry.Rectangle([0, 0], 100, 100);
 	this.geom.style = new OG.geometry.Style({
 		'fill' : '#ffffff',
-		'fill-opacity': 1,
+		'fill-opacity': 0,
 		"stroke": 'none'
 	});
 
@@ -11054,7 +11054,7 @@ OG.shape.HorizontalPoolShape.prototype.createShape = function () {
         'label-direction': 'vertical',
         'vertical-align' : 'top',
         'fill' : '#ffffff',
-        'fill-opacity': 1,
+        'fill-opacity': 0,
         'title-size' : 32
     });
 
@@ -11221,7 +11221,7 @@ OG.shape.Transformer.prototype.createShape = function () {
         'label-direction': 'horizontal',
         'vertical-align' : 'top',
         fill: '#ffffff',
-        'fill-opacity': 1
+        'fill-opacity': 0
     });
 
     return this.geom;
@@ -11263,7 +11263,7 @@ OG.shape.VerticalLaneShape.prototype.createShape = function () {
 		'vertical-align' : 'top',
 		'title-size' : 24,
 		fill: '#ffffff',
-		'fill-opacity': 1
+		'fill-opacity': 0
 	});
 
 	return this.geom;
@@ -11305,7 +11305,7 @@ OG.shape.VerticalPoolShape.prototype.createShape = function () {
         'label-direction': 'horizontal',
         'vertical-align' : 'top',
         'fill': '#ffffff',
-        'fill-opacity': 1
+        'fill-opacity': 0
     });
 
     return this.geom;
@@ -14361,7 +14361,7 @@ OG.shape.bpmn.M_Group.prototype.createShape = function () {
         //'stroke-dasharray': '- ',
         'r': 6,
         'fill': '#ffffff',
-        'fill-opacity': 1,
+        'fill-opacity': 0,
         "vertical-align": "top",
         "text-anchor": "start"
 
@@ -20694,7 +20694,7 @@ OG.renderer.RaphaelRenderer.prototype.drawConnectGuide = function (element) {
                     }
                     if (isRightAngle.type === 'vertical') {
                         var lineLenght = vertices[index - 1].y - vertices[index].y;
-                        if(Math.abs(lineLenght) < 50){
+                        if (Math.abs(lineLenght) < 50) {
                             return;
                         }
 
@@ -20704,12 +20704,12 @@ OG.renderer.RaphaelRenderer.prototype.drawConnectGuide = function (element) {
                             x: middleSpotPoint.x - (height / 2),
                             y: middleSpotPoint.y - (width / 2),
                             width: height,
-                            height: width,
+                            height: width
                         };
                         spotRectStyle.cursor = 'ew-resize';
                     } else {
                         var lineLenght = vertices[index - 1].x - vertices[index].x;
-                        if(Math.abs(lineLenght) < 50){
+                        if (Math.abs(lineLenght) < 50) {
                             return;
                         }
 
@@ -20719,7 +20719,7 @@ OG.renderer.RaphaelRenderer.prototype.drawConnectGuide = function (element) {
                             x: middleSpotPoint.x - (width / 2),
                             y: middleSpotPoint.y - (height / 2),
                             width: width,
-                            height: height,
+                            height: height
                         }
                         spotRectStyle.cursor = 'ns-resize';
                     }
@@ -21368,7 +21368,7 @@ OG.renderer.RaphaelRenderer.prototype.removeHighlight = function (element, highl
         var childNodes = me.getNotConnectGuideElements(element);
         $.each(childNodes, function (idx, childNode) {
             var orgAttrGroup = $(childNode).data('orgAttrGroup');
-            if(!orgAttrGroup){
+            if (!orgAttrGroup) {
                 return;
             }
             for (var key in highlight) {
@@ -21836,6 +21836,7 @@ OG.renderer.RaphaelRenderer.prototype.getExceptTitleLaneArea = function (element
  * @param {String} quarterOrder 분기 명령
  */
 OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrder) {
+    var divedLanes = [];
     var me = this;
     var rElement = me._getREleById(OG.Util.isElement(element) ? element.id : element);
     var geometry = rElement ? rElement.node.shape.geom : null;
@@ -21848,10 +21849,10 @@ OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrd
         return;
     }
 
-    var isUpper = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_UPPER ? true : false;
-    var isLow = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_LOW ? true : false;
-    var isBisector = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_BISECTOR ? true : false;
-    var isThirds = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_THIRDS ? true : false;
+    var isUpper = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_UPPER;
+    var isLow = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_LOW;
+    var isBisector = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_BISECTOR;
+    var isThirds = quarterOrder === OG.Constants.GUIDE_SUFFIX.QUARTER_THIRDS;
 
     //내부 분기일경우
     //1. 내 영역에서 타이틀 영역을 뺀 것이 분기가능한 바운더리 영역이다.
@@ -21869,7 +21870,8 @@ OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrd
                 if (i === quarterLength - 1) {
                     _height = _height + (targetArea.getHeight() % quarterLength);
                 }
-                me._CANVAS.drawShape([x + (_width / 2), y + (_height / 2)], new OG.HorizontalLaneShape(), [_width, _height], null, null, element.id);
+                var newLane = me._CANVAS.drawShape([x + (_width / 2), y + (_height / 2)], new OG.HorizontalLaneShape(), [_width, _height], null, null, element.id);
+                divedLanes.push(newLane);
             }
 
             if (me.isVerticalLane(element)) {
@@ -21880,7 +21882,8 @@ OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrd
                 if (i === quarterLength - 1) {
                     _width = _width + (targetArea.getWidth() % quarterLength);
                 }
-                me._CANVAS.drawShape([x + (_width / 2), y + (_height / 2)], new OG.VerticalLaneShape(), [_width, _height], null, null, element.id);
+                var newLane = me._CANVAS.drawShape([x + (_width / 2), y + (_height / 2)], new OG.VerticalLaneShape(), [_width, _height], null, null, element.id);
+                divedLanes.push(newLane);
             }
             me.fitLaneOrder(element);
         }
@@ -21912,6 +21915,7 @@ OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrd
                 var y = targetUpperLeft.y;
                 var shape = me.isHorizontalLane(element) ? new OG.HorizontalLaneShape() : new OG.VerticalLaneShape();
                 standardLane = me._CANVAS.drawShape([x + (_width / 2), y + (_height / 2)], shape, [_width, _height], null, null, element.id);
+                divedLanes.push(standardLane);
             }
 
             //하위 lane 이 있으면 upper,low 에 따른 기준을 골라 삼는다.
@@ -22012,12 +22016,19 @@ OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrd
                     }
                 }
             })
-            me._CANVAS.drawShape([x + (_width / 2), y + (_height / 2)], shape, [_width, _height], null, null, parent.id);
+            var newLane = me._CANVAS.drawShape([x + (_width / 2), y + (_height / 2)], shape, [_width, _height], null, null, parent.id);
+            divedLanes.push(newLane);
             $.each(lanesToMove, function (index, laneToMove) {
                 me.move(laneToMove, moveOffset);
             });
             me.reEstablishLane(standardLane);
             me.fitLaneOrder(standardLane);
+        }
+    }
+
+    if (divedLanes.length) {
+        for (var i = 0; i < divedLanes.length; i++) {
+            $(this._PAPER.canvas).trigger('divideLane', divedLanes[i]);
         }
     }
 }
@@ -22652,7 +22663,7 @@ OG.renderer.RaphaelRenderer.prototype.removeLaneShape = function (element) {
         me.removeShape(element);
         me.reEstablishLane(rootLane);
     }
-}
+};
 
 /**
  * Lane 내부 도형들을 구한다.
@@ -23087,7 +23098,6 @@ OG.handler.EventHandler.prototype = {
             $(root).removeData("groupTarget");
         }
 
-        //TODO 캔버스 마우스 무빙 이벤트로 교체한다.
         if (renderer.isGroup(element)) {
             $(element).bind({
                 mousemove: function () {
@@ -23127,17 +23137,18 @@ OG.handler.EventHandler.prototype = {
                     }
 
                     //이동중인 도형 중 Lane,Pool,ScopeActivity가 있다면 반응하지 않는다.
+                    //이동중인 도형 중 Lane 이 있다면 반응하지 않는다.
                     var blackList = false;
                     $.each(bBoxArray, function (idx, item) {
                         if (renderer.isLane(item.id)) {
                             blackList = true;
                         }
-                        if (renderer.isPool(item.id)) {
-                            blackList = true;
-                        }
-                        if (renderer.isScopeActivity(item.id)) {
-                            blackList = true;
-                        }
+                        //if (renderer.isPool(item.id)) {
+                        //    blackList = true;
+                        //}
+                        //if (renderer.isScopeActivity(item.id)) {
+                        //    blackList = true;
+                        //}
                     });
                     if (blackList) {
                         removeDropOverBox(targetElement);
@@ -23175,7 +23186,6 @@ OG.handler.EventHandler.prototype = {
                         removeDropOverBox(targetElement);
                         return;
                     }
-
 
                     $(root).data("groupTarget", targetElement);
                     me._RENDERER.drawDropOverGuide(targetElement);
@@ -23637,7 +23647,13 @@ OG.handler.EventHandler.prototype = {
                         $(root).removeData("groupTarget");
                     } else {
                         // ungrouping
-                        renderer.addToGroup(root, eleArray);
+                        var addToGroupArray = [];
+                        $.each(eleArray , function(idx , ele){
+                            if(ele.parentElement.id !== root.id){
+                                addToGroupArray.push(ele);
+                            }
+                        });
+                        renderer.addToGroup(root, addToGroupArray);
                     }
 
                     $.each(me._getSelectedElement(), function (idx, selected) {
@@ -29959,6 +29975,17 @@ OG.graph.Canvas.prototype = {
     onDrawShape: function (callbackFunc) {
         $(this.getRootElement()).bind('drawShape', function (event, shapeElement) {
             callbackFunc(event, shapeElement);
+        });
+    },
+
+    /**
+     * Lane 이 divide 되었을 때의 이벤트 리스너
+     *
+     * @param {Function} callbackFunc 콜백함수(event, shapeElement)
+     */
+    onDivideLane: function (callbackFunc) {
+        $(this.getRootElement()).bind('divideLane', function (event, divideLanes) {
+            callbackFunc(event, divideLanes);
         });
     },
 
