@@ -158,7 +158,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
 
             CompletionCriterion criterion = new CompletionCriterion();
 
-            sprint.setLevelOfDetails(new ArrayList<LevelOfDetail>());
+            sprint.setStates(new ArrayList<State>());
 
             LevelOfDetail done = new LevelOfDetail();
             done.setParentWorkProduct(sprint);
@@ -229,7 +229,7 @@ public class MultpleInstancesByMultipleWorkProducts extends UEngineTest{
         defaultSprint.setId("<id>");
         defaultSprint.setAttribute("iteration", new Integer(5));
         defaultSprint.setAttribute("startDate", "");
-        defaultSprint.setCurrentLevelOfDetailName("draft");
+        defaultSprint.setCurrentStateName("draft");
 //        defaultSprint.put("duration", 14);
 
         ProcessVariableValue pvv = new ProcessVariableValue();

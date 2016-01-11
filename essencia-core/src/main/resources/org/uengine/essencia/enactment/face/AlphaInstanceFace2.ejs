@@ -6,6 +6,7 @@
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#properties<%=objectId%>" aria-controls="home" role="tab" data-toggle="tab">Properties</a></li>
     <li role="presentation"><a href="#checkpoints<%=objectId%>" aria-controls="profile" role="tab" data-toggle="tab">Checkpoints</a></li>
+    <li role="presentation"><a href="#planning<%=objectId%>" aria-controls="profile" role="tab" data-toggle="tab">Planning</a></li>
   </ul>
 
   <!-- Tab panes -->
@@ -17,11 +18,20 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="checkpoints<%=objectId%>">
 
-<%if(mw3.when == 'edit' && value.checkPointInstanceGroups && value.checkPointInstanceGroups.length > 0){%>
+      <%if(mw3.when == 'edit' && value.checkPointInstanceGroups && value.checkPointInstanceGroups.length > 0){%>
 
-<%=fields.checkPointInstanceGroups.here()%>
+      <%=fields.checkPointInstanceGroups.here()%>
 
-<%}%>
+      <%}%>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="planning<%=objectId%>">
+
+      <%if(mw3.when == 'edit' && value.alphaPlanningPanel){%>
+
+        <%=fields.alphaPlanningPanel.here()%>
+
+      <%}%>
 
     </div>
   </div>

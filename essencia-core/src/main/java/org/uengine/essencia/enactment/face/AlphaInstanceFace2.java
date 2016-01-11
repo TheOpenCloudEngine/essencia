@@ -33,6 +33,15 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
             this.checkPointInstanceGroups = checkPointInstanceGroups;
         }
 
+    AlphaPlanningPanel alphaPlanningPanel;
+        public AlphaPlanningPanel getAlphaPlanningPanel() {
+            return alphaPlanningPanel;
+        }
+        public void setAlphaPlanningPanel(AlphaPlanningPanel alphaPlanningPanel) {
+            this.alphaPlanningPanel = alphaPlanningPanel;
+        }
+
+
 
     @Override
     public void setValueToFace(AlphaInstance value) {
@@ -40,7 +49,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
 
  //       setAttributeValues(value.getAttributeValues());
 
-        boolean isCompletionCriteria = (getCurrentStateName()==null ? true : false);
+        int indexOfTargetState = 1000, i=0;
 
         setCheckPointInstanceGroups(new ArrayList<CheckPointInstanceGroup>());
 
@@ -53,11 +62,7 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
             group.setCheckPointInstanceList(new ArrayList<CheckPointInstance>());
             group.setTitle(state.getName());
 
-            if(state.getName().equals(getCurrentStateName())){
-                isCompletionCriteria = true;
-            }
-
-            group.setCompletionCriteria(isCompletionCriteria);
+            group.setCompletionCriteria(indexOfTargetState >= i);
 
             for(CheckPoint checkPoint : state.getCheckPoints()){
                 CheckPointInstance checkPointInstance = new CheckPointInstance();
@@ -69,10 +74,15 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
 
 
             if(state.getName().equals(getTargetStateName())){
-                isCompletionCriteria = false;
+                indexOfTargetState = i;
             }
 
+            i++;
         }
+
+        setAlphaPlanningPanel(new AlphaPlanningPanel(value));
+
+
     }
 
     @Override
@@ -94,6 +104,11 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
                     alphaInstance.setChecked(checkPointInstance.getCheckPoint().getName(), checkPointInstance.isChecked());
                 }
             }
+        }
+
+
+        if(getAlphaPlanningPanel()!=null){
+            getAlphaPlanningPanel().applyToAlphaInstance(alphaInstance);
         }
 
         return alphaInstance;

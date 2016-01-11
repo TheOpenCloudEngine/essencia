@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment.handler;
 
+import com.itextpdf.text.Meta;
 import org.metaworks.annotation.AutowiredToClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Hidden;
@@ -21,6 +22,7 @@ import org.uengine.kernel.HumanActivity;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.ElementViewActionDelegate;
 import org.uengine.modeling.modeler.DefaultElementViewActionDelegate;
+import org.uengine.social.SocialBPMWorkItemHandler;
 import org.uengine.util.UEngineUtil;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class EssenceActivityHandler extends WorkItemHandler {
+public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
 
 
     ElementViewActionDelegate elementViewActionDelegate;
@@ -70,11 +72,12 @@ public class EssenceActivityHandler extends WorkItemHandler {
 
         Activity activityInEssenceDefinition = essenceActivity.getActivityInEssenceDefinition();
 
-        HashMap<String, Criterion> criterionByElementName = new HashMap<String, Criterion>();
+        HashMap<String, Criterion> criterionByElementName = new HashMap<String, Criterion>();   // Map of Completion criteria of this activity
         for(Criterion criterion : activityInEssenceDefinition.getCompletionCriteria()){
             criterionByElementName.put(criterion.getElement().getName(), criterion);
         }
 
+        List<AlphaInstance> alphaInstanceList = new ArrayList<AlphaInstance>();
         for(ParameterValue parameterValue : getParameters()){
 
 
@@ -84,16 +87,22 @@ public class EssenceActivityHandler extends WorkItemHandler {
 
                 parameterValueValue = parameterValue.getProcessVariableValueList().getDefaultValue();
 
+                for(MetaworksElement metaworksElement : parameterValue.getProcessVariableValueList().getElements()){
+                    alphaInstanceList.add((AlphaInstance) metaworksElement.getValue());
+                }
+
             }
 
+            if(parameterValueValue instanceof AlphaInstance)
+                alphaInstanceList.add((AlphaInstance) parameterValueValue);
 
-            if(parameterValueValue instanceof AlphaInstance){
-                AlphaInstance alphaInstance = (AlphaInstance) parameterValueValue;
 
+            //set target states for each alphaInstance parameters
+            for(AlphaInstance alphaInstance : alphaInstanceList){
                 if(criterionByElementName.containsKey(alphaInstance.getAlpha().getName())){
                     Criterion criterion = criterionByElementName.get(alphaInstance.getAlpha().getName());
 
-                    alphaInstance.setTargetStateName(criterion.getState().getName());
+                    alphaInstance.setTargetStateName(criterion.getStateOrLevelOfDetail().getName());
                 }
             }
         }

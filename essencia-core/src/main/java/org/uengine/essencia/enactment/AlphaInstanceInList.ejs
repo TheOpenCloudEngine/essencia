@@ -30,11 +30,16 @@
 
         var state = alpha.states[j];
 
+        %><td><%
+
         if(alphaInstance.currentStateName == state.name){
-            %><td><div class="icon-rounded m-r-10 current tooltip-top"><i class="glyphicon glyphicon-ok workitem_btn current"></i></div><%
-        }else{
-            %><td><%
+            %><div class="icon-rounded m-r-10 current tooltip-top"><%
         }
+
+        if(alphaInstance.targetStateName == state.name){
+            %><i class="glyphicon glyphicon-flag workitem_btn current"></i><%
+        }
+
 
         if(alphaInstance.subAlphaInstanceCount>1){
             var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
@@ -44,9 +49,14 @@
             // var max = 256;
 
 
-                %><font color="blue"><b><%=stateDetails['WIPCount']%>/<%=alphaInstance.subAlphaInstanceCount%></b></font><%
+                %><div><font color="blue"><b><%=stateDetails['WIPCount']%>/<%=alphaInstance.subAlphaInstanceCount%></b></font></div><%
             }
         }
+
+        if(alphaInstance.currentStateName == state.name){
+            %></div><%
+        }
+
         %></td><%
     }
 }

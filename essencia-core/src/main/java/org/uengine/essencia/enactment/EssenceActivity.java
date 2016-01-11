@@ -182,7 +182,7 @@ public class EssenceActivity extends HumanActivity {
         for(LanguageElement criterion1 : getActivityInEssenceDefinition().getEntryCriteria()){
             Criterion criterion = (Criterion)criterion1;   //TODO: why entrycriteria is not named as criterion and Criterion class.
 
-            Alpha alpha = criterion.getState().getParentAlpha(); //this structure may cause recursive reference
+            Alpha alpha = criterion.getStateOrLevelOfDetail().getParentAlpha(); //this structure may cause recursive reference
 
             List<AlphaInstance> alphaInstances =  alpha.getInstances(instance);
 

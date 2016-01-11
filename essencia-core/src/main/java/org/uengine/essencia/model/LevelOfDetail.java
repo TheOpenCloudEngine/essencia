@@ -2,6 +2,7 @@ package org.uengine.essencia.model;
 
 import java.util.List;
 
+import Essence.Foundation.*;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Name;
@@ -12,63 +13,45 @@ import org.uengine.essencia.model.view.LevelOfDetailView;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 
-public class LevelOfDetail extends LanguageElement implements IElement, FaceTransformer {
+public class LevelOfDetail extends State{// implements IElement, FaceTransformer {
 
-    private List<CheckPoint> checkPoints;
-    private transient CheckPointListFace listFace;
-
-    private ElementView elementView;
-    private WorkProduct parentWorkProduct;
-
-//    private TextContext name;
+//    private List<CheckPoint> checkPoints;
+//    private transient CheckPointListFace listFace;
 //
-//    @Name
-//    @Order(1)
-//    public String getName() {
-//        if (this.name == null) {
-//            return "";
-//        }
-//        return name.getText();
+//    private ElementView elementView;
+//    private WorkProduct parentWorkProduct;
+
+//
+//    public String getName(String locale) {
+//        return name.getText(locale);
 //    }
 //
-//    public void setName(String name) {
-//        if (this.name == null) {
-//            this.name = new TextContext();
-//        }
-//        this.name.setText(name);
+//    public void setName(String locale, String name) {
+//        this.name.setText(locale, name);
 //    }
 
-    public String getName(String locale) {
-        return name.getText(locale);
-    }
-
-    public void setName(String locale, String name) {
-        this.name.setText(locale, name);
-    }
-
-//    private TextContext description;
     private boolean isSufficientLevel;
-    private String aggregationAlphaState;
+//    private String aggregationAlphaState;
 
 
-    @Hidden
-    public List<CheckPoint> getCheckPoints() {
-        return checkPoints;
-    }
-
-    public void setCheckPoints(List<CheckPoint> checkPoints) {
-        this.checkPoints = checkPoints;
-    }
-
-    @Order(3)
-    @Face(displayName = "CheckPoint")
-    public CheckPointListFace getListFace() {
-        return listFace;
-    }
-
-    public void setListFace(CheckPointListFace listFace) {
-        this.listFace = listFace;
-    }
+//    @Hidden
+//    public List<CheckPoint> getCheckPoints() {
+//        return checkPoints;
+//    }
+//
+//    public void setCheckPoints(List<CheckPoint> checkPoints) {
+//        this.checkPoints = checkPoints;
+//    }
+//
+//    @Order(3)
+//    @Face(displayName = "CheckPoint")
+//    public CheckPointListFace getListFace() {
+//        return listFace;
+//    }
+//
+//    public void setListFace(CheckPointListFace listFace) {
+//        this.listFace = listFace;
+//    }
 
     public boolean isSufficientLevel() {
         return isSufficientLevel;
@@ -80,11 +63,11 @@ public class LevelOfDetail extends LanguageElement implements IElement, FaceTran
 
     @Hidden
     public WorkProduct getParentWorkProduct() {
-        return parentWorkProduct;
+        return (WorkProduct) getParentAlpha();
     }
 
     public void setParentWorkProduct(WorkProduct parentWorkProduct) {
-        this.parentWorkProduct = parentWorkProduct;
+        setParentAlpha(parentWorkProduct);
     }
 
 
@@ -119,7 +102,7 @@ public class LevelOfDetail extends LanguageElement implements IElement, FaceTran
         setName(name);
     }
 
-    public Essence.AlphaAndWorkProduct.LevelOfDetail toXmi() {
+    public Essence.Foundation.LanguageElement toXmi() {
         Essence.AlphaAndWorkProduct.LevelOfDetail levelOfDetail = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE
                 .createLevelOfDetail();
 
@@ -133,41 +116,41 @@ public class LevelOfDetail extends LanguageElement implements IElement, FaceTran
         return levelOfDetail;
     }
 
-    @Hidden
-    @Override
-    public ElementView getElementView() {
-        return this.elementView;
-    }
+//    @Hidden
+//    @Override
+//    public ElementView getElementView() {
+//        return this.elementView;
+//    }
+//
+//    @Override
+//    public void setElementView(ElementView elementView) {
+//        this.elementView = elementView;
+//    }
+//
+//    @Override
+//    public ElementView createView() {
+//        return new LevelOfDetailView(this);
+//    }
+//
+//    @Override
+//    public void setUpElement() {
+//        setListFace(new CheckPointListFace());
+//        if (getCheckPoints() != null) {
+//            getListFace().fillElements(getCheckPoints());
+//            getCheckPoints().clear();
+//        }
+//    }
 
-    @Override
-    public void setElementView(ElementView elementView) {
-        this.elementView = elementView;
-    }
-
-    @Override
-    public ElementView createView() {
-        return new LevelOfDetailView(this);
-    }
-
-    @Override
-    public void setUpElement() {
-        setListFace(new CheckPointListFace());
-        if (getCheckPoints() != null) {
-            getListFace().fillElements(getCheckPoints());
-            getCheckPoints().clear();
-        }
-    }
-
-    @Override
-    public void beforeApply() {
-        setCheckPoints(getListFace().createValue());
-    }
-
-    public String getAggregationAlphaState() {
-        return aggregationAlphaState;
-    }
-
-    public void setAggregationAlphaState(String aggregationAlphaState) {
-        this.aggregationAlphaState = aggregationAlphaState;
-    }
+//    @Override
+//    public void beforeApply() {
+//        setCheckPoints(getListFace().createValue());
+//    }
+//
+//    public String getAggregationAlphaState() {
+//        return aggregationAlphaState;
+//    }
+//
+//    public void setAggregationAlphaState(String aggregationAlphaState) {
+//        this.aggregationAlphaState = aggregationAlphaState;
+//    }
 }

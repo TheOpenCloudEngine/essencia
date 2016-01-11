@@ -16,6 +16,7 @@ import java.util.*;
 public class AlphaInstance extends LanguageElementInstance {
 
     public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
+    public static String STATE_PROP_KEY_DueDate = "Due";
 
     public Alpha getAlpha() {
         return (Alpha)getLanguageElement();
@@ -106,12 +107,24 @@ public class AlphaInstance extends LanguageElementInstance {
 
         alpha.getStates();
 
+        //// calculate Current State
         for(State state : alpha.getStates()){
             if(state.isAllChecked(this))
                 setCurrentStateName(state.getName());
             else
                 break;
         }
+
+        //// calculate Target State
+        java.util.Date today = new java.util.Date();
+
+        for(State state : alpha.getStates()){
+            java.util.Date dueDate = (Date) getStateDetails(state.getName(), STATE_PROP_KEY_DueDate);
+            if(dueDate!=null && today.after(dueDate)){
+                setTargetStateName(state.getName());
+            }
+        }
+
     }
 
 //    public void advanceStateTo(String stateName) {
@@ -228,32 +241,6 @@ public class AlphaInstance extends LanguageElementInstance {
 
                 }
 
-            }else if(element instanceof WorkProduct){
-                WorkProduct subAlpha = (WorkProduct)element;
-
-                List<WorkProductInstance> subAlphaInstances = subAlpha.getInstances(instance);
-
-                if(subAlphaInstances!=null) {
-                    totalCount += subAlphaInstances.size();
-
-                    for (WorkProductInstance subAlphaInstance : subAlphaInstances) {
-
-                        String aggregationAlphaStateName = subAlphaInstance.getCurrentLevelOfDetail().getAggregationAlphaState();
-
-                        try {
-                            getAlpha().findState(aggregationAlphaStateName);
-
-
-                            int runningCntOfThisState = 0;
-                            Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
-
-                            if (wipCntObject != null)
-                                runningCntOfThisState = (int) wipCntObject;
-
-                            setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
-                        }catch(Exception e){}
-                    }
-                }
             }
 
         }

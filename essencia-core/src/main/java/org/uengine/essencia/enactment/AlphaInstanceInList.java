@@ -65,12 +65,13 @@ public class AlphaInstanceInList {
     @Autowired
     public ProcessManagerRemote processManagerRemote;
 
-    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true, mouseBinding = ServiceMethodContext.MOUSEBINDING_LEFTCLICK)
+    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true)
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
 
         AlphaInstanceInEditor alphaInstanceInEditor = new AlphaInstanceInEditor();
         alphaInstanceInEditor.setInstanceId(instanceId);
         alphaInstanceInEditor.setVariablePointer(variablePointer);
+
 
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
         LanguageElementInstance leInstance = (LanguageElementInstance) variablePointer.getValue(instance);

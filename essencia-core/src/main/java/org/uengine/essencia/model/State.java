@@ -5,7 +5,6 @@ import java.util.List;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.metaworks.widget.ModalWindow;
-import org.uengine.essencia.dashboard.Dashboard;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.model.card.DetailCard;
 import org.uengine.essencia.model.card.StateCard;
@@ -98,7 +97,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
         return card;
     }
 
-    public Essence.AlphaAndWorkProduct.State toXmi() {
+    public Essence.Foundation.LanguageElement toXmi() {
         Essence.AlphaAndWorkProduct.State state = Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory.eINSTANCE.createState();
         state.setName(getName());
         state.setDescription(getDescription());

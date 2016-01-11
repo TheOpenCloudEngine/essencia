@@ -50,7 +50,10 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
 
         if(getLanguageElementInstance() instanceof AlphaInstance){
-            ((AlphaInstance) getLanguageElementInstance()).calculateState();
+            AlphaInstance alphaInstance = ((AlphaInstance) getLanguageElementInstance());
+            alphaInstance.calculateState();
+
+
         }
 
 
@@ -63,6 +66,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
         PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)instance.getProcessDefinition()).getPracticeDefinition();
         BasicElement alphaOrWP = (BasicElement) practiceDefinition.getElementByName(getLanguageElementInstance().getLanguageElement().getName());
+
         if(alphaOrWP.getIncomingRelations()!=null){
 
             for(Relation relation : alphaOrWP.getIncomingRelations()){

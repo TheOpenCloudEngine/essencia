@@ -157,11 +157,15 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
     public void afterDeserialization() {
 
         for(Object fieldValue : getValueMap().values()){
-            if(fieldValue instanceof AbstractMetaworksFile && ((AbstractMetaworksFile) fieldValue).getUploadedPath()==null){
-                try {
-                    ((AbstractMetaworksFile) fieldValue).upload();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            if(fieldValue instanceof AbstractMetaworksFile){
+                AbstractMetaworksFile metaworksFile = ((AbstractMetaworksFile) fieldValue);
+
+                if(metaworksFile.getUploadedPath()==null && metaworksFile.getFileTransfer()!=null) {
+                    try {
+                        ((AbstractMetaworksFile) fieldValue).upload();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

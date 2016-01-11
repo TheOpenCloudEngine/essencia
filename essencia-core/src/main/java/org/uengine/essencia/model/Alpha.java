@@ -13,6 +13,7 @@ import org.uengine.essencia.component.EssenciaConcernSelectBox;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.card.AlphaCard;
 import org.uengine.essencia.model.card.Card;
+import org.uengine.essencia.model.face.list.ListFace;
 import org.uengine.essencia.model.face.list.StateListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.ProcessInstance;
@@ -26,7 +27,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     private List<LanguageElement> childElements;
 
     private List<State> states;
-    private transient StateListFace listFace;
+    private transient ListFace listFace;
 
     public Alpha() {
         setConcernBox(new EssenciaConcernSelectBox());
@@ -42,11 +43,11 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     }
 
     @Face(displayName = "State")
-    public StateListFace getListFace() {
+    public ListFace getListFace() {
         return listFace;
     }
 
-    public void setListFace(StateListFace listFace) {
+    public void setListFace(ListFace listFace) {
         this.listFace = listFace;
     }
 
@@ -123,7 +124,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
         alpha.setDescription(getDescription());
         alpha.setBriefDescription(getBriefDescription());
         for (State s : getStates()) {
-            alpha.getStates().add(s.toXmi());
+            alpha.getStates().add((Essence.AlphaAndWorkProduct.State) s.toXmi());
         }
         return alpha;
     }

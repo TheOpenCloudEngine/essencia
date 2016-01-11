@@ -24,8 +24,7 @@ public class WorkProductCard extends BasicCard {
         x = 120;
         y = 48;
 
-        for (EssenciaElement essenciaElement : ((WorkProduct) element).getListFace().getEssenciaElementList()) {
-            LevelOfDetail levelOfDetail = (LevelOfDetail) essenciaElement.getValue();
+        for (LevelOfDetail levelOfDetail : ((WorkProduct)element).getLevelOfDetails()) {
             setSymbol(new LevelOfDetailView().createSymbol());
             setView(levelOfDetail.createView());
 

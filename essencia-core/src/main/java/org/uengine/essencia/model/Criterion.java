@@ -41,6 +41,17 @@ public class Criterion extends LanguageElement {
 	this.levelOfDetail = levelOfDetail;
     }
 
+
+    public State getStateOrLevelOfDetail(){
+        if(getState()!=null)
+            return getState();
+
+        if(getLevelOfDetail()!=null)
+            return getLevelOfDetail();
+
+        return null;
+    }
+
     public void setUpState(String state, String alpha) {
 	State tempState = new State(state);
 	Alpha tempAlpha = new Alpha(alpha);
@@ -80,7 +91,7 @@ public class Criterion extends LanguageElement {
 
         ValidationContext validationContext = new ValidationContext();
 
-        if(getState()!=null && UEngineUtil.isNotEmpty(getState().getName())){ //means Alpha
+        if(getStateOrLevelOfDetail()!=null && UEngineUtil.isNotEmpty(getStateOrLevelOfDetail().getName())){ //means Alpha
 
             Alpha alpha = getState().getParentAlpha();
 
@@ -118,13 +129,6 @@ public class Criterion extends LanguageElement {
                 throw new RuntimeException(e);
             }
 
-        }else if(getLevelOfDetail()!=null){ //means WorkProduct
-
-            WorkProduct workProduct = getLevelOfDetail().getParentWorkProduct();
-
-
-
-///
         }
 
 

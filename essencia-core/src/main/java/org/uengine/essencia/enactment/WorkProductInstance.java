@@ -8,25 +8,23 @@ import org.uengine.kernel.ProcessInstance;
 import java.util.*;
 
 //@Face(faceClass= AlphaInstanceFace.class)
-public class WorkProductInstance extends LanguageElementInstance {
-
-    public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
+public class WorkProductInstance extends AlphaInstance {
 
     public WorkProduct getWorkProduct() {
         return (WorkProduct)getLanguageElement();
     }
 
-    String currentLevelOfDetailName;
-    @Face(faceClass = LevelOfDetailNameSelector.class)
-        public String getCurrentLevelOfDetailName() {
-            return currentLevelOfDetailName;
-        }
-        public void setCurrentLevelOfDetailName(String currentLevelOfDetailName) {
-            this.currentLevelOfDetailName = currentLevelOfDetailName;
-        }
+//    String currentLevelOfDetailName;
+//    @Face(faceClass = LevelOfDetailNameSelector.class)
+//        public String getCurrentLevelOfDetailName() {
+//            return currentLevelOfDetailName;
+//        }
+//        public void setCurrentLevelOfDetailName(String currentLevelOfDetailName) {
+//            this.currentLevelOfDetailName = currentLevelOfDetailName;
+//        }
 
     public LevelOfDetail getCurrentLevelOfDetail(){
-        return getWorkProduct().findLevelOfDetail(getCurrentLevelOfDetailName());
+        return getWorkProduct().findLevelOfDetail(getCurrentStateName());
     }
 
 //    public WorkProductInstance(WorkProduct workProduct, String id){

@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.metaworks.annotation.Face;
@@ -14,31 +15,47 @@ import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.uml.model.ObjectInstance;
 
-public class WorkProduct extends BasicElement implements ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement, HasLevel {
+public class WorkProduct extends Alpha{//BasicElement implements ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement, HasLevel {
 
 
-    private List<LevelOfDetail> levelOfDetails;
-    private transient LevelOfDetailListFace listFace;
+//    private List<LevelOfDetail> levelOfDetails;
+//    private transient LevelOfDetailListFace listFace;
+//
 
+    @Override
+    @Face(displayName = "Levels Of Detail")
+    public List<State> getStates() {
+        return super.getStates();
+    }
 
     @Hidden
     public List<LevelOfDetail> getLevelOfDetails() {
-        return this.levelOfDetails;
-    }
-
-    public void setLevelOfDetails(List<LevelOfDetail> levelOfDetails) {
-        this.levelOfDetails = levelOfDetails;
-    }
+        if(getStates()==null)
+            return null;
 
 
-    @Face(displayName = "LevelOfDetail")
-    public LevelOfDetailListFace getListFace() {
-        return listFace;
+        List<LevelOfDetail> levelOfDetails = new ArrayList<LevelOfDetail>();
+
+        for(State state : getStates()){
+            levelOfDetails.add((LevelOfDetail) state);
+        }
+
+        return levelOfDetails;
     }
 
-    public void setListFace(LevelOfDetailListFace listFace) {
-        this.listFace = listFace;
-    }
+//    public void setLevelOfDetails(List<LevelOfDetail> levelOfDetails) {
+//        this.levelOfDetails = levelOfDetails;
+//    }
+
+
+//    @Face(displayName = "LevelOfDetail")
+//    public LevelOfDetailListFace getListFace() {
+//        return listFace;
+//    }
+//
+//    public void setListFace(LevelOfDetailListFace listFace) {
+//        this.listFace = listFace;
+//    }
 
     public WorkProduct() {
         setListFace(new LevelOfDetailListFace());
@@ -74,7 +91,7 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
         workProduct.setName(getName());
         workProduct.setDescription(getDescription());
         for (LevelOfDetail levelOfDetail : getLevelOfDetails()) {
-            workProduct.getLevelOfDetail().add(levelOfDetail.toXmi());
+            workProduct.getLevelOfDetail().add((Essence.AlphaAndWorkProduct.LevelOfDetail) levelOfDetail.toXmi());
         }
 
         return workProduct;
@@ -93,7 +110,7 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
     @Override
     public void beforeApply() {
         super.beforeApply();
-        setLevelOfDetails(getListFace().createValue());
+        setStates(getListFace().createValue());
     }
 
     public LevelOfDetail findLevelOfDetail(String levelOfDetailName) {
@@ -109,10 +126,10 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
 
     }
 
-    @Override
-    public List<WorkProductInstance> getInstances(ProcessInstance instance) {
-        return (List<WorkProductInstance>) super.getInstances(instance);
-    }
+//    @Override
+//    public List<WorkProductInstance> getInstances(ProcessInstance instance) {
+//        return (List<WorkProductInstance>) super.getInstances(instance);
+//    }
 
     @Override
     public WorkProductInstance createObjectInstance() {
@@ -124,13 +141,4 @@ public class WorkProduct extends BasicElement implements ContextTransformer, Car
         return new WorkProductInstance();
     }
 
-    //    @Override
-//    public WorkProductInstance createInstance(String id) {
-//        return (WorkProductInstance) new WorkProductInstance(this, id);
-//    }
-
-    @Override
-    public List<LevelOfDetail> getLevels() {
-        return getLevelOfDetails();
-    }
 }
