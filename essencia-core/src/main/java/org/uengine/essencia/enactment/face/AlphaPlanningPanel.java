@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment.face;
 
+import org.metaworks.annotation.Face;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.model.State;
 
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * Created by jjy on 2016. 1. 10..
  */
+@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class AlphaPlanningPanel {
 
     public AlphaPlanningPanel(){}
