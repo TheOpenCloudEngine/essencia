@@ -11008,7 +11008,7 @@ OG.shape.HorizontalLaneShape.prototype.createShape = function () {
 		'label-direction': 'vertical',
 		'vertical-align' : 'top',
 		'fill' : '#ffffff',
-		'fill-opacity': 1
+		'fill-opacity': 0
 	});
 
 	return this.geom;
@@ -16612,11 +16612,6 @@ OG.renderer.RaphaelRenderer.prototype.drawShape = function (position, shape, siz
         this.drawExceptionType(groupNode);
 
 
-    if (shape instanceof OG.shape.HorizontalLaneShape
-        || shape instanceof OG.shape.VerticalLaneShape) {
-        groupNode.parentNode.insertBefore(groupNode, groupNode.parentNode.firstChild);
-    }
-
     // Draw Label
     if (!(shape instanceof OG.shape.TextShape)) {
         this.drawLabel(groupNode);
@@ -16655,6 +16650,37 @@ OG.renderer.RaphaelRenderer.prototype.drawShape = function (position, shape, siz
         }
     }
 
+    //신규 shape 이면 그룹위에 그려졌을 경우 그룹처리
+    var setGroup = function () {
+        var frontGroup = me.getFrontForBoundary(me.getBoundary(groupNode));
+
+        if (!frontGroup) {
+            return;
+        }
+        //draw 대상이 Lane 인 경우 리턴.
+        if (me.isLane(groupNode)) {
+            return;
+        }
+        //그룹이 Lane 인 경우 RootLane 으로 변경
+        if (me.isLane(frontGroup)) {
+            frontGroup = me.getRootLane(frontGroup);
+        }
+        if (!me._CONFIG.GROUP_DROPABLE || !frontGroup.shape.GROUP_DROPABLE) {
+            return;
+        }
+
+        //그룹이 A_Task 일경우 반응하지 않는다.
+        if (frontGroup.shape instanceof OG.shape.bpmn.A_Task) {
+            return;
+        }
+
+        //자신일 경우 반응하지 않는다.
+        if (frontGroup.id === groupNode.id) {
+            return;
+        }
+        frontGroup.appendChild(groupNode);
+    };
+    setGroup();
 
     if ($(shape).attr('auto_draw') == 'yes') {
         $(groupNode).attr('auto_draw', 'yes');
@@ -18508,7 +18534,7 @@ OG.renderer.RaphaelRenderer.prototype.disconnect = function (element) {
 };
 
 /**
- * ID에 해당하는 Element 의 Edge 연결시 Drop Over 가이드를 드로잉한다.
+ * ID에 해당하는 Element 의 Drop Over 가이드를 드로잉한다.
  *
  * @param {Element,String} element Element 또는 ID
  * @override
@@ -22836,6 +22862,59 @@ OG.renderer.RaphaelRenderer.prototype.getFrontForCoordinate = function (point) {
 }
 
 /**
+ * Boundary 를 포함하는 가장 Front 에 위치한 Group Element 를 반환한다.
+ *
+ * @param {OG.geometry.Envelope} boundary 영역
+ * @return {Element} Element
+ */
+OG.renderer.RaphaelRenderer.prototype.getFrontForBoundary = function (boundary) {
+    var me = this, envelope, mostFrontElement = null;
+    if (!boundary) {
+        return mostFrontElement;
+    }
+
+    function getFront(group) {
+        var frontElement;
+        var childs = me.getChilds(group);
+        if (!childs.length) {
+            return;
+        }
+        $.each(childs, function (index, child) {
+
+            if (me.isEdge(child)) {
+                return;
+            }
+            if (!me.isGroup(child)) {
+                return;
+            }
+
+            if (child.shape instanceof OG.shape.bpmn.A_Task) {
+                return;
+            }
+
+            //바운더리가 일치하는 경우 반응하지 않는다.
+            envelope = me.getBoundary(child);
+            if (boundary.getUpperLeft().x === envelope.getUpperLeft().x &&
+                boundary.getUpperLeft().y === envelope.getUpperLeft().y &&
+                boundary.getWidth() === envelope.getWidth() &&
+                boundary.getHeight() === envelope.getHeight()) {
+                return;
+            }
+
+            if (envelope.isContainsAll(boundary.getVertices())) {
+                frontElement = child;
+            }
+        })
+        if (frontElement) {
+            mostFrontElement = frontElement;
+            getFront(frontElement);
+        }
+    }
+
+    getFront(me.getRootGroup());
+    return mostFrontElement;
+}
+/**
  * Event Handler
  *
  * @class
@@ -22858,10 +22937,11 @@ OG.handler.EventHandler.prototype = {
      */
     enableEditLabel: function (element) {
         var me = this;
+        var renderer = me._RENDERER;
 
         $(element).bind({
             dblclick: function (event) {
-                var container = me._RENDERER.getContainer(),
+                var container = renderer.getContainer(),
                     envelope = element.shape.geom.getBoundary(),
                     upperLeft = envelope.getUpperLeft(),
                     bBox,
@@ -22909,6 +22989,17 @@ OG.handler.EventHandler.prototype = {
                     },
                     centerOfEdge;
 
+                //상위 그룹의 라벨수정을 방지하기 위해
+                var eventOffset = me._getOffset(event)
+                var frontElement = renderer.getFrontForCoordinate([eventOffset.x, eventOffset.y]);
+                if (!frontElement) {
+                    return;
+                }
+                if (frontElement.id !== element.id) {
+                    return;
+                }
+
+
                 if (element.shape.isCollapsed === false) {
                     // textarea
                     $(container).append("<textarea id='" + element.id + OG.Constants.LABEL_EDITOR_SUFFIX + "'></textarea>");
@@ -22948,10 +23039,10 @@ OG.handler.EventHandler.prototype = {
                             focusout: function () {
                                 element.shape.html = this.value;
                                 if (element.shape.html) {
-                                    me._RENDERER.redrawShape(element);
+                                    renderer.redrawShape(element);
                                     this.parentNode.removeChild(this);
                                 } else {
-                                    me._RENDERER.removeShape(element);
+                                    renderer.removeShape(element);
                                     this.parentNode.removeChild(this);
                                 }
                             }
@@ -22974,20 +23065,20 @@ OG.handler.EventHandler.prototype = {
                             focusout: function () {
                                 element.shape.text = this.value;
                                 if (element.shape.text) {
-                                    me._RENDERER.redrawShape(element);
+                                    renderer.redrawShape(element);
                                     this.parentNode.removeChild(this);
                                 } else {
-                                    me._RENDERER.removeShape(element);
+                                    renderer.removeShape(element);
                                     this.parentNode.removeChild(this);
                                 }
                             }
                         });
                     } else if ($(element).attr("_shape") === OG.Constants.SHAPE_TYPE.EDGE) {
                         // Edge Shape
-                        if (element.shape.label && me._RENDERER.isSVG()) {
+                        if (element.shape.label && renderer.isSVG()) {
                             $(element).children('[id$=_LABEL]').each(function (idx, item) {
                                 $(item).find("text").each(function (idx2, item2) {
-                                    bBox = me._RENDERER.getBBox(item2);
+                                    bBox = renderer.getBBox(item2);
                                     left = bBox.x - 10;
                                     top = bBox.y;
                                     width = bBox.width + 20;
@@ -23005,7 +23096,7 @@ OG.handler.EventHandler.prototype = {
                         // 시작점 라벨인 경우
                         $(event.srcElement).parents('[id$=_FROMLABEL]').each(function (idx, item) {
                             $(item).find("text").each(function (idx2, item2) {
-                                bBox = me._RENDERER.getBBox(item2);
+                                bBox = renderer.getBBox(item2);
                                 left = bBox.x - 10;
                                 top = bBox.y;
                                 width = bBox.width + 20;
@@ -23017,7 +23108,7 @@ OG.handler.EventHandler.prototype = {
                         // 끝점 라벨인 경우
                         $(event.srcElement).parents('[id$=_TOLABEL]').each(function (idx, item) {
                             $(item).find("text").each(function (idx2, item2) {
-                                bBox = me._RENDERER.getBBox(item2);
+                                bBox = renderer.getBBox(item2);
                                 left = bBox.x - 10;
                                 top = bBox.y;
                                 width = bBox.width + 20;
@@ -23045,11 +23136,11 @@ OG.handler.EventHandler.prototype = {
                         $(labelEditor).bind({
                             focusout: function () {
                                 if (fromLabel) {
-                                    me._RENDERER.drawEdgeLabel(element, this.value, 'FROM');
+                                    renderer.drawEdgeLabel(element, this.value, 'FROM');
                                 } else if (toLabel) {
-                                    me._RENDERER.drawEdgeLabel(element, this.value, 'TO');
+                                    renderer.drawEdgeLabel(element, this.value, 'TO');
                                 } else {
-                                    me._RENDERER.drawLabel(element, this.value);
+                                    renderer.drawLabel(element, this.value);
                                 }
 
                                 this.parentNode.removeChild(this);
@@ -23070,138 +23161,14 @@ OG.handler.EventHandler.prototype = {
 
                         $(labelEditor).bind({
                             focusout: function () {
-                                me._RENDERER.drawLabel(element, this.value);
+                                renderer.drawLabel(element, this.value);
                                 this.parentNode.removeChild(this);
                             }
                         });
                     }
                 }
-
-                //상위 그룹의 라벨수정을 방지하기 위해
-                event.stopImmediatePropagation();
             }
         });
-    },
-
-
-    /**
-     * 주어진 Shape Element 를 Drag & Drop 으로 그룹핑 가능하도록 한다.
-     *
-     * @param {Element} element Shape Element
-     */
-    enableDragAndDropGroup: function (element) {
-        var renderer = this._RENDERER;
-        var me = this, root = renderer.getRootGroup();
-
-        var removeDropOverBox = function (target) {
-            me._RENDERER.remove(target.id + OG.Constants.DROP_OVER_BBOX_SUFFIX);
-            $(root).removeData("groupTarget");
-        }
-
-        if (renderer.isGroup(element)) {
-            $(element).bind({
-                mousemove: function () {
-                    //A_Task 일 경우 반응하지 않는다.
-                    if (element.shape instanceof OG.shape.bpmn.A_Task) {
-                        return;
-                    }
-
-                    //접혀진 상태면 반응하지 않는다.
-                    if (element.shape.isCollapsed === true) {
-                        return;
-                    }
-                    //도형 이동중이 아니면 반응하지 않는다.
-                    var bBoxArray = $(root).data("bBoxArray");
-                    if (!bBoxArray) {
-                        return;
-                    }
-
-                    //Lane 도형에 접근할 경우 최상위 Lane 으로 타겟변경한다.
-                    var targetElement;
-                    if (renderer.isLane(element)) {
-                        targetElement = renderer.getRootLane(element);
-                    } else {
-                        targetElement = element;
-                    }
-
-                    //이동중인 도형들 속에 타겟이 겹친 경우 반응하지 않는다.
-                    var isSelf = false;
-                    $.each(bBoxArray, function (idx, item) {
-                        if (targetElement.id === item.id) {
-                            isSelf = true;
-                        }
-                    });
-                    if (isSelf) {
-                        removeDropOverBox(targetElement);
-                        return;
-                    }
-
-                    //이동중인 도형 중 Lane,Pool,ScopeActivity가 있다면 반응하지 않는다.
-                    //이동중인 도형 중 Lane 이 있다면 반응하지 않는다.
-                    var blackList = false;
-                    $.each(bBoxArray, function (idx, item) {
-                        if (renderer.isLane(item.id)) {
-                            blackList = true;
-                        }
-                        //if (renderer.isPool(item.id)) {
-                        //    blackList = true;
-                        //}
-                        //if (renderer.isScopeActivity(item.id)) {
-                        //    blackList = true;
-                        //}
-                    });
-                    if (blackList) {
-                        removeDropOverBox(targetElement);
-                        return;
-                    }
-
-                    //이동중인 도형의 전체 바운더리가 완전히 타겟에 속하지 않는다면 반응하지 않는다.
-                    var completelyContain = false;
-                    var moveElements = [];
-                    var transform = [];
-                    $.each(bBoxArray, function (idx, item) {
-                        transform = renderer.getAttr(item.box, 'transform')[0];
-                        moveElements.push(renderer.getElementById(item.id));
-                    });
-                    if (!transform.length) {
-                        removeDropOverBox(targetElement);
-                        return;
-                    }
-
-                    var moveBoundary = renderer.getBoundaryOfElements(moveElements);
-                    var targetBoundary = renderer.getBoundary(targetElement);
-                    var moveTop = moveBoundary.getUpperCenter().y + transform[2];
-                    var moveLow = moveBoundary.getLowerCenter().y + transform[2];
-                    var moveLeft = moveBoundary.getLeftCenter().x + transform[1];
-                    var moveRight = moveBoundary.getRightCenter().x + transform[1];
-
-                    if (targetBoundary.getUpperCenter().y < moveTop &&
-                        targetBoundary.getLowerCenter().y > moveLow &&
-                        targetBoundary.getLeftCenter().x < moveLeft &&
-                        targetBoundary.getRightCenter().x > moveRight
-                    ) {
-                        completelyContain = true;
-                    }
-                    if (!completelyContain) {
-                        removeDropOverBox(targetElement);
-                        return;
-                    }
-
-                    $(root).data("groupTarget", targetElement);
-                    me._RENDERER.drawDropOverGuide(targetElement);
-                },
-                mouseout: function (event) {
-                    //Lane 도형에 접근할 경우 최상위 Lane 으로 타겟변경한다.
-                    var targetElement;
-                    if (renderer.isLane(element)) {
-                        targetElement = renderer.getRootLane(element);
-                    } else {
-                        targetElement = element;
-                    }
-                    removeDropOverBox(targetElement);
-                }
-            });
-        }
     },
 
     /**
@@ -23499,6 +23466,86 @@ OG.handler.EventHandler.prototype = {
             return fixedPosition;
         }
 
+        var removeDropOverBox = function () {
+            var dropOverBoxes = $('[id$=' + OG.Constants.DROP_OVER_BBOX_SUFFIX + ']');
+            $.each(dropOverBoxes, function (index, dropOverBox) {
+                renderer.remove(dropOverBox.id);
+            })
+            $(root).removeData("groupTarget");
+        }
+
+        var setGroupTarget = function () {
+            removeDropOverBox();
+
+            var bBoxArray = $(root).data("bBoxArray");
+            if (!bBoxArray) {
+                return;
+            }
+
+            var moveElements = [];
+            var transform = [];
+            $.each(bBoxArray, function (idx, item) {
+                transform = renderer.getAttr(item.box, 'transform')[0];
+                moveElements.push(renderer.getElementById(item.id));
+            });
+            if (!transform.length) {
+                return;
+            }
+            var moveBoundary = renderer.getBoundaryOfElements(moveElements);
+            var moveTop = moveBoundary.getUpperCenter().y + transform[2];
+            var moveLeft = moveBoundary.getLeftCenter().x + transform[1];
+            var bBoxBoundary = new OG.geometry.Envelope(
+                [moveLeft, moveTop], moveBoundary.getWidth(), moveBoundary.getHeight());
+
+            var frontGroup = renderer.getFrontForBoundary(bBoxBoundary);
+            if (!frontGroup) {
+                return;
+            }
+
+            if (!me._CONFIG.GROUP_DROPABLE || !frontGroup.shape.GROUP_DROPABLE) {
+                return;
+            }
+
+            //Lane 도형에 접근할 경우 최상위 Lane 으로 타겟변경한다.
+            if (renderer.isLane(frontGroup)) {
+                frontGroup = renderer.getRootLane(frontGroup);
+            }
+
+            //A_Task 일 경우 반응하지 않는다.
+            if (frontGroup.shape instanceof OG.shape.bpmn.A_Task) {
+                return;
+            }
+
+            //접혀진 상태면 반응하지 않는다.
+            if (frontGroup.shape.isCollapsed === true) {
+                return;
+            }
+
+            //이동중인 도형들 속에 타겟이 겹친 경우 반응하지 않는다.
+            var isSelf = false;
+            $.each(bBoxArray, function (idx, item) {
+                if (frontGroup.id === item.id) {
+                    isSelf = true;
+                }
+            });
+            if (isSelf) {
+                return;
+            }
+
+            //이동중인 도형 중 Lane 이 있다면 반응하지 않는다.
+            var blackList = false;
+            $.each(bBoxArray, function (idx, item) {
+                if (renderer.isLane(item.id)) {
+                    blackList = true;
+                }
+            });
+            if (blackList) {
+                return;
+            }
+            $(root).data("groupTarget", frontGroup);
+            renderer.drawDropOverGuide(frontGroup);
+        };
+
         if (isMovable === true) {
             $(element).draggable({
                 start: function (event) {
@@ -23615,6 +23662,8 @@ OG.handler.EventHandler.prototype = {
                         renderer.setAttr(item.box, {transform: "t" + dx + "," + dy});
                     });
 
+                    setGroupTarget();
+
                     renderer.removeAllConnectGuide();
                 },
                 stop: function (event) {
@@ -23648,8 +23697,8 @@ OG.handler.EventHandler.prototype = {
                     } else {
                         // ungrouping
                         var addToGroupArray = [];
-                        $.each(eleArray , function(idx , ele){
-                            if(ele.parentElement.id !== root.id){
+                        $.each(eleArray, function (idx, ele) {
+                            if (ele.parentElement.id !== root.id) {
                                 addToGroupArray.push(ele);
                             }
                         });
@@ -24400,7 +24449,9 @@ OG.handler.EventHandler.prototype = {
      * @param {Boolean} isSelectable 선택가능여부
      */
     setClickSelectable: function (element, isSelectable) {
-        var me = this, root = me._RENDERER.getRootGroup();
+        var me = this;
+        var renderer = me._RENDERER;
+        var root = me._RENDERER.getRootGroup();
         if (isSelectable === true) {
             // 마우스 클릭하여 선택 처리
             $(element).bind({
@@ -24454,15 +24505,20 @@ OG.handler.EventHandler.prototype = {
             if (me._CONFIG.ENABLE_CONTEXTMENU) {
                 $(element).bind("contextmenu", function (event) {
 
-                    //TODO 그룹 내부의 아이템 콘텍스트시 그룹이 함께 콘텍스트 되는 문제 해결
-                    //그룹일 경우, 그룹 내부의 모든 아이템 중에
-                    //이벤트 포지션을 포함하는 아이템이 있을 경우, 콘텍스트 생성을 포기한다.
+                    //중복된 콘텍스트를 방지
+                    var eventOffset = me._getOffset(event)
+                    var frontElement = renderer.getFrontForCoordinate([eventOffset.x, eventOffset.y]);
+                    if (!frontElement) {
+                        return;
+                    }
+                    if (frontElement.id !== element.id) {
+                        return;
+                    }
 
                     if (element.shape) {
                         if ($(element).attr("_selected") !== "true") {
                             me.selectShape(element, event);
                         }
-                        return true;
                     }
                 });
             }
@@ -26501,9 +26557,7 @@ OG.handler.EventHandler.prototype = {
                 me.setConnectGuide(newElement, me._isConnectable(newElement.shape));
                 me.setResizable(newElement, newGuide, me._isResizable(newElement.shape));
                 me.setConnectable(newElement, newGuide, me._isConnectable(newElement.shape));
-                if (me._CONFIG.GROUP_DROPABLE && newElement.shape.GROUP_DROPABLE) {
-                    me.enableDragAndDropGroup(newElement);
-                }
+
                 if (me._CONFIG.GROUP_COLLAPSIBLE && newElement.shape.GROUP_COLLAPSIBLE) {
                     me.enableCollapse(newElement);
                 }
@@ -26550,9 +26604,6 @@ OG.handler.EventHandler.prototype = {
                 me.setConnectGuide(groupElement, me._isConnectable(groupElement.shape));
                 me.setResizable(groupElement, guide, me._isResizable(groupElement.shape));
                 me.setConnectable(groupElement, guide, me._isConnectable(groupElement.shape));
-                if (me._CONFIG.GROUP_DROPABLE && groupElement.shape.GROUP_DROPABLE) {
-                    me.enableDragAndDropGroup(groupElement);
-                }
 
                 me._RENDERER.toFront(guide.group);
             }
@@ -27231,9 +27282,7 @@ OG.handler.EventHandler.prototype = {
                 me.setClickSelectable(newElement, me._isSelectable(newElement.shape));
                 me.setMovable(newElement, me._isMovable(newElement.shape));
                 me.setConnectGuide(newElement, me._isConnectable(newElement.shape));
-                if (me._CONFIG.GROUP_DROPABLE && newElement.shape.GROUP_DROPABLE) {
-                    me.enableDragAndDropGroup(newElement);
-                }
+
                 if (me._CONFIG.GROUP_COLLAPSIBLE && newElement.shape.GROUP_COLLAPSIBLE) {
                     me.enableCollapse(newElement);
                 }
@@ -28067,16 +28116,16 @@ OG.handler.EventHandler.prototype = {
 
                                     var connectableDirection = isConnectableSpot(spot);
                                     var frontElement = renderer.getFrontForCoordinate([eventOffset.x, eventOffset.y]);
-                                    $.each(renderer.getAllNotEdges() , function(idx, otherElement){
+                                    $.each(renderer.getAllNotEdges(), function (idx, otherElement) {
                                         if (frontElement && connectableDirection) {
-                                            if(otherElement.id === frontElement.id){
+                                            if (otherElement.id === frontElement.id) {
                                                 renderer.setHighlight(otherElement, enableStyle);
                                                 renderer.drawConnectGuide(otherElement);
-                                            }else{
+                                            } else {
                                                 renderer.removeHighlight(otherElement, enableStyle);
                                                 renderer.removeConnectGuide(otherElement);
                                             }
-                                        }else{
+                                        } else {
                                             renderer.removeHighlight(otherElement, enableStyle);
                                             renderer.removeConnectGuide(otherElement);
                                         }
@@ -28845,10 +28894,6 @@ OG.graph.Canvas.prototype = {
 
         if (this._HANDLER._isLabelEditable(element.shape)) {
             this._HANDLER.enableEditLabel(element);
-        }
-
-        if (this._CONFIG.GROUP_DROPABLE && element.shape.GROUP_DROPABLE) {
-            this._HANDLER.enableDragAndDropGroup(element);
         }
 
         if (element.shape.HaveButton) {   // + 버튼을 만들기 위해서
