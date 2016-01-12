@@ -27,6 +27,8 @@ public class AlphaPlanningPanel {
         if(alphaInstance==null) return;
 
         setDueDatePerStateList(new ArrayList<DueDatePerState>());
+
+        if(alphaInstance.getAlpha()!=null && alphaInstance.getAlpha().getStates()!=null)
         for(State state : alphaInstance.getAlpha().getStates()){
             getDueDatePerStateList().add(new DueDatePerState(state, alphaInstance));
         }
