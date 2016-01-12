@@ -31,6 +31,13 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
 
 	protected TextContext name;
+
+	@Override
+	@Hidden
+	public Attribute[] getFieldDescriptors() {
+		return super.getFieldDescriptors();
+	}
+
 	@Order(1)
 	@Id
 	@Name
@@ -98,6 +105,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	}
 
 	@Face(displayName = "Resource")
+	@Hidden
 	public ResourceListFace getResourceListFace() {
 		return resourceListFace;
 	}
@@ -107,6 +115,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	}
 
 	@Face(displayName = "Tag")
+	@Hidden
 	public TagListFace getTagListFace() {
 		return tagListFace;
 	}
@@ -154,6 +163,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		this.isSuppressable = isSuppressable;
 	}
 
+	@Hidden
 	public ElementGroup getOwner() {
 		return owner;
 	}
@@ -271,6 +281,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 
 
 	MultilingualBundle multilingualBundle;
+	@Hidden
 		public MultilingualBundle getMultilingualBundle() {
 			return multilingualBundle;
 		}

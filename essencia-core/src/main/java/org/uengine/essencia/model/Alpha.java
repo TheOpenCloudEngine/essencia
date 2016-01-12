@@ -17,6 +17,7 @@ import org.uengine.essencia.model.face.list.ListFace;
 import org.uengine.essencia.model.face.list.StateListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.ProcessInstance;
+import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ObjectInstance;
 
 public class Alpha extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
@@ -196,5 +197,12 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
         throw new IllegalArgumentException("No such state named " + stateName);
     }
+
+    @Override
+    @Hidden(on=false)
+    public Attribute[] getFieldDescriptors() {
+        return super.getFieldDescriptors();
+    }
+
 
 }

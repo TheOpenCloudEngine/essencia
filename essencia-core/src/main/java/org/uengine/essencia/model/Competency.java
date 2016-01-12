@@ -14,6 +14,7 @@ import org.uengine.essencia.model.face.list.CompetencyLevelListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.Role;
 import org.uengine.kernel.view.RoleView;
+import org.uengine.uml.model.Attribute;
 
 public class Competency extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
 
@@ -144,5 +145,12 @@ public class Competency extends BasicElement implements Concernable, ContextTran
         setConcern(getConcernBox().getSelected());
         setConcernBox(null);
     }
+
+    @Override
+    @Hidden(on=false)
+    public Attribute[] getFieldDescriptors() {
+        return super.getFieldDescriptors();
+    }
+
 
 }

@@ -47,6 +47,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
         this.aggregationAlphaState = aggregationAlphaState;
     }
 
+    @Hidden
     public List<CheckPoint> getCheckPoints() {
         return checkPoints;
     }
