@@ -16657,6 +16657,10 @@ OG.renderer.RaphaelRenderer.prototype.drawShape = function (position, shape, siz
         if (!frontGroup) {
             return;
         }
+        //draw 대상이 Edge 이면 리턴.
+        if(me.isEdge(groupNode)){
+            return;
+        }
         //draw 대상이 Lane 인 경우 리턴.
         if (me.isLane(groupNode)) {
             return;
@@ -22993,9 +22997,11 @@ OG.handler.EventHandler.prototype = {
                 var eventOffset = me._getOffset(event)
                 var frontElement = renderer.getFrontForCoordinate([eventOffset.x, eventOffset.y]);
                 if (!frontElement) {
+                    event.stopImmediatePropagation();
                     return;
                 }
                 if (frontElement.id !== element.id) {
+                    event.stopImmediatePropagation();
                     return;
                 }
 
