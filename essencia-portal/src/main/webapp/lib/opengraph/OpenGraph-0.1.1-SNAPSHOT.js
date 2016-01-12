@@ -22937,10 +22937,11 @@ OG.handler.EventHandler.prototype = {
      */
     enableEditLabel: function (element) {
         var me = this;
+        var renderer = me._RENDERER;
 
         $(element).bind({
             dblclick: function (event) {
-                var container = me._RENDERER.getContainer(),
+                var container = renderer.getContainer(),
                     envelope = element.shape.geom.getBoundary(),
                     upperLeft = envelope.getUpperLeft(),
                     bBox,
@@ -22988,6 +22989,17 @@ OG.handler.EventHandler.prototype = {
                     },
                     centerOfEdge;
 
+                //상위 그룹의 라벨수정을 방지하기 위해
+                var eventOffset = me._getOffset(event)
+                var frontElement = renderer.getFrontForCoordinate([eventOffset.x, eventOffset.y]);
+                if (!frontElement) {
+                    return;
+                }
+                if (frontElement.id !== element.id) {
+                    return;
+                }
+
+
                 if (element.shape.isCollapsed === false) {
                     // textarea
                     $(container).append("<textarea id='" + element.id + OG.Constants.LABEL_EDITOR_SUFFIX + "'></textarea>");
@@ -23027,10 +23039,10 @@ OG.handler.EventHandler.prototype = {
                             focusout: function () {
                                 element.shape.html = this.value;
                                 if (element.shape.html) {
-                                    me._RENDERER.redrawShape(element);
+                                    renderer.redrawShape(element);
                                     this.parentNode.removeChild(this);
                                 } else {
-                                    me._RENDERER.removeShape(element);
+                                    renderer.removeShape(element);
                                     this.parentNode.removeChild(this);
                                 }
                             }
@@ -23053,20 +23065,20 @@ OG.handler.EventHandler.prototype = {
                             focusout: function () {
                                 element.shape.text = this.value;
                                 if (element.shape.text) {
-                                    me._RENDERER.redrawShape(element);
+                                    renderer.redrawShape(element);
                                     this.parentNode.removeChild(this);
                                 } else {
-                                    me._RENDERER.removeShape(element);
+                                    renderer.removeShape(element);
                                     this.parentNode.removeChild(this);
                                 }
                             }
                         });
                     } else if ($(element).attr("_shape") === OG.Constants.SHAPE_TYPE.EDGE) {
                         // Edge Shape
-                        if (element.shape.label && me._RENDERER.isSVG()) {
+                        if (element.shape.label && renderer.isSVG()) {
                             $(element).children('[id$=_LABEL]').each(function (idx, item) {
                                 $(item).find("text").each(function (idx2, item2) {
-                                    bBox = me._RENDERER.getBBox(item2);
+                                    bBox = renderer.getBBox(item2);
                                     left = bBox.x - 10;
                                     top = bBox.y;
                                     width = bBox.width + 20;
@@ -23084,7 +23096,7 @@ OG.handler.EventHandler.prototype = {
                         // 시작점 라벨인 경우
                         $(event.srcElement).parents('[id$=_FROMLABEL]').each(function (idx, item) {
                             $(item).find("text").each(function (idx2, item2) {
-                                bBox = me._RENDERER.getBBox(item2);
+                                bBox = renderer.getBBox(item2);
                                 left = bBox.x - 10;
                                 top = bBox.y;
                                 width = bBox.width + 20;
@@ -23096,7 +23108,7 @@ OG.handler.EventHandler.prototype = {
                         // 끝점 라벨인 경우
                         $(event.srcElement).parents('[id$=_TOLABEL]').each(function (idx, item) {
                             $(item).find("text").each(function (idx2, item2) {
-                                bBox = me._RENDERER.getBBox(item2);
+                                bBox = renderer.getBBox(item2);
                                 left = bBox.x - 10;
                                 top = bBox.y;
                                 width = bBox.width + 20;
@@ -23124,11 +23136,11 @@ OG.handler.EventHandler.prototype = {
                         $(labelEditor).bind({
                             focusout: function () {
                                 if (fromLabel) {
-                                    me._RENDERER.drawEdgeLabel(element, this.value, 'FROM');
+                                    renderer.drawEdgeLabel(element, this.value, 'FROM');
                                 } else if (toLabel) {
-                                    me._RENDERER.drawEdgeLabel(element, this.value, 'TO');
+                                    renderer.drawEdgeLabel(element, this.value, 'TO');
                                 } else {
-                                    me._RENDERER.drawLabel(element, this.value);
+                                    renderer.drawLabel(element, this.value);
                                 }
 
                                 this.parentNode.removeChild(this);
@@ -23149,15 +23161,12 @@ OG.handler.EventHandler.prototype = {
 
                         $(labelEditor).bind({
                             focusout: function () {
-                                me._RENDERER.drawLabel(element, this.value);
+                                renderer.drawLabel(element, this.value);
                                 this.parentNode.removeChild(this);
                             }
                         });
                     }
                 }
-
-                //상위 그룹의 라벨수정을 방지하기 위해
-                event.stopImmediatePropagation();
             }
         });
     },
@@ -24440,7 +24449,9 @@ OG.handler.EventHandler.prototype = {
      * @param {Boolean} isSelectable 선택가능여부
      */
     setClickSelectable: function (element, isSelectable) {
-        var me = this, root = me._RENDERER.getRootGroup();
+        var me = this;
+        var renderer = me._RENDERER;
+        var root = me._RENDERER.getRootGroup();
         if (isSelectable === true) {
             // 마우스 클릭하여 선택 처리
             $(element).bind({
@@ -24494,15 +24505,20 @@ OG.handler.EventHandler.prototype = {
             if (me._CONFIG.ENABLE_CONTEXTMENU) {
                 $(element).bind("contextmenu", function (event) {
 
-                    //TODO 그룹 내부의 아이템 콘텍스트시 그룹이 함께 콘텍스트 되는 문제 해결
-                    //그룹일 경우, 그룹 내부의 모든 아이템 중에
-                    //이벤트 포지션을 포함하는 아이템이 있을 경우, 콘텍스트 생성을 포기한다.
+                    //중복된 콘텍스트를 방지
+                    var eventOffset = me._getOffset(event)
+                    var frontElement = renderer.getFrontForCoordinate([eventOffset.x, eventOffset.y]);
+                    if (!frontElement) {
+                        return;
+                    }
+                    if (frontElement.id !== element.id) {
+                        return;
+                    }
 
                     if (element.shape) {
                         if ($(element).attr("_selected") !== "true") {
                             me.selectShape(element, event);
                         }
-                        return true;
                     }
                 });
             }
