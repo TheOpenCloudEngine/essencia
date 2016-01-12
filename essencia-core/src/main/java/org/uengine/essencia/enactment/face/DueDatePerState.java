@@ -1,5 +1,8 @@
 package org.uengine.essencia.enactment.face;
 
+import org.metaworks.annotation.Face;
+import org.metaworks.annotation.NonEditable;
+import org.metaworks.annotation.Order;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.model.State;
 
@@ -8,6 +11,7 @@ import java.util.Calendar;
 /**
  * Created by jjy on 2016. 1. 10..
  */
+//@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class DueDatePerState {
 
     public DueDatePerState(State state, AlphaInstance alphaInstance) {
@@ -18,6 +22,8 @@ public class DueDatePerState {
     public DueDatePerState() {}
 
     String stateName;
+    @Order(1)
+    @NonEditable
         public String getStateName() {
             return stateName;
         }
@@ -27,6 +33,7 @@ public class DueDatePerState {
 
 
     java.util.Date dueDate;
+    @Order(2)
         public java.util.Date getDueDate() {
             return dueDate;
         }
