@@ -22,6 +22,7 @@
 
         <convert converter="bean" match="org.metaworks.dwr.*"/>
         <convert converter="metaworks" match="org.metaworks.example.*"/>
+        <convert converter="metaworks" match="org.metaworks.*"/>
 
         <convert converter="metaworks" match="java.lang.Class"/>
         <convert converter="metaworks" match="java.lang.Object"/>
