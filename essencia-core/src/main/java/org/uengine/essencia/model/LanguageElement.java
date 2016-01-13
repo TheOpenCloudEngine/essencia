@@ -246,21 +246,21 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 				instance.setBeanProperty(attribute.getName(), new MetaworksFile());
 			}
 
-			else if("org.uengine.social.RoleUser".equals(attribute.getClassName())){
+//			else if("org.uengine.social.RoleUser".equals(attribute.getClassName())){
+//				try {
+//					instance.setBeanProperty(attribute.getName(), Thread.currentThread().getContextClassLoader().loadClass(attribute.getClassName()).newInstance());
+//				} catch (Exception e) {
+//					throw new RuntimeException("Failed to create a default instance of " + attribute.getName() + "(" + attribute.getClassName() + ")", e);
+//				}
+//			}
+
+			else if (!attribute.getClassName().startsWith("java.lang")){
 				try {
 					instance.setBeanProperty(attribute.getName(), Thread.currentThread().getContextClassLoader().loadClass(attribute.getClassName()).newInstance());
 				} catch (Exception e) {
 					throw new RuntimeException("Failed to create a default instance of " + attribute.getName() + "(" + attribute.getClassName() + ")", e);
 				}
 			}
-
-//			else if (!attribute.getClassName().startsWith("java.lang")){
-//				try {
-//					instance.setBeanProperty(attribute.getName(), Thread.currentThread().getContextClassLoader().loadClass(attribute.getClassName()));
-//				} catch (ClassNotFoundException e) {
-//					throw new RuntimeException("Failed to create a default instance of " + attribute.getName() + "(" + attribute.getClassName() + ")", e);
-//				}
-//			}
 		}
 
 		instance.setId(getName());
