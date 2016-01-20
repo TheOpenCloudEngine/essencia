@@ -189,7 +189,7 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
         String[] processResourceNameAndLanguageElementName = className.split("\\#");
 
         if(processResourceNameAndLanguageElementName.length < 2){
-            throw new IllegalArgumentException("ClassName should be defined like this : codi/processName.process#languageElement");
+            throw new IllegalArgumentException("ClassName should be defined like this : codi/processName.process#languageElement, but this is " + className);
         }
 
         ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);

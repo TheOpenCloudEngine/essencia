@@ -1,8 +1,6 @@
 package org.uengine.essencia.enactment;
 
-import org.metaworks.Refresh;
-import org.metaworks.Remover;
-import org.metaworks.ToOpener;
+import org.metaworks.*;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Payload;
@@ -18,9 +16,13 @@ import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.modeling.Relation;
 import org.uengine.processmanager.ProcessManagerRemote;
+import org.uengine.uml.model.Attribute;
+import org.uengine.uml.model.ClassDefinition;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jjy on 2015. 12. 23..
@@ -83,7 +85,12 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
                         alphaInstanceListToRefresh = new AlphaInstanceInList(parentAlphaObjectInstance, instance, 0);
                     }else {
+
+                        Map<String, Integer> rowSpanMap = new HashMap<String, Integer>();
+                        AlphaInstance prevInstance = null;
+
                         for(AlphaInstance alphaInstance : parentAlphaInstances){
+
                             i++;
 
                             if(alphaInstance==null) continue;
@@ -91,6 +98,9 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
                             alphaInstance.aggregateStateDetails(instance);
 
                             alphaInstanceListToRefresh = new AlphaInstanceInList(alphaInstance, instance, i);
+
+                            ClassDefinition type = alphaInstance.getAlpha();
+
                         }
                     }
 

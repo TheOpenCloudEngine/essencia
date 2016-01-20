@@ -78,6 +78,8 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
         }
 
         List<AlphaInstance> alphaInstanceList = new ArrayList<AlphaInstance>();
+
+        if(getParameters()!=null)
         for(ParameterValue parameterValue : getParameters()){
 
 

@@ -51,11 +51,7 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
         if(!(instance.getProcessDefinition() instanceof EssenceProcessDefinition))
             throw new RuntimeException("This instance is not an EssenceProcessDefinition's instance");
 
-        PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)instance.getProcessDefinition()).getPracticeDefinition();
-
-        Dashboard dashboard = new Dashboard(practiceDefinition);
-
-        ModalWindow modal = new ModalWindow(new GameBoard(practiceDefinition, instance), 900, 700);
+        ModalWindow modal = new ModalWindow(new GameBoard(instance, false), 900, 700);
 
         modal.setTitle("Alpha Dashboard");
 

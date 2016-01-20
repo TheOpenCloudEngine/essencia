@@ -1,9 +1,6 @@
 package org.uengine.essencia.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.*;
@@ -314,6 +311,10 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 
 	public List<AlphaInstanceInList> getInstanceInLists(ProcessInstance instance) {
+		return getInstanceInLists(instance, true);
+	}
+
+	public List<AlphaInstanceInList> getInstanceInLists(ProcessInstance instance, boolean sorting) {
 
 		List<? extends LanguageElementInstance> alphaInstances = getInstances(instance);
 		List<AlphaInstanceInList> alphaInstanceInLists = new ArrayList<AlphaInstanceInList>();
@@ -322,13 +323,161 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 		int i=-1;
 		for (LanguageElementInstance alphaInstance : alphaInstances) {
-			i++;
-
 			if(alphaInstance==null) continue;
 
-			AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, i);
+			i++;
 
+			AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, i);
 			alphaInstanceInLists.add(alphaInstanceInList);
+		}
+
+		if(sorting) {
+
+			Collections.sort(alphaInstanceInLists, new Comparator<AlphaInstanceInList>() {
+				@Override
+				public int compare(AlphaInstanceInList o1, AlphaInstanceInList o2) {
+					if(getFieldDescriptors()!=null) {
+						int compResult = 0;
+
+						for (Attribute fd : getFieldDescriptors()) {
+							Object fieldValueO1 = o1.getLanguageElementInstance().getBeanProperty(fd.getName());
+							Object fieldValue02 = o2.getLanguageElementInstance().getBeanProperty(fd.getName());
+
+							if(fieldValueO1 instanceof Comparable) {
+								compResult = ((Comparable) fieldValueO1).compareTo(fieldValue02);
+							}else{
+								compResult = 0;
+							}
+
+							if(compResult!=0){
+								return compResult;
+							}
+						}
+					}else{
+						return o1.getLanguageElementInstance().getId().compareTo(o2.getLanguageElementInstance().getId());
+					}
+
+					return 0;
+				}
+			});
+
+			////// calculate row span
+
+			LanguageElementInstance prevInstance = null;
+			Map<String, Integer> rowSpanMap = new HashMap<String, Integer>();
+
+			i=-1;
+			for (AlphaInstanceInList alphaInstanceInList : alphaInstanceInLists) {
+				i++;
+
+				if (prevInstance != null && getFieldDescriptors() != null) {
+
+					boolean priorFieldValueChanged = false;
+					boolean lastField = false;
+
+					int fieldIndex = 0;
+					AlphaInstanceInList total = null;
+
+					for (Attribute fd : getFieldDescriptors()) {
+						fieldIndex++;
+						boolean totalling = false;
+						lastField = (fieldIndex == getFieldDescriptors().length);
+
+						if(Double.class.getName().equals(fd.getClassName())){
+							totalling = true;
+						}
+
+						Object fieldValue = alphaInstanceInList.getLanguageElementInstance().getBeanProperty(fd.getName());
+						Object prevFieldValue = null;
+
+						prevFieldValue = prevInstance.getBeanProperty(fd.getName());
+
+						int rowSpan = 0;
+
+						Integer rowSpanObject = rowSpanMap.get(fd.getName());
+						if (rowSpanObject == null)
+							rowSpan = 1;
+						else
+							rowSpan = rowSpanObject.intValue();
+
+						if (!priorFieldValueChanged && ((fieldValue == null && prevFieldValue == null) || (fieldValue != null && fieldValue.equals(prevFieldValue)))) {
+							rowSpan++;
+
+							rowSpanMap.put(fd.getName(), new Integer(rowSpan));
+
+							if(totalling){
+
+							}
+
+						} else {
+
+							priorFieldValueChanged = true;
+
+							int whereRowSpanStart = i - rowSpan;
+							AlphaInstanceInList alphaInstanceInListNeedToSetRowSpanMap = alphaInstanceInLists.get(whereRowSpanStart);
+
+							if (alphaInstanceInListNeedToSetRowSpanMap.getRowSpanMap() == null) {
+								alphaInstanceInListNeedToSetRowSpanMap.setRowSpanMap(new HashMap<String, Integer>());
+							}
+
+							alphaInstanceInListNeedToSetRowSpanMap.getRowSpanMap().put(fd.getName(), new Integer(rowSpan));
+
+							rowSpanMap.put(fd.getName(), new Integer(1));
+
+
+							//totalling and insert the total row
+							if(totalling && rowSpan > 1){ //at lease two or more rows are meaningful
+
+								if(total == null) {
+									total = new AlphaInstanceInList();
+
+
+									total.setLanguageElementInstance(createObjectInstance());
+									total.getLanguageElementInstance().setId("Total");
+
+									//copy values from the head.
+									total.getLanguageElementInstance().getValueMap().putAll(alphaInstanceInListNeedToSetRowSpanMap.getLanguageElementInstance().getValueMap());
+								}
+
+								Double totalValue = (Double) total.getLanguageElementInstance().getBeanProperty(fd.getName());
+								if(totalValue==null){
+									totalValue = 0d;
+								}
+
+								totalValue = totalValue + ((Double)fieldValue).doubleValue();
+
+								total.getLanguageElementInstance().setBeanProperty(fd.getName(), totalValue);
+
+								if(lastField){
+									alphaInstanceInLists.add(whereRowSpanStart, total); //maybe error
+								}
+							}
+						}
+					}
+
+				}
+
+				prevInstance = alphaInstanceInList.getLanguageElementInstance();
+			}
+
+
+			if (prevInstance != null && getFieldDescriptors() != null) {
+				for (Attribute fd : getFieldDescriptors()) {
+					Integer rowSpan = rowSpanMap.get(fd.getName());
+
+					if (rowSpan != null) {
+						int whereRowSpanStart = i - rowSpan + 1;
+						AlphaInstanceInList alphaInstanceInListNeedToSetRowSpanMap = alphaInstanceInLists.get(whereRowSpanStart);
+
+						if (alphaInstanceInListNeedToSetRowSpanMap.getRowSpanMap() == null)
+							alphaInstanceInListNeedToSetRowSpanMap.setRowSpanMap(new HashMap<String, Integer>());
+
+						//rowSpanMap.put(fd.getName(), rowSpan + 1);
+
+						alphaInstanceInListNeedToSetRowSpanMap.getRowSpanMap().put(fd.getName(), rowSpan);
+					}
+				}
+			}
 		}
 
 		return alphaInstanceInLists;

@@ -119,8 +119,7 @@ public class Benchmark {
 
             if(!(processDefinition instanceof EssenceProcessDefinition)) continue;
 
-            PracticeDefinition practiceDefinition = ((EssenceProcessDefinition) processDefinition).getPracticeDefinition();
-            GameBoard gameBoard = new GameBoard(practiceDefinition, instance);
+            GameBoard gameBoard = new GameBoard(instance, true);
 
             RadarData pointOfEachAlphas = new RadarData();
             pointOfEachAlphas.setLabel(instance.getName());

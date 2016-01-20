@@ -3,10 +3,7 @@ package org.uengine.essencia.enactment;
 import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.Instance;
 import org.metaworks.MetaworksContext;
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Payload;
-import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
@@ -155,6 +152,7 @@ public class AlphaGameBoard extends MetaworksContext {
 
 
     @ServiceMethod(inContextMenu = true, target = ServiceMethod.TARGET_SELF)
+    @Available(when="edit")
     public AlphaGameBoard addAlphaInstance(@Payload("instanceId") String instanceId, @Payload("alpha") Alpha alpha) throws Exception {
         LanguageElementInstance alphaInstance = alpha.createObjectInstance();
         alphaInstance.setBeanProperty("id", "New " + alpha.getName());
@@ -179,7 +177,7 @@ public class AlphaGameBoard extends MetaworksContext {
 
         EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition) instance.getProcessDefinition();
         PracticeDefinition practiceDefinition = essenceProcessDefinition.getPracticeDefinition();
-        GameBoard gameBoard = new GameBoard(practiceDefinition, instance);
+        GameBoard gameBoard = new GameBoard(instance, true);
 
         AlphaGameBoard alphaGameBoard = new AlphaGameBoard(getInstanceId(), (Alpha) practiceDefinition.getElementByName(alpha.getName()), gameBoard.getAlphaInstancesMap());
 

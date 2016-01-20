@@ -15,8 +15,24 @@
 
             if (fd.name == 'metaworksContext') continue;
 
+            var rowSpan = "";
+
+            if(mw3.when != 'edit') {
+                if (!value.rowSpanMap) continue;
+                rowSpan = value.rowSpanMap[fd.name];
+
+                if (!rowSpan || rowSpan == 0) continue;
+                if (rowSpan > 1) {
+                    rowSpan = " rowSpan=" + rowSpan;
+                } else {
+                    rowSpan = "";
+                }
+            }
+
             %>
-    <td><% if (alphaInstance.valueMap[fd.name] && alphaInstance.valueMap[fd.name].__className) {%>
+    <td<%=rowSpan%>><%
+
+          if (alphaInstance.valueMap[fd.name] && alphaInstance.valueMap[fd.name].__className) {%>
             <%=mw3.locateObject(alphaInstance.valueMap[fd.name])%>
         <%}else{%>
             <%=alphaInstance.valueMap[fd.name]%>

@@ -11,6 +11,8 @@ import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.processmanager.ProcessManagerRemote;
 
+import java.util.Map;
+
 
 /**
  * Created by jjy on 2015. 12. 23..
@@ -66,6 +68,7 @@ public class AlphaInstanceInList {
     public ProcessManagerRemote processManagerRemote;
 
     @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true)
+    @Available(when=MetaworksContext.WHEN_EDIT)
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
 
         AlphaInstanceInEditor alphaInstanceInEditor = new AlphaInstanceInEditor();
@@ -84,6 +87,7 @@ public class AlphaInstanceInList {
     }
 
     @ServiceMethod(target=ServiceMethod.TARGET_SELF, inContextMenu = true, needToConfirm = true)
+    @Available(when=MetaworksContext.WHEN_EDIT)
     public void delete(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
 
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
@@ -110,5 +114,13 @@ public class AlphaInstanceInList {
             this.deleted = deleted;
         }
 
+
+    Map<String, Integer> rowSpanMap;
+        public Map<String, Integer> getRowSpanMap() {
+            return rowSpanMap;
+        }
+        public void setRowSpanMap(Map<String, Integer> rowSpanMap) {
+            this.rowSpanMap = rowSpanMap;
+        }
 
 }

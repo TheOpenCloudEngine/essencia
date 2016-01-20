@@ -1,5 +1,8 @@
 package org.uengine.modeling.resource.editor;
 
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.uengine.codi.mw3.model.ProcessMap;
+import org.uengine.codi.mw3.model.RoleMappingPanel;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -9,12 +12,14 @@ import org.uengine.kernel.ProcessVariable;
 import org.uengine.modeling.resource.IEditor;
 import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.Serializer;
+import org.uengine.modeling.resource.Simulatable;
+import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.uml.model.ClassDefinition;
 
 /**
  * Created by jjy on 2015. 11. 10..
  */
-public class MethodEditor extends MethodComposer implements IEditor<EssenceProcessDefinition> {
+public class MethodEditor extends MethodComposer implements IEditor<EssenceProcessDefinition>, Simulatable {
 
 
     public MethodEditor() throws Exception {
@@ -75,4 +80,21 @@ public class MethodEditor extends MethodComposer implements IEditor<EssenceProce
         public void setObjStr(String objStr) {
             this.objStr = objStr;
         }
+
+    @Override
+    public Object simulator(IResource resource) {
+
+        ProcessManagerRemote processManager = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
+
+        ProcessMap processMap = new ProcessMap();
+        processMap.setName("[Test] " + resource.getName());
+        processMap.setDefId(resource.getPath().substring(resource.getPath().indexOf("/") + 1));
+        MetaworksRemoteService.autowire(processMap);
+
+        try {
+            return processMap.simulate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
