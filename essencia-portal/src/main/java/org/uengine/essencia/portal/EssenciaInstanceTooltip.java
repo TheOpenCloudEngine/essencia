@@ -2,9 +2,11 @@ package org.uengine.essencia.portal;
 
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.uengine.codi.mw3.model.Application;
 import org.uengine.codi.mw3.model.InstanceTooltip;
 import org.uengine.essencia.dashboard.Dashboard;
 import org.uengine.essencia.enactment.AlphaGameBoard;
@@ -43,7 +45,7 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
 //        return modal;
 //    }
 
-    @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)
+    @ServiceMethod(callByContent=true)//, target= ServiceMethodContext.TARGET_POPUP)
     public ModalWindow showDashBoard() throws Exception{
 
         ProcessInstance instance = processManager.getProcessInstance(""+getInstanceId());
@@ -54,6 +56,10 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
         ModalWindow modal = new ModalWindow(new GameBoard(instance, false), 900, 700);
 
         modal.setTitle("Alpha Dashboard");
+
+        //Gam application = new Application();
+
+        MetaworksRemoteService.wrapReturn(modal.getPanel());
 
         return modal;
     }

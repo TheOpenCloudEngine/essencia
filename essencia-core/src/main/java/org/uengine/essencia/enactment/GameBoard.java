@@ -5,6 +5,7 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.stereotype.Service;
+import org.uengine.codi.mw3.model.Application;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.ProcessInstance;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameBoard implements ContextAware{
+public class GameBoard extends Application implements ContextAware{
 
     public GameBoard(){}
 
@@ -125,6 +126,20 @@ public class GameBoard implements ContextAware{
 
         }
 
+        for(AlphaGameBoard alphaGameBoard : getAlphaGameBoards()){
+            String alphaName = alphaGameBoard.getAlpha().getName();
+
+            switch (alphaName){
+                case "Stakeholders": setStakeholders(alphaGameBoard); break;
+                case "Opportunity": setOpportunity(alphaGameBoard);break;
+                case "Requirements": setRequirements(alphaGameBoard);break;
+                case "System": setSystem(alphaGameBoard);break;
+                case "Team": setTeam(alphaGameBoard);break;
+                case "Work": setWork(alphaGameBoard);break;
+                case "Way-of-working": setWayOfWorking(alphaGameBoard);
+            }
+        }
+
     }
 
     MetaworksContext metaworksContext;
@@ -161,4 +176,68 @@ public class GameBoard implements ContextAware{
 //        return toggleEditable();
 //    }
 
+
+    AlphaGameBoard stakeholders;
+    AlphaGameBoard opportunity;
+    AlphaGameBoard requirements;
+    AlphaGameBoard system;
+    AlphaGameBoard team;
+    AlphaGameBoard work;
+    AlphaGameBoard wayOfWorking;
+
+    public AlphaGameBoard getStakeholders() {
+        return stakeholders;
+    }
+
+    public void setStakeholders(AlphaGameBoard stakeholders) {
+        this.stakeholders = stakeholders;
+    }
+
+    public AlphaGameBoard getOpportunity() {
+        return opportunity;
+    }
+
+    public void setOpportunity(AlphaGameBoard opportunity) {
+        this.opportunity = opportunity;
+    }
+
+    public AlphaGameBoard getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(AlphaGameBoard requirements) {
+        this.requirements = requirements;
+    }
+
+    public AlphaGameBoard getSystem() {
+        return system;
+    }
+
+    public void setSystem(AlphaGameBoard system) {
+        this.system = system;
+    }
+
+    public AlphaGameBoard getTeam() {
+        return team;
+    }
+
+    public void setTeam(AlphaGameBoard team) {
+        this.team = team;
+    }
+
+    public AlphaGameBoard getWork() {
+        return work;
+    }
+
+    public void setWork(AlphaGameBoard work) {
+        this.work = work;
+    }
+
+    public AlphaGameBoard getWayOfWorking() {
+        return wayOfWorking;
+    }
+
+    public void setWayOfWorking(AlphaGameBoard wayOfWorking) {
+        this.wayOfWorking = wayOfWorking;
+    }
 }

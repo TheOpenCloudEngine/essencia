@@ -1,2 +1,150 @@
-<%=methods.toggleEditable.here()%>
+<div style="padding:15px">
+
+<table width="95%">
+
+
+            <!--header-->
+            <tr><th></th>
+
+                <%
+                var allAlphas = ["stakeholders", "opportunity", "requirements", "system", "team", "work", "wayOfWorking"];
+                var allAlphaNames = ["Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way Of Working"];
+
+                for (var i=0; i<allAlphas.length; i++){
+                    var alphaName = allAlphaNames[i];
+
+                %>
+                <th align="center"><center><h4><%=alphaName%></h4></center></th>
+                <% }%>
+
+            </tr>
+
+
+
+
+            <!--done states-->
+            <tr><td></td>
+
+                <%
+
+                    for (var i=0; i<allAlphas.length; i++){
+                        var alphaGameBoard = value[allAlphas[i]];
+
+                %>
+                    <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                <%
+                    if(alphaGameBoard){
+
+                        var alphaInstance = alphaGameBoard.alphaInstances[0].languageElementInstance;
+
+                        if(alphaInstance.currentStateName)
+                        for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
+                            var state = alphaGameBoard.alpha.states[j];
+
+                            if(alphaInstance.currentStateName == state.name)
+                                break;
+
+                            %><button type="button" class="btn btn-default"> <%=state.name%> </button><br><%
+                        }
+                    }
+
+                %>
+
+                    </td>
+                <% }%>
+
+            </tr>
+
+            <!--wip states-->
+
+            <tr><td><font color="gray">now</td><td align="center" colspan="7"><hr></td> </tr>
+
+
+            <tr><td></td>
+
+                <%
+
+                for (var i=0; i<allAlphas.length; i++){
+                    var alphaGameBoard = value[allAlphas[i]];
+
+                %>
+                <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                    <%
+                    if(alphaGameBoard){
+
+                        var alphaInstance = alphaGameBoard.alphaInstances[0].languageElementInstance;
+
+                        for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
+                            var state = alphaGameBoard.alpha.states[j];
+
+                            if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
+                        %><button type="button" class="btn btn-success"> <%=state.name%> </button><br><%
+                            }
+                        }
+                    }
+
+                    %>
+
+
+                </td>
+
+                <% }%>
+
+            </tr>
+
+            <!--todo states-->
+
+            <tr><td>to do</td><td align="center" colspan="7"><hr></td> </tr>
+
+            <tr><td></td>
+            <%
+
+                for (var i=0; i<allAlphas.length; i++){
+                    var alphaGameBoard = value[allAlphas[i]];
+
+                %>
+                    <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                    <%
+                    if(alphaGameBoard){
+
+                        var alphaInstance = alphaGameBoard.alphaInstances[0].languageElementInstance;
+
+                        var isDone = alphaInstance.currentStateName;
+
+                        for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
+                            var state = alphaGameBoard.alpha.states[j];
+
+                            if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
+                                if(alphaInstance.currentStateName == state.name){
+                                    isDone = false;
+                                }
+
+                                continue;
+                            }
+
+                            if(!isDone){
+                                %><button type="button" class="btn btn-info"> <%=state.name%> </button><br><%
+                            }
+
+                            if(alphaInstance.currentStateName == state.name){
+                                    isDone = false;
+                            }
+                        }
+                    }
+
+                    %>
+
+                    </td>
+                <% }%>
+
+            </tr>
+
+        </table>
+
+    <hr>
+
+        <%=methods.toggleEditable.here()%>
 <%=fields.alphaGameBoards.here()%>
+
+
+</div>
