@@ -16479,7 +16479,7 @@ OG.renderer.RaphaelRenderer.prototype.drawShape = function (position, shape, siz
     var width = size ? size[0] : 100,
         height = size ? size[1] : 100,
         groupNode, geometry, text, image, html,
-        me = this, change = false;
+        me = this;
 
     if (shape instanceof OG.shape.GeomShape) {
         geometry = shape.createShape();
@@ -16653,9 +16653,8 @@ OG.renderer.RaphaelRenderer.prototype.drawShape = function (position, shape, siz
         setGroup();
     }
 
-    //TODO Shape 의 위치를 수정하고 Root 에 마우스 드래그시 알 수 있도록 데이터를 삽입한다.
     if (!id && (me.isLane(groupNode) || me.isPool(groupNode))) {
-
+        me.setDropablePool(groupNode);
     }
 
     if ($(shape).attr('auto_draw') == 'yes') {
@@ -21770,6 +21769,26 @@ OG.renderer.RaphaelRenderer.prototype.isVerticalLane = function (element) {
 };
 
 /**
+ * 도형의 HorizontalPoolShape 타입 여부를 판별한다.
+ *
+ * @param {Element,String} Element Element 또는 ID
+ * @return {boolean} true false
+ */
+OG.renderer.RaphaelRenderer.prototype.isHorizontalPool = function (element) {
+    return element.shape instanceof OG.shape.HorizontalPoolShape;
+};
+
+/**
+ * 도형의 VerticalPoolShape 타입 여부를 판별한다.
+ *
+ * @param {Element,String} Element Element 또는 ID
+ * @return {boolean} true false
+ */
+OG.renderer.RaphaelRenderer.prototype.isVerticalPool = function (element) {
+    return element.shape instanceof OG.shape.VerticalPoolShape;
+};
+
+/**
  * Lane 타입 도형 하위의 Lane 타입들을 리턴한다.
  *
  * @param {Element,String} Element Element 또는 ID
@@ -21838,7 +21857,7 @@ OG.renderer.RaphaelRenderer.prototype.enableDivideCount = function (element) {
 };
 
 /**
- * Lane 의 타이틀 영역을 제외한 boundary 를 리턴한다.
+ * Lane,Pool 의 타이틀 영역을 제외한 boundary 를 리턴한다.
  *
  * @param {Element,String} Element Element 또는 ID
  * @param {OG.geometry.Envelope} boundary
@@ -21860,17 +21879,17 @@ OG.renderer.RaphaelRenderer.prototype.getExceptTitleLaneArea = function (element
     var height = boundary.getHeight();
     var newUpperLeft, newWidth, newHeight;
 
-    if (!me.isLane(element)) {
+    if (!me.isLane(element) && !me.isPool(element)) {
         return boundary;
     }
 
-    if (me.isHorizontalLane(element)) {
+    if (me.isHorizontalLane(element) || me.isHorizontalPool(element)) {
         newUpperLeft = new OG.geometry.Coordinate(upperLeft.x + titleSize, upperLeft.y);
         newWidth = width - titleSize;
         newHeight = height;
     }
 
-    if (me.isVerticalLane(element)) {
+    if (me.isVerticalLane(element) || me.isVerticalPool(element)) {
         newUpperLeft = new OG.geometry.Coordinate(upperLeft.x, upperLeft.y + titleSize);
         newWidth = width;
         newHeight = height - titleSize;
@@ -22944,7 +22963,7 @@ OG.renderer.RaphaelRenderer.prototype.getFrontForBoundary = function (boundary) 
     return mostFrontElement;
 };
 
-//trimEdgeDirection
+
 /**
  * 신규 Edge 의 vertices 를 연결대상 도형에 따라 설정한다
  *
@@ -23014,6 +23033,130 @@ OG.renderer.RaphaelRenderer.prototype.trimEdgeDirection = function (edge, fromSh
 
     return me.drawEdge(new OG.PolyLine(points), edge.shape.geom.style, edge.id);
 };
+
+/**
+ * 신규 Lane 또는 Pool 이 캔버스상에서 드래그하여 그려지도록 사전작업을 수행한다.
+ *
+ * @param {Element,String} Element
+
+ * @return {Element} Element
+ */
+OG.renderer.RaphaelRenderer.prototype.setDropablePool = function (element) {
+    var me = this;
+    var root = me.getRootGroup();
+
+    if (!me.isLane(element) && !me.isPool(element)) {
+        return element;
+    }
+
+    var geometry = element.shape.geom;
+
+    //캔버스 하위 shape 중 그룹 가능한 것의 집합.
+    var rootInnderShape = [];
+    var childs = me.getChilds(root);
+    $.each(childs, function (index, child) {
+        if (!me.isLane(child) && !me.isPool(child) && !me.isEdge(child)) {
+            rootInnderShape.push(child);
+        }
+    });
+
+    var poolDefaultSize = me._CONFIG.POOL_DEFAULT_SIZE;
+    var space = 30;
+    var boundary = geometry.getBoundary();
+    var centroid = boundary.getCentroid();
+    var poolSize = {};
+
+    var calculateDropCorrectionConditions = function () {
+
+        var correctionConditions = [];
+        if (!rootInnderShape.length) {
+            return correctionConditions;
+        }
+
+        var childArea = me.getBoundaryOfElements(rootInnderShape);
+        var elementArea = me.getBoundary(element);
+
+        var center = childArea.getCentroid();
+        var widthEnable = (elementArea.getWidth() / 2) - ((childArea.getWidth() / 2) + space);
+        var heightEnable = (elementArea.getHeight() / 2) - ((childArea.getHeight() / 2) + space);
+        if (widthEnable < 0) {
+            widthEnable = 0;
+        }
+        if (heightEnable < 0) {
+            heightEnable = 0;
+        }
+
+        correctionConditions.push({
+            condition: {
+                maxX: center.x + widthEnable
+            },
+            fixedPosition: {
+                x: center.x + widthEnable
+            }
+        });
+        correctionConditions.push({
+            condition: {
+                minX: center.x - widthEnable
+            },
+            fixedPosition: {
+                x: center.x - widthEnable
+            }
+        });
+        correctionConditions.push({
+            condition: {
+                maxY: center.y + heightEnable
+            },
+            fixedPosition: {
+                y: center.y + heightEnable
+            }
+        });
+        correctionConditions.push({
+            condition: {
+                minY: center.y - heightEnable
+            },
+            fixedPosition: {
+                y: center.y - heightEnable
+            }
+        });
+        return correctionConditions;
+    };
+
+
+    if (me.isVerticalLane(element) || me.isVerticalPool(element)) {
+        poolSize.width = poolDefaultSize[1];
+        poolSize.height = poolDefaultSize[0];
+    } else {
+        poolSize.width = poolDefaultSize[0];
+        poolSize.height = poolDefaultSize[1];
+    }
+
+    if (rootInnderShape.length) {
+        var childArea = me.getBoundaryOfElements(rootInnderShape);
+        centroid = childArea.getCentroid();
+
+        if (poolSize.width < childArea.getWidth() + (space * 2)) {
+            poolSize.width = childArea.getWidth() + (space * 2);
+        }
+        if (poolSize.height < childArea.getHeight() + (space * 2)) {
+            poolSize.height = childArea.getHeight() + (space * 2);
+        }
+    }
+
+    var originalStyle = JSON.parse(JSON.stringify(geometry.style.map));
+    geometry.moveCentroid([centroid.x, centroid.y]);
+    geometry.resizeBox(poolSize.width, poolSize.height);
+    geometry.style.map['stroke-width'] = 2;
+    geometry.style.map['stroke'] = '#FFCC50';
+
+    element = this.redrawShape(element);
+
+    $(element).data('originalStyle', originalStyle);
+    $(root).data('newPool', element);
+    $(root).data('poolInnderShape', rootInnderShape);
+    $(root).data('correctionConditions', calculateDropCorrectionConditions());
+
+    return element;
+}
 /**
  * Event Handler
  *
@@ -23588,15 +23731,15 @@ OG.handler.EventHandler.prototype = {
             }
 
             return fixedPosition;
-        }
+        };
 
         var removeDropOverBox = function () {
             var dropOverBoxes = $('[id$=' + OG.Constants.DROP_OVER_BBOX_SUFFIX + ']');
             $.each(dropOverBoxes, function (index, dropOverBox) {
                 renderer.remove(dropOverBox.id);
-            })
+            });
             $(root).removeData("groupTarget");
-        }
+        };
 
         var setGroupTarget = function () {
             removeDropOverBox();
@@ -24660,6 +24803,42 @@ OG.handler.EventHandler.prototype = {
     },
 
     /**
+     * Lane,Pool 엘리먼트가 새로 생성될 시 그룹을 맺도록 한다.
+     *
+     * @param {Element} element Shape 엘리먼트
+     */
+    setGroupDropable: function (element) {
+        var me = this;
+        var renderer = me._RENDERER;
+        var root = renderer.getRootGroup();
+
+        $(element).bind("mousedown", function () {
+            var newPool = $(root).data('newPool');
+            var poolInnderShape = $(root).data('poolInnderShape');
+            if (!renderer.isLane(element) && !renderer.isPool(element)) {
+                return;
+            }
+            if (!newPool) {
+                return;
+            }
+            if (element.id !== newPool.id) {
+                return;
+            }
+
+            $.each(poolInnderShape, function (index, innderShape) {
+                newPool.appendChild(innderShape);
+            });
+
+            if ($(newPool).data('originalStyle')) {
+                newPool.shape.geom.style.map = $(newPool).data('originalStyle');
+            }
+            renderer.redrawShape(newPool);
+
+            $(root).data('newPool', false);
+            $(root).data('poolInnderShape', []);
+        });
+    },
+    /**
      * 마우스 드래그 영역지정 선택가능여부를 설정한다.
      * 선택가능해야 리사이즈가 가능하다.
      *
@@ -24668,7 +24847,74 @@ OG.handler.EventHandler.prototype = {
     setDragSelectable: function (isSelectable) {
         var renderer = this._RENDERER;
         var me = this, rootEle = renderer.getRootElement(),
-            root = renderer.getRootGroup(), eventOffset;
+            root = renderer.getRootGroup();
+
+        var correctionConditionAnalysis = function (correctionConditions, offset) {
+            var fixedPosition = {
+                x: offset.x,
+                y: offset.y
+            };
+            var calculateFixedPosition = function (expectedPosition) {
+                if (!expectedPosition) {
+                    return fixedPosition;
+                }
+                if (expectedPosition.x && !expectedPosition.y) {
+                    return {
+                        x: expectedPosition.x,
+                        y: fixedPosition.y
+                    }
+                }
+                if (expectedPosition.y && !expectedPosition.x) {
+                    return {
+                        x: fixedPosition.x,
+                        y: expectedPosition.y
+                    }
+                }
+                if (expectedPosition.x && expectedPosition.y) {
+                    return expectedPosition;
+                }
+                return fixedPosition;
+            };
+            if (!correctionConditions || !correctionConditions.length) {
+                return fixedPosition;
+            }
+
+            var conditionsPassCandidates = [];
+            $.each(correctionConditions, function (index, correctionCondition) {
+                var condition = correctionCondition.condition;
+
+                var conditionsPassToFix = true;
+                if (condition.minX) {
+                    if (offset.x > condition.minX) {
+                        conditionsPassToFix = false;
+                    }
+                }
+                if (condition.maxX) {
+                    if (offset.x < condition.maxX) {
+                        conditionsPassToFix = false;
+                    }
+                }
+                if (condition.minY) {
+                    if (offset.y > condition.minY) {
+                        conditionsPassToFix = false;
+                    }
+                }
+                if (condition.maxY) {
+                    if (offset.y < condition.maxY) {
+                        conditionsPassToFix = false;
+                    }
+                }
+
+                if (conditionsPassToFix) {
+                    conditionsPassCandidates.push(correctionCondition);
+                }
+            });
+            $.each(conditionsPassCandidates, function (index, conditionsPassCandidate) {
+                fixedPosition = calculateFixedPosition(conditionsPassCandidate.fixedPosition);
+            });
+
+            return fixedPosition;
+        };
 
         // 배경클릭한 경우 deselect 하도록
         $(rootEle).bind("click", function () {
@@ -24696,13 +24942,26 @@ OG.handler.EventHandler.prototype = {
             if (isConnectMode === 'active') {
                 eventOffset = me._getOffset(event);
                 renderer.updateVirtualEdge(eventOffset.x, eventOffset.y);
-                return;
             }
 
-            //TODO Lnae,Pool 위치조정 모드일 경우 수행
+            //Lane,Pool 이 새로 그려졌을 경우 위치조정
+            var newPool = $(root).data('newPool');
+            var correctionConditions = $(root).data('correctionConditions');
+            if (newPool) {
 
+                var geometry = newPool.shape.geom;
+                var eventOffset = me._getOffset(event);
+                var newX = eventOffset.x;
+                var newY = eventOffset.y;
+
+                var conditionAnalysis = correctionConditionAnalysis(correctionConditions, {x: newX, y: newY});
+                newX = me._grid(conditionAnalysis.x, 'move');
+                newY = me._grid(conditionAnalysis.y, 'move');
+
+                geometry.moveCentroid([newX, newY]);
+                renderer.redrawShape(newPool);
+            }
         });
-
 
         $(rootEle).bind("contextmenu", function (event) {
             if (event.target.nodeName == 'svg') {
@@ -28751,7 +29010,7 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
         EDGE_MOVE_DELAY_SIZE: 14,
 
         /**
-         * swimLane 최소 폭
+         * swimLane 리사이즈 최소 폭
          */
         LANE_MIN_SIZE: 50,
 
@@ -28759,6 +29018,11 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
          * swimLane 확장 기본 폭
          */
         LANE_DEFAULT_SIZE: 100,
+
+        /**
+         * swimLane, pool 생성 기본 가로,세로
+         */
+        POOL_DEFAULT_SIZE: [300, 200],
 
         /**
          * 그룹 하위 shape 와 그룹사이의 여유폭
@@ -29138,6 +29402,7 @@ OG.graph.Canvas.prototype = {
 
         this._HANDLER.setClickSelectable(element, this._HANDLER._isSelectable(element.shape));
         this._HANDLER.setMovable(element, this._HANDLER._isMovable(element.shape));
+        this._HANDLER.setGroupDropable(element);
         this._HANDLER.setConnectGuide(element, this._HANDLER._isConnectable(element.shape));
 
         if (this._HANDLER._isLabelEditable(element.shape)) {
