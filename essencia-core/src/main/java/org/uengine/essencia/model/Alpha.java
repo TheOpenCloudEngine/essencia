@@ -191,7 +191,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
     public State findState(String stateName) {
 
-        if(stateName==null) throw new IllegalArgumentException("Finding state name is null");
+        if(stateName==null) return null; //throw new IllegalArgumentException("Finding state name is null");
 
         for(State state : getStates()){
             if(stateName.equals(state.getName())){
@@ -199,7 +199,9 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
             }
         }
 
-        throw new IllegalArgumentException("No such state named " + stateName);
+        return null;
+
+        //throw new IllegalArgumentException("No such state named " + stateName);
     }
 
     @Override
