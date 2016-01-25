@@ -323,9 +323,9 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 		int i=-1;
 		for (LanguageElementInstance alphaInstance : alphaInstances) {
-			if(alphaInstance==null) continue;
+			i++;  //should count the index even if the value is null since the index is important.
 
-			i++;
+			if(alphaInstance==null) continue;
 
 			AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, i);
 			alphaInstanceInLists.add(alphaInstanceInList);
