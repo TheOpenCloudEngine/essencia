@@ -14,16 +14,14 @@
                     var alphaName = allAlphaNames[i];
 
                 %>
-                <th align="center"><center><h4><%=alphaName%></h4></center></th>
+                <th align="center"><center><h5><u><%=alphaName%></u></h5></center></th>
                 <% }%>
 
             </tr>
 
 
 
-
-            <!--done states-->
-            <tr><td></td>
+            <tr><td><!--font color="#222"> done</font--></td>
 
                 <%
 
@@ -32,6 +30,7 @@
 
                 %>
                     <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                        <div style="padding:10px">
                 <%
                     if(alphaGameBoard){
 
@@ -49,18 +48,17 @@
                     }
 
                 %>
-
+                        </div>
                     </td>
                 <% }%>
 
             </tr>
 
-            <!--wip states-->
 
-            <tr><td><font color="gray">now</td><td align="center" colspan="7"><hr></td> </tr>
+            <tr><td><font color="gray">now</td><td align="center" colspan="7"><hr style="margin: 0px"></td> </tr>
 
 
-            <tr><td></td>
+            <tr><td><!--font color="#222">working</font--></td>
 
                 <%
 
@@ -69,6 +67,7 @@
 
                 %>
                 <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                    <div style="padding:10px">
                     <%
                     if(alphaGameBoard){
 
@@ -77,14 +76,14 @@
                         for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
                             var state = alphaGameBoard.alpha.states[j];
 
-                            if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
+                            if(alphaInstance.currentStateName == state.name || alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
                         %><button type="button" class="btn btn-success"> <%=state.name%> </button><br><%
                             }
                         }
                     }
 
                     %>
-
+                    </div>
 
                 </td>
 
@@ -94,9 +93,9 @@
 
             <!--todo states-->
 
-            <tr><td>to do</td><td align="center" colspan="7"><hr></td> </tr>
+            <tr><td><font color="gray">to do</font></td><td align="center" colspan="7"><hr style="margin: 0px"></td> </tr>
 
-            <tr><td></td>
+            <tr><td><!--font color="#222">to do</font--></td>
             <%
 
                 for (var i=0; i<allAlphas.length; i++){
@@ -104,6 +103,7 @@
 
                 %>
                     <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                        <div style="padding:10px">
                     <%
                     if(alphaGameBoard){
 
@@ -133,7 +133,7 @@
                     }
 
                     %>
-
+                        </div>
                     </td>
                 <% }%>
 

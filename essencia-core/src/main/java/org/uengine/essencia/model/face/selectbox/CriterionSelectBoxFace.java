@@ -36,6 +36,7 @@ public class CriterionSelectBoxFace extends AbstractSelectBoxFace {
         setSubSelectBox(new EssenciaSelectBox());
         for (IElement e : essenciaCanvas.takeElementList()) {
             if (e instanceof Alpha && getMainSelectBox().getSelectedText().equals(((Alpha) e).getName())) {
+                if(((Alpha) e).getStates()!=null)
                 for (State s : ((Alpha) e).getStates()) {
                     getSubSelectBox().add(s.getName(), s.getName());
                 }

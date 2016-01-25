@@ -62,6 +62,7 @@ public class ActivityEntryCriterionFace extends CriterionFace {
             for (IElement e : getElementListFromCanvas()) {
                 if (e instanceof Alpha && ((Criterion) list.get(i)).getState().getParentAlpha().getName().equals(((Alpha) e).getName())) {
 
+                    if(((Alpha) e).getStates()!=null)
                     for (State s : ((Alpha) e).getStates()) {
                         ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().add(s.getName(), s.getName());
                     }

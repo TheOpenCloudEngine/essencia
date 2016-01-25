@@ -130,10 +130,14 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
         return alpha;
     }
 
+    protected ListFace createListFace(){
+        return new StateListFace();
+    }
+
     @Override
     public void setUpElement() {
         super.setUpElement();
-        setListFace(new StateListFace());
+        setListFace(createListFace());
         if (getStates() != null) {
             getListFace().fillElements(getStates());
             getStates().clear();

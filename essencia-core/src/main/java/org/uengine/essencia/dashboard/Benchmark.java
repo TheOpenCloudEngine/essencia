@@ -27,18 +27,18 @@ public class Benchmark {
 
     private static final int DEFAULT_LOAD_INSTANCE_CNT = 5;
     static String[] colors = {
-            "rgba(192, 57, 43,1.0)",
-            "rgba(41, 128, 185,1.0)",
-            "rgba(22, 160, 133,1.0)",
-            "rgba(243, 156, 18,1.0)",
-            "rgba(142, 68, 173,1.0)",
-            "rgba(44, 62, 80,1.0)",
-            "rgba(231, 76, 60,1.0)",
-            "rgba(52, 152, 219,1.0)",
-            "rgba(39, 174, 96,1.0)",
-            "rgba(241, 196, 15,1.0)",
-            "rgba(155, 89, 182,1.0)",
-            "rgba(52, 73, 94,1.0)}",
+            "192, 57, 43",
+            "41, 128, 185",
+            "22, 160, 133",
+            "243, 156, 18",
+            "142, 68, 173",
+            "44, 62, 80",
+            "231, 76, 60",
+            "52, 152, 219",
+            "39, 174, 96",
+            "241, 196, 15",
+            "155, 89, 182",
+            "52, 73, 94",
     };
 
     SelectBox targetInstances;
@@ -139,7 +139,7 @@ public class Benchmark {
                         Alpha alphaInObject = ((AlphaInstance) languageElementInstance).getAlpha();
                         for(int j=0; j< alphaInObject.getStates().size(); j++){
                             if(alphaInObject.getStates().get(j).getName().equals(alphaInstance.getCurrentStateName())){
-                                point = j * 100 / alphaInObject.getStates().size();
+                                point = j * 6 / alphaInObject.getStates().size();
                             }
                         }
 
@@ -149,7 +149,7 @@ public class Benchmark {
                     }
                 }
 
-                pointOfEachAlphas.getData().add(point);
+                pointOfEachAlphas.getData().add(point + 1);
             }
 
 

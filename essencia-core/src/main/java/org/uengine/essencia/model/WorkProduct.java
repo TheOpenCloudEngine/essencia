@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
+import org.uengine.essencia.component.EssenciaConcernSelectBox;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.enactment.WorkProductInstance;
 import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.model.card.WorkProductCard;
 import org.uengine.essencia.model.face.list.LevelOfDetailListFace;
+import org.uengine.essencia.model.face.list.ListFace;
+import org.uengine.essencia.model.face.list.StateListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.uml.model.ObjectInstance;
@@ -26,6 +29,13 @@ public class WorkProduct extends Alpha{//BasicElement implements ContextTransfor
     @Face(displayName = "Levels Of Detail")
     public List<State> getStates() {
         return super.getStates();
+    }
+
+
+    @Override
+    @Face(displayName = "Levels of detail")
+    public ListFace getListFace() {
+        return super.getListFace();
     }
 
     @Hidden
@@ -98,20 +108,11 @@ public class WorkProduct extends Alpha{//BasicElement implements ContextTransfor
     }
 
     @Override
-    public void setUpElement() {
-        super.setUpElement();
-        setListFace(new LevelOfDetailListFace());
-        if (getLevelOfDetails() != null) {
-            getListFace().fillElements(getLevelOfDetails());
-            getLevelOfDetails().clear();
-        }
+    protected ListFace createListFace(){
+        return new LevelOfDetailListFace();
     }
 
-    @Override
-    public void beforeApply() {
-        super.beforeApply();
-        setStates(getListFace().createValue());
-    }
+
 
     public LevelOfDetail findLevelOfDetail(String levelOfDetailName) {
         if (levelOfDetailName == null) return null;//throw new IllegalArgumentException("Finding state name is null");

@@ -48,10 +48,17 @@ public class WorkProductFace extends CriterionFace {
     @Override
     public void fillElements(List<? extends LanguageElement> list) {
         for (int i = 0; i < list.size(); i++) {
+
+            if(((Criterion) list.get(i)).getLevelOfDetail().getParentAlpha() == null) continue; //skip invalid data
+
             add();
+
+
             getAbstractSelectBoxFaceList().get(i).getMainSelectBox()
                     .setSelected(((Criterion) list.get(i)).getLevelOfDetail().getParentWorkProduct().getName());
             ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).setSubSelectBox(new EssenciaSelectBox());
+
+
             for (IElement e : getElementListFromCanvas()) {
                 if (e instanceof WorkProduct
                         && ((Criterion) list.get(i)).getLevelOfDetail().getParentWorkProduct().getName().equals(((WorkProduct) e).getName())) {
@@ -60,6 +67,7 @@ public class WorkProductFace extends CriterionFace {
                     }
                 }
             }
+
             ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).getSubSelectBox().setSelected(
                     ((Criterion) list.get(i)).getLevelOfDetail().getName());
         }
