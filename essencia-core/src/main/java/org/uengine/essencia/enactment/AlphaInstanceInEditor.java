@@ -113,6 +113,8 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
         AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList();
         BeanUtils.copyProperties(this, alphaInstanceInList);
+        alphaInstanceInList.setMetaworksContext(new MetaworksContext());
+        alphaInstanceInList.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 
         if(alphaInstanceListToRefresh!=null){
             MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh), new Remover(new ModalWindow()));

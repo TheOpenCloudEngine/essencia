@@ -180,6 +180,7 @@ public class AlphaGameBoard extends MetaworksContext {
         GameBoard gameBoard = new GameBoard(instance, true);
 
         AlphaGameBoard alphaGameBoard = new AlphaGameBoard(getInstanceId(), (Alpha) practiceDefinition.getElementByName(alpha.getName()), gameBoard.getAlphaInstancesMap());
+        alphaGameBoard.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 
         //MetaworksRemoteService.wrapReturn(alphaGameBoard);
 

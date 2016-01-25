@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
@@ -11,6 +12,7 @@ import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.processmanager.ProcessManagerRemote;
 
+import javax.naming.Context;
 import java.util.Map;
 
 
@@ -19,7 +21,7 @@ import java.util.Map;
  */
 
 @Face(ejsPathForArray = "dwr/metaworks/org/uengine/essencia/enactment/AlphaInstanceTableFace.ejs")
-public class AlphaInstanceInList {
+public class AlphaInstanceInList implements ContextAware{
 
     public AlphaInstanceInList(LanguageElementInstance objectInstance, ProcessInstance instance, int index) {
         setLanguageElementInstance(objectInstance);
@@ -102,7 +104,9 @@ public class AlphaInstanceInList {
         processManagerRemote.applyChanges();
 
 
+        //getLanguageElementInstance().setId("___deleted____");
         setDeleted(true);
+
     }
 
     boolean deleted;
@@ -121,6 +125,17 @@ public class AlphaInstanceInList {
         }
         public void setRowSpanMap(Map<String, Integer> rowSpanMap) {
             this.rowSpanMap = rowSpanMap;
+        }
+
+
+    MetaworksContext metaworksContext;
+        @Override
+        public MetaworksContext getMetaworksContext() {
+            return metaworksContext;
+        }
+        @Override
+        public void setMetaworksContext(MetaworksContext metaworksContext) {
+            this.metaworksContext = metaworksContext;
         }
 
 }
