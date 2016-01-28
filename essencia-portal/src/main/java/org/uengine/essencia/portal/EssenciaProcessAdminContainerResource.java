@@ -20,7 +20,7 @@ public class EssenciaProcessAdminContainerResource extends ProcessAdminContainer
     public void newMethod() throws Exception {
 
         DefaultResource processResource = new DefaultResource();
-        processResource.setPath(getPath() + File.separator + "New Method.method");
+        processResource.setPath(getPath() + "/New Method.method");
         processResource.setParent(this);
 
         processResource.newOpen();
