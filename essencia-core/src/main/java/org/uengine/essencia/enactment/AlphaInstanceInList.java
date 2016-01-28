@@ -83,6 +83,9 @@ public class AlphaInstanceInList implements ContextAware{
 
         alphaInstanceInEditor.setLanguageElementInstance(leInstance);
 
+        //reset the className information so that the user interface can be loaded.
+        leInstance.setClassName("codi/" + instance.getProcessDefinition().getId() + "#" + leInstance.getClassDefinition().getName());
+
         ModalWindow modalWindow = new ModalWindow(alphaInstanceInEditor, 500, 400, "Edit Alpha Instance");
         modalWindow.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
         MetaworksRemoteService.wrapReturn(modalWindow);

@@ -72,15 +72,14 @@ public class MethodEditor extends MethodComposer implements IEditor<EssenceProce
     }
 
     String objStr;
-
         public String getObjStr() {
             return objStr;
         }
-
         public void setObjStr(String objStr) {
             this.objStr = objStr;
         }
 
+    
     @Override
     public Object simulator(IResource resource) {
 

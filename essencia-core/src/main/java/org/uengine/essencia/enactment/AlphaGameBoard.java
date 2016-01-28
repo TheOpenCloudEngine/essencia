@@ -155,7 +155,7 @@ public class AlphaGameBoard extends MetaworksContext {
     @Available(when="edit")
     public AlphaGameBoard addAlphaInstance(@Payload("instanceId") String instanceId, @Payload("alpha") Alpha alpha) throws Exception {
         LanguageElementInstance alphaInstance = alpha.createObjectInstance();
-        alphaInstance.setBeanProperty("id", "New " + alpha.getName());
+        alphaInstance.setBeanProperty("Id", "New " + alpha.getName());
 
         ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
 

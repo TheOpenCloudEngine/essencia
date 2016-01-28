@@ -6,6 +6,7 @@ import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Payload;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.dwr.SerializationSensitive;
 import org.metaworks.website.AbstractMetaworksFile;
@@ -44,40 +45,6 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
         }
 
 
-
-//    transient
-//    HashMap<String, Serializable> cachedMap;
-//    @Hidden
-//        private HashMap<String, Serializable> getCachedMap() {
-//            return cachedMap;
-//        }
-
-
-//    ObjectInstance propertyValues;
-//        public ObjectInstance getPropertyValues() {
-//            return propertyValues;
-//        }
-//
-//        public void setPropertyValues(ObjectInstance propertyValues) {
-//            this.propertyValues = propertyValues;
-//        }
-
-
-//    public LanguageElementInstance(BasicElement languageElement1, String id){
-//
-//
-//        setClassDefinition(languageElement1);
-//
-//        if(languageElement1 == null)
-//            throw new IllegalArgumentException("Alpha should be provided to instantiate an AlphaInstance");
-//
-//        if(id == null)
-//            throw new IllegalArgumentException("Id should be provided to instantiate an AlphaInstance");
-//
-//        setLanguageElement(languageElement1);
-//        setId(id);
-//    }
-
     //only for serialization / deserialization
     public LanguageElementInstance(){
 
@@ -92,30 +59,7 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 
         return value;
 
-//        Map<String, Attribute> propertyMap = getLanguageElement().createAttributeMap();
-//
-//        if("id".equals(key)){
-//            throw new IllegalArgumentException("Don't use 'put(\"id\", id)'. Use 'setId(id)' instead.");
-//        }
-//
-//        if(!propertyMap.containsKey(key))
-//            throw new IllegalArgumentException("No such property ["+key+"] is defined for this Alpha - " + getLanguageElement().getName());
-//
-//        if(value == null)
-//            return getCachedMap().remove(key);
-//
-//        Class propertyType = null;
-//        try {
-//            propertyType = Class.forName(propertyMap.get(key).getClassName());
-//        } catch (ClassNotFoundException e) {
-//            throw new IllegalStateException(e);
-//        }
-//
-//        if(!propertyType.isAssignableFrom(value.getClass())){
-//            throw new IllegalArgumentException("Property [" + key + ":"+ propertyType + "] is not assignable with value " + value + " which is a " + value.getClass());
-//        }
-//
-//        return getCachedMap().put(key, value);
+
     }
 
     public Serializable getAttribute(String key){
@@ -124,13 +68,6 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
         return (Serializable) getBeanProperty(key);
     }
 
-//    List<AttributeInstance> attributeValues;
-//        public List<AttributeInstance> getAttributeValues() {
-//            return attributeValues;
-//        }
-//        public void setAttributeValues(List<AttributeInstance> attributeValues) {
-//            this.attributeValues = attributeValues;
-//        }
 
 
     @Override
@@ -143,12 +80,20 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 
         //exchange the classDefinition object itself with a link info to avoid the huge serialization of definition-side object (also it eager to be an old value).
 
-        if(getClassName()==null && getLanguageElement()!=null){
-            String classLinkName = /*getLanguageElement().getResourcePath() + "#" + */ getLanguageElement().getName();
+        if((getClassName()==null || getClassName().indexOf("#") == -1) && getLanguageElement()!=null){
+
+            String resourcePath = (String) TransactionContext.getThreadLocalInstance().getSharedContext("resourceManager.resourcePath");
+            if(resourcePath==null) {
+                resourcePath = "";
+            }else{
+                resourcePath = resourcePath + "#";
+            }
+
+            String classLinkName = resourcePath + getLanguageElement().getName();
 
             setClassName(classLinkName);
 
-            setClassDefinition(null);
+            //setClassDefinition(null);
         }
 
     }
@@ -170,13 +115,17 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
             }
         }
 
-        if(getClassName()!=null && getClassName().indexOf("#") > 0 && getClassDefinition()==null) {
-
-            try {
-                fillClassDefinition(getClassName());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        if(getClassName()==null || getClassName().indexOf("#") == -1) {
+            String resourcePath = (String) TransactionContext.getThreadLocalInstance().getSharedContext("resourceManager.resourcePath");
+            if(resourcePath==null) {
+                resourcePath = "";
+            }else{
+                resourcePath = resourcePath + "#";
             }
+
+            String classLinkName = resourcePath + getLanguageElement().getName();
+
+            setClassName(classLinkName);
         }
     }
 

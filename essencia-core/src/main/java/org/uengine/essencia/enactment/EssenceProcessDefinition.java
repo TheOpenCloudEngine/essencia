@@ -30,6 +30,7 @@ public class EssenceProcessDefinition extends ProcessDefinition{
                 }
             }
 
+
             practiceDefinition.beforeSerialization();
         }
 

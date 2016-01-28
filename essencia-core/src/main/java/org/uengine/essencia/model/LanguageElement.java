@@ -35,7 +35,18 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	@Override
 	@Hidden
 	public Attribute[] getFieldDescriptors() {
-		return super.getFieldDescriptors();
+		Attribute[] attributes = super.getFieldDescriptors();
+
+		if(attributes==null || attributes.length == 0){
+
+			Attribute attribute = new Attribute();
+			attribute.setName("Id");
+			attribute.setClassName("java.lang.String");
+
+			return new Attribute[]{attribute};
+		}
+
+		return attributes;
 	}
 
 	@Order(1)

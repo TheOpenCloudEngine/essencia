@@ -5,6 +5,7 @@ import org.metaworks.FieldFace;
 import org.metaworks.component.SelectBox;
 import org.uengine.essencia.enactment.WorkProductInstance;
 import org.uengine.essencia.model.LevelOfDetail;
+import org.uengine.essencia.model.State;
 import org.uengine.essencia.model.WorkProduct;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class LevelOfDetailNameSelector extends SelectBox implements Face<String>
     public void visitHolderObjectOfField(WorkProductInstance holderObject) {
 
         ArrayList<String> options = new ArrayList<String>();
-        for(LevelOfDetail levelOfDetail : holderObject.getWorkProduct().getLevelOfDetails()){
+        for(State levelOfDetail : holderObject.getAlpha().getStates()){
             options.add(levelOfDetail.getName());
         }
 

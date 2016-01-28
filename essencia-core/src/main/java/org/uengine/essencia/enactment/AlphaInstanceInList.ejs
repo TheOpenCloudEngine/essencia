@@ -1,13 +1,13 @@
 <!--replace-->
 <tr id="objDiv_<%=objectId%>">
 
-<% if (value && !value.deleted) {
+<% if (value && !value.deleted && value.languageElementInstance && value.languageElementInstance.classDefinition) {
 
     var alphaInstance = value.languageElementInstance;
-    var alpha = mw3.uengineUML.classDefinitions[alphaInstance.classDefinition.name];
+    var alpha = mw3.uengineUML.classDefinitions[alphaInstance.classDefinition.name]; //it must be available by AlphaGameBoard.ejs will cache the class definitions.
 
 
-    if(alpha.fieldDescriptors){
+    if(alpha && alpha.fieldDescriptors){
 
         for (var i=0; i<alpha.fieldDescriptors.length; i++) {
 
@@ -40,8 +40,11 @@
     </td>
             <%
         }
+    }else{
+       %><td><%=alphaInstance.valueMap["id"]%></td><%
     }
 
+    if(alpha.states)
     for(var j in alpha.states){
 
         var state = alpha.states[j];

@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.annotation.Face;
 import org.uengine.essencia.enactment.face.LevelOfDetailNameSelector;
 import org.uengine.essencia.model.*;
@@ -10,9 +11,10 @@ import java.util.*;
 //@Face(faceClass= AlphaInstanceFace.class)
 public class WorkProductInstance extends AlphaInstance {
 
-    public WorkProduct getWorkProduct() {
-        return (WorkProduct)getLanguageElement();
-    }
+//    @Face(faceClass=AllChildFacesAreIgnored.class)
+//    public WorkProduct getWorkProduct() {
+//        return (WorkProduct)getLanguageElement();
+//    }
 
 //    String currentLevelOfDetailName;
 //    @Face(faceClass = LevelOfDetailNameSelector.class)
@@ -22,10 +24,10 @@ public class WorkProductInstance extends AlphaInstance {
 //        public void setCurrentLevelOfDetailName(String currentLevelOfDetailName) {
 //            this.currentLevelOfDetailName = currentLevelOfDetailName;
 //        }
-
-    public LevelOfDetail getCurrentLevelOfDetail(){
-        return getWorkProduct().findLevelOfDetail(getCurrentStateName());
-    }
+//
+//    public LevelOfDetail getCurrentLevelOfDetail(){
+//        return getWorkProduct().findLevelOfDetail(getCurrentStateName());
+//    }
 
 //    public WorkProductInstance(WorkProduct workProduct, String id){
 //

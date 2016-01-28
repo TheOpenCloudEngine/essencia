@@ -767,6 +767,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
     @Override
     public void beforeSerialization() {
+
         for (IElement element : getElements(Activity.class)) {
 
             Activity activityInPracticeDefinition = (Activity) element;

@@ -6,6 +6,7 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.widget.Clipboard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.CodiProcessDefinitionFactory;
@@ -34,21 +35,21 @@ public class MethodResource extends DefaultResource {
 
 		ProcessDefinition processDefinition = (ProcessDefinition) editingObject;
 
-		{//Extract Class Definitions and deploy them, and replace the class definition itself with a link
-
-			for (ProcessVariable processVariable : processDefinition.getProcessVariables()) {
-				if (processVariable.getDefaultValue() instanceof LanguageElementInstance) {
-					LanguageElementInstance languageElementInstance = (LanguageElementInstance) processVariable.getDefaultValue();
-					ClassDefinition classDefinition = languageElementInstance.getClassDefinition();
-
-					String classLinkName = getPath() + "#" + classDefinition.getName();
-
-					languageElementInstance.setClassName(classLinkName);
-
-				}
-			}
-
-		}
+//		{//Extract Class Definitions and deploy them, and replace the class definition itself with a link
+//
+//			for (ProcessVariable processVariable : processDefinition.getProcessVariables()) {
+//				if (processVariable.getDefaultValue() instanceof LanguageElementInstance) {
+//					LanguageElementInstance languageElementInstance = (LanguageElementInstance) processVariable.getDefaultValue();
+//					ClassDefinition classDefinition = languageElementInstance.getClassDefinition();
+//
+//					String classLinkName = getPath() + "#" + classDefinition.getName();
+//
+//					languageElementInstance.setClassName(classLinkName);
+//
+//				}
+//			}
+//
+//		}
 
 		super.save(editingObject);
 

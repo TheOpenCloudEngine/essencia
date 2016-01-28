@@ -1,10 +1,8 @@
 package org.uengine.essencia.enactment;
 
 import org.metaworks.*;
+import org.metaworks.annotation.*;
 import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Payload;
-import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.beans.BeanUtils;
@@ -32,6 +30,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
     @Override
     @Hidden
+    @Available(when="NONE")
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
     //    super.edit(instanceId, variablePointer);
     }
@@ -125,6 +124,9 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
     @Override
     @Hidden
+    @Available(when="NONE")
     public void delete(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
     }
+
+
 }

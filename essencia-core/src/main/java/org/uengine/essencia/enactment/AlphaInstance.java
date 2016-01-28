@@ -1,5 +1,6 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
@@ -18,6 +19,7 @@ public class AlphaInstance extends LanguageElementInstance {
     public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
     public static String STATE_PROP_KEY_DueDate = "Due";
 
+    @Face(faceClass=AllChildFacesAreIgnored.class)
     public Alpha getAlpha() {
         return (Alpha)getLanguageElement();
     }
@@ -33,6 +35,8 @@ public class AlphaInstance extends LanguageElementInstance {
         public State getCurrentState(){
 
             if(getCurrentStateName()==null) return null;
+
+            if(getAlpha()==null) return null;
 
             return getAlpha().findState(getCurrentStateName());
         }
@@ -108,6 +112,7 @@ public class AlphaInstance extends LanguageElementInstance {
         alpha.getStates();
 
         //// calculate Current State
+        if(alpha.getStates()!=null)
         for(State state : alpha.getStates()){
             if(state.isAllChecked(this))
                 setCurrentStateName(state.getName());
@@ -118,6 +123,8 @@ public class AlphaInstance extends LanguageElementInstance {
         //// calculate Target State
         java.util.Date today = new java.util.Date();
 
+
+        if(alpha.getStates()!=null)
         for(State state : alpha.getStates()){
             java.util.Date dueDate = (Date) getStateDetails(state.getName(), STATE_PROP_KEY_DueDate);
             if(dueDate!=null && today.after(dueDate)){
