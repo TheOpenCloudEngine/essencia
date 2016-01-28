@@ -6,13 +6,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
-import org.uengine.essencia.model.PracticeDefinition;
-import org.uengine.kernel.ProcessDefinition;
-import org.uengine.modeling.resource.Serializer;
 import org.uengine.modeling.resource.editor.MethodEditor;
 import org.uengine.modeling.resource.editor.MethodEditor_ProcessMode;
-import org.uengine.modeling.resource.editor.ProcessEditor;
 import org.uengine.processadmin.ProcessAdminEditorPanel;
+
 
 /**
  * Created by jjy on 2015. 11. 10..
@@ -44,5 +41,6 @@ public class EssenciaEditorPanel extends ProcessAdminEditorPanel{
         setEditor(new MethodEditor());
         ((MethodEditor) getEditor()).setEditingObject(essenceProcessDefinition);
     }
+
 
 }
