@@ -6,6 +6,7 @@ import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.stereotype.Service;
 import org.uengine.codi.mw3.model.Application;
+import org.uengine.codi.mw3.model.InstanceViewDetail;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.ProcessInstance;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameBoard extends Application implements ContextAware{
+public class GameBoard extends InstanceViewDetail implements ContextAware{
 
     public GameBoard(){}
 
@@ -43,14 +44,14 @@ public class GameBoard extends Application implements ContextAware{
             this.alphaInstancesMap = alphaInstancesMap;
         }
 
-    String instanceId;
-    @Id
-        public String getInstanceId() {
-            return instanceId;
-        }
-        public void setInstanceId(String instanceId) {
-            this.instanceId = instanceId;
-        }
+//    String instanceId;
+//    @Id
+//        public String getInstanceId() {
+//            return instanceId;
+//        }
+//        public void setInstanceId(String instanceId) {
+//            this.instanceId = instanceId;
+//        }
 
 
 

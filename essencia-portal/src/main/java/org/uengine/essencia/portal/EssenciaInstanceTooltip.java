@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.uengine.codi.mw3.model.Application;
 import org.uengine.codi.mw3.model.InstanceTooltip;
+import org.uengine.codi.mw3.model.InstanceView;
+import org.uengine.codi.mw3.model.InstanceViewDetail;
 import org.uengine.essencia.dashboard.Dashboard;
 import org.uengine.essencia.enactment.AlphaGameBoard;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
@@ -26,24 +28,16 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
         super();
     }
 
-//    @Override
-//    @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)
-//    public ModalWindow monitor() throws Exception{
-//
-//        ProcessInstance instance = processManager.getProcessInstance(""+getInstanceId());
-//
-//        if(!(instance.getProcessDefinition() instanceof EssenceProcessDefinition))
-//            throw new RuntimeException("This instance is not an EssenceProcessDefinition's instance");
-//
-//        PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)instance.getProcessDefinition()).getPracticeDefinition();
-//
-//        ModalWindow modal = new ModalWindow(new GameBoard(practiceDefinition, instance), 600, 700);
-//
-//        modal.setTitle("Alpha Dashboard");
-//
-//
-//        return modal;
-//    }
+    @ServiceMethod(callByContent=true)
+    public InstanceViewDetail workItems() throws Exception{
+
+        InstanceView instanceView = new InstanceView();
+        instanceView.setInstanceId(String.valueOf(getInstanceId()));
+        MetaworksRemoteService.autowire(instanceView);
+
+        return instanceView.createInstanceViewDetail();
+    }
+
 
     @ServiceMethod(callByContent=true)//, target= ServiceMethodContext.TARGET_POPUP)
     public ModalWindow showDashBoard() throws Exception{
