@@ -11,6 +11,8 @@
     <modules>
         <module>essencia-core</module>
         <module>essence-model</module>
+        <module>atlassian-jwt</module>
+        <module>essencia-jira</module>
         <module>essencia-portal</module>
         <module>essencia-marketplace</module>
     </modules>

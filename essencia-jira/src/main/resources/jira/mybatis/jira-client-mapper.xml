@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.uengine.web.jiraclient.JiraClientRepository">
+
+    <resultMap id="JiraClientMap" type="org.uengine.web.jiraclient.JiraClient">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="addonKey" column="addonkey" jdbcType="VARCHAR"/>
+        <result property="clientKey" column="clientkey" jdbcType="VARCHAR"/>
+        <result property="publicKey" column="publickey" jdbcType="VARCHAR"/>
+        <result property="sharedSecret" column="sharedsecret" jdbcType="VARCHAR"/>
+        <result property="serverVersion" column="serverversion" jdbcType="VARCHAR"/>
+        <result property="pluginsVersion" column="pluginsversion" jdbcType="VARCHAR"/>
+        <result property="baseUrl" column="baseurl" jdbcType="VARCHAR"/>
+        <result property="productType" column="producttype" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="serviceEntitlementNumber" column="serviceentitlementnumber" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.uengine.web.jiraclient.JiraClient"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO jira_client
+        (
+        addonkey,
+        clientkey,
+        publickey,
+        sharedsecret,
+        serverversion,
+        pluginsversion,
+        baseurl,
+        producttype,
+        description,
+        serviceentitlementnumber,
+        status
+        )
+        VALUES (
+          #{addonKey},
+          #{clientKey},
+          #{publicKey},
+          #{sharedSecret},
+          #{serverVersion},
+          #{pluginsVersion},
+          #{baseUrl},
+          #{productType},
+          #{description},
+          #{serviceEntitlementNumber},
+          #{status}
+        )
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="JiraClientMap">
+        SELECT
+        *
+        FROM
+        jira_client
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="selectByClientKey" parameterType="string" resultMap="JiraClientMap">
+        SELECT
+        *
+        FROM
+        jira_client
+        WHERE
+        clientkey = #{clientKey}
+    </select>
+
+    <update id="replaceClient" parameterType="org.uengine.web.jiraclient.JiraClient">
+        UPDATE jira_client
+        SET
+          addonkey = #{addonKey},
+          clientkey = #{clientKey},
+          publickey = #{publicKey},
+          sharedsecret = #{sharedSecret},
+          serverversion = #{serverVersion},
+          pluginsversion = #{pluginsVersion},
+          baseurl = #{baseUrl},
+          producttype = #{productType},
+          description = #{description},
+          serviceentitlementnumber = #{serviceEntitlementNumber},
+          status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="map">
+        UPDATE jira_client
+        SET
+        status = #{status}
+        WHERE id = #{id}
+    </update>
+</mapper>

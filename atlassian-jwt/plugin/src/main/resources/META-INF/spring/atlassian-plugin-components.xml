@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/osgi
+                           http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+    <beans:bean id="jwtReaderFactory" class="com.atlassian.jwt.core.reader.NimbusJwtReaderFactory" autowire="constructor"/>
+    <osgi:service id="jwtReaderFactory_osgiService" ref="jwtReaderFactory"
+            interface="com.atlassian.jwt.reader.JwtReaderFactory"/>
+
+    <beans:bean id="jwtWriterFactory" class="com.atlassian.jwt.core.writer.NimbusJwtWriterFactory" autowire="constructor"/>
+    <osgi:service id="jwtWriterFactory_osgiService" ref="jwtWriterFactory"
+            interface="com.atlassian.jwt.writer.JwtWriterFactory"/>
+
+    <beans:bean id="jwtJsonBuilderFactory" class="com.atlassian.jwt.internal.writer.PluggableJwtJsonBuilderFactory"
+                autowire="constructor" destroy-method="destroy">
+        <beans:property name="delegate">
+            <beans:bean class="com.atlassian.jwt.core.writer.JsonSmartJwtJsonBuilderFactory"/>
+        </beans:property>
+    </beans:bean>
+    <osgi:service id="jwtJsonBuilderFactory_osgiService" ref="jwtJsonBuilderFactory">
+        <osgi:interfaces>
+            <beans:value>com.atlassian.jwt.writer.JwtJsonBuilderFactory</beans:value>
+            <beans:value>com.atlassian.sal.api.lifecycle.LifecycleAware</beans:value>
+        </osgi:interfaces>
+    </osgi:service>
+
+    <beans:bean id="jwtPeerService" class="com.atlassian.jwt.internal.applinks.ApplinksJwtPeerService" autowire="constructor"/>
+    <osgi:service id="jwtPeerService_osgiService" ref="jwtPeerService"
+            interface="com.atlassian.jwt.applinks.JwtPeerService"/>
+
+    <beans:bean id="jwtService" class="com.atlassian.jwt.internal.DefaultJwtService">
+        <beans:constructor-arg ref="jwtReaderFactory"/>
+        <beans:constructor-arg ref="jwtWriterFactory"/>
+    </beans:bean>
+    <osgi:service id="jwtService_osgiService" ref="jwtService" interface="com.atlassian.jwt.JwtService"/>
+
+    <beans:bean id="applinksJwtService" class="com.atlassian.jwt.internal.applinks.ApplinksJwtService" autowire="constructor"/>
+    <osgi:service id="applinksJwtService_osgiService" ref="applinksJwtService"
+            interface="com.atlassian.jwt.applinks.JwtService"/>
+
+    <beans:bean id="applinksJwtIssuerRegistry" class="com.atlassian.jwt.internal.applinks.ApplinksJwtIssuerRegistry" autowire="constructor"/>
+    <osgi:service id="applinksJwtIssuerRegistry_osgiService" ref="applinksJwtIssuerRegistry"
+            interface="com.atlassian.jwt.JwtIssuerRegistry"/>
+
+    <beans:bean id="jwtApplinkFinder" class="com.atlassian.jwt.applinks.JwtApplinkFinderImpl" autowire="constructor"/>
+    <osgi:service id="jwtApplinkFinder_osgiService" ref="jwtApplinkFinder"
+                  interface="com.atlassian.jwt.applinks.JwtApplinkFinder"/>
+
+</beans:beans>

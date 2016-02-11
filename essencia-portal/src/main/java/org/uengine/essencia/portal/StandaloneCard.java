@@ -57,13 +57,13 @@ public class StandaloneCard {
 
         Session session = new Session();
         session.setUser(new User());
-        String emailAddress = null; //obtain from token.
+        String emailAddress = "test@uengine.org"; //obtain from token.
         session.getUser().setEmail(emailAddress);
 
         EssenceActivityHandler essenceActivityHandler1 = new EssenceActivityHandler();
-        essenceActivityHandler1.setInstanceId(getInstanceId());
-        essenceActivityHandler1.setTracingTag("1");
-        essenceActivityHandler1.setTaskId(665l);
+        essenceActivityHandler1.setInstanceId("6");
+        essenceActivityHandler1.setTracingTag("4");
+        essenceActivityHandler1.setTaskId(new Long(12));
 
         essenceActivityHandler1.session = session;
 

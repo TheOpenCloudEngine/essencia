@@ -1,0 +1,19 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <permissions>
+            <permission>execute_java</permission>
+        </permissions>
+    </plugin-info>
+
+    <!-- All components and imports are defined in META-INF/spring -->
+
+    <!-- servlets and filters -->
+    <servlet-filter key="jwtAuthFilter" class="com.atlassian.jwt.internal.servlet.JwtAuthFilter"
+                    location="after-encoding">
+        <url-pattern>/*</url-pattern>
+    </servlet-filter>
+
+</atlassian-plugin>

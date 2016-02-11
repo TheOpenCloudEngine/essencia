@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/mvc
+    	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+    <!-- ========================= PROPERTY PLACE HOLDER DEFINITION ========================= &ndash;&gt;-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:*.properties</value>
+                <value>classpath:org/uengine/uengine.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <!-- ========================= COMPONENT SCAN DEFINITION ========================= -->
+
+    <context:component-scan base-package="org.uengine">
+        <context:exclude-filter type="regex" expression="org\.uengine\.social\.SocialBPMInstanceTooltip"/>
+        <context:exclude-filter type="regex" expression="org\.uengine\.web\..*"/>
+    </context:component-scan>
+    <context:annotation-config/>
+    <aop:aspectj-autoproxy/>
+
+    <!-- ============================================================= -->
+    <!-- DataAccess -->
+    <!-- ============================================================= -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+
+        <!-- MySQL Data Source -->
+        <property name="driverClassName" value="${codi.jdbc.driverClassName}"/>
+        <property name="url"
+                  value="${codi.jdbc.url}"/>
+        <property name="username" value="${codi.jdbc.username}"/>
+        <property name="password" value="${codi.jdbc.password}"/>
+        <property name="validationQuery" value="${codi.jdbc.validationQuery}"/>
+    </bean>
+
+    <!-- ============================================================= -->
+    <!-- Transaction -->
+    <!-- ============================================================= -->
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="txManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <!-- ============================================================= -->
+    <!-- uEngine SpringConnectionFactory setDataSource(DataSource) -->
+    <!-- ============================================================= -->
+    <bean class="org.uengine.codi.common.aoptx.ProcessManagerDirtyCheckAdvice"/>
+
+
+    <bean id="springConnectionFactory"
+          class="org.uengine.codi.MetaworksUEngineSpringConnectionAdapter"></bean>
+
+    <bean id="processManagerBean" class="org.uengine.codi.CodiProcessManagerBean"
+          scope="request">
+        <property name="managedTransaction" value="true"/>
+        <property name="autoCloseConnection" value="false"/>
+        <property name="connectionFactory" ref="springConnectionFactory"/>
+        <aop:scoped-proxy/>
+    </bean>
+
+    <bean id="springConnectionFactoryForMetaworks" class="org.metaworks.spring.SpringConnectionFactory">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="MetaworksRemoteService" class="org.uengine.codi.mw3.CodiMetaworksRemoteService"
+          scope="singleton">
+        <property name="connectionFactory" ref="springConnectionFactoryForMetaworks"/>
+        <property name="lowerCaseSQL" value="true"/>
+    </bean>
+
+    <bean class="org.metaworks.dao.TransactionAdvice">
+        <property name="connectionFactory" ref="springConnectionFactoryForMetaworks"/>
+    </bean>
+
+    <!-- ============================================================= -->
+    <!-- Speciy Upload file method -->
+    <!-- ============================================================= -->
+
+    <!-- ============================================================= -->
+    <!-- Process Codi Schedule Job and Task Executor -->
+    <!-- ============================================================= -->
+    <task:annotation-driven executor="codiExecutor" scheduler="codiScheduler"/>
+    <task:executor id="codiExecutor" pool-size="1"/>
+    <task:scheduler id="codiScheduler" pool-size="2"/>
+
+    <bean id="storage" class="org.uengine.modeling.resource.LocalFileStorage">
+        <property name="localBasePath" value="${codebase}"/>
+    </bean>
+
+    <!--    <bean id="storage" class="org.uengine.modeling.resource.AmazonS3Storage">
+            <property name="amazonS3Bucket" value="${Amazon.S3.Bucket}"/>
+            <property name="awsAccessKey" value="${Amazon.AccessKeyID}"/>
+            <property name="awsSecretAccessKey" value="${Amazon.SecretAccessKey}"/>
+        </bean>-->
+
+    <bean class="org.uengine.modeling.resource.ResourceManager" scope="singleton">
+        <property name="storage" ref="storage"/>
+    </bean>
+
+</beans>

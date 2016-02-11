@@ -40,6 +40,11 @@
         </dependency>
         <dependency>
             <groupId>org.uengine</groupId>
+            <artifactId>essencia-jira</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.uengine</groupId>
             <artifactId>garuda-marketplace</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -52,6 +57,37 @@
             <groupId>org.uengine</groupId>
             <artifactId>essencia-marketplace</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
+        </dependency>
+        <!-- ====== -->
+        <!--  JSON  -->
+        <!-- ====== -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.4.4</version>
         </dependency>
     </dependencies>
 
@@ -91,7 +127,6 @@
                     <port>8080</port>
                 </configuration>
             </plugin>
-
         </plugins>
 
 
@@ -102,12 +137,9 @@
                     <exclude>**/*.java</exclude>
                 </excludes>
             </resource>
-
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
-
             </resource>
-
         </resources>
     </build>
 

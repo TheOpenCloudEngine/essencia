@@ -1,0 +1,46 @@
+{
+  "name": "Essencia Jira",
+  "description": "Essencia Atlassian Connect add-on",
+  "key": "essencia-jira",
+  "vendor": {
+    "name": "uEngine, Inc.",
+    "url": "http://localhost:9090"
+  },
+  "baseUrl": "http://localhost:9090",
+  "scopes": [
+    "READ", "WRITE","DELETE","PROJECT_ADMIN","ADMIN"
+  ],
+  "links": {
+    "self": "http://localhost:9090/atlassian-connect.json",
+    "homepage": "http://localhost:9090/atlassian-connect.json"
+  },
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/api/handshake/installed",
+    "uninstalled": "/api/handshake/uninstalled",
+    "enabled": "/api/handshake/enabled",
+    "disabled": "/api/handshake/disabled"
+  },
+  "apiVersion": 1,
+  "modules": {
+    "generalPages": [
+      {
+        "key": "essencia-index",
+        "location": "system.top.navigation.bar",
+        "name": {
+          "value": "Essencia"
+        },
+        "url": "/api/view/index"
+      }
+    ],
+    "postInstallPage": {
+      "url": "/api/view/index",
+      "key": "essencia-postinstall",
+      "name": {
+        "value": "Essencia"
+      }
+    }
+  }
+}

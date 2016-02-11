@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>essencia</artifactId>
+        <groupId>org.uengine</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>essencia-jira</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.uengine</groupId>
+            <artifactId>essencia-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.0.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
+        </dependency>
+
+        <!-- ========== -->
+        <!--  Jira Dependency  -->
+        <!-- ========== -->
+        <dependency>
+            <groupId>com.atlassian.jwt</groupId>
+            <artifactId>jwt-api</artifactId>
+            <version>1.5.7-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.jwt</groupId>
+            <artifactId>jwt-applinks</artifactId>
+            <version>1.5.7-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.jwt</groupId>
+            <artifactId>jwt-core</artifactId>
+            <version>1.5.7-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.jwt</groupId>
+            <artifactId>jwt-plugin</artifactId>
+            <version>1.5.7-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.jwt</groupId>
+            <artifactId>jwt-spi</artifactId>
+            <version>1.5.7-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.jsontoken</groupId>
+            <artifactId>jsontoken</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>4.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+            <version>1.0.9</version>
+        </dependency>
+
+        <!-- ============= -->
+        <!--  Logging API  -->
+        <!-- ============= -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.lazyluke</groupId>
+            <artifactId>log4jdbc-remix</artifactId>
+            <version>${log4jdbc.remix.version}</version>
+        </dependency>
+
+        <!--===================-->
+        <!--JDBC Dependencies-->
+        <!--===================-->
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP-java6</artifactId>
+            <version>${hikaricp.version}</version>
+        </dependency>
+
+        <!-- ====================== -->
+        <!--  MyBatis Dependencies  -->
+        <!-- ====================== -->
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis.spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-tx</artifactId>
+                </exclusion>
+
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- ============= -->
+        <!--  Java EE API  -->
+        <!-- ============= -->
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>${javax.jsp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${javax.jstl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons.codec.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <properties>
+        <!-- Logging -->
+        <commons.logging.version>1.1.1</commons.logging.version>
+        <slf4j.version>1.7.9</slf4j.version>
+        <logback.version>1.1.2</logback.version>
+        <log4j.version>1.2.17</log4j.version>
+        <log4jdbc.remix.version>0.2.7</log4jdbc.remix.version>
+
+        <!-- Persistence -->
+        <mybatis.version>3.2.8</mybatis.version>
+        <mybatis.spring.version>1.2.2</mybatis.spring.version>
+
+        <!-- JDBC -->
+        <mysql.version>5.1.34</mysql.version>
+        <hikaricp.version>2.3.2</hikaricp.version>
+
+        <!-- Java EE API -->
+        <javax.jsp.version>2.3.0</javax.jsp.version>
+        <javax.jstl.version>1.2</javax.jstl.version>
+        <commons.codec.version>1.10</commons.codec.version>
+    </properties>
+
+</project>

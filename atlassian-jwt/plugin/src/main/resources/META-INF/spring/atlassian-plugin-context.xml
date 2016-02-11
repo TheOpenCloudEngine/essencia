@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+             default-autowire="autodetect">
+
+    <beans:bean id="jwtAuthenticator" class="com.atlassian.jwt.internal.sal.JwtAuthenticatorImpl">
+        <beans:constructor-arg ref="jwtService"/>
+    </beans:bean>
+
+    <beans:bean id="pluginJwtRegistry" class="com.atlassian.jwt.internal.PluginJwtRegistry" autowire="constructor" destroy-method="destroy"/>
+
+</beans:beans>
