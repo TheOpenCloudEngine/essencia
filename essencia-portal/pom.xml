@@ -123,6 +123,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
+                    <path>/</path>
                     <server>local</server>
                     <port>8080</port>
                 </configuration>

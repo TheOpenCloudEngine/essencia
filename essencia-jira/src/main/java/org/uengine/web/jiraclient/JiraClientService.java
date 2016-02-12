@@ -15,4 +15,5 @@ public interface JiraClientService {
     void disabled(Map payload) throws IOException;
 
     String validateAndGetClaim(HttpServletRequest request) throws Exception;
+
 }
