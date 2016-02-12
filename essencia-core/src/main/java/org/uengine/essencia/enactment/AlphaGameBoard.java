@@ -4,6 +4,7 @@ import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.Instance;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.*;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
@@ -40,17 +41,27 @@ public class AlphaGameBoard extends MetaworksContext {
         setAlphaInstances(getAlphaInstancesMap().get(alpha.getName()));
 
 
+        String essencia_alreadyLoaded_gameboard = "essencia_alreadyLoaded_gameboard";
+        HashMap<String, String> alreadyLoaded = (HashMap<String, String>) TransactionContext.getThreadLocalInstance().getSharedContext(essencia_alreadyLoaded_gameboard);
+        if(alreadyLoaded==null) {
+            alreadyLoaded = new HashMap<String, String>();
+            TransactionContext.getThreadLocalInstance().setSharedContext(essencia_alreadyLoaded_gameboard, alreadyLoaded);
+        }
+
         setChildAlphaGameBoards(new ArrayList<AlphaGameBoard>());
+
         if(alpha.getOutgoingRelations()!=null)
         for(Relation relation : alpha.getOutgoingRelations()){
 
             LanguageElement childAlpha = (LanguageElement) relation.getTargetElement();
 
-            if(childAlpha instanceof Alpha){
+            if(childAlpha instanceof Alpha && !alreadyLoaded.containsKey(childAlpha.getName())){
+                alreadyLoaded.put(childAlpha.getName(), childAlpha.getName());
 
                 AlphaGameBoard alphaGameBoard = new AlphaGameBoard(instanceId, (Alpha)childAlpha, alphaInstancesMap);
 
                 getChildAlphaGameBoards().add(alphaGameBoard);
+
             }
         }
 
