@@ -154,6 +154,7 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
         }
 
     @ServiceMethod(target = ServiceMethod.TARGET_SELF, inContextMenu = true)
+    @Hidden
     public GameBoard toggleEditable() throws Exception {
 
         boolean editable = (getMetaworksContext()!=null && MetaworksContext.WHEN_EDIT.equals(getMetaworksContext().getWhen()));

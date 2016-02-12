@@ -59,6 +59,7 @@ public class AlphaGameBoard extends MetaworksContext {
                 alreadyLoaded.put(childAlpha.getName(), childAlpha.getName());
 
                 AlphaGameBoard alphaGameBoard = new AlphaGameBoard(instanceId, (Alpha)childAlpha, alphaInstancesMap);
+                alphaGameBoard.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 
                 getChildAlphaGameBoards().add(alphaGameBoard);
 
