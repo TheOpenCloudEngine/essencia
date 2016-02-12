@@ -171,6 +171,8 @@ public class ActivityCard extends BasicCard {
 
                 BasicElement theElementForCriteria = criterion.getElement();
 
+                if(theElementForCriteria==null || (theElementForCriteria instanceof Alpha ? criterion.getState()==null : criterion.getLevelOfDetail()==null)) continue;
+
                 description += "<h4>" + theElementForCriteria.getName() + ": "
 
                         + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
