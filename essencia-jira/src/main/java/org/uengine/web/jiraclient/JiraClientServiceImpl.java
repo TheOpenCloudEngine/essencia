@@ -126,7 +126,6 @@ public class JiraClientServiceImpl implements JiraClientService {
         JWTClaimsSet claimsSet = this.read(jwtToken, verifier);
         JSONObject jsonObject = claimsSet.toJSONObject();
         return jsonObject.toJSONString();
-
     }
 
     private void insertLifeCycle(Long jiraClientId, Map payload) throws IOException {

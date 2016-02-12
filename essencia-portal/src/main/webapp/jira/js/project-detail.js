@@ -1,14 +1,15 @@
 var onPageLoadScript = function () {
     var defId = $('#defId').val();
     var roles = [];
+    var processMwService;
 
     var createRoleMappingLayout = function () {
 
         $.each(roles, function (index, role) {
             var selectBox = '' +
-                '<div class="field-group">' +
-                '<label for="name">'+role.name+'</label>' +
-                '<input class="text long-field ajax-get-user" type="text">' +
+                '<div class="field-group" name="role-mapping">' +
+                '<label>'+role.name+'</label>' +
+                '<input name="userkey" class="text long-field ajax-get-user" data-aui-validation-field required type="text">' +
                 '<input type="hidden" name="rolename" value="'+role.name+'">' +
                 '</div>';
             selectBox = $(selectBox);
@@ -39,8 +40,8 @@ var onPageLoadScript = function () {
         });
     }
     var getRoles = function () {
-        var processMwService = new MetaworksObject({
-            __className: "org.uengine.jira.mw3.ProcessMwService",
+        processMwService = new MetaworksObject({
+            __className: 'org.uengine.jira.mw3.ProcessMwService',
             defId: defId
         }, '#metaworks_space');
 
@@ -61,5 +62,36 @@ var onPageLoadScript = function () {
     });
     $.get('/jira/plugins/marked/README.md', function (data) {
         $('#marked-content').html(marked(data));
+    });
+
+
+    AJS.$('#add-project-form').on('aui-valid-submit', function(event) {
+        event.preventDefault();
+
+        if(!roles || !roles.length){
+            customUtil.renderWarningDialog('Assigned personnel required.');
+            return;
+        }
+
+        var form = $('#add-project-form');
+        var roleMapping = [];
+        $.each(form.find('[name=role-mapping]'), function(index,mapping){
+            roleMapping.push({
+               name: $(mapping).find('[name=rolename]').val(),
+               userkey: $(mapping).find('[name=userkey]').val()
+            });
+        });
+
+        blockSubmitStart();
+        processMwService = new MetaworksObject({
+                    __className: 'org.uengine.jira.mw3.ProcessMwService',
+                    defId: defId,
+                    name : form.find('[name=name]').val(),
+                    key  : form.find('[name=key]').val(),
+                    roleMapping: JSON.stringify(roleMapping)
+                }, '#metaworks_space');
+        processMwService.saveProject(null, function(){
+            blockStop();
+        });
     });
 };

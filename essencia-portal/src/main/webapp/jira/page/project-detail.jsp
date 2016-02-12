@@ -44,20 +44,19 @@
 
                 <div class="aui-group">
                     <div class="aui-item">
-                        <form id="add-project-form" class="aui" action="undefined" method="post">
+                        <form id="add-project-form" class="aui" action="#">
                             <br>
                             <h4>Basic Information</h4>
                             <fieldset>
                                 <div class="field-group"><label for="name">Project Name</label>
-                                    <input class="text long-field"
-                                           type="text" name="name" id="name"
-                                           maxlength="80">
+                                    <input class="text" type="text" name="name" id="name" data-aui-validation-field
+                                           maxlength="80" minlength="2" required>
 
                                     <div class="description">Max. 80 characters.</div>
                                 </div>
                                 <div class="field-group"><label for="key">Project Key</label>
-                                    <input class="text" type="text" name="key"
-                                           id="key" maxlength="10"
+                                    <input class="text" type="text" name="key" id="key" data-aui-validation-field
+                                           maxlength="10" minlength="2" required
                                            style="text-transform: uppercase">
 
                                     <div class="description">Max. 10 characters.</div>
@@ -71,9 +70,9 @@
                             </fieldset>
                             <div class="buttons-container form-footer">
                                 <div class="buttons">
-                                    <div class="aui-button aui-button-primary"
-                                         id="create-project">Create
-                                    </div>
+                                    <button class="aui-button aui-button-primary"
+                                         id="create-project" type="submit">Create
+                                    </button>
                                     <a class="cancel" id="cancle-project">Cancel</a>
                                 </div>
                             </div>
@@ -93,6 +92,7 @@
 
                 <br>
                 <h4>Process Usage</h4>
+
                 <div id="marked-content"></div>
             </div>
         </div>

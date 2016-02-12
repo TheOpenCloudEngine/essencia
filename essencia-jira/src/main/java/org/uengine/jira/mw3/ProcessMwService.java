@@ -1,15 +1,18 @@
 package org.uengine.jira.mw3;
 
-import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.context.ApplicationContext;
 import org.uengine.codi.mw3.model.*;
-import org.uengine.kernel.*;
+import org.uengine.codi.mw3.model.ProcessMap;
 import org.uengine.kernel.Role;
 import org.uengine.modeling.resource.VersionManager;
 import org.uengine.processmanager.ProcessManagerRemote;
+import org.uengine.web.process.*;
+import org.uengine.web.util.ApplicationContextRegistry;
 import org.uengine.web.util.JsonUtils;
+
+import java.util.List;
 
 /**
  * Created by uengine on 2016. 2. 11..
@@ -27,6 +30,12 @@ public class ProcessMwService {
     private org.uengine.kernel.Role[] roles;
 
     private String rolesJson;
+
+    private String name;
+
+    private String key;
+
+    private String roleMapping;
 
     public String getDefId() {
         return defId;
@@ -52,10 +61,43 @@ public class ProcessMwService {
         this.rolesJson = rolesJson;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getRoleMapping() {
+        return roleMapping;
+    }
+
+    public void setRoleMapping(String roleMapping) {
+        this.roleMapping = roleMapping;
+    }
+
     @ServiceMethod(callByContent = true)
     public void loadRoles() throws Exception {
         org.uengine.kernel.ProcessDefinition definition = processManager.getProcessDefinition(this.getDefId());
         this.setRolesJson(JsonUtils.marshal(definition.getRoles()));
+    }
+
+    @ServiceMethod(callByContent = true)
+    public void saveProject() throws Exception {
+        ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
+        ProcessMapService processMapService = context.getBean(ProcessMapService.class);
+        List<org.uengine.web.process.ProcessMap> listProcessMap = processMapService.getListProcessMap();
+
+
     }
 
     @ServiceMethod(callByContent = true)
