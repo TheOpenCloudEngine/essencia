@@ -134,7 +134,7 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
                 case "Stakeholders": setStakeholders(alphaGameBoard); break;
                 case "Opportunity": setOpportunity(alphaGameBoard);break;
                 case "Requirements": setRequirements(alphaGameBoard);break;
-                case "System": setSystem(alphaGameBoard);break;
+                case "Software System": setSystem(alphaGameBoard);break;
                 case "Team": setTeam(alphaGameBoard);break;
                 case "Work": setWork(alphaGameBoard);break;
                 case "Way-of-working": setWayOfWorking(alphaGameBoard);
