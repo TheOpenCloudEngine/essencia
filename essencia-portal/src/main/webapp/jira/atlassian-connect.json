@@ -41,6 +41,39 @@
       "name": {
         "value": "Essencia"
       }
-    }
+    },
+    "jiraProjectTabPanels": [
+      {
+        "url": "/api/view/process-monitor",
+        "weight": 100,
+        "key": "process-monitor",
+        "name": {
+          "value": "Process Monitor"
+        }
+      },
+      {
+        "url": "/api/view/alpha-view",
+        "weight": 100,
+        "key": "alpha-view",
+        "name": {
+          "value": "Alpha View"
+        }
+      }
+    ],
+    "webPanels": [
+      {
+        "url": "/api/view/index",
+        "location": "atl.jira.view.issue.left.context",
+        "layout": {
+          "width": "100%",
+          "height": "100%"
+        },
+        "weight": 1,
+        "key": "my-web-panel",
+        "name": {
+          "value": "Activity Card"
+        }
+      }
+    ]
   }
 }

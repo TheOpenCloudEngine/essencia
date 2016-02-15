@@ -5,16 +5,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.uengine.codi.mw3.model.Company;
-import org.uengine.codi.mw3.model.IProcessMap;
-import org.uengine.codi.mw3.model.Session;
-import org.uengine.codi.mw3.model.User;
-import org.uengine.processmanager.ProcessManagerRemote;
-import org.uengine.web.exception.ServiceException;
+import org.uengine.web.company.Company;
+import org.uengine.web.company.CompanyService;
+import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.rest.Response;
 import org.uengine.web.util.ExceptionUtils;
-import org.uengine.web.util.JsonUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Properties;
 
@@ -31,10 +28,13 @@ public class ProcessMapController {
     private Properties config;
 
     @Autowired
-    ProcessMapService processService;
+    private ProcessMapService processService;
 
     @Autowired
-    public ProcessManagerRemote processManager;
+    private JiraClientService jiraClientService;
+
+    @Autowired
+    private CompanyService companyService;
 
     /**
      * 프로세스 리스트를 불러온다.
@@ -42,13 +42,32 @@ public class ProcessMapController {
     @RequestMapping(value = "process/list", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Response list() throws Exception {
+    public Response list(HttpSession session) throws Exception {
         Response response = new Response();
         try {
-            List<ProcessMap> listProcessMap = processService.getListProcessMap();
+
+            //퍼블릭 프로세스맵리스트
+            List<ProcessMap> publicProcessMap = processService.listPublicProcessMap();
+            for (int i = 0; i < publicProcessMap.size(); i++) {
+                publicProcessMap.get(i).setIsPublic(true);
+                publicProcessMap.get(i).setIsNew(true);
+            }
+            response.getList().addAll(publicProcessMap);
+
+
+            //지라 사용자 프로세스맵리스트
+            String clientKey = jiraClientService.getClientKeyFromSession(session);
+            Company company = companyService.selectByAlias(clientKey);
+            List<ProcessMap> listProcessMap = processService.listProcessMapByComCode(company.getComCode());
+            for (int i = 0; i < listProcessMap.size(); i++) {
+                listProcessMap.get(i).setIsPublic(false);
+                publicProcessMap.get(i).setIsNew(true);
+            }
+
             response.getList().addAll(listProcessMap);
             response.setSuccess(true);
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.setSuccess(false);
             response.getError().setMessage(ex.getMessage());
             if (ex.getCause() != null) response.getError().setCause(ex.getCause().getMessage());

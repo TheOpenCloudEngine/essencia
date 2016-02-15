@@ -30,6 +30,11 @@ public class ProcessMapRepositoryImpl extends PersistentRepositoryImpl<ProcessMa
     }
 
     @Override
+    public List<ProcessMap> selectByComCode(String comCode) {
+        return this.getSqlSessionTemplate().selectList(this.getNamespace() + ".selectByComCode", comCode);
+    }
+
+    @Override
     public ProcessMap selectByMapId(String mapId) {
         return this.getSqlSessionTemplate().selectOne(this.getNamespace() + ".selectByMapId", mapId);
     }

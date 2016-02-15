@@ -1,14 +1,15 @@
 package org.uengine.web.jiraclient;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
 public interface JiraClientService {
 
-    void install(Map payload) throws IOException, Exception;
+    void install(Map payload) throws Exception;
 
-    void uninstalled(Map payload) throws IOException;
+    void uninstalled(Map payload) throws Exception;
 
     void enabled(Map payload) throws IOException;
 
@@ -16,4 +17,9 @@ public interface JiraClientService {
 
     String validateAndGetClaim(HttpServletRequest request) throws Exception;
 
+    String getClientKeyFromClaimJson(String claimJson) throws Exception;
+
+    String getClientKeyFromRequest(HttpServletRequest request) throws Exception;
+
+    String getClientKeyFromSession(HttpSession session) throws Exception;
 }
