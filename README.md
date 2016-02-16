@@ -358,7 +358,9 @@ atlas-run-standalone --container tomcat7x --product jira --version 7.1.0-OD-05-0
 [INFO] Type Ctrl-C to exit
 ```
 
-After validation, the sdk will save your cloud cash, and then next time,you may just run
+After validation, the sdk will save your cloud cash, and then next time,you may just run.
+
+Make sure that always use CTL+D when you closing Jira-SDK. 
 
 ```
 atlas-run-standalone --product jira
