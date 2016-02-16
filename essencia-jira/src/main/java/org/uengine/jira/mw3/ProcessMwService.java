@@ -1,23 +1,23 @@
 package org.uengine.jira.mw3;
 
 import org.metaworks.annotation.ServiceMethod;
+import org.oce.garuda.multitenancy.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.uengine.codi.mw3.model.*;
 import org.uengine.codi.mw3.model.ProcessMap;
+import org.uengine.kernel.*;
 import org.uengine.kernel.Role;
 import org.uengine.modeling.resource.VersionManager;
 import org.uengine.processmanager.ProcessManagerRemote;
-import org.uengine.web.process.*;
-import org.uengine.web.util.ApplicationContextRegistry;
 import org.uengine.web.util.JsonUtils;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 /**
  * Created by uengine on 2016. 2. 11..
  */
-public class ProcessMwService {
+public class ProcessMwService extends JiraMwService {
 
     @Autowired
     public ProcessManagerRemote processManager;
@@ -25,9 +25,11 @@ public class ProcessMwService {
     @Autowired
     public InstanceViewContent instanceView;
 
+    private String claimJson;
+
     private String defId;
 
-    private org.uengine.kernel.Role[] roles;
+    private String comCode;
 
     private String rolesJson;
 
@@ -45,12 +47,12 @@ public class ProcessMwService {
         this.defId = defId;
     }
 
-    public org.uengine.kernel.Role[] getRoles() {
-        return roles;
+    public String getComCode() {
+        return comCode;
     }
 
-    public void setRoles(Role[] roles) {
-        this.roles = roles;
+    public void setComCode(String comCode) {
+        this.comCode = comCode;
     }
 
     public String getRolesJson() {
@@ -85,19 +87,89 @@ public class ProcessMwService {
         this.roleMapping = roleMapping;
     }
 
+    public String getClaimJson() {
+        return claimJson;
+    }
+
+    public void setClaimJson(String claimJson) {
+        this.claimJson = claimJson;
+    }
+
     @ServiceMethod(callByContent = true)
     public void loadRoles() throws Exception {
+        new TenantContext(this.getComCode());
         org.uengine.kernel.ProcessDefinition definition = processManager.getProcessDefinition(this.getDefId());
         this.setRolesJson(JsonUtils.marshal(definition.getRoles()));
     }
 
     @ServiceMethod(callByContent = true)
     public void saveProject() throws Exception {
-        ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
-        ProcessMapService processMapService = context.getBean(ProcessMapService.class);
-        List<org.uengine.web.process.ProcessMap> listProcessMap = processMapService.getListProcessMap();
+        //new TenantContext(this.jiraSession.getComCode());
+        new TenantContext("1");
 
+        ProcessMap map = new ProcessMap();
+        String instId = processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", map.getDefId()));
 
+        org.uengine.kernel.ProcessDefinition definition = processManager.getProcessDefinition(this.getDefId());
+
+        ArrayList<IRoleMappingDefinition> roleMappingDefinitions = new ArrayList<IRoleMappingDefinition>();
+        if(definition.getRoles()!=null)
+            for(org.uengine.kernel.Role role : definition.getRoles()){
+                if( "Initiator".equalsIgnoreCase(role.getName()) ){
+                    continue;
+                }
+                RoleMappingDefinition roleMappingDefinition = new RoleMappingDefinition();
+                roleMappingDefinition.setRoleDefId(this.jiraSession.getComCode() + "." + defId + "." + role.getName());
+                try{
+                    roleMappingDefinition.copyFrom(roleMappingDefinition.findRoleMappingDefinition());
+                    roleMappingDefinition.setRoleMappedUser(new RoleMappedUser());
+
+                    IUser user = new User();
+                    user.setName(roleMappingDefinition.getMappedUserName());
+                    user.setUserId(roleMappingDefinition.getMappedUserId());
+                    roleMappingDefinition.getRoleMappedUser().getUsers().add(user);
+
+                    roleMappingDefinitions.add(roleMappingDefinition);
+                }catch(Exception e){
+                    RoleMappingDefinition roleMappingDef = new RoleMappingDefinition();
+                    roleMappingDef.setRoleDefId(roleMappingDefinition.getRoleDefId());
+                    roleMappingDef.setDefId(defId);
+                    roleMappingDef.setRoleName(role.getName());
+
+                    IUser user = new User();
+                    user.setUserId("2");
+                    roleMappingDefinition.getRoleMappedUser().getUsers().add(user);
+
+                    roleMappingDef.setComCode(this.jiraSession.getComCode());
+                    roleMappingDef.setRoleDefType(RoleMappingDefinition.ROLE_DEF_TYPE_USER);
+                    roleMappingDefinitions.add(roleMappingDef);
+                }
+            }
+
+        for(IRoleMappingDefinition roleMappingDefinition: roleMappingDefinitions){
+            if( RoleMappingDefinition.ROLE_DEF_TYPE_USER.equals(roleMappingDefinition.getRoleDefType() )){
+                if(roleMappingDefinition.getMappedUserId()!=null){
+                    processManager.putRoleMapping(instId, roleMappingDefinition.getRoleName(), roleMappingDefinition.getMappedUserId());
+                }
+            }else if( RoleMappingDefinition.ROLE_DEF_TYPE_ROLE.equals(roleMappingDefinition.getRoleDefType() )){
+                if(roleMappingDefinition.getMappedRoleCode()!=null ){
+                    RoleUser roleUser = new RoleUser();
+                    roleUser.setRoleCode(roleMappingDefinition.getMappedRoleCode());
+                    IRoleUser refRoleUser = roleUser.findUserByRoleCode();
+                    while(refRoleUser.next()){
+                        processManager.putRoleMapping(instId, roleMappingDefinition.getRoleName(), refRoleUser.getEmpCode() );
+                    }
+                }
+            }
+        }
+
+//        Instance instanceRef = new Instance();
+//        instanceRef.setInstId(new Long(instId));
+
+        //map.setRoleMappingPanel(new RoleMappingPanel(this.processManager, map.getDefId(), map.session));
+        //map.getRoleMappingPanel().putRoleMappings(this.processManager, instId);
+        map.processManager.executeProcess(instId);
+        map.processManager.applyChanges();
     }
 
     @ServiceMethod(callByContent = true)
@@ -130,6 +202,7 @@ public class ProcessMwService {
         org.uengine.kernel.Role[] roles = definition.getRoles();
         for (int i = 0; i < roles.length; i++) {
             org.uengine.kernel.Role role = roles[i];
+
         }
 
         String instId = map.processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", map.getDefId()));

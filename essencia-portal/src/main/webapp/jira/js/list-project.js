@@ -22,7 +22,14 @@ var onPageLoadScript = function () {
                     row.find('[name=name]').find('a').data('mapId', processmap.mapId);
 
                     //태그 입력
-                    var tags = ['public', 'new'];
+                    var tags = [];
+                    if(processmap.isPublic){
+                        tags.push('public');
+                    };
+                    if(processmap.isNew){
+                        tags.push('new');
+                    };
+
                     var tagsHtml = '';
                     for (var i = 0; i < tags.length; i++) {
                         if (tags[i] === 'public') {

@@ -12,6 +12,7 @@
 <!--<![endif]-->
 <head>
     <%@include file="../template/header.jsp" %>
+    <%@include file="../template/mw3_jira_common.jsp" %>
     <script src="/jira/js/list-project.js" type="text/javascript"></script>
 </head>
 
@@ -51,7 +52,11 @@
     </section>
 
 </section>
+<!-- Metaworks Space -->
+<div id="metaworks_space" style="display: none">
 
+</div>
+<!-- Metaworks Space End -->
 </body>
 
 </html>

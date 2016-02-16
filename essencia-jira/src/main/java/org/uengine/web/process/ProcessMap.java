@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.mw3.model.InstanceViewContent;
 import org.uengine.processmanager.ProcessManagerRemote;
 
+import java.util.ArrayList;
+
 /**
  * Created by uengine on 2016. 2. 4..
  */
@@ -28,6 +30,10 @@ public class ProcessMap {
     private String cmTrgr;
 
     private boolean isScheduled;
+
+    private boolean isPublic;
+
+    private boolean isNew;
 
     public String getMapId() {
         return mapId;
@@ -101,12 +107,28 @@ public class ProcessMap {
         this.cmTrgr = cmTrgr;
     }
 
-    public boolean isScheduled() {
+    public boolean getIsScheduled() {
         return isScheduled;
     }
 
     public void setIsScheduled(boolean isScheduled) {
         this.isScheduled = isScheduled;
+    }
+
+    public boolean getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    public boolean getIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
     }
 
     @Override
@@ -122,6 +144,8 @@ public class ProcessMap {
                 ", cmPhrase='" + cmPhrase + '\'' +
                 ", cmTrgr='" + cmTrgr + '\'' +
                 ", isScheduled=" + isScheduled +
+                ", isPublic=" + isPublic +
+                ", isNew=" + isNew +
                 '}';
     }
 }

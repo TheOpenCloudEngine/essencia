@@ -103,7 +103,10 @@
 
 <!-- Metaworks Space -->
 <div id="metaworks_space" style="display: none">
+
+    <input type="hidden" value="${processMap.mapId}" id="mapId">
     <input type="hidden" value="${processMap.defId}" id="defId">
+    <input type="hidden" value="${processMap.comCode}" id="comCode">
 </div>
 <!-- Metaworks Space End -->
 </body>

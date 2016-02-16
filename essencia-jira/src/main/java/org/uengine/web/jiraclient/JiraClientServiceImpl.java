@@ -11,6 +11,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.uengine.web.company.Company;
+import org.uengine.web.company.CompanyService;
 import org.uengine.web.exception.ServiceException;
 import org.uengine.web.util.JsonUtils;
 
@@ -34,8 +37,11 @@ public class JiraClientServiceImpl implements JiraClientService {
     @Autowired
     private JiraClientLifecycleRepository lifecycleRepository;
 
+    @Autowired
+    private CompanyService companyService;
+
     @Override
-    public void install(Map payload) throws IOException, Exception {
+    public void install(Map payload) throws Exception {
         String clientKey = payload.get("clientKey").toString();
         JiraClient existClient = clientRepository.selectByClientKey(clientKey);
 
@@ -47,7 +53,6 @@ public class JiraClientServiceImpl implements JiraClientService {
             clientRepository.replaceClient(jiraClient);
 
             this.insertLifeCycle(jiraClient.getId(), payload);
-
         }
         //신규 등록일 경우
         else {
@@ -60,7 +65,8 @@ public class JiraClientServiceImpl implements JiraClientService {
     }
 
     @Override
-    public void uninstalled(Map payload) throws IOException {
+    @Transactional
+    public void uninstalled(Map payload) throws Exception {
         String clientKey = payload.get("clientKey").toString();
         JiraClient existClient = clientRepository.selectByClientKey(clientKey);
         if (existClient != null) {
@@ -92,21 +98,70 @@ public class JiraClientServiceImpl implements JiraClientService {
         }
     }
 
+    /**
+     * Jira 관련 페이지 접속시 페이지 앞단에서 실행되는 로직.
+     * JWT 토큰의 validation 수행
+     * JWT 토큰의 세션저장
+     * Jira Company 체크
+     * Jira comCode 세션 저장
+     *
+     * @return Model And View
+     */
     @Override
     public String validateAndGetClaim(HttpServletRequest request) throws Exception {
         String jwtToken = null;
         HttpSession session = request.getSession();
         jwtToken = this.getJwtToken(request);
-        if(jwtToken == null){
+        if (jwtToken == null) {
             if (session.getAttribute("jwtToken") != null) {
                 jwtToken = session.getAttribute("jwtToken").toString();
             } else {
                 throw new ServiceException("Not found jwtToken.");
             }
-        }else{
+        } else {
             session.setAttribute("jwtToken", jwtToken);
         }
 
+        String parseToken = this.parseToken(jwtToken);
+        String clientKey = this.getClientKeyFromClaimJson(parseToken);
+        companyService.createJiraCompanyIfNotExist(clientKey);
+        Company company = companyService.selectByAlias(clientKey);
+        if(company != null){
+            session.setAttribute("comCode", company.getComCode());
+        }
+        return parseToken;
+    }
+
+    @Override
+    public String getClientKeyFromClaimJson(String claimJson) throws Exception {
+        try {
+            Map claimMap = JsonUtils.unmarshal(claimJson);
+            return (String) claimMap.get("iss");
+        } catch (Exception e) {
+            throw new ServiceException("Can not parse iss key in given clamimJson");
+        }
+    }
+
+    @Override
+    public String getClientKeyFromRequest(HttpServletRequest request) throws Exception {
+        String claimJson = this.validateAndGetClaim(request);
+        String clientKey = this.getClientKeyFromClaimJson(claimJson);
+        return clientKey;
+    }
+
+    @Override
+    public String getClientKeyFromSession(HttpSession session) throws Exception {
+        String jwtToken = null;
+        if (session.getAttribute("jwtToken") != null) {
+            jwtToken = session.getAttribute("jwtToken").toString();
+        } else {
+            throw new ServiceException("Not found jwtToken.");
+        }
+        String claimJson = this.parseToken(jwtToken);
+        return this.getClientKeyFromClaimJson(claimJson);
+    }
+
+    private String parseToken(String jwtToken) throws Exception {
         String[] base64UrlEncodedSegments = jwtToken.split("\\.");
         String base64UrlEncodedHeader = base64UrlEncodedSegments[0];
         String base64UrlEncodedClaims = base64UrlEncodedSegments[1];

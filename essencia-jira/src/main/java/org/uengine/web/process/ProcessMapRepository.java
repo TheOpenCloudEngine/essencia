@@ -10,5 +10,7 @@ public interface ProcessMapRepository extends PersistentRepository<ProcessMap, L
 
     List<ProcessMap> selectAll();
 
+    List<ProcessMap> selectByComCode(String comCode);
+
     ProcessMap selectByMapId(String mapId);
 }
