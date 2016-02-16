@@ -61,6 +61,8 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
 
     public void load(ProcessInstance instance, boolean editable) throws Exception {
 
+        editable = true; //TODO temporal
+
         setInstanceId(instance.getInstanceId());
 
         PracticeDefinition practiceDefinition;

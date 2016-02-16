@@ -7,6 +7,8 @@ import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.uengine.codi.mw3.filter.OtherSessionFilter;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -45,6 +47,8 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
     public ProcessManagerRemote processManagerRemote;
 
 
+    @AutowiredFromClient
+    public Session session;
 
     @ServiceMethod(callByContent = true, target=ServiceMethod.TARGET_POPUP)
     public void save() throws Exception {
@@ -117,8 +121,23 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
         if(alphaInstanceListToRefresh!=null){
             MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh), new Remover(new ModalWindow()));
+
+            HashMap<String, String> pushUserMap = new HashMap<String, String>();
+            pushUserMap.put("3","3");
+
+            MetaworksRemoteService.pushClientObjectsFiltered(
+                    new OtherSessionFilter(pushUserMap, session.getUser().getUserId().toUpperCase()),
+                    new Object[]{new Refresh(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh)});
+
         }else{
             MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Remover(new ModalWindow()));
+
+            HashMap<String, String> pushUserMap = new HashMap<String, String>();
+            pushUserMap.put("4","4");
+
+            MetaworksRemoteService.pushClientObjectsFiltered(
+                    new OtherSessionFilter(pushUserMap, session.getUser().getUserId().toUpperCase()),
+                    new Object[]{new Refresh(alphaInstanceInList)});
         }
     }
 
