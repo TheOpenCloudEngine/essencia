@@ -1,5 +1,7 @@
 var onPageLoadScript = function () {
+    var mapId = $('#mapId').val();
     var defId = $('#defId').val();
+    var comCode = $('#comCode').val();
     var roles = [];
     var processMwService;
 
@@ -42,6 +44,8 @@ var onPageLoadScript = function () {
     var getRoles = function () {
         processMwService = new MetaworksObject({
             __className: 'org.uengine.jira.mw3.ProcessMwService',
+            jiraSession: JSON.stringify(jiraSession),
+            comCode: comCode,
             defId: defId
         }, '#metaworks_space');
 
@@ -85,7 +89,9 @@ var onPageLoadScript = function () {
         blockSubmitStart();
         processMwService = new MetaworksObject({
                     __className: 'org.uengine.jira.mw3.ProcessMwService',
+                    jiraSession: JSON.stringify(jiraSession),
                     defId: defId,
+                    comCode: comCode,
                     name : form.find('[name=name]').val(),
                     key  : form.find('[name=key]').val(),
                     roleMapping: JSON.stringify(roleMapping)

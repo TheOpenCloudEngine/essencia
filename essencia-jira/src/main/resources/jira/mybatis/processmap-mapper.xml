@@ -53,6 +53,15 @@
         ORDER BY name
     </select>
 
+    <select id="selectByComCode" parameterType="string" resultMap="ProcessMap">
+        SELECT
+        *
+        FROM
+        processmap
+        WHERE comcode = #{comCode}
+        ORDER BY name
+    </select>
+
     <select id="selectByMapId" parameterType="string" resultMap="ProcessMap">
         SELECT
         *

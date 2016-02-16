@@ -336,8 +336,12 @@ cd atlastutorial
 
 3. Start latest version of JIRA on default port of 2990, by entering the following:
 
+
+First Time, you should run jira-sdk on cloud mode, by entering the following:
+
 ```
-atlas-run-standalone --product jira
+atlas-run-standalone --container tomcat7x --product jira --version 7.1.0-OD-05-006 --data-version 7.1.0-OD-05-006 --bundled-plugins com.atlassian.bundles:json-schema-validator-atlassian-bundle:1.0.4,com.atlassian.jwt:jwt-plugin:1.5.4,com.atlassian.upm:atlassian-universal-plugin-manager-plugin:2.21-D20160128T024330,com.atlassian.plugins:atlassian-connect-plugin:1.1.71 --jvmargs -Datlassian.upm.on.demand=true
+
 
 .
 .
@@ -352,6 +356,15 @@ atlas-run-standalone --product jira
 [INFO] jira started successfully in 249s at http://localhost:2990/jira
 [INFO] Type Ctrl-D to shutdown gracefully
 [INFO] Type Ctrl-C to exit
+```
+
+After validation, the sdk will save your cloud cash, and then next time,you may just run.
+
+Make sure that always use CTL+D when you closing Jira-SDK. 
+
+```
+atlas-run-standalone --product jira
+
 ```
 
 4. Open url [http://localhost:2990/jira](http://localhost:2990/jira)

@@ -6,11 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.uengine.web.rest.Response;
-import org.uengine.web.util.ExceptionUtils;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -42,6 +38,7 @@ public class JiraClientController {
             jiraClientService.install(payload);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return new ResponseEntity("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -59,6 +56,7 @@ public class JiraClientController {
             jiraClientService.uninstalled(payload);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return new ResponseEntity("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -76,6 +74,7 @@ public class JiraClientController {
             jiraClientService.enabled(payload);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return new ResponseEntity("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -93,6 +92,7 @@ public class JiraClientController {
             jiraClientService.disabled(payload);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return new ResponseEntity("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
