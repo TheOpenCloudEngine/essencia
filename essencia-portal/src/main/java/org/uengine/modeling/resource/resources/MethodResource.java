@@ -1,31 +1,69 @@
 package org.uengine.modeling.resource.resources;
 
+import org.metaworks.EventContext;
 import org.metaworks.Refresh;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
-import org.metaworks.dao.TransactionContext;
 import org.metaworks.widget.Clipboard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.CodiProcessDefinitionFactory;
 import org.uengine.codi.mw3.model.Session;
-import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
+import org.uengine.essencia.modeling.canvas.MethodCanvas;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.ProcessDefinitionFactory;
-import org.uengine.kernel.ProcessVariable;
 import org.uengine.modeling.resource.DefaultResource;
-import org.uengine.uml.model.ClassDefinition;
+import org.uengine.modeling.resource.EditorPanel;
+import org.uengine.modeling.resource.IEditor;
+import org.uengine.modeling.resource.editor.MethodEditor;
+import org.uengine.processadmin.ProcessAdminEditorPanel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MethodResource extends DefaultResource {
 
+	public static HashMap<String, ArrayList<String>> sessions = new HashMap<String, ArrayList<String>>();
 
 	@AutowiredFromClient
 	public Session session;
 
+	boolean isJoin;
 
+	@ServiceMethod(callByContent=true, except="children", eventBinding= EventContext.EVENT_DBLCLICK, inContextMenu=true, target=ServiceMethodContext.TARGET_POPUP)
+	public void joinEditing() throws Exception {
+
+		if(!sessions.containsKey(getPath()))
+			sessions.put(getPath(), new ArrayList<String>());
+
+		ArrayList<String> sessionsOfThisResource = sessions.get(getPath());
+		sessionsOfThisResource.add(session.getUser().getUserId());
+
+		isJoin = true;
+
+		open(null);
+
+
+	}
+
+	@Override
+	public EditorPanel _newAndOpen(boolean isNew) throws Exception {
+		EditorPanel editorPanel = super._newAndOpen(isNew);
+
+		if(isJoin && editorPanel instanceof ProcessAdminEditorPanel){
+			IEditor editor = ((ProcessAdminEditorPanel) editorPanel).getEditor();
+			if(editor instanceof MethodEditor){
+				MethodCanvas methodCanvas = (MethodCanvas) ((MethodEditor) editor).getCanvas();
+				methodCanvas.setJoinEditing(true);
+			}
+		}
+
+		return editorPanel;
+
+	}
 
 	@Autowired
 	public ProcessDefinitionFactory definitionFactory;
@@ -64,5 +102,7 @@ public class MethodResource extends DefaultResource {
 		return new Refresh(new Clipboard(EssenciaCanvas.CANVAS_DROP, this),
 				true);
 	}
+
+
 
 }

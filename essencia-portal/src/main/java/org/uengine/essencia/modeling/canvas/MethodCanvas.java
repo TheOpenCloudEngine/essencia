@@ -1,8 +1,10 @@
 package org.uengine.essencia.modeling.canvas;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.directwebremoting.Browser;
 import org.directwebremoting.ScriptSession;
 import org.directwebremoting.ScriptSessionFilter;
 import org.metaworks.MetaworksContext;
@@ -309,6 +311,23 @@ public class MethodCanvas extends EssenciaCanvas {
             }
         }
 
+    }
+
+
+    boolean joinEditing;
+        public boolean isJoinEditing() {
+            return joinEditing;
+        }
+        public void setJoinEditing(boolean joinEditing) {
+            this.joinEditing = joinEditing;
+        }
+
+
+    @ServiceMethod(callByContent = true)
+    public void sendChanges(){
+        for(ArrayList<String> sessionsForThisCanvas : MethodResource.sessions.values()){
+            //Browser.withAllSessions();
+        }
     }
 
 }
