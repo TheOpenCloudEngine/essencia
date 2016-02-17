@@ -322,6 +322,13 @@ public class MethodCanvas extends EssenciaCanvas {
             this.joinEditing = joinEditing;
         }
 
+    String resourcePath;
+        public String getResourcePath() {
+            return resourcePath;
+        }
+        public void setResourcePath(String resourcePath) {
+            this.resourcePath = resourcePath;
+        }
 
     @ServiceMethod(callByContent = true)
     public void sendChanges(){

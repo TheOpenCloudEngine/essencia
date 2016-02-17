@@ -26,52 +26,56 @@ import java.util.HashMap;
 
 public class MethodResource extends DefaultResource {
 
-	public static HashMap<String, ArrayList<String>> sessions = new HashMap<String, ArrayList<String>>();
+    private boolean isJoin;
 
-	@AutowiredFromClient
-	public Session session;
+    public boolean isJoin() {
+        return isJoin;
+    }
 
-	boolean isJoin;
+    public void setIsJoin(boolean isJoin) {
+        this.isJoin = isJoin;
+    }
 
-	@ServiceMethod(callByContent=true, except="children", eventBinding= EventContext.EVENT_DBLCLICK, inContextMenu=true, target=ServiceMethodContext.TARGET_POPUP)
-	public void joinEditing() throws Exception {
+    public static HashMap<String, ArrayList<String>> sessions = new HashMap<String, ArrayList<String>>();
 
-		if(!sessions.containsKey(getPath()))
-			sessions.put(getPath(), new ArrayList<String>());
+    @AutowiredFromClient
+    public Session session;
 
-		ArrayList<String> sessionsOfThisResource = sessions.get(getPath());
-		sessionsOfThisResource.add(session.getUser().getUserId());
+    @ServiceMethod(callByContent = true, except = "children", eventBinding = EventContext.EVENT_DBLCLICK, inContextMenu = true, target = ServiceMethodContext.TARGET_POPUP)
+    public void joinEditing() throws Exception {
 
-		isJoin = true;
+//        if (!sessions.containsKey(getPath()))
+//            sessions.put(getPath(), new ArrayList<String>());
+//
+//        ArrayList<String> sessionsOfThisResource = sessions.get(getPath());
+//        sessionsOfThisResource.add(session.getUser().getUserId());
 
-		open(null);
+        this.setIsJoin(true);
+        open(null);
+    }
 
+    @Override
+    public EditorPanel _newAndOpen(boolean isNew) throws Exception {
+        EditorPanel editorPanel = super._newAndOpen(isNew);
 
-	}
+        if (this.isJoin() && editorPanel instanceof ProcessAdminEditorPanel) {
+            IEditor editor = ((ProcessAdminEditorPanel) editorPanel).getEditor();
+            if (editor instanceof MethodEditor) {
+                MethodCanvas methodCanvas = (MethodCanvas) ((MethodEditor) editor).getCanvas();
+                methodCanvas.setJoinEditing(true);
+                methodCanvas.setResourcePath(getPath());
+            }
+        }
+        return editorPanel;
+    }
 
-	@Override
-	public EditorPanel _newAndOpen(boolean isNew) throws Exception {
-		EditorPanel editorPanel = super._newAndOpen(isNew);
+    @Autowired
+    public ProcessDefinitionFactory definitionFactory;
 
-		if(isJoin && editorPanel instanceof ProcessAdminEditorPanel){
-			IEditor editor = ((ProcessAdminEditorPanel) editorPanel).getEditor();
-			if(editor instanceof MethodEditor){
-				MethodCanvas methodCanvas = (MethodCanvas) ((MethodEditor) editor).getCanvas();
-				methodCanvas.setJoinEditing(true);
-			}
-		}
+    @Override
+    public void save(Object editingObject) throws Exception {
 
-		return editorPanel;
-
-	}
-
-	@Autowired
-	public ProcessDefinitionFactory definitionFactory;
-
-	@Override
-	public void save(Object editingObject) throws Exception {
-
-		ProcessDefinition processDefinition = (ProcessDefinition) editingObject;
+        ProcessDefinition processDefinition = (ProcessDefinition) editingObject;
 
 //		{//Extract Class Definitions and deploy them, and replace the class definition itself with a link
 //
@@ -89,20 +93,19 @@ public class MethodResource extends DefaultResource {
 //
 //		}
 
-		super.save(editingObject);
+        super.save(editingObject);
 
-		definitionFactory.removeFromCache(getPath().substring(CodiProcessDefinitionFactory.codiProcessDefinitionFolder.length() + 1));
-	}
+        definitionFactory.removeFromCache(getPath().substring(CodiProcessDefinitionFactory.codiProcessDefinitionFolder.length() + 1));
+    }
 
 
-	@Hidden
-	@Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
-	@ServiceMethod(mouseBinding = "drag", bindingHidden = true, target = ServiceMethodContext.TARGET_APPEND)
-	public Object drag() {
-		return new Refresh(new Clipboard(EssenciaCanvas.CANVAS_DROP, this),
-				true);
-	}
-
+    @Hidden
+    @Available(condition = "metaworksContext.how == 'tree' && metaworksContext.where == 'navigator'")
+    @ServiceMethod(mouseBinding = "drag", bindingHidden = true, target = ServiceMethodContext.TARGET_APPEND)
+    public Object drag() {
+        return new Refresh(new Clipboard(EssenciaCanvas.CANVAS_DROP, this),
+                true);
+    }
 
 
 }
