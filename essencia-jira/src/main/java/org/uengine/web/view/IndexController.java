@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.uengine.codi.mw3.model.Company;
 import org.uengine.codi.mw3.model.IProcessMap;
 import org.uengine.codi.mw3.model.Session;
+import org.uengine.jira.mw3.ProcessMwService;
+import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.process.ProcessMap;
@@ -42,9 +44,6 @@ public class IndexController {
     @Autowired
     private ProcessMapService processMapService;
 
-    @Autowired
-    public ProcessManagerRemote processManager;
-
     /**
      * 인덱스 페이지로 이동한다.
      *
@@ -61,6 +60,9 @@ public class IndexController {
         return new ModelAndView("page/list-project");
     }
 
+    @Autowired
+    ProcessManagerRemote processManager;
+
     @RequestMapping(value = "project-detail", method = RequestMethod.GET)
     @Transactional
     public ModelAndView projectDetail(HttpServletRequest request, HttpSession session,
@@ -70,6 +72,11 @@ public class IndexController {
         try {
             ProcessMap processMap = processMapService.getProcessMapByMapId(mapId);
             view.addObject("processMap", processMap);
+
+            //TODO 여기서 processMap 의 롤매핑정보까지 가져오면 좋겠는데 이게 서블릿이 dwr 서블릿이 아니다 보니...
+            //이런식으로 붙이면 된다.
+
+
         } finally {
             return view;
         }
