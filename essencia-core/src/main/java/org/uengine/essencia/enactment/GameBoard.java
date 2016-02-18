@@ -35,6 +35,7 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
             this.alphaGameBoards = alphaGameBoards;
         }
 
+
     Map<String, List<AlphaInstanceInList>> alphaInstancesMap;
         public Map<String, List<AlphaInstanceInList>> getAlphaInstancesMap() {
             return alphaInstancesMap;

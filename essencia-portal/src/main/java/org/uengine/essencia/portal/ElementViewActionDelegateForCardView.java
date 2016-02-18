@@ -4,6 +4,8 @@ import Essence.Competency.Competency;
 import org.metaworks.Refresh;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.uengine.essencia.enactment.EssenceActivity;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.CardViewable;
@@ -24,6 +26,8 @@ import org.uengine.essencia.model.card.Card;
 /**
  * Created by jjy on 2015. 11. 25..
  */
+@Component
+//@Scope("prototype")
 public class ElementViewActionDelegateForCardView extends ElementViewActionDelegateForInstanceMonitoring {
     @Override
     public void onDoubleClick(ElementView elementView) {
