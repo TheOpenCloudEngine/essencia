@@ -97,6 +97,9 @@ public class ProcessMwService extends JiraMwService {
 
     @ServiceMethod(callByContent = true)
     public void loadRoles() throws Exception {
+
+
+
         new TenantContext(this.getComCode());
         org.uengine.kernel.ProcessDefinition definition = processManager.getProcessDefinition(this.getDefId());
         this.setRolesJson(JsonUtils.marshal(definition.getRoles()));

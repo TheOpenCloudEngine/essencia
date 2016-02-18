@@ -28,6 +28,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void createJiraCompanyIfNotExist(String clientKey) {
+
+        //TODO Mybatis 안쓰고 기존의 Metawork Dao 로 컴퍼니 만들기.....
         Company company = companyRepository.selectByAlias(clientKey);
         if (company == null) {
             int key = companyRepository.createKey();
