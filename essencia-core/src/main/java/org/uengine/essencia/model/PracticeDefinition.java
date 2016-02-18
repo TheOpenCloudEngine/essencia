@@ -735,6 +735,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             String from = relation.getRelationView().getFrom();
             String to = relation.getRelationView().getTo();
 
+            //danggling link will be ignored
+            if(to==null || from==null) continue;
+
             from = from.split("_TERMINAL")[0];
             to = to.split("_TERMINAL")[0];
 
