@@ -5,8 +5,18 @@ if(value){
     var alpha = value.alpha;%>
 
 
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><H1> <%=alpha.name%></h1></div>
 
-<H1> <%=alpha.name%></h1>
+    <%if(alpha.description && alpha.description.trim().length > 0){%>
+    <div class="panel-body">
+        <p><%=alpha.description%></p>
+    </div>
+    <%}%>
+
+
+
 
 <table class="table table-striped active">
     <tr>
@@ -83,3 +93,4 @@ if(value){
 
 %>
 
+</div>
