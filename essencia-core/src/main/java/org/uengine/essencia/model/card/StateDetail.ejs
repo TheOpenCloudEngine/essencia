@@ -1,3 +1,6 @@
+<!--replace-->
+
+<div id="objDiv_<%=objectId%>" style="padding: 15px">
 <h4><%=value.state.description%></h4>
 
 <%
@@ -13,10 +16,12 @@
              var checkPoint = value.state.checkPoints[i];
 
 %>
-    <li>- <%=checkPoint.name%></li>
+    <h1><%=checkPoint.name%></h1>
 <%
          }
 %></ul><%
     }
 
 %>
+
+</div>
