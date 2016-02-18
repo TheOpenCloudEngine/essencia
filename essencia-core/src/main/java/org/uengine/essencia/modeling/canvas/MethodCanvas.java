@@ -330,6 +330,24 @@ public class MethodCanvas extends EssenciaCanvas {
             this.resourcePath = resourcePath;
         }
 
+    String remoteUserName;
+        public String getRemoteUserName() {
+            return remoteUserName;
+        }
+
+        public void setRemoteUserName(String remoteUserName) {
+            this.remoteUserName = remoteUserName;
+        }
+
+    String remoteUserKey;
+        public String getRemoteUserKey() {
+            return remoteUserKey;
+        }
+
+        public void setRemoteUserKey(String remoteUserKey) {
+            this.remoteUserKey = remoteUserKey;
+        }
+
     @ServiceMethod(callByContent = true)
     public void sendChanges(){
         for(ArrayList<String> sessionsForThisCanvas : MethodResource.sessions.values()){

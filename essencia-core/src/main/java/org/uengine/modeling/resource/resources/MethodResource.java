@@ -64,6 +64,8 @@ public class MethodResource extends DefaultResource {
                 MethodCanvas methodCanvas = (MethodCanvas) ((MethodEditor) editor).getCanvas();
                 methodCanvas.setJoinEditing(true);
                 methodCanvas.setResourcePath(getPath());
+                methodCanvas.setRemoteUserKey(session.getUser().getUserId());
+                methodCanvas.setRemoteUserName(session.getUser().getName());
             }
         }
         return editorPanel;
