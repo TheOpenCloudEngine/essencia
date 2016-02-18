@@ -6627,7 +6627,7 @@ OG.shape.essencia = {};
  *
  * @class
  *
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.Constants = {
 
@@ -6955,7 +6955,7 @@ if (typeof KeyEvent === "undefined") {
  *
  * @class
  *
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.Util = {
 
@@ -7422,7 +7422,7 @@ OG.Util = OG.common.Util;
  *
  * @class
  *
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.CurveUtil = {
 	/**
@@ -7676,7 +7676,7 @@ OG.CurveUtil = OG.common.CurveUtil;
  * @class
  *
  * @param {String} message 메시지
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.NotSupportedException = function (message) {
 	/**
@@ -7699,7 +7699,7 @@ OG.NotSupportedException = OG.common.NotSupportedException;
  * @class
  *
  * @param {String} message 메시지
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.NotImplementedException = function (message) {
 	/**
@@ -7722,7 +7722,7 @@ OG.NotImplementedException = OG.common.NotImplementedException;
  * @class
  *
  * @param {String} message 메시지
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.ParamError = function (message) {
 	/**
@@ -7758,7 +7758,7 @@ OG.ParamError = OG.common.ParamError;
  * console.log(map2.get('key1'));
  *
  * @param {Object} jsonObject key:value 매핑 JSON 오브젝트
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.HashMap = function (jsonObject) {
 	/**
@@ -7907,7 +7907,7 @@ OG.HashMap = OG.common.HashMap;
  *
  * @class
  *
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.common.JSON = new (function () {
 	var useHasOwn = !!{}.hasOwnProperty,
@@ -8085,7 +8085,7 @@ OG.JSON = OG.common.JSON;
  * });
  *
  * @param {Object} style 키:값 매핑된 스타일 프라퍼티 정보
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Style = function (style) {
 	var DEFAULT_STYLE = {}, _style = {};
@@ -8110,7 +8110,7 @@ OG.Style = OG.geometry.Style;
  *
  * @param {Number} x x좌표
  * @param {Number} y y좌표
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Coordinate = function (x, y) {
 
@@ -8253,7 +8253,7 @@ OG.Coordinate = OG.geometry.Coordinate;
  * @param {OG.geometry.Coordinate,Number[]} upperLeft 기준 좌상단 좌표
  * @param {Number} width 너비
  * @param {Number} height 높이
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Envelope = function (upperLeft, width, height) {
 
@@ -8706,7 +8706,7 @@ OG.Envelope = OG.geometry.Envelope;
  * @class
  * @requires OG.geometry.Coordinate, OG.geometry.Envelope
  *
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Geometry = function () {
 
@@ -9379,7 +9379,7 @@ OG.geometry.Geometry.prototype.constructor = OG.geometry.Geometry;
  * var geom = new OG.geometry.PolyLine([[20, 5], [30, 15], [40, 25], [50, 15]]);
  *
  * @param {OG.geometry.Coordinate[]} vertices Line Vertex 좌표 Array
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.PolyLine = function (vertices) {
 
@@ -9598,7 +9598,7 @@ OG.geometry.PolyLine.prototype.angleBetweenThreePoints = function (prev, center,
  * var geom = new OG.geometry.Curve([[200, 100], [100, 300], [-100, -100], [-200, 100]]);
  *
  * @param {OG.geometry.Coordinate[]} controlPoints Curve Vertex 좌표 Array
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Curve = function (controlPoints) {
 
@@ -9681,7 +9681,7 @@ OG.geometry.Curve.prototype.toString = function () {
  * @param {Number} radiusX X축 반경
  * @param {Number} radiusY Y축 반경
  * @param {Number} angle X축 기울기
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Ellipse = function (center, radiusX, radiusY, angle) {
 
@@ -9787,7 +9787,7 @@ OG.geometry.Ellipse.prototype.toString = function () {
  * var geom = new OG.geometry.BezierCurve([[200, 100], [100, 300], [-100, -100], [-200, 100]]);
  *
  * @param {OG.geometry.Coordinate[]} controlPoints [from, control_point1, control_point2, to]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.BezierCurve = function (controlPoints) {
     var bezier, t, i;
@@ -9950,7 +9950,7 @@ OG.geometry.BezierCurve.prototype.reset = function () {
  *
  * @param {OG.geometry.Coordinate} center Circle 중심 좌표
  * @param {Number} radius radius 반경
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Circle = function (center, radius) {
 
@@ -10020,7 +10020,7 @@ OG.geometry.Circle.prototype.toString = function () {
  * var collection = new OG.geometry.GeometryCollection([geom1, geom2, geom3]);
  *
  * @param geometries {OG.geometry.Geometry[]} 공간 기하 객체 Array
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.GeometryCollection = function (geometries) {
 
@@ -10200,7 +10200,7 @@ OG.geometry.GeometryCollection.prototype.toString = function () {
  *
  * @param {OG.geometry.Coordinate} from 라인 시작 좌표값
  * @param {OG.geometry.Coordinate} to 라인 끝 좌표값
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Line = function (from, to, poi) {
 
@@ -10246,7 +10246,7 @@ OG.geometry.Line.prototype.toString = function () {
  * var geom = new OG.geometry.Point([20, 5]);
  *
  * @param {OG.geometry.Coordinate} coordinate 좌표값
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Point = function (coordinate) {
 
@@ -10398,7 +10398,7 @@ OG.geometry.Point.prototype.toString = function () {
  * var geom = new OG.geometry.Polygon([[20, 5], [30, 15], [40, 25], [50, 15], [60, 5], [20, 5]]);
  *
  * @param {OG.geometry.Coordinate[]} vertices Line Vertex 좌표 Array
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Polygon = function (vertices) {
 
@@ -10430,7 +10430,7 @@ OG.Polygon = OG.geometry.Polygon;
  * @param {OG.geometry.Coordinate} upperLeft 좌상단좌표
  * @param {Number} width 너비
  * @param {Number} height 높이
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.geometry.Rectangle = function (upperLeft, width, height) {
 
@@ -10483,7 +10483,7 @@ OG.geometry.Rectangle.prototype.toString = function () {
  * @class
  * @requires OG.common.*, OG.geometry.*
  *
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.IShape = function () {
 	/**
@@ -10605,7 +10605,7 @@ OG.IShape = OG.shape.IShape;
  * @extends OG.shape.IShape
  * @requires OG.common.*, OG.geometry.*
  *
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.GeomShape = function () {
 	OG.shape.GeomShape.superclass.call(this);
@@ -10637,7 +10637,7 @@ OG.shape.GeomShape.prototype.clone = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} text 텍스트
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.TextShape = function (text) {
 	OG.shape.TextShape.superclass.call(this);
@@ -10694,7 +10694,7 @@ OG.shape.TextShape.prototype.clone = function () {
  *
  * @param {String} image 이미지 URL
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.ImageShape = function (image, label) {
 	OG.shape.ImageShape.superclass.call(this);
@@ -10756,7 +10756,7 @@ OG.shape.ImageShape.prototype.clone = function () {
  * @param {String} label 라벨 [Optional]
  * @param {String} fromLabel 시작점 라벨 [Optional]
  * @param {String} toLabel 끝점 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.EdgeShape = function (from, to, label, fromLabel, toLabel) {
 	OG.shape.EdgeShape.superclass.call(this);
@@ -10834,7 +10834,7 @@ OG.shape.EdgeShape.prototype.clone = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.CircleShape = function (label) {
 	OG.shape.CircleShape.superclass.call(this);
@@ -10869,7 +10869,7 @@ OG.shape.CircleShape.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.EllipseShape = function (label) {
 	OG.shape.EllipseShape.superclass.call(this);
@@ -10904,7 +10904,7 @@ OG.shape.EllipseShape.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.GroupShape = function (label) {
 	OG.shape.GroupShape.superclass.call(this);
@@ -10979,7 +10979,7 @@ OG.shape.GroupShape.prototype.clone = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.HorizontalLaneShape = function (label) {
 	OG.shape.HorizontalLaneShape.superclass.call(this, label);
@@ -11021,7 +11021,7 @@ OG.shape.HorizontalLaneShape.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.HorizontalPoolShape = function (label) {
     OG.shape.HorizontalPoolShape.superclass.call(this, label);
@@ -11069,7 +11069,7 @@ OG.shape.HorizontalPoolShape.prototype.createShape = function () {
  *
  * @param {String} html 임베드 HTML String
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.HtmlShape = function (html, label) {
 	OG.shape.HtmlShape.superclass.call(this);
@@ -11127,7 +11127,7 @@ OG.shape.HtmlShape.prototype.clone = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.RectangleShape = function (label) {
 	OG.shape.RectangleShape.superclass.call(this);
@@ -11162,7 +11162,7 @@ OG.shape.RectangleShape.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.SpotShape = function (label) {
 	OG.shape.SpotShape.superclass.call(this);
@@ -11197,7 +11197,7 @@ OG.shape.SpotShape.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*, OG.shape.bpmn.A_Task
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.Transformer = function (label) {
     OG.shape.Transformer.superclass.call(this);
@@ -11234,7 +11234,7 @@ OG.shape.Transformer.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.VerticalLaneShape = function (label) {
 	OG.shape.VerticalLaneShape.superclass.call(this, label);
@@ -11318,7 +11318,7 @@ OG.shape.VerticalPoolShape.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.Activity = function (label) {
     OG.shape.essencia.Activity.superclass.call(this);
@@ -11366,7 +11366,7 @@ OG.shape.essencia.Activity.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.ActivityArrow = function (label) {
     OG.shape.essencia.ActivityArrow.superclass.call(this);
@@ -11415,7 +11415,7 @@ OG.shape.essencia.ActivityArrow.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.ActivitySpace = function (label) {
     OG.shape.essencia.ActivitySpace.superclass.call(this);
@@ -11487,7 +11487,7 @@ OG.shape.essencia.ActivitySpace.prototype.createTerminal = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.Alpha = function (label) {
     OG.shape.essencia.Alpha.superclass.call(this);
@@ -11539,7 +11539,7 @@ OG.shape.essencia.Alpha.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.Competency = function (label) {
     OG.shape.essencia.Competency.superclass.call(this);
@@ -11593,7 +11593,7 @@ OG.shape.essencia.Competency.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.CompetencyLevel = function (label) {
     OG.shape.essencia.CompetencyLevel.superclass.call(this);
@@ -11639,7 +11639,7 @@ OG.shape.essencia.CompetencyLevel.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.LevelOfDetail = function (label) {
     OG.shape.essencia.LevelOfDetail.superclass.call(this);
@@ -11687,7 +11687,7 @@ OG.shape.essencia.LevelOfDetail.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.Practice = function (label) {
     OG.shape.essencia.Practice.superclass.call(this);
@@ -11740,7 +11740,7 @@ OG.shape.essencia.Practice.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.State = function (label) {
     OG.shape.essencia.State.superclass.call(this);
@@ -11784,7 +11784,7 @@ OG.shape.essencia.State.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.essencia.WorkProduct = function (label) {
     OG.shape.essencia.WorkProduct.superclass.call(this);
@@ -11833,7 +11833,7 @@ OG.shape.essencia.WorkProduct.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_Task = function (label) {
     OG.shape.bpmn.A_Task.superclass.call(this);
@@ -11897,7 +11897,7 @@ OG.Event = OG.shape.bpmn.Event;
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End = function (label) {
     OG.shape.bpmn.E_End.superclass.call(this);
@@ -11938,7 +11938,7 @@ OG.shape.bpmn.E_End.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate = function (label) {
 	OG.shape.bpmn.E_Intermediate.superclass.call(this);
@@ -11981,7 +11981,7 @@ OG.shape.bpmn.E_Intermediate.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start = function (label) {
 	OG.shape.bpmn.E_Start.superclass.call(this);
@@ -12022,7 +12022,7 @@ OG.shape.bpmn.E_Start.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.G_Gateway = function (label) {
 	OG.shape.bpmn.G_Gateway.superclass.call(this);
@@ -12063,7 +12063,7 @@ OG.shape.bpmn.G_Gateway.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*, OG.shape.bpmn.A_Task
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_HumanTask = function (label) {
     OG.shape.bpmn.A_HumanTask.superclass.call(this);
@@ -12088,7 +12088,7 @@ OG.A_HumanTask = OG.shape.bpmn.A_HumanTask;
  * @requires OG.common.*, OG.geometry.*, OG.shape.bpmn.A_Task
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_LoopTask = function (label) {
     OG.shape.bpmn.A_LoopTask.superclass.call(this);
@@ -12113,7 +12113,7 @@ OG.A_LoopTask = OG.shape.bpmn.A_LoopTask;
  * @requires OG.common.*, OG.geometry.*, OG.shape.bpmn.A_Task
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_ManualTask = function (label) {
     OG.shape.bpmn.A_ManualTask.superclass.call(this);
@@ -12138,7 +12138,7 @@ OG.A_ManualTask = OG.shape.bpmn.A_ManualTask;
  * @requires OG.common.*, OG.geometry.*, OG.shape.bpmn.A_Task
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_MapperTask = function (label) {
     OG.shape.bpmn.A_MapperTask.superclass.call(this);
@@ -12163,7 +12163,7 @@ OG.A_MapperTask = OG.shape.bpmn.A_MapperTask;
  * @requires OG.common.*, OG.geometry.*, OG.shape.bpmn.A_Task
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_ServiceTask = function (label) {
     OG.shape.bpmn.A_HumanTask.superclass.call(this);
@@ -12187,7 +12187,7 @@ OG.A_ServiceTask = OG.shape.bpmn.A_ServiceTask;
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_Subprocess = function (label) {
     OG.shape.bpmn.A_Subprocess.superclass.call(this);
@@ -12235,7 +12235,7 @@ OG.shape.bpmn.A_Subprocess.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*, OG.shape.bpmn.A_Task
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.A_WebServiceTask = function (label) {
     OG.shape.bpmn.A_WebServiceTask.superclass.call(this);
@@ -12261,7 +12261,7 @@ OG.A_WebServiceTask = OG.shape.bpmn.A_WebServiceTask;
  * @param {Number[]} from 와이어 시작 좌표
  * @param {Number[]} to 와이어 끝 좌표
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.C_Association = function (from, to, label) {
     OG.shape.bpmn.C_Association.superclass.call(this, from, to, label);
@@ -12304,7 +12304,7 @@ OG.shape.bpmn.C_Association.prototype.createShape = function () {
  * @param {Number[]} from 와이어 시작 좌표
  * @param {Number[]} to 와이어 끝 좌표
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.C_Conditional = function (from, to, label) {
     OG.shape.bpmn.C_Conditional.superclass.call(this, from, to, label);
@@ -12346,7 +12346,7 @@ OG.shape.bpmn.C_Conditional.prototype.createShape = function () {
  * @param {Number[]} from 와이어 시작 좌표
  * @param {Number[]} to 와이어 끝 좌표
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.C_DataAssociation = function (from, to, label) {
     OG.shape.bpmn.C_DataAssociation.superclass.call(this, from, to, label);
@@ -12389,7 +12389,7 @@ OG.shape.bpmn.C_DataAssociation.prototype.createShape = function () {
  * @param {Number[]} from 와이어 시작 좌표
  * @param {Number[]} to 와이어 끝 좌표
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.C_DataAssociation = function (from, to, label) {
     OG.shape.bpmn.C_DataAssociation.superclass.call(this, from, to, label);
@@ -12432,7 +12432,7 @@ OG.shape.bpmn.C_DataAssociation.prototype.createShape = function () {
  * @param {Number[]} from 와이어 시작 좌표
  * @param {Number[]} to 와이어 끝 좌표
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.C_Message = function (from, to, label) {
     OG.shape.bpmn.C_Message.superclass.call(this, from, to, label);
@@ -12475,7 +12475,7 @@ OG.shape.bpmn.C_Message.prototype.createShape = function () {
  * @param {Number[]} from 와이어 시작 좌표
  * @param {Number[]} to 와이어 끝 좌표
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.C_Sequence = function (from, to, label) {
     OG.shape.bpmn.C_Sequence.superclass.call(this, from, to, label);
@@ -12515,7 +12515,7 @@ OG.shape.bpmn.C_Sequence.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.D_Data = function (label) {
     OG.shape.bpmn.D_Data.superclass.call(this);
@@ -12561,7 +12561,7 @@ OG.shape.bpmn.D_Data.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.D_Store = function (label) {
     OG.shape.bpmn.D_Store.superclass.call(this);
@@ -12621,7 +12621,7 @@ OG.shape.bpmn.D_Store.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End_Cancel = function (label) {
     OG.shape.bpmn.E_End_Cancel.superclass.call(this);
@@ -12680,7 +12680,7 @@ OG.shape.bpmn.E_End_Cancel.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End_Compensation = function (label) {
     OG.shape.bpmn.E_End_Compensation.superclass.call(this);
@@ -12749,7 +12749,7 @@ OG.shape.bpmn.E_End_Compensation.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End_Connector = function (label) {
     OG.shape.bpmn.E_End_Connector.superclass.call(this);
@@ -12806,7 +12806,7 @@ OG.shape.bpmn.E_End_Connector.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End_Error = function (label) {
     OG.shape.bpmn.E_End_Error.superclass.call(this);
@@ -12868,7 +12868,7 @@ OG.shape.bpmn.E_End_Error.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End_Link = function (label) {
     OG.shape.bpmn.E_End_Link.superclass.call(this);
@@ -12927,7 +12927,7 @@ OG.shape.bpmn.E_End_Link.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End_Message = function (label) {
 	OG.shape.bpmn.E_End_Message.superclass.call(this);
@@ -13000,7 +13000,7 @@ OG.shape.bpmn.E_End_Message.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_End_Multiple = function (label) {
 	OG.shape.bpmn.E_End_Multiple.superclass.call(this);
@@ -13067,7 +13067,7 @@ OG.shape.bpmn.E_End_Multiple.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate_Compensation = function (label) {
 	OG.shape.bpmn.E_Intermediate_Compensation.superclass.call(this);
@@ -13130,7 +13130,7 @@ OG.shape.bpmn.E_Intermediate_Compensation.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate_Error = function (label) {
 	OG.shape.bpmn.E_Intermediate_Error.superclass.call(this);
@@ -13235,7 +13235,7 @@ OG.shape.bpmn.E_Intermediate_Escalation.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate_Link = function (label) {
 	OG.shape.bpmn.E_Intermediate_Link.superclass.call(this);
@@ -13278,7 +13278,7 @@ OG.shape.bpmn.E_Intermediate_Link.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate_Message = function (label) {
 	OG.shape.bpmn.E_Intermediate_Message.superclass.call(this);
@@ -13408,7 +13408,7 @@ OG.shape.bpmn.E_Intermediate_MessageFill.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate_Multiple = function (label) {
 	OG.shape.bpmn.E_Intermediate_Multiple.superclass.call(this);
@@ -13464,7 +13464,7 @@ OG.shape.bpmn.E_Intermediate_Multiple.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate_Rule = function (label) {
 	OG.shape.bpmn.E_Intermediate_Rule.superclass.call(this);
@@ -13518,7 +13518,7 @@ OG.shape.bpmn.E_Intermediate_Rule.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Intermediate_Timer = function (label) {
 	OG.shape.bpmn.E_Intermediate_Timer.superclass.call(this);
@@ -13580,7 +13580,7 @@ OG.shape.bpmn.E_Intermediate_Timer.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start_Connector = function (label) {
     OG.shape.bpmn.E_Start_Connector.superclass.call(this);
@@ -13635,7 +13635,7 @@ OG.shape.bpmn.E_Start_Connector.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start_Error = function (label) {
     OG.shape.bpmn.E_Start_Error.superclass.call(this);
@@ -13690,7 +13690,7 @@ OG.shape.bpmn.E_Start_Error.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start_Link = function (label) {
 	OG.shape.bpmn.E_Start_Link.superclass.call(this);
@@ -13744,7 +13744,7 @@ OG.shape.bpmn.E_Start_Link.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start_Message = function (label) {
 	OG.shape.bpmn.E_Start_Message.superclass.call(this);
@@ -13809,7 +13809,7 @@ OG.shape.bpmn.E_Start_Message.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start_Multiple = function (label) {
 	OG.shape.bpmn.E_Start_Multiple.superclass.call(this);
@@ -13869,7 +13869,7 @@ OG.shape.bpmn.E_Start_Multiple.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start_Rule = function (label) {
 	OG.shape.bpmn.E_Start_Rule.superclass.call(this);
@@ -13923,7 +13923,7 @@ OG.shape.bpmn.E_Start_Rule.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Start_Timer = function (label) {
 	OG.shape.bpmn.E_Start_Timer.superclass.call(this);
@@ -13984,7 +13984,7 @@ OG.shape.bpmn.E_Start_Timer.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.E_Terminate = function (label) {
 	OG.shape.bpmn.E_Terminate.superclass.call(this, label);
@@ -14037,7 +14037,7 @@ OG.shape.bpmn.E_Terminate.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.G_Complex = function (label) {
 	OG.shape.bpmn.G_Complex.superclass.call(this);
@@ -14107,7 +14107,7 @@ OG.shape.bpmn.G_Complex.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.G_Exclusive = function (label) {
 	OG.shape.bpmn.G_Exclusive.superclass.call(this);
@@ -14165,7 +14165,7 @@ OG.shape.bpmn.G_Exclusive.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.G_Inclusive = function (label) {
 	OG.shape.bpmn.G_Inclusive.superclass.call(this);
@@ -14217,7 +14217,7 @@ OG.shape.bpmn.G_Inclusive.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.G_Parallel = function (label) {
 	OG.shape.bpmn.G_Parallel.superclass.call(this);
@@ -14326,7 +14326,7 @@ OG.shape.bpmn.M_Annotation.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.M_Group = function (label) {
     OG.shape.bpmn.M_Group.superclass.call(this);
@@ -14377,7 +14377,7 @@ OG.shape.bpmn.M_Group.prototype.createShape = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.M_Text = function (label) {
 	OG.shape.bpmn.M_Text.superclass.call(this);
@@ -14498,7 +14498,7 @@ OG.shape.bpmn.ScopeActivity.prototype.layoutChild = function () {
  * @requires OG.common.*, OG.geometry.*
  *
  * @param {String} label 라벨 [Optional]
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.shape.bpmn.Signal = function (label) {
     OG.shape.bpmn.Signal.superclass.call(this);
@@ -14643,7 +14643,7 @@ OG.shape.bpmn.Value_Chain_Module.prototype.createShape = function () {
  * @param {String} backgroundColor 캔버스 배경색
  * @param {String} backgroundImage 캔버스 배경이미지
  * @param {Object} config Configuration
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.renderer.IRenderer = function (container, containerSize, backgroundColor, backgroundImage, config) {
     this._CONFIG = null;
@@ -15866,7 +15866,7 @@ OG.renderer.IRenderer.prototype.constructor = OG.renderer.IRenderer;
  * @param {String} backgroundColor 캔버스 배경색
  * @param {String} backgroundImage 캔버스 배경이미지
  * @param {Object} config Configuration
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.renderer.RaphaelRenderer = function (container, containerSize, backgroundColor, backgroundImage, config) {
     OG.renderer.RaphaelRenderer.superclass.call(this, arguments);
@@ -21659,6 +21659,14 @@ OG.renderer.RaphaelRenderer.prototype.addHistory = function () {
 
     me._CONFIG.HISTORY = history;
     me._CONFIG.HISTORY_INDEX = historyIndex;
+
+
+    //캔버스가 서버로부터 받은 데이터를 적용시키는 과정이 아닐 경우 브로드캐스트 수행.
+    if(!me._CANVAS.getRemoteDuring()){
+        OG.RemoteHandler.broadCastCanvas(me._CANVAS, function(canvas){
+
+        });
+    }
 };
 
 /**
@@ -23179,7 +23187,7 @@ OG.renderer.RaphaelRenderer.prototype.offDropablePool = function () {
  *
  * @param {OG.renderer.IRenderer} renderer 렌더러
  * @param {Object} config Configuration
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.handler.EventHandler = function (renderer, config) {
     this._RENDERER = renderer;
@@ -28718,6 +28726,444 @@ OG.handler.EventHandler.prototype = {
 OG.handler.EventHandler.prototype.constructor = OG.handler.EventHandler;
 OG.EventHandler = OG.handler.EventHandler;
 /**
+ * Remote User
+ *
+ * @class
+ * @requires OG.*
+ *
+ * @example
+ * var user = new OG.handler.RemoteUser(key, name, sessionId);
+ *
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
+ */
+OG.handler.RemoteUser = function (key, name, sessionId) {
+
+    this.key = key;
+    this.name = name;
+    this.sessionId = sessionId;
+    this.isMaster = false;
+    this.editable = false;
+};
+OG.handler.RemoteUser.prototype = {
+    getKey: function () {
+        return this.key;
+    },
+    setKey: function (key) {
+        this.key = key;
+    },
+    getName: function () {
+        return this.name;
+    },
+    setName: function (name) {
+        this.name = name;
+    },
+    getSessionId: function () {
+        return this.sessionId;
+    },
+    setSessionId: function (sessionId) {
+        this.sessionId = sessionId;
+    },
+    getIsMaster: function () {
+        return this.isMaster;
+    },
+    setIsMaster: function (ismaster) {
+        this.isMaster = ismaster;
+    },
+    getEditable: function () {
+        return this.editable;
+    },
+    setEditable: function (editable) {
+        this.editable = editable;
+    }
+};
+OG.handler.RemoteUser.prototype.constructor = OG.handler.RemoteUser;
+OG.RemoteUser = OG.handler.RemoteUser();
+/**
+ * Remote Handler
+ *
+ * @class
+ * @requires OG.*
+ *
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
+ */
+OG.handler.RemoteRepo = {};
+OG.handler.RemoteHandler = function () {
+    this._REPO = OG.handler.RemoteRepo;
+    this._CLASSNAME = 'org.uengine.opengraph.RemoteService';
+    this._SESSIONID = null;
+    this._ENCODESUFFIX = '_%$';
+    this._SCHEDULER = null;
+};
+OG.handler.RemoteHandler.prototype = {
+    encodeJson: function (obj) {
+        return JSON.stringify(obj).replace(/"/gi, this._ENCODESUFFIX);
+    },
+    getRepo: function () {
+        return this._REPO;
+    },
+    setCanvasForIdentifier: function (canvas, identifier) {
+        var repo = this.getRepo();
+        if (!repo[identifier]) {
+            repo[identifier] = {
+                canvas: null,
+                users: []
+            };
+        }
+        repo[identifier].canvas = canvas;
+        return repo[identifier];
+    },
+    getCanvasByIdentifier: function (identifier) {
+        var repo = this.getRepo();
+        if (!repo[identifier]) {
+            return null;
+        }
+
+        return repo[identifier].canvas;
+    },
+    getRemote: function (param) {
+        var obj = {
+            __className: this._CLASSNAME
+        };
+        if (param) {
+            for (var key in param) {
+                obj[key] = param[key];
+            }
+        }
+        return new MetaworksObject(obj, 'body');
+    },
+    /**
+     * 서버로부터 온 Json User 객체를 OG.handler.RemoteUser 로 변환한다.
+     *
+     * @param serverUser Object
+     * @return OG.handler.RemoteUser
+     */
+    convertRemoteUser: function (serverUser) {
+        var remoteUser = new OG.handler.RemoteUser();
+        remoteUser.setKey(serverUser['key']);
+        remoteUser.setName(serverUser['name']);
+        remoteUser.setSessionId(serverUser['sessionId']);
+        remoteUser.setIsMaster(serverUser['isMaster']);
+        remoteUser.setEditable(serverUser['editable']);
+        return remoteUser;
+    },
+    /**
+     * 사용된 메타웍스 오브젝트를 제거한다.
+     * 브라우저 가비지 제거
+     *
+     * @param remote MetaworksObject
+     *
+     */
+    closeRemote: function (remote) {
+        var objectId = remote.__objectId;
+        $('#objDiv_' + objectId).remove();
+        delete mw3.objects[objectId];
+    },
+    getCanvasId: function (canvas) {
+        return canvas._CONTAINER.id;
+    },
+
+    /**
+     * 캔버스를 리모트모드로 변경한다.
+     *
+     * @param canvas 캔버스
+     * @param identifier 리모트그룹 식별자
+     * @param user OG.handler.RemoteUser 유저
+     * @param callback Callback
+     *
+     * @return callback(OG.handler.RemoteUser) 서버 등록 후 갱신된 유저
+     *
+     */
+    startRemote: function (canvas, identifier, user, callback) {
+        var me = this;
+        if (!canvas || !identifier || !user) {
+            return;
+        }
+        if (!user.key || !user.name) {
+            return;
+        }
+        canvas.setRemotable(true);
+        canvas.setIdentifier(identifier);
+        me.setCanvasForIdentifier(canvas, identifier);
+
+        me.registeToServer(identifier, user, function (user) {
+            callback(user);
+        });
+    },
+    /**
+     * 현재 자신의 세션아이디를 구한다.
+     *
+     * @param callback Callback
+     *
+     * @return callback(String sessionId) sessionId
+     *
+     */
+    getSelfSession: function (callback) {
+        if (this._SESSIONID) {
+            callback(this._SESSIONID);
+            return;
+        }
+        var me = this;
+        var remote = this.getRemote();
+        var objectId = remote.__objectId;
+        remote.selfSession(null, function () {
+            var sessionId = mw3.objects[objectId]['currentSessionId'];
+            me.closeRemote(remote);
+
+            if (sessionId) {
+                me._SESSIONID = sessionId;
+            }
+            callback(sessionId);
+        });
+    },
+    /**
+     * 서버에 현재 사용자를 등록한다.
+     *
+     * @param identifier 리모트그룹 식별자
+     * @param user OG.handler.RemoteUser 유저
+     * @param callback Callback
+     *
+     * @return callback(OG.handler.RemoteUser) 등록된 유저
+     *
+     */
+    registeToServer: function (identifier, user, callback) {
+
+        var me = this, result;
+        var remote = this.getRemote({
+            identifier: identifier,
+            remoteUser: me.encodeJson(user)
+        });
+        var objectId = remote.__objectId;
+        remote.registe(null, function (value) {
+
+            result = mw3.objects[objectId];
+            me.closeRemote(remote);
+            var remoteUser = me.convertRemoteUser(JSON.parse(result['remoteUser']));
+            callback(remoteUser);
+        })
+    },
+
+    /**
+     * From Server.
+     * 주어진 캔바스의 유저 목록을 업데이트한다.
+     *
+     * @param data identifier, 유저목록 remoteUsers
+     *
+     */
+    updateRemoteUser: function (data) {
+        var me = this;
+        var parse = JSON.parse(data);
+        var identifier = parse.identifier;
+        var remoteServerUsers = parse.remoteUsers;
+
+        if (!this.getRepo()[identifier]) {
+            return;
+        }
+
+        var remoteUsers = [];
+        var canvas = this.getCanvasByIdentifier(identifier);
+        this.getSelfSession(function (sessionId) {
+            $.each(remoteServerUsers, function (index, serverUser) {
+                if (serverUser.sessionId && serverUser.sessionId == sessionId) {
+                    canvas.setRemoteEditable(serverUser.editable);
+                    canvas.setRemoteIsMaster(serverUser.isMaster);
+                }
+                if (serverUser.isMaster) {
+                    remoteUsers.push(me.convertRemoteUser(serverUser));
+                }
+            });
+            $.each(remoteServerUsers, function (index, serverUser) {
+                if (!serverUser.isMaster) {
+                    remoteUsers.push(me.convertRemoteUser(serverUser));
+                }
+            });
+            me.getRepo()[identifier]['users'] = remoteUsers;
+
+
+            var canvasDiv = $('#' + me.getCanvasId(canvas));
+            canvasDiv.find('.userPanel').remove();
+            var userPanel = $('<div class="userPanel"></div>');
+            userPanel.css({
+                position: 'absolute',
+                top: '0px',
+                left: '0px'
+            });
+            canvasDiv.append(userPanel);
+            $.each(remoteUsers, function (index, remoteUser) {
+                var userDiv = $('<div class="userDiv" data-key="' + remoteUser.getKey() + '"></div>');
+                if (remoteUser.isMaster) {
+                    userDiv.append('<span>' + remoteUser.getName() + ' (Master)</span>');
+                } else {
+                    userDiv.append('<span>' + remoteUser.getName() + ' </span>');
+
+                    if(canvas.getRemoteIsMaster()){
+                        var controller;
+                        if(!remoteUser.editable){
+                            controller = $('<button>Read Only</button>');
+                            controller.data('identifier' , identifier);
+                            controller.data('mode' , 'readonly');
+                            controller.data('user' , remoteUser);
+                        }else{
+                            controller = $('<button>Editable</button>');
+                            controller.data('identifier' , identifier);
+                            controller.data('mode' , 'editable');
+                            controller.data('user' , remoteUser);
+                        }
+                        userDiv.append(controller);
+
+                        controller.click(function(){
+                            var clickedIdentifier = $(this).data('identifier');
+                            var clickedMode = $(this).data('mode');
+                            var user = $(this).data('user');
+                            if(clickedMode === 'readonly'){
+                                user.setEditable(true);
+                            }else{
+                                user.setEditable(false);
+                            }
+                            me.updateUserState(clickedIdentifier,user,function(){
+
+                            });
+                        });
+                    }
+                }
+                userPanel.append(userDiv);
+            });
+        });
+    },
+
+    /**
+     * 서버에 사용자 상태를 업데이트시킨다.
+     *
+     * @param identifier 리모트그룹 식별자
+     * @param user OG.handler.RemoteUser 유저
+     * @param callback Callback
+     *
+     * @return callback(OG.handler.RemoteUser) 변경된 유저
+     *
+     */
+    updateUserState: function (identifier, user, callback) {
+
+        var me = this, result;
+        var remote = this.getRemote({
+            identifier: identifier,
+            remoteUser: me.encodeJson(user)
+        });
+        var objectId = remote.__objectId;
+        remote.updateUserState(null, function () {
+
+            result = mw3.objects[objectId];
+            me.closeRemote(remote);
+            var remoteUser = me.convertRemoteUser(JSON.parse(result['remoteUser']));
+            callback(remoteUser);
+        })
+    },
+
+    /**
+     * From Server.
+     * 주어진 캔버스를 업데이트한다.
+     *
+     * @param data identifier, canvasJsonString
+     *
+     */
+    updateCanvas: function (data) {
+        var parse = JSON.parse(data);
+        var identifier = parse.identifier;
+        var canvasData = parse.canvasData;
+
+        var canvas = this.getCanvasByIdentifier(identifier);
+        if (!canvas || !canvas.getRemotable()) {
+            return;
+        }
+        canvas.setRemoteDuring(true);
+        canvas.loadJSON(canvasData);
+        canvas.setRemoteDuring(false);
+    },
+
+    /**
+     * To Server.
+     * 주어진 캔바스를 브로드캐스팅한다.
+     *
+     * @param OG.graph.Canvas canvas
+     * @param callback Callback
+     *
+     * @return callback(OG.graph.Canvas) canvas
+     */
+    broadCastCanvas: function (canvas, callback) {
+        if (!canvas.getRemotable()) {
+            callback(null);
+            return;
+        }
+        if (!canvas.getRemoteEditable()) {
+            callback(null);
+            return;
+        }
+
+        var identifier = canvas.getIdentifier();
+        var me = this, result;
+        var remote = this.getRemote({
+            identifier: identifier,
+            canvasData: me.encodeJson(canvas.toJSON())
+        });
+        var objectId = remote.__objectId;
+        remote.broadCastCanvas(null, function () {
+            result = mw3.objects[objectId];
+            me.closeRemote(remote);
+            callback(canvas);
+        })
+    },
+    /**
+     * To Server.
+     * 주어진 리모트그룹에 사용자가 종료하였음을 알린다.
+     *
+     * @param identifier 리모트그룹 식별자
+     * @param callback Callback
+     *
+     */
+    remoteExit: function (identifier, callback) {
+
+        var me = this, result;
+        var remote = this.getRemote({
+            identifier: identifier
+        });
+        var objectId = remote.__objectId;
+        remote.remoteUserExited(null, function () {
+            result = mw3.objects[objectId];
+            me.closeRemote(remote);
+            callback(null);
+        })
+    },
+    /**
+     * Scheduler, To Server.
+     *
+     * 브라우저의 재종료 없이 캔버스가 삭제되었을 경우
+     * 관련 캐쉬를 삭제하고 서버에 사용자가 종료되었음을 알린다.
+     *
+     */
+    checkExpiredRemoteCanvas: function () {
+        if (this._SCHEDULER) {
+            return;
+        }
+
+        var me = this, repo, identifier, canvas;
+        this._SCHEDULER = setInterval(function () {
+                repo = me.getRepo();
+                for (identifier in repo) {
+                    canvas = repo[identifier].canvas;
+                    if (canvas && me.getCanvasId(canvas) && $('#' + me.getCanvasId(canvas)).length) {
+                        return;
+                    }
+                    delete repo[identifier];
+                    me.remoteExit(identifier, function () {
+                    });
+                }
+            }, 1000
+        );
+    }
+};
+OG.handler.RemoteHandler.prototype.constructor = OG.handler.RemoteHandler;
+OG.RemoteHandler = new OG.handler.RemoteHandler();
+OG.RemoteHandler.checkExpiredRemoteCanvas();
+
+/**
  * OpenGraph 캔버스 클래스
  *
  * @class
@@ -28735,11 +29181,31 @@ OG.EventHandler = OG.handler.EventHandler;
  * @param {Number[]} containerSize 컨테이너 Width, Height
  * @param {String} backgroundColor 캔버스 배경색
  * @param {String} backgroundImage 캔버스 배경이미지
- * @author <a href="mailto:hrkenshin@gmail.com">Seungbaek Lee</a>
+ * @author <a href="mailto:sppark@uengine.org">Seungpil Park</a>
  */
 OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroundImage) {
 
     this._CONFIG = {
+        /**
+         * 서버 수신 데이터 처리중
+         */
+        REMOTE_PERFORMED_DURING: false,
+        /**
+         * 리모트 데피니션
+         */
+        REMOTE_IDENTIFIER: null,
+        /**
+         * 리모트 모드
+         */
+        REMOTEABLE: false,
+        /**
+         * 리모트 모드 수정권한
+         */
+        REMOTE_EDITABLE: false,
+        /**
+         * 리모트 모드 마스터모드
+         */
+        REMOTE_ISMASTER: false,
         /**
          * 히스토리 인덱스
          */
@@ -29300,7 +29766,39 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
 };
 
 OG.graph.Canvas.prototype = {
-
+    setRemoteDuring: function (during) {
+        this._CONFIG.REMOTE_PERFORMED_DURING = during;
+    },
+    getRemoteDuring: function () {
+        return this._CONFIG.REMOTE_PERFORMED_DURING;
+    },
+    setIdentifier: function (identifier) {
+        this._CONFIG.REMOTE_IDENTIFIER = identifier;
+    },
+    getIdentifier: function () {
+        return this._CONFIG.REMOTE_IDENTIFIER;
+    },
+    getRemotable: function () {
+        return this._CONFIG.REMOTEABLE;
+    },
+    setRemotable: function (remotable) {
+        this._CONFIG.REMOTEABLE = remotable;
+    },
+    setRemoteEditable: function (editable) {
+        this._CONFIG.REMOTE_EDITABLE = editable;
+    },
+    getRemoteEditable: function () {
+        return this._CONFIG.REMOTE_EDITABLE;
+    },
+    setRemoteIsMaster: function (isMaster) {
+        this._CONFIG.REMOTE_ISMASTER = isMaster;
+    },
+    getRemoteIsMaster: function () {
+        return this._CONFIG.REMOTE_ISMASTER;
+    },
+    setCurrentCanvas: function (canvas) {
+        this._RENDERER.setCanvas(canvas);
+    },
     /**
      * Canvas 의 설정값을 초기화한다.
      *
@@ -29322,11 +29820,9 @@ OG.graph.Canvas.prototype = {
      *
      * @param {Object} config JSON 포맷의 configuration
      */
-    setCurrentCanvas: function (canvas) {
-        this._RENDERER.setCanvas(canvas);
-    },
     initConfig: function (config) {
         if (config) {
+            this._CONFIG.REMOTEABLE = config.remoteable === undefined ? this._CONFIG.REMOTEABLE : config.remoteable;
             this._CONFIG.SELECTABLE = config.selectable === undefined ? this._CONFIG.SELECTABLE : config.selectable;
             this._CONFIG.DRAG_SELECTABLE = config.dragSelectable === undefined ? this._CONFIG.DRAG_SELECTABLE : config.dragSelectable;
             this._CONFIG.MOVABLE = config.movable === undefined ? this._CONFIG.MOVABLE : config.movable;
@@ -30600,7 +31096,7 @@ OG.graph.Canvas.prototype = {
     onDrawLabel: function (callbackFunc) {
         $(this.getRootElement()).bind('drawLabel', function (event, shapeElement, labelText) {
             callbackFunc(event, shapeElement, labelText);
-        });
+        })
     },
 
     /**
