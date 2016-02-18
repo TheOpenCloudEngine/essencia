@@ -14,30 +14,127 @@
     <import resource="applicationContext.xml"/>
 
     <bean id="storage" class="org.uengine.modeling.resource.LocalFileStorage">
-        <property name="localBasePath" value="/oce/codebase"/>
+        <property name="localBasePath" value="${codebase}"/>
     </bean>
-
-    <!--    <bean id="storage" class="org.uengine.modeling.resource.AmazonS3Storage">
-            <property name="amazonS3Bucket" value="${Amazon.S3.Bucket}"/>
-            <property name="awsAccessKey" value="${Amazon.AccessKeyID}"/>
-            <property name="awsSecretAccessKey" value="${Amazon.SecretAccessKey}"/>
-        </bean>-->
 
     <bean class="org.uengine.modeling.resource.ResourceManager" scope="singleton">
         <property name="storage" ref="storage"/>
     </bean>
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:*.properties</value>
-                <value>classpath:org/uengine/uengine.properties</value>
-            </list>
-        </property>
-        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    <util:properties id="config" location="classpath:org/uengine/uengine.properties"/>
+
+
+    <!-- ========================= FILEUPLOAD DEFINITION ========================= -->
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="${fileupload.max.size}"/>
+        <property name="defaultEncoding" value="${fileupload.default.encoding}"/>
     </bean>
 
-    <util:properties id="config" location="classpath:org/uengine/uengine.properties"/>
+    <!-- ========================= REST DEFINITION ========================= -->
+
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="defaultContentType" value="application/json"/>
+        <property name="favorPathExtension" value="true"/>
+        <property name="favorParameter" value="false"/>
+        <property name="parameterName" value="type"/>
+        <property name="ignoreAcceptHeader" value="false"/>
+        <property name="useJaf" value="false"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+        <property name="viewResolvers">
+            <list>
+                <ref bean="internalResourceViewResolver"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- ========================= VIEW RESOLVER DEFINITION ========================= -->
+
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/jira/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="1"/>
+    </bean>
+
+    <!-- ========================= MESSAGE CONVERTER DEFINITION ========================= -->
+
+    <bean id="jsonMediaType" class="org.springframework.http.MediaType">
+        <constructor-arg value="application"/>
+        <constructor-arg value="json"/>
+    </bean>
+
+    <bean id="xmlMediaType" class="org.springframework.http.MediaType">
+        <constructor-arg value="application"/>
+        <constructor-arg value="xml"/>
+    </bean>
+
+    <bean id="stringMediaType" class="org.springframework.http.MediaType">
+        <constructor-arg value="text"/>
+        <constructor-arg value="plain"/>
+    </bean>
+
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <util:list>
+                <ref bean="jsonMediaType"/>
+            </util:list>
+        </property>
+        <property name="prettyPrint" value="true"/>
+        <property name="objectMapper" ref="jacksonObjectMapper"/>
+    </bean>
+
+    <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <constructor-arg type="java.nio.charset.Charset">
+            <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                <property name="staticMethod" value="java.nio.charset.Charset.forName"/>
+                <property name="arguments">
+                    <list>
+                        <!-- Set Default Charset -->
+                        <bean class="java.lang.String">
+                            <constructor-arg value="UTF-8"/>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+        </constructor-arg>
+
+        <property name="supportedMediaTypes">
+            <util:list>
+                <ref bean="jsonMediaType"/>
+                <ref bean="stringMediaType"/>
+            </util:list>
+        </property>
+    </bean>
+
+    <!-- ========================= EXCEPTION RESOLVER DEFINITION ========================= -->
+
+    <bean id="exceptionResolverComposite"
+          class="org.springframework.web.servlet.handler.HandlerExceptionResolverComposite">
+        <property name="exceptionResolvers">
+            <list>
+                <bean id="exceptionResolver"
+                      class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+                    <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+                </bean>
+            </list>
+        </property>
+        <property name="order" value="0"/>
+    </bean>
+
+    <!-- ========================= JACKSON OBJECT MAPPER DEFINITION ========================= -->
+
+    <bean id="jacksonObjectMapper" class="org.uengine.web.util.ObjectMapperFactoryBean">
+        <property name="indentOutput" value="true"/>
+    </bean>
 
 
     <!-- ========================= TRANSLATION DEFINITION ========================= -->
@@ -61,5 +158,6 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg ref="sqlSessionFactory"/>
     </bean>
+
 
 </beans>
