@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+       <!-- ========================= COMPONENT SCAN DEFINITION ========================= -->
+
+       <mvc:annotation-driven>
+              <mvc:message-converters>
+                     <ref bean="stringHttpMessageConverter"/>
+                     <ref bean="jsonConverter"/>
+                     <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+              </mvc:message-converters>
+       </mvc:annotation-driven>
+
+       <context:component-scan base-package="org.uengine.web"/>
+
+       <import resource="applicationContext.xml"/>
+
+       <bean id="storage" class="org.uengine.modeling.resource.LocalFileStorage">
+              <property name="localBasePath" value="${codebase}"/>
+       </bean>
+
+       <bean class="org.uengine.modeling.resource.ResourceManager" scope="singleton">
+              <property name="storage" ref="storage"/>
+       </bean>
+
+       <util:properties id="config" location="classpath:org/uengine/uengine.properties"/>
+
+
+       <!-- ========================= FILEUPLOAD DEFINITION ========================= -->
+
+       <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+              <property name="maxUploadSize" value="${fileupload.max.size}"/>
+              <property name="defaultEncoding" value="${fileupload.default.encoding}"/>
+       </bean>
+
+       <!-- ========================= REST DEFINITION ========================= -->
+
+       <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+              <property name="defaultContentType" value="application/json"/>
+              <property name="favorPathExtension" value="true"/>
+              <property name="favorParameter" value="false"/>
+              <property name="parameterName" value="type"/>
+              <property name="ignoreAcceptHeader" value="false"/>
+              <property name="useJaf" value="false"/>
+              <property name="mediaTypes">
+                     <map>
+                            <entry key="json" value="application/json"/>
+                     </map>
+              </property>
+       </bean>
+
+       <bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+              <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+              <property name="viewResolvers">
+                     <list>
+                            <ref bean="internalResourceViewResolver"/>
+                     </list>
+              </property>
+       </bean>
+
+       <!-- ========================= VIEW RESOLVER DEFINITION ========================= -->
+
+       <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+              <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+              <property name="prefix" value="/jira/"/>
+              <property name="suffix" value=".jsp"/>
+              <property name="order" value="1"/>
+       </bean>
+
+       <!-- ========================= MESSAGE CONVERTER DEFINITION ========================= -->
+
+       <bean id="jsonMediaType" class="org.springframework.http.MediaType">
+              <constructor-arg value="application"/>
+              <constructor-arg value="json"/>
+       </bean>
+
+       <bean id="xmlMediaType" class="org.springframework.http.MediaType">
+              <constructor-arg value="application"/>
+              <constructor-arg value="xml"/>
+       </bean>
+
+       <bean id="stringMediaType" class="org.springframework.http.MediaType">
+              <constructor-arg value="text"/>
+              <constructor-arg value="plain"/>
+       </bean>
+
+       <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+              <property name="supportedMediaTypes">
+                     <util:list>
+                            <ref bean="jsonMediaType"/>
+                     </util:list>
+              </property>
+              <property name="prettyPrint" value="true"/>
+              <property name="objectMapper" ref="jacksonObjectMapper"/>
+       </bean>
+
+       <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+              <constructor-arg type="java.nio.charset.Charset">
+                     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+                            <property name="staticMethod" value="java.nio.charset.Charset.forName"/>
+                            <property name="arguments">
+                                   <list>
+                                          <!-- Set Default Charset -->
+                                          <bean class="java.lang.String">
+                                                 <constructor-arg value="UTF-8"/>
+                                          </bean>
+                                   </list>
+                            </property>
+                     </bean>
+              </constructor-arg>
+
+              <property name="supportedMediaTypes">
+                     <util:list>
+                            <ref bean="jsonMediaType"/>
+                            <ref bean="stringMediaType"/>
+                     </util:list>
+              </property>
+       </bean>
+
+       <!-- ========================= EXCEPTION RESOLVER DEFINITION ========================= -->
+
+       <bean id="exceptionResolverComposite"
+             class="org.springframework.web.servlet.handler.HandlerExceptionResolverComposite">
+              <property name="exceptionResolvers">
+                     <list>
+                            <bean id="exceptionResolver"
+                                  class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+                                   <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+                            </bean>
+                     </list>
+              </property>
+              <property name="order" value="0"/>
+       </bean>
+
+       <!-- ========================= APPLICATION CONTEXT SERVICE DEFINITION ========================= -->
+
+       <bean id="applicationContextService" class="org.uengine.web.util.ApplicationContextRegistry"/>
+
+
+       <!-- ========================= JACKSON OBJECT MAPPER DEFINITION ========================= -->
+
+       <bean id="jacksonObjectMapper" class="org.uengine.web.util.ObjectMapperFactoryBean">
+              <property name="indentOutput" value="true"/>
+       </bean>
+
+
+       <!-- ========================= TRANSLATION DEFINITION ========================= -->
+
+       <bean id="persistenceExceptionTranslationPostProcessor"
+             class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+       <bean class="org.mybatis.spring.MyBatisExceptionTranslator">
+              <constructor-arg ref="dataSource"/>
+              <constructor-arg value="false"/>
+       </bean>
+
+       <!-- ========================= MYBATIS DEFINITION ========================= -->
+
+       <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+              <property name="dataSource" ref="dataSource"/>
+              <property name="configLocation" value="classpath:/jira/mybatis-config.xml"/>
+              <property name="mapperLocations" value="classpath*:jira/mybatis/**/*.xml"/>
+       </bean>
+
+       <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+              <constructor-arg ref="sqlSessionFactory"/>
+       </bean>
+
+
+</beans>

@@ -8,7 +8,6 @@
     JiraClientService clientService = (JiraClientService) context.getBean(JiraClientService.class);
     CompanyService companyService = (CompanyService) context.getBean(CompanyService.class);
 
-
     String claimJson = null;
     String clientKey = null;
     String comCode = null;

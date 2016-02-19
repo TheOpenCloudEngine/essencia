@@ -20,12 +20,8 @@ import java.util.Properties;
  */
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/process")
 public class ProcessMapController {
-
-    @Autowired
-    @Qualifier("config")
-    private Properties config;
 
     @Autowired
     private ProcessMapService processService;
@@ -39,7 +35,7 @@ public class ProcessMapController {
     /**
      * 프로세스 리스트를 불러온다.
      */
-    @RequestMapping(value = "process/list", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Response list(HttpSession session) throws Exception {

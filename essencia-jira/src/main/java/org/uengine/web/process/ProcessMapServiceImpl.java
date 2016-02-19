@@ -16,10 +16,6 @@ import java.util.Properties;
 public class ProcessMapServiceImpl implements ProcessMapService {
 
     @Autowired
-    @Qualifier("config")
-    private Properties config;
-
-    @Autowired
     private ProcessMapRepository processMapRepository;
 
     @Override

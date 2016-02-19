@@ -28,10 +28,6 @@ import java.util.Properties;
 public class JiraClientServiceImpl implements JiraClientService {
 
     @Autowired
-    @Qualifier("config")
-    private Properties config;
-
-    @Autowired
     private JiraClientRepository clientRepository;
 
     @Autowired

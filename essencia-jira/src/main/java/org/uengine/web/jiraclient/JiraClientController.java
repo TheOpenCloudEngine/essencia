@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -15,12 +16,8 @@ import java.util.Properties;
  */
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/handshake")
 public class JiraClientController {
-
-    @Autowired
-    @Qualifier("config")
-    private Properties config;
 
     @Autowired
     JiraClientService jiraClientService;
@@ -30,7 +27,7 @@ public class JiraClientController {
      *
      * @return ResponseEntity
      */
-    @RequestMapping(value = "handshake/installed", method = RequestMethod.POST)
+    @RequestMapping(value = "/installed", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity installed(@RequestBody Map payload) {
@@ -48,7 +45,7 @@ public class JiraClientController {
      *
      * @return ResponseEntity
      */
-    @RequestMapping(value = "handshake/uninstalled", method = RequestMethod.POST)
+    @RequestMapping(value = "/uninstalled", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity uninstalled(@RequestBody Map payload) {
@@ -66,7 +63,7 @@ public class JiraClientController {
      *
      * @return ResponseEntity
      */
-    @RequestMapping(value = "handshake/enabled", method = RequestMethod.POST)
+    @RequestMapping(value = "/enabled", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity enabled(@RequestBody Map payload) {
@@ -84,7 +81,7 @@ public class JiraClientController {
      *
      * @return ResponseEntity
      */
-    @RequestMapping(value = "handshake/disabled", method = RequestMethod.POST)
+    @RequestMapping(value = "/disabled", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseEntity disabled(@RequestBody Map payload) {

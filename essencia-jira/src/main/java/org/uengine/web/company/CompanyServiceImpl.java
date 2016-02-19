@@ -15,10 +15,6 @@ import java.util.Properties;
 public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
-    @Qualifier("config")
-    private Properties config;
-
-    @Autowired
     CompanyRepository companyRepository;
 
     @Override

@@ -37,11 +37,6 @@ public class IndexController {
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
-    @Qualifier("config")
-    private Properties config;
-
-
-    @Autowired
     private ProcessMapService processMapService;
 
     /**
@@ -49,13 +44,13 @@ public class IndexController {
      *
      * @return Model And View
      */
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request, HttpSession session) {
 
         return new ModelAndView("page/index");
     }
 
-    @RequestMapping(value = "list-project", method = RequestMethod.GET)
+    @RequestMapping(value = "/list-project", method = RequestMethod.GET)
     public ModelAndView listProject(HttpServletRequest request, HttpSession session) {
         return new ModelAndView("page/list-project");
     }
@@ -63,7 +58,7 @@ public class IndexController {
     @Autowired
     ProcessManagerRemote processManager;
 
-    @RequestMapping(value = "project-detail", method = RequestMethod.GET)
+    @RequestMapping(value = "/project-detail", method = RequestMethod.GET)
     @Transactional
     public ModelAndView projectDetail(HttpServletRequest request, HttpSession session,
                                       @RequestParam(defaultValue = "") String mapId) {
@@ -82,7 +77,18 @@ public class IndexController {
         }
     }
 
-    @RequestMapping(value = "test", method = RequestMethod.GET)
+    /**
+     * 이슈 액티비티 카드
+     *
+     * @return Model And View
+     */
+    @RequestMapping(value = "/activityCard", method = RequestMethod.GET)
+    public ModelAndView activityCard(HttpServletRequest request, HttpSession session) {
+
+        return new ModelAndView("page/activityCard");
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
     @Transactional
     public void test(HttpServletRequest request, HttpSession session) throws RemoteException {
 
