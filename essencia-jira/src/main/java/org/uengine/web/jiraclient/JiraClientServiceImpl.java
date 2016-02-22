@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.uengine.web.company.Company;
+import org.uengine.codi.mw3.model.Company;
+import org.uengine.codi.mw3.model.ICompany;
 import org.uengine.web.company.CompanyService;
 import org.uengine.web.exception.ServiceException;
 import org.uengine.web.util.JsonUtils;
@@ -61,7 +62,6 @@ public class JiraClientServiceImpl implements JiraClientService {
     }
 
     @Override
-    @Transactional
     public void uninstalled(Map payload) throws Exception {
         String clientKey = payload.get("clientKey").toString();
         JiraClient existClient = clientRepository.selectByClientKey(clientKey);
@@ -122,7 +122,7 @@ public class JiraClientServiceImpl implements JiraClientService {
         String clientKey = this.getClientKeyFromClaimJson(parseToken);
         companyService.createJiraCompanyIfNotExist(clientKey);
         Company company = companyService.selectByAlias(clientKey);
-        if(company != null){
+        if (company != null) {
             session.setAttribute("comCode", company.getComCode());
         }
         return parseToken;

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../template/jwtvalidate.jsp" %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -43,6 +44,20 @@
                 <th>Watchers</th>
                 <th class="aui-table-column-unsortable">Description</th>
             </tr>
+            <c:forEach items="${processMaps}" var="processMap" varStatus="status">
+            <tr>
+                <td name="name"><a href="#" data-mapId="${processMap.mapId}">${processMap.name}</a></td>
+                <td name="tags">
+                    <span class="aui-lozenge aui-lozenge-success">public</span>
+                    <span class="aui-lozenge aui-lozenge-complete">new</span>
+                </td>
+                <td name="watchers">1581</td>
+                <td name="description">Essencia helps you adopting OMG&quot;s Standard &quot;Essence&quot; stands for SW
+                    engineering practice authoring and execution.
+                </td>
+            <tr>
+
+                </c:forEach>
             </thead>
             <tbody>
 
@@ -52,11 +67,6 @@
     </section>
 
 </section>
-<!-- Metaworks Space -->
-<div id="metaworks_space" style="display: none">
-
-</div>
-<!-- Metaworks Space End -->
 </body>
 
 </html>
