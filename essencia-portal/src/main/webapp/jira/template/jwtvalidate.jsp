@@ -2,12 +2,11 @@
 <%@ page import="org.uengine.web.util.ApplicationContextRegistry" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="org.uengine.web.company.CompanyService" %>
-<%@ page import="org.uengine.web.company.Company" %>
+<%@ page import="org.uengine.codi.mw3.model.ICompany" %>
 <%
     ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
     JiraClientService clientService = (JiraClientService) context.getBean(JiraClientService.class);
     CompanyService companyService = (CompanyService) context.getBean(CompanyService.class);
-
 
     String claimJson = null;
     String clientKey = null;
@@ -16,7 +15,7 @@
     try {
         claimJson = clientService.validateAndGetClaim(request);
         clientKey = clientService.getClientKeyFromClaimJson(claimJson);
-        Company company = companyService.selectByAlias(clientKey);
+        ICompany company = companyService.selectByAlias(clientKey);
         comCode = company.getComCode();
 
     } catch (Exception ex) {

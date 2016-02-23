@@ -1,49 +1,65 @@
 package org.uengine.web.company;
 
+import org.metaworks.dao.TransactionAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.uengine.web.process.ProcessMap;
-import org.uengine.web.process.ProcessMapRepository;
-import org.uengine.web.process.ProcessMapService;
+import org.uengine.codi.mw3.model.Company;
+import org.uengine.codi.mw3.model.ICompany;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
-    @Qualifier("config")
-    private Properties config;
+    TransactionAdvice transactionAdvice;
 
-    @Autowired
-    CompanyRepository companyRepository;
 
     @Override
-    public int createKey() {
-        return companyRepository.createKey();
+    public void createJiraCompanyIfNotExist(String clientKey) throws Exception {
+        Company selectByAlias = this.selectByAlias(clientKey);
+        if (selectByAlias == null) {
+            this.createCompany(clientKey);
+        }
     }
 
-    @Override
-    public void createJiraCompanyIfNotExist(String clientKey) {
+    private void createCompany(String clientKey) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
 
-        //TODO Mybatis 안쓰고 기존의 Metawork Dao 로 컴퍼니 만들기.....
-        Company company = companyRepository.selectByAlias(clientKey);
-        if (company == null) {
-            int key = companyRepository.createKey();
-            company = new Company();
-            company.setComCode(key + "");
+            Company company = new Company();
+            String newId = company.createNewId();
+            company.setComCode(newId);
             company.setComName(clientKey);
             company.setAlias(clientKey);
-            company.setIsDeleted("0");
-            companyRepository.insert(company);
+            company.createDatabaseMe();
+
+            transactionAdvice.commitTransaction();
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
         }
     }
 
     @Override
-    public Company selectByAlias(String clientKey) {
-        return companyRepository.selectByAlias(clientKey);
+    public Company selectByAlias(String clientKey) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
+
+            Company company = new Company();
+            Company result = new Company();
+            company.setAlias(clientKey);
+            ICompany companyByAlias = company.findByAlias();
+            result.copyFrom(companyByAlias);
+
+            transactionAdvice.commitTransaction();
+            return result;
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
+        }
     }
 }

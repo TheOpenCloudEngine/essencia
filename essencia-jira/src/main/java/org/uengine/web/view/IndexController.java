@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.uengine.codi.mw3.model.Company;
-import org.uengine.codi.mw3.model.IProcessMap;
-import org.uengine.codi.mw3.model.Session;
+import org.uengine.codi.mw3.model.*;
 import org.uengine.jira.mw3.ProcessMwService;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
-import org.uengine.web.process.ProcessMap;
+import org.uengine.web.company.CompanyService;
+import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.process.ProcessMapService;
 import org.uengine.web.util.JsonUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Properties;
 
 @Controller
@@ -37,34 +37,43 @@ public class IndexController {
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
-    @Qualifier("config")
-    private Properties config;
-
+    private ProcessMapService processMapService;
 
     @Autowired
-    private ProcessMapService processMapService;
+    private JiraClientService jiraClientService;
+
+    @Autowired
+    private CompanyService companyService;
 
     /**
      * 인덱스 페이지로 이동한다.
      *
      * @return Model And View
      */
-    @RequestMapping(value = "index", method = RequestMethod.GET)
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request, HttpSession session) {
 
         return new ModelAndView("page/index");
     }
 
-    @RequestMapping(value = "list-project", method = RequestMethod.GET)
-    public ModelAndView listProject(HttpServletRequest request, HttpSession session) {
-        return new ModelAndView("page/list-project");
+    @RequestMapping(value = "/list-project", method = RequestMethod.GET)
+    public ModelAndView listProject(HttpServletRequest request, HttpSession session) throws Exception {
+
+        ModelAndView view = new ModelAndView("page/list-project");
+
+        String clientKey = jiraClientService.getClientKeyFromSession(session);
+        Company company = companyService.selectByAlias(clientKey);
+        List<ProcessMap> processMaps = processMapService.listPublicAndOwnProcessMap(company.getComCode());
+
+        view.addObject("processMaps", processMaps);
+
+        return view;
     }
 
     @Autowired
     ProcessManagerRemote processManager;
 
-    @RequestMapping(value = "project-detail", method = RequestMethod.GET)
-    @Transactional
+    @RequestMapping(value = "/project-detail", method = RequestMethod.GET)
     public ModelAndView projectDetail(HttpServletRequest request, HttpSession session,
                                       @RequestParam(defaultValue = "") String mapId) {
 
@@ -73,17 +82,27 @@ public class IndexController {
             ProcessMap processMap = processMapService.getProcessMapByMapId(mapId);
             view.addObject("processMap", processMap);
 
-            //TODO 여기서 processMap 의 롤매핑정보까지 가져오면 좋겠는데 이게 서블릿이 dwr 서블릿이 아니다 보니...
-            //이런식으로 붙이면 된다.
+            List<Role> roles = processMapService.getRoles(processMap.getDefId(), processMap.getComCode());
+            view.addObject("roles", roles);
 
-
-        } finally {
-            return view;
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        return view;
     }
 
-    @RequestMapping(value = "test", method = RequestMethod.GET)
-    @Transactional
+    /**
+     * 이슈 액티비티 카드
+     *
+     * @return Model And View
+     */
+    @RequestMapping(value = "/activityCard", method = RequestMethod.GET)
+    public ModelAndView activityCard(HttpServletRequest request, HttpSession session) {
+
+        return new ModelAndView("page/activityCard");
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
     public void test(HttpServletRequest request, HttpSession session) throws RemoteException {
 
         new TenantContext("2");

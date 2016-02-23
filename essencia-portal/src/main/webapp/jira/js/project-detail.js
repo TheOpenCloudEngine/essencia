@@ -2,21 +2,9 @@ var onPageLoadScript = function () {
     var mapId = $('#mapId').val();
     var defId = $('#defId').val();
     var comCode = $('#comCode').val();
-    var roles = [];
     var processMwService;
 
     var createRoleMappingLayout = function () {
-
-        $.each(roles, function (index, role) {
-            var selectBox = '' +
-                '<div class="field-group" name="role-mapping">' +
-                '<label>'+role.name+'</label>' +
-                '<input name="userkey" class="text long-field ajax-get-user" data-aui-validation-field required type="text">' +
-                '<input type="hidden" name="rolename" value="'+role.name+'">' +
-                '</div>';
-            selectBox = $(selectBox);
-            $('#roleMappingFieldset').append(selectBox);
-        });
 
         customUtil.getUserByName('%', function (err, res) {
             if (err) {
@@ -41,23 +29,7 @@ var onPageLoadScript = function () {
             }
         });
     }
-    var getRoles = function () {
-        processMwService = new MetaworksObject({
-            __className: 'org.uengine.jira.mw3.ProcessMwService',
-            jiraSession: JSON.stringify(jiraSession),
-            comCode: comCode,
-            defId: defId
-        }, '#metaworks_space');
-
-        processMwService.loadRoles(null, function () {
-            var rolesJson = $('#metaworks_space').find('[name=rolesJson]').html();
-            if (rolesJson && rolesJson.length) {
-                roles = JSON.parse(rolesJson);
-                createRoleMappingLayout();
-            }
-        });
-    };
-    getRoles();
+    createRoleMappingLayout();
 
     marked.setOptions({
         highlight: function (code) {
@@ -68,14 +40,8 @@ var onPageLoadScript = function () {
         $('#marked-content').html(marked(data));
     });
 
-
     AJS.$('#add-project-form').on('aui-valid-submit', function(event) {
         event.preventDefault();
-
-        if(!roles || !roles.length){
-            customUtil.renderWarningDialog('Assigned personnel required.');
-            return;
-        }
 
         var form = $('#add-project-form');
         var roleMapping = [];
@@ -87,17 +53,32 @@ var onPageLoadScript = function () {
         });
 
         blockSubmitStart();
-        processMwService = new MetaworksObject({
-                    __className: 'org.uengine.jira.mw3.ProcessMwService',
-                    jiraSession: JSON.stringify(jiraSession),
-                    defId: defId,
-                    comCode: comCode,
-                    name : form.find('[name=name]').val(),
-                    key  : form.find('[name=key]').val(),
-                    roleMapping: JSON.stringify(roleMapping)
-                }, '#metaworks_space');
-        processMwService.saveProject(null, function(){
-            blockStop();
+
+        var params = {
+            defId: defId,
+            comCode: comCode,
+            name : form.find('[name=name]').val(),
+            key  : form.find('[name=key]').val(),
+            roleMapping: roleMapping
+        }
+        $.ajax({
+            type: "POST",
+            url: "/api/process/create",
+            data: JSON.stringify(params),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+
+                } else {
+                    customUtil.renderWarningDialog('Failed to create Essencia projects.');
+                }
+                blockStop();
+            },
+            error: function (response, status, errorThrown) {
+                customUtil.renderWarningDialog('Failed to create Essencia projects.');
+                blockStop();
+            }
         });
     });
 };

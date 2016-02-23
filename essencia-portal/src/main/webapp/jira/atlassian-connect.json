@@ -62,7 +62,7 @@
     ],
     "webPanels": [
       {
-        "url": "/api/view/index",
+        "url": "/api/view/activityCard",
         "location": "atl.jira.view.issue.left.context",
         "layout": {
           "width": "100%",

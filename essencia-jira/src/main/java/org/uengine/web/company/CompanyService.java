@@ -1,14 +1,10 @@
 package org.uengine.web.company;
 
-import org.uengine.web.process.ProcessMap;
-
-import java.util.List;
+import org.uengine.codi.mw3.model.Company;
 
 public interface CompanyService {
 
-    int createKey();
+    void createJiraCompanyIfNotExist(String clientKey) throws Exception;
 
-    void createJiraCompanyIfNotExist(String clientKey);
-
-    Company selectByAlias(String clientKey);
+    Company selectByAlias(String clientKey) throws Exception;
 }

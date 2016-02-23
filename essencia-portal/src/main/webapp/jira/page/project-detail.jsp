@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../template/jwtvalidate.jsp" %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -66,16 +67,26 @@
                             <h4>Assigned personnel</h4>
 
                             <fieldset id="roleMappingFieldset">
-
+                                <c:forEach items="${roles}" var="role" varStatus="status">
+                                    <div class="field-group" name="role-mapping">
+                                        <label>${role.name}</label>
+                                        <input name="userkey" class="text long-field ajax-get-user"
+                                               data-aui-validation-field required type="text">
+                                        <input type="hidden" name="rolename" value="${role.name}">
+                                    </div>
+                                </c:forEach>
                             </fieldset>
                             <div class="buttons-container form-footer">
                                 <div class="buttons">
                                     <button class="aui-button aui-button-primary"
-                                         id="create-project" type="submit">Create
+                                            id="create-project" type="submit">Create
                                     </button>
                                     <a class="cancel" id="cancle-project">Cancel</a>
                                 </div>
                             </div>
+                            <input type="hidden" value="${processMap.mapId}" id="mapId">
+                            <input type="hidden" value="${processMap.defId}" id="defId">
+                            <input type="hidden" value="${processMap.comCode}" id="comCode">
                         </form>
                     </div>
                     <div class="aui-item">
@@ -101,14 +112,6 @@
 
 </section>
 
-<!-- Metaworks Space -->
-<div id="metaworks_space" style="display: none">
-
-    <input type="hidden" value="${processMap.mapId}" id="mapId">
-    <input type="hidden" value="${processMap.defId}" id="defId">
-    <input type="hidden" value="${processMap.comCode}" id="comCode">
-</div>
-<!-- Metaworks Space End -->
 </body>
 
 </html>
