@@ -1,3 +1,4 @@
+
 <%
 
 if(value){
@@ -7,7 +8,7 @@ if(value){
 
 <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading"><H1> <%=alpha.name%></h1></div>
+    <div class="panel-heading"><H1> <a name="<%=alpha.name%>" style="color:black"><%=alpha.name%></a></h1> </div>
 
     <%if(alpha.description && alpha.description.trim().length > 0){%>
     <div class="panel-body">
