@@ -152,6 +152,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4</version>
+        </dependency>
+
         <!-- ============= -->
         <!--  Java EE API  -->
         <!-- ============= -->
@@ -173,6 +179,44 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>${commons.codec.version}</version>
+        </dependency>
+
+        <!-- ======================= -->
+        <!--  Velocity for JiraApi Template  -->
+        <!-- ======================= -->
+
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-tools</artifactId>
+            <version>${velocity.tools.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>oro</groupId>
+                    <artifactId>oro</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-taglib</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-tiles</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>dom4j</groupId>
+                    <artifactId>dom4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
     </dependencies>
@@ -197,6 +241,10 @@
         <javax.jsp.version>2.3.0</javax.jsp.version>
         <javax.jstl.version>1.2</javax.jstl.version>
         <commons.codec.version>1.10</commons.codec.version>
+
+        <!-- Velocity -->
+        <velocity.version>1.7</velocity.version>
+        <velocity.tools.version>2.0</velocity.tools.version>
     </properties>
 
 </project>

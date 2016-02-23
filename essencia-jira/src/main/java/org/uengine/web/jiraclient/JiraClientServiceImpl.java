@@ -105,9 +105,8 @@ public class JiraClientServiceImpl implements JiraClientService {
      */
     @Override
     public String validateAndGetClaim(HttpServletRequest request) throws Exception {
-        String jwtToken = null;
         HttpSession session = request.getSession();
-        jwtToken = this.getJwtToken(request);
+        String jwtToken = this.getJwtToken(request);
         if (jwtToken == null) {
             if (session.getAttribute("jwtToken") != null) {
                 jwtToken = session.getAttribute("jwtToken").toString();
@@ -116,6 +115,9 @@ public class JiraClientServiceImpl implements JiraClientService {
             }
         } else {
             session.setAttribute("jwtToken", jwtToken);
+            session.setAttribute("jira_product_context", request.getParameter("cp"));
+            session.setAttribute("jira_product_baseurl", request.getParameter("xdm_e"));
+            session.setAttribute("jira_request_userkey", request.getParameter("user_key"));
         }
 
         String parseToken = this.parseToken(jwtToken);
@@ -208,6 +210,41 @@ public class JiraClientServiceImpl implements JiraClientService {
         JavaxJwtRequestExtractor jwtRequestExtractor = new JavaxJwtRequestExtractor();
         String jwt = jwtRequestExtractor.extractJwt(request);
         return jwt;
+    }
+
+    @Override
+    public String getProductContext(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        try {
+            return session.getAttribute("jira_product_context").toString();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public String getProductBaseUrl(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        try {
+            return session.getAttribute("jira_product_baseurl").toString();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public String getRequestUserKey(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        try {
+            return session.getAttribute("jira_request_userkey").toString();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public JiraClient selectByClientKey(String clientKey) throws Exception {
+        return clientRepository.selectByClientKey(clientKey);
     }
 
     private String base64UrlDecode(String input) {

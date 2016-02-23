@@ -62,6 +62,13 @@
 
                                     <div class="description">Max. 10 characters.</div>
                                 </div>
+                                <div class="field-group"><label for="key">Project Type</label>
+                                    <select name="projectType" id="projectType" data-aui-validation-field required>
+                                        <c:forEach items="${projectTypes}" var="projectType" varStatus="status">
+                                            <option value="${projectType.key}">${projectType.formattedKey}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </fieldset>
                             <br>
                             <h4>Assigned personnel</h4>

@@ -3,20 +3,23 @@ package org.uengine.web.process;
 import org.metaworks.dao.TransactionAdvice;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.uengine.codi.mw3.model.Company;
-import org.uengine.codi.mw3.model.IProcessMap;
-import org.uengine.codi.mw3.model.ProcessMap;
-import org.uengine.codi.mw3.model.Session;
+import org.uengine.codi.mw3.model.*;
 import org.uengine.kernel.Role;
+import org.uengine.modeling.resource.ResourceManager;
+import org.uengine.modeling.resource.VersionManager;
 import org.uengine.processmanager.ProcessManagerRemote;
-import org.uengine.web.util.JsonUtils;
+import org.uengine.web.company.CompanyService;
+import org.uengine.web.employee.EmployeeService;
+import org.uengine.web.jiraapi.JiraApiService;
+import org.uengine.web.jiraapi.JiraServiceFactory;
+import org.uengine.web.jiraclient.JiraClientService;
+import org.uengine.web.jiraproject.JiraProjectService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 @Service
 public class ProcessMapServiceImpl implements ProcessMapService {
@@ -27,13 +30,31 @@ public class ProcessMapServiceImpl implements ProcessMapService {
     @Autowired
     ProcessManagerRemote processManager;
 
+    @Autowired
+    JiraClientService jiraClientService;
+
+    @Autowired
+    CompanyService companyService;
+
+    @Autowired
+    ResourceManager resourceManager;
+
+    @Autowired
+    EmployeeService employeeService;
+
+    @Autowired
+    JiraApiService jiraApiService;
+
+    @Autowired
+    JiraProjectService jiraProjectService;
+
     @Override
     public List<ProcessMap> listPublicAndOwnProcessMap(String comCode) throws Exception {
         List<ProcessMap> processMaps = new ArrayList<>();
-        List<ProcessMap> publicProcessList = this.listPublicProcessMap();
+        //List<ProcessMap> publicProcessList = this.listPublicProcessMap();
         List<ProcessMap> ownProcessList = this.listProcessMapByComCode(comCode);
 
-        processMaps.addAll(publicProcessList);
+        //processMaps.addAll(publicProcessList);
         processMaps.addAll(ownProcessList);
         return processMaps;
     }
@@ -117,6 +138,88 @@ public class ProcessMapServiceImpl implements ProcessMapService {
 
             transactionAdvice.commitTransaction();
             return roleList;
+
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
+        }
+    }
+
+    @Override
+    public void createProcess(HttpServletRequest request, String projectName, String projectKey,
+                              String projectType, String mapId, List<Map> roleMappings) throws Exception {
+
+        String clientKey = jiraClientService.getClientKeyFromRequest(request);
+        String requestUserKey = jiraClientService.getRequestUserKey(request);
+        Company company = companyService.selectByAlias(clientKey);
+        ProcessMap processMap = this.getProcessMapByMapId(mapId);
+
+        //프로세스 생성 요청자 유저 생성.
+        Employee requestEmployee = employeeService.createJiraEmployeeIfNotExist(request, requestUserKey);
+
+        //테넌트 설정과 프로세스 인스턴스 생성
+        new TenantContext(company.getComCode());
+        String instId = this.initializeProcess(processMap.getDefId());
+
+        //롤 매핑 Initiator 설정
+        transactionAdvice.initiateTransaction();
+        if (roleMappings != null && roleMappings.size() > 0) {
+            this.putRoleMapping(instId, "Initiator", requestEmployee.getEmpCode());
+        }
+
+        //롤 매핑 대상자 유저 생성 및 설정
+        for (Map roleMapping : roleMappings) {
+            String roleName = roleMapping.get("roleName").toString();
+            String userKey = roleMapping.get("userKey").toString();
+
+            Employee mappingEmployee = employeeService.createJiraEmployeeIfNotExist(request, userKey);
+            this.putRoleMapping(instId, roleName, mappingEmployee.getEmpCode());
+        }
+
+        //지라 프로젝트 생성
+        String jiraProjectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
+
+        //지라 프로젝트와 프로세스 인스턴스 매핑
+        jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, jiraProjectId);
+
+        //인스턴스 러닝시 지라 프로젝트 인지 판별. 지라프로젝트일 경우 지라에 이슈생성. 이슈와 워크아이템 매핑
+
+        //지라 이슈 종료시 지라 프로젝트와 워크아이템 매핑에 있는지 판별. 매핑이슈일경우 프로세스 다음단계 진행.
+
+        //프로세스 시작
+        this.excuteProcess(instId);
+    }
+
+    private void excuteProcess(String instId) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
+            processManager.executeProcess(instId);
+            processManager.applyChanges();
+            transactionAdvice.commitTransaction();
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
+        }
+    }
+
+    private void putRoleMapping(String instId, String roleName, String empCode) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
+            processManager.putRoleMapping(instId, roleName, empCode);
+            transactionAdvice.commitTransaction();
+
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
+        }
+    }
+
+    private String initializeProcess(String defId) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
+            String instId = processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", defId));
+            transactionAdvice.commitTransaction();
+            return instId;
 
         } catch (Exception ex) {
             transactionAdvice.rollbackTransaction();

@@ -1,0 +1,10 @@
+{
+  "key": "${key}",
+  "name": "${name}",
+  "projectTypeKey": "${type}",
+  "projectTemplateKey": "com.atlassian.jira-core-project-templates:jira-core-project-management",
+  "description": "Essencia Project",
+  "lead": "${lead}",
+  "url": "http://www.essencia.com",
+  "assigneeType": "PROJECT_LEAD"
+}

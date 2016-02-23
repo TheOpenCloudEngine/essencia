@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.uengine.web.jiraproject.JiraProjectRepository">
+
+    <resultMap id="JiraProjectMap" type="org.uengine.web.jiraproject.JiraProject">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="instanceId" column="instance_id" jdbcType="BIGINT"/>
+        <result property="jiraClientId" column="jira_client_id" jdbcType="BIGINT"/>
+        <result property="jiraProjectId" column="jira_project_id" jdbcType="VARCHAR"/>
+        <result property="regDt" column="reg_dt" jdbcType="DATE"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="org.uengine.web.jiraproject.JiraProject"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO jira_project
+        (
+        instance_id,
+        jira_client_id,
+        jira_project_id
+        )
+        VALUES (
+        #{instanceId},
+        #{jiraClientId},
+        #{jiraProjectId}
+        )
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="JiraProjectMap">
+        SELECT
+        *
+        FROM
+        jira_project
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="selectByInstanceId" parameterType="java.lang.Long" resultMap="JiraProjectMap">
+        SELECT
+        *
+        FROM
+        jira_project
+        WHERE
+        instance_id = #{instanceId}
+    </select>
+
+    <select id="selectByClientAndProjectId" parameterType="map" resultMap="JiraProjectMap">
+        SELECT
+        *
+        FROM
+        jira_project
+        WHERE
+        jira_client_id = #{jiraClientId}
+        AND
+        jira_project_id = #{jiraProjectId}
+    </select>
+
+</mapper>
