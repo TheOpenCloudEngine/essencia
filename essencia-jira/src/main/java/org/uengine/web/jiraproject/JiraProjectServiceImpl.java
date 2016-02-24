@@ -14,15 +14,21 @@ public class JiraProjectServiceImpl implements JiraProjectService {
     private JiraClientService jiraClientService;
 
     @Override
-    public void mappingWithInstanceId(Long instanceId, String clientKey, String jiraProjectId) throws Exception {
+    public void mappingWithInstanceId(Long instanceId, String clientKey, String projectId) throws Exception {
         JiraClient jiraClient = jiraClientService.selectByClientKey(clientKey);
         Long id = jiraClient.getId();
 
         JiraProject jiraProject = new JiraProject();
         jiraProject.setInstanceId(instanceId);
         jiraProject.setJiraClientId(id);
-        jiraProject.setJiraProjectId(jiraProjectId);
+        jiraProject.setProjectId(projectId);
 
         projectRepository.insert(jiraProject);
+    }
+
+    @Override
+    public JiraProject selectByInstanceId(Long instanceId) {
+
+        return projectRepository.selectByInstanceId(instanceId);
     }
 }

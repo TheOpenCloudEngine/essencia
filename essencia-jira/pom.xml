@@ -181,6 +181,12 @@
             <version>${commons.codec.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons.lang.version}</version>
+        </dependency>
+
         <!-- ======================= -->
         <!--  Velocity for JiraApi Template  -->
         <!-- ======================= -->
@@ -241,6 +247,7 @@
         <javax.jsp.version>2.3.0</javax.jsp.version>
         <javax.jstl.version>1.2</javax.jstl.version>
         <commons.codec.version>1.10</commons.codec.version>
+        <commons.lang.version>2.6</commons.lang.version>
 
         <!-- Velocity -->
         <velocity.version>1.7</velocity.version>

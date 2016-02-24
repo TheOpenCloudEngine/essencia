@@ -64,6 +64,27 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Override
+    public Employee findByEmpCode(String empCode) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
+
+            Employee employee = new Employee();
+
+            IEmployee iemployee = employee.findByEmpCode(empCode);
+            employee.copyFrom(iemployee);
+            if (iemployee == null) {
+                employee = null;
+            }
+
+            transactionAdvice.commitTransaction();
+            return employee;
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
+        }
+    }
+
     private Employee createJiraEmployee(String email, String userKey, String comCode) throws Exception {
         try {
             transactionAdvice.initiateTransaction();

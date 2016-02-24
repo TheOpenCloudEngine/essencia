@@ -39,7 +39,7 @@ public class JiraTest {
 //        String resultString = EntityUtils.toString(entity);
 //        System.out.println(resultString);
 
-        File file = new File("/Users/uengine/IdeaProjects/essencia/essencia-jira/src/main/resources/jira/template/project.json");
+        File file = new File("/Users/uengine/IdeaProjects/essencia/essencia-jira/src/main/resources/jira/template/project-sample.json");
         FileInputStream fisTargetFile = new FileInputStream(file);
 
         String targetFileStr = IOUtils.toString(fisTargetFile, "UTF-8");
@@ -102,8 +102,8 @@ public class JiraTest {
                 .expirationTime(expiresAt)
                 .issuer(key);
 
-        Map map = new HashMap();
-        map.put("username", new String[]{"user1"});
+//        Map map = new HashMap();
+//        map.put("username", new String[]{"user1"});
         CanonicalHttpUriRequest canonical = new CanonicalHttpUriRequest(method,
                 apiPath, contextPath, new HashMap());
         JwtClaimsBuilder.appendHttpRequestClaims(jwtBuilder, canonical);

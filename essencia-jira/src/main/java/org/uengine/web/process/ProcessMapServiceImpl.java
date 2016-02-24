@@ -177,17 +177,17 @@ public class ProcessMapServiceImpl implements ProcessMapService {
         }
 
         //지라 프로젝트 생성
-        String jiraProjectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
+        String projectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
 
         //지라 프로젝트와 프로세스 인스턴스 매핑
-        jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, jiraProjectId);
-
-        //인스턴스 러닝시 지라 프로젝트 인지 판별. 지라프로젝트일 경우 지라에 이슈생성. 이슈와 워크아이템 매핑
-
-        //지라 이슈 종료시 지라 프로젝트와 워크아이템 매핑에 있는지 판별. 매핑이슈일경우 프로세스 다음단계 진행.
+        jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, projectId);
 
         //프로세스 시작
-        this.excuteProcess(instId);
+        try {
+            this.excuteProcess(instId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void excuteProcess(String instId) throws Exception {

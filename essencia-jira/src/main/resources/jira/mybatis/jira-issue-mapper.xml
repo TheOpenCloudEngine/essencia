@@ -1,58 +1,69 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.uengine.web.jiraproject.JiraProjectRepository">
+<mapper namespace="org.uengine.web.jiraissue.JiraIssueRepository">
 
-    <resultMap id="JiraProjectMap" type="org.uengine.web.jiraproject.JiraProject">
+    <resultMap id="JiraIssueMap" type="org.uengine.web.jiraissue.JiraIssue">
         <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="instanceId" column="instance_id" jdbcType="BIGINT"/>
+        <result property="tracingTag" column="tracing_tag" jdbcType="BIGINT"/>
         <result property="jiraClientId" column="jira_client_id" jdbcType="BIGINT"/>
         <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="issueId" column="issue_id" jdbcType="VARCHAR"/>
         <result property="regDt" column="reg_dt" jdbcType="DATE"/>
     </resultMap>
 
-    <insert id="insert" parameterType="org.uengine.web.jiraproject.JiraProject"
+    <insert id="insert" parameterType="org.uengine.web.jiraissue.JiraIssue"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO jira_project
+        INSERT INTO jira_issue
         (
         instance_id,
+        tracing_tag,
         jira_client_id,
-        project_id
+        project_id,
+        issue_id
         )
         VALUES (
         #{instanceId},
+        #{tracingTag},
         #{jiraClientId},
-        #{projectId}
+        #{projectId},
+        #{issueId}
         )
     </insert>
 
-    <select id="selectById" parameterType="java.lang.Long" resultMap="JiraProjectMap">
+    <select id="selectById" parameterType="java.lang.Long" resultMap="JiraIssueMap">
         SELECT
         *
         FROM
-        jira_project
+        jira_issue
         WHERE
         id = #{id}
     </select>
 
-    <select id="selectByInstanceId" parameterType="java.lang.Long" resultMap="JiraProjectMap">
+    <select id="selectByInstanceAndTracing" parameterType="map" resultMap="JiraIssueMap">
         SELECT
         *
         FROM
-        jira_project
+        jira_issue
         WHERE
         instance_id = #{instanceId}
+        AND
+        tracing_tag = #{tracingTag}
     </select>
 
-    <select id="selectByClientAndProjectId" parameterType="map" resultMap="JiraProjectMap">
+    <select id="selectByJiraIssueInformation" parameterType="map" resultMap="JiraIssueMap">
         SELECT
         *
         FROM
-        jira_project
+        jira_issue
         WHERE
         jira_client_id = #{jiraClientId}
         AND
         project_id = #{projectId}
+        AND
+        issue_id = #{issueId}
     </select>
+
 
 </mapper>

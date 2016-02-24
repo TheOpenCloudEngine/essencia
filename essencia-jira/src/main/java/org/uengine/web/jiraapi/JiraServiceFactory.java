@@ -37,4 +37,14 @@ public class JiraServiceFactory {
         return new JiraApi(productContext, productBaseUrl, requestUserKey,
                 jiraClient.getAddonKey(), jiraClient.getSharedSecret());
     }
+
+    public JiraApi create(String clientKey) throws Exception {
+        JiraClient jiraClient = jiraClientService.selectByClientKey(clientKey);
+        if (jiraClient == null) {
+            throw new ServiceException("Can not find JiraClient");
+        }
+        return new JiraApi("", jiraClient.getBaseUrl(), null,
+                jiraClient.getAddonKey(), jiraClient.getSharedSecret());
+
+    }
 }

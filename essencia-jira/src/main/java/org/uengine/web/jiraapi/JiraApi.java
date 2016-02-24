@@ -61,6 +61,33 @@ public class JiraApi {
         }
     }
 
+    public String createIssue(String projectId, String summary, String issueType,
+                           String assignee, String reporter) throws Exception {
+        ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
+        VelocityEngine velocityEngine = (VelocityEngine) context.getBean(VelocityEngine.class);
+
+        String apiPath = "/rest/api/2/issue";
+
+        Map model = new HashMap();
+        model.put("projectId", projectId);
+        model.put("summary", summary);
+        model.put("issueType", issueType);
+        model.put("assignee", assignee);
+        model.put("reporter", reporter);
+
+        String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "jira/template/issue.json", "UTF-8", model);
+
+        String excuted = this.excutePost(apiPath, body);
+        return ((Map) JsonUtils.unmarshal(excuted)).get("id").toString();
+    }
+
+    public Map getProject(String projectId) throws Exception {
+        String apiPath = "/rest/api/2/project/" + projectId;
+
+        String excuted = this.excuteGet(apiPath, null);
+        return JsonUtils.unmarshal(excuted);
+    }
+
     public String createProject(String name, String key, String type, String lead) throws Exception {
         ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
         VelocityEngine velocityEngine = (VelocityEngine) context.getBean(VelocityEngine.class);
@@ -74,9 +101,8 @@ public class JiraApi {
         model.put("lead", lead);
 
         String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "jira/template/project.json", "UTF-8", model);
-
         String excuted = this.excutePost(apiPath, body);
-        return ((Map)JsonUtils.unmarshal(excuted)).get("id").toString();
+        return ((Map) JsonUtils.unmarshal(excuted)).get("id").toString();
     }
 
     public List<Map> projectTypes() throws Exception {
@@ -122,13 +148,13 @@ public class JiraApi {
         return JsonUtils.unmarshal(excuted);
     }
 
-    private String excutePost(String apiPath, String body) throws Exception{
+    private String excutePost(String apiPath, String body) throws Exception {
 
         String jwtToken = this.createJwtToken("POST", apiPath, null);
         String url = this.productBaseUrl + this.productContext + apiPath;
 
-        Map<String,String> headers = new HashMap();
-        headers.put("Authorization","JWT " + jwtToken);
+        Map<String, String> headers = new HashMap();
+        headers.put("Authorization", "JWT " + jwtToken);
         headers.put("Content-Type", "application/json");
 
         HttpResponse response = new HttpUtils().makeRequest("POST", url, body, headers);

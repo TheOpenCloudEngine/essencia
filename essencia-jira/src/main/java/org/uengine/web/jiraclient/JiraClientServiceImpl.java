@@ -247,6 +247,11 @@ public class JiraClientServiceImpl implements JiraClientService {
         return clientRepository.selectByClientKey(clientKey);
     }
 
+    @Override
+    public JiraClient selectById(Long id) throws Exception {
+        return clientRepository.selectById(id);
+    }
+
     private String base64UrlDecode(String input) {
         System.out.println(Base64.class.getProtectionDomain().getCodeSource().getLocation());
         byte[] bytes = Base64.decodeBase64(input);

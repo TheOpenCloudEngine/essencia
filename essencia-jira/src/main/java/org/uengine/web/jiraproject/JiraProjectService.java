@@ -7,5 +7,7 @@ import java.util.Map;
 
 public interface JiraProjectService {
 
-    void mappingWithInstanceId(Long instanceId, String clientKey, String jiraProjectId) throws Exception;
+    void mappingWithInstanceId(Long instanceId, String clientKey, String projectId) throws Exception;
+
+    JiraProject selectByInstanceId(Long instanceId);
 }

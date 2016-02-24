@@ -12,4 +12,9 @@ public interface JiraApiService {
     boolean isAdmin(HttpServletRequest request, String userKey) throws Exception;
 
     String createProject(HttpServletRequest request, String name, String key, String type, String lead) throws Exception;
+
+    String createIssue(String clientKey, String projectId, String summary, String issueType,
+                       String assignee, String reporter) throws Exception;
+
+    String getDefaultIssueTypeIdOfProject(String clientKey, String projectId) throws Exception;
 }

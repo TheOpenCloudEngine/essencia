@@ -1,19 +1,22 @@
-package org.uengine.web.jiraproject;
+package org.uengine.web.jiraissue;
 
 import java.sql.Date;
 
 /**
  * Created by uengine on 2016. 2. 23..
  */
-public class JiraProject {
-
+public class JiraIssue {
     private Long id;
 
     private Long instanceId;
 
+    private Long tracingTag;
+
     private Long jiraClientId;
 
     private String projectId;
+
+    private String issueId;
 
     private Date regDt;
 
@@ -33,6 +36,14 @@ public class JiraProject {
         this.instanceId = instanceId;
     }
 
+    public Long getTracingTag() {
+        return tracingTag;
+    }
+
+    public void setTracingTag(Long tracingTag) {
+        this.tracingTag = tracingTag;
+    }
+
     public Long getJiraClientId() {
         return jiraClientId;
     }
@@ -49,6 +60,14 @@ public class JiraProject {
         this.projectId = projectId;
     }
 
+    public String getIssueId() {
+        return issueId;
+    }
+
+    public void setIssueId(String issueId) {
+        this.issueId = issueId;
+    }
+
     public Date getRegDt() {
         return regDt;
     }
@@ -59,11 +78,13 @@ public class JiraProject {
 
     @Override
     public String toString() {
-        return "JiraProject{" +
+        return "JiraIssue{" +
                 "id=" + id +
                 ", instanceId=" + instanceId +
+                ", tracingTag=" + tracingTag +
                 ", jiraClientId=" + jiraClientId +
                 ", projectId='" + projectId + '\'' +
+                ", issueId='" + issueId + '\'' +
                 ", regDt=" + regDt +
                 '}';
     }

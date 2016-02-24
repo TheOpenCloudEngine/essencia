@@ -1,0 +1,10 @@
+{
+  "key": "SCRUM",
+  "name": "Scrum Project",
+  "projectTypeKey": "business",
+  "projectTemplateKey": "com.atlassian.jira-core-project-templates:jira-core-project-management",
+  "description": "Essencia Project",
+  "lead": "admin",
+  "url": "http://www.essencia.com",
+  "assigneeType": "PROJECT_LEAD"
+}

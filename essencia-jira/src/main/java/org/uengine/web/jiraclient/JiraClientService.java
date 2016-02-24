@@ -30,4 +30,6 @@ public interface JiraClientService {
     String getRequestUserKey(HttpServletRequest request);
 
     JiraClient selectByClientKey(String clientKey) throws Exception;
+
+    JiraClient selectById(Long id) throws Exception;
 }
