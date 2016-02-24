@@ -10,8 +10,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@include file="../template/jwtvalidate.jsp" %>
 <%
-    Map parameterMap = request.getParameterMap();
-    //아마도 저 맵 안에 project.id...  issue.id 이런식으로 지라쪽에서 던져준 파라미터가 있을거임.
+  Map parameterMap = request.getParameterMap();
+  //아마도 저 맵 안에 project.id...  issue.id 이런식으로 지라쪽에서 던져준 파라미터가 있을거임.
 %>
 <!DOCTYPE html>
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -25,8 +25,7 @@
 <head>
     <%@include file="../template/header.jsp" %>
     <%@include file="../template/mw3_jira_common.jsp" %>
-    <script src="/jira/js/activityCard.js" type="text/javascript"></script>
-
+    <script src="/jira/js/process-monitor.js" type="text/javascript"></script>
 </head>
 <body>
 </body>

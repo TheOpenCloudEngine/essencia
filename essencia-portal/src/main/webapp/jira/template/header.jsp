@@ -34,6 +34,28 @@
 <script type="text/javascript" src="/lib/jquery/jquery.layout-latest.js"></script>
 <script type="text/javascript" src="/assets/plugins/jquery-migrate-1.2.1.js"></script>
 
+<script type='text/javascript' src='/scripts/jquery/timeago/jquery.timeago.js'></script>
+<script type="text/javascript" src="/scripts/jquery/jqueryCycle/jquery.cycle2.js"></script>
+<script type="text/javascript" src="/scripts/jquery/jqueryCycle/jquery.cycle2.carousel.js"></script>
+<script type="text/javascript" src="/scripts/jquery/jqueryCycle/jquery.cycle2.center.js"></script>
+<script type="text/javascript" src="/scripts/jquery/jquery.center.js"></script>
+<script type="text/javascript" src="/scripts/jquery/jquery.msg.js"></script>
+<script type='text/javascript' src='/scripts/jquery/jquery.textPlaceholder.js'></script>
+<script type="text/javascript" src="/scripts/jquery/jquery.jqote2.js"></script>
+<script type="text/javascript" src="/scripts/jquery/jquery.smartTab.js"></script>
+
+<!-- full calendar -->
+<script type="text/javascript" src="/scripts/jquery/fullcalendar/fullcalendar.min.js"></script>
+<script type="text/javascript" src="/lib/jquery/jquery.contextMenu.js"></script>
+<link rel="stylesheet" type="text/css" href="/style/jquery.contextMenu.css" />
+
+<script src="/assets/plugins/mcustom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/lib/jquery-ui-1.11.0.custom/jquery-ui.min.css" />
+
+<link rel="stylesheet" type="text/css" href="/scripts/jquery/jquery-ui-189custom/development-bundle/themes/base/jquery.ui.all.css" />
+<link href="/assets/plugins/datetimepicker/jquery.datetimepicker.css" rel="stylesheet">
+
 <!-- blockUI -->
 <script type="text/javascript" src="/lib/jquery/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/jira/js/blockUIcustom.js"></script>
@@ -44,6 +66,5 @@
 <script src="/jira/aui/js/aui.min.js"></script>
 <script src="/jira/aui/js/aui-experimental.min.js"></script>
 <script src="/jira/aui/js/aui-soy.min.js"></script>
-
 
 <script src="/jira/js/startup.js"></script>

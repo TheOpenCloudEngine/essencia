@@ -1,36 +1,27 @@
 package org.uengine.web.view;
 
-import org.apache.velocity.app.VelocityEngine;
+import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.uengine.codi.mw3.model.*;
-import org.uengine.kernel.ProcessDefinition;
+import org.uengine.codi.mw3.model.Company;
+import org.uengine.codi.mw3.model.ProcessMap;
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
-import org.uengine.web.jiraapi.JiraApi;
-import org.uengine.web.jiraapi.JiraApiService;
-import org.uengine.web.jiraapi.JiraServiceFactory;
 import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.process.ProcessMapService;
-import org.uengine.web.util.JsonUtils;
-import org.uengine.web.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.*;
 import java.rmi.RemoteException;
-import java.util.*;
+import java.util.List;
 
 @Controller
 @RequestMapping("/view")
@@ -53,19 +44,14 @@ public class IndexController {
     @Autowired
     ProcessManagerRemote processManager;
 
-    @Autowired
-    JiraServiceFactory serviceFactory;
-
     /**
      * 인덱스 페이지로 이동한다.
      *
      * @return Model And View
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public ModelAndView index(HttpServletRequest request, HttpSession session) throws Exception {
+    public ModelAndView index(HttpServletRequest request, HttpSession session) {
 
-        String s = jiraClientService.validateAndGetClaim(request);
-        System.out.println(s);
         return new ModelAndView("page/index");
     }
 
@@ -89,10 +75,6 @@ public class IndexController {
 
         ModelAndView view = new ModelAndView("page/project-detail");
         try {
-            JiraApi jiraApi = serviceFactory.create(request);
-            List<Map> projectTypes = jiraApi.projectTypes();
-            view.addObject("projectTypes", projectTypes);
-
             ProcessMap processMap = processMapService.getProcessMapByMapId(mapId);
             view.addObject("processMap", processMap);
 
@@ -110,10 +92,29 @@ public class IndexController {
      *
      * @return Model And View
      */
-    @RequestMapping(value = "/activityCard", method = RequestMethod.GET)
+    @RequestMapping(value = "/activity-card", method = RequestMethod.GET)
     public ModelAndView activityCard(HttpServletRequest request, HttpSession session) {
+        return new ModelAndView("page/activity-card");
+    }
 
-        return new ModelAndView("page/activityCard");
+    /**
+     * AlphaView
+     *
+     * @return Model And View
+     */
+    @RequestMapping(value = "/alpha-view", method = RequestMethod.GET)
+    public ModelAndView alphaView(HttpServletRequest request, HttpSession session) {
+        return new ModelAndView("page/alpha-view");
+    }
+
+    /**
+     * ProcessMonitor
+     *
+     * @return Model And View
+     */
+    @RequestMapping(value = "/process-monitor", method = RequestMethod.GET)
+    public ModelAndView processMonitor(HttpServletRequest request, HttpSession session) {
+        return new ModelAndView("page/process-monitor");
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
