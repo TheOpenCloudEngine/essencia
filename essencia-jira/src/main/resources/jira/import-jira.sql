@@ -46,11 +46,12 @@ CREATE TABLE IF NOT EXISTS uengine.jira_client_lifecycle (
 -- Table `uengine`.`jira_project`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS uengine.jira_project (
-  id              INT(11) NOT NULL AUTO_INCREMENT,
-  instance_id     INT(11) NOT NULL,
-  jira_client_id  INT(11) NOT NULL,
-  project_id VARCHAR(255) NOT NULL,
-  reg_dt          TIMESTAMP        DEFAULT CURRENT_TIMESTAMP,
+  id             INT(11)      NOT NULL AUTO_INCREMENT,
+  instance_id    INT(11)      NOT NULL,
+  jira_client_id INT(11)      NOT NULL,
+  project_id     VARCHAR(255) NOT NULL,
+  initiator      VARCHAR(255) NOT NULL,
+  reg_dt         TIMESTAMP             DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (ID)
 )
   ENGINE = InnoDB
@@ -60,13 +61,13 @@ CREATE TABLE IF NOT EXISTS uengine.jira_project (
 -- Table `uengine`.`jira_issue`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS uengine.jira_issue (
-  id              INT(11) NOT NULL AUTO_INCREMENT,
-  instance_id     INT(11) NOT NULL,
-  tracing_tag     INT(11) NOT NULL,
-  jira_client_id  INT(11) NOT NULL,
-  project_id VARCHAR(255) NOT NULL,
-  issue_id VARCHAR(255) NOT NULL,
-  reg_dt          TIMESTAMP        DEFAULT CURRENT_TIMESTAMP,
+  id             INT(11)      NOT NULL AUTO_INCREMENT,
+  instance_id    INT(11)      NOT NULL,
+  tracing_tag    INT(11)      NOT NULL,
+  jira_client_id INT(11)      NOT NULL,
+  project_id     VARCHAR(255) NOT NULL,
+  issue_id       VARCHAR(255) NOT NULL,
+  reg_dt         TIMESTAMP             DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (ID)
 )
   ENGINE = InnoDB

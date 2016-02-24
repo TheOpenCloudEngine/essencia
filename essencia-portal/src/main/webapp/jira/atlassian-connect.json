@@ -25,6 +25,12 @@
   },
   "apiVersion": 1,
   "modules": {
+    "webhooks": [
+      {
+        "event": "jira:issue_updated",
+        "url": "/api/issue/updated"
+      }
+    ],
     "generalPages": [
       {
         "key": "essencia-index",

@@ -15,6 +15,8 @@ public class JiraProject {
 
     private String projectId;
 
+    private String initiator;
+
     private Date regDt;
 
     public Long getId() {
@@ -49,6 +51,14 @@ public class JiraProject {
         this.projectId = projectId;
     }
 
+    public String getInitiator() {
+        return initiator;
+    }
+
+    public void setInitiator(String initiator) {
+        this.initiator = initiator;
+    }
+
     public Date getRegDt() {
         return regDt;
     }
@@ -64,6 +74,7 @@ public class JiraProject {
                 ", instanceId=" + instanceId +
                 ", jiraClientId=" + jiraClientId +
                 ", projectId='" + projectId + '\'' +
+                ", initiator='" + initiator + '\'' +
                 ", regDt=" + regDt +
                 '}';
     }

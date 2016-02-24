@@ -8,6 +8,7 @@
         <result property="instanceId" column="instance_id" jdbcType="BIGINT"/>
         <result property="jiraClientId" column="jira_client_id" jdbcType="BIGINT"/>
         <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="initiator" column="initiator" jdbcType="VARCHAR"/>
         <result property="regDt" column="reg_dt" jdbcType="DATE"/>
     </resultMap>
 
@@ -17,12 +18,14 @@
         (
         instance_id,
         jira_client_id,
-        project_id
+        project_id,
+        initiator
         )
         VALUES (
         #{instanceId},
         #{jiraClientId},
-        #{projectId}
+        #{projectId},
+        #{initiator}
         )
     </insert>
 

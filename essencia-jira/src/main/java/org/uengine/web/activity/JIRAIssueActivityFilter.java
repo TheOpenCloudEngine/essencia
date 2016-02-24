@@ -1,5 +1,7 @@
 package org.uengine.web.activity;
 
+import org.metaworks.dao.TransactionAdvice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.uengine.codi.mw3.model.Employee;
 import org.uengine.kernel.*;
@@ -39,6 +41,7 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             JiraApiService jiraApiService = (JiraApiService) context.getBean(JiraApiService.class);
             JiraClientService jiraClientService = (JiraClientService) context.getBean(JiraClientService.class);
             JiraIssueService jiraIssueService = (JiraIssueService) context.getBean(JiraIssueService.class);
+            TransactionAdvice transactionAdvice = (TransactionAdvice) context.getBean(TransactionAdvice.class);
 
             //필요 정보를 모은다.
             String instanceId = instance.getInstanceId(); //인스턴스 아이디
@@ -48,30 +51,6 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             String activityName = activity.getName(); //이슈 제목
             Role role = ((HumanActivity) activity).getRole();
             String roleName = role.getName(); // 롤 이름
-
-            //최초 시작한 인스턴스이고 지라 파라미터가 있는지 살핀다.
-            Serializable jiraSerializable = instance.get("jira");
-            if (instance.isNew() && jiraSerializable != null) {
-                Map jira = (Map) jiraSerializable;
-                String clientKey = (String) jira.get("clientKey");
-                String projectName = (String) jira.get("projectName");
-                String projectKey = (String) jira.get("projectKey");
-                String projectType = (String) jira.get("projectType");
-                String requestUserKey = (String) jira.get("requestUserKey");
-
-                //지라 프로젝트 생성
-                //String projectId = jiraApiService.createProject(clientKey, projectName, projectKey, projectType, requestUserKey);
-
-                //지라 프로젝트와 프로세스 인스턴스 매핑
-                projectService.mappingWithInstanceId(Long.parseLong(instanceId), clientKey, "9999");
-            }
-
-
-            //지라 프로젝트 생성
-            //String projectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
-            //지라 프로젝트와 프로세스 인스턴스 매핑
-            //jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, projectId);
-
 
             //jira 프로젝트와 연동된 인스턴스가 아니면 리턴한다.
             JiraProject jiraProject = projectService.selectByInstanceId(Long.parseLong(instanceId));
@@ -106,14 +85,7 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             Employee assigneeEmployee = employeeService.findByEmpCode(assigneeEndpoint);
             String assigneeKey = assigneeEmployee.getEmpName(); //assignee userKey
 
-            RoleMapping initiator = instance.getRoleMapping("Initiator");
-            if (initiator == null) {
-                throw new ServiceException("No reporter user for " +
-                        roleName + " , instanceId : " + instanceId);
-            }
-            String reporterEndpoint = initiator.getEndpoint();
-            Employee reporterEmployee = employeeService.findByEmpCode(reporterEndpoint);
-            String reporterKey = reporterEmployee.getEmpName(); //reporter userKey
+            String reporterKey = jiraProject.getInitiator(); //reporter userKey
 
 
             //jira 프로젝트의 디폴트 이슈타입아이디를 가져온다.
@@ -134,6 +106,8 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             jiraIssue.setIssueId(issueId);
             jiraIssueService.insert(jiraIssue);
 
+            //프로세스 후처리를 위한 트랜잭션 유지
+            transactionAdvice.initiateTransaction();
         }
     }
 

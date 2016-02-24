@@ -20,7 +20,6 @@ import org.uengine.web.jiraproject.JiraProjectService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -162,32 +161,23 @@ public class ProcessMapServiceImpl implements ProcessMapService {
 
         //롤 매핑 대상자 유저 생성
         for (Map roleMapping : roleMappings) {
+            String roleName = roleMapping.get("roleName").toString();
             String userKey = roleMapping.get("userKey").toString();
             Employee mappingEmployee = employeeService.createJiraEmployeeIfNotExist(request, userKey);
             roleMapping.put("empCode", mappingEmployee.getEmpCode());
         }
 
+        //테넌트 설정과 프로세스 인스턴스 생성
+        new TenantContext(company.getComCode());
+        String instId = this.initializeProcess(processMap.getDefId());
+
         //지라 프로젝트 생성
-        //String projectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
+        String projectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
         //지라 프로젝트와 프로세스 인스턴스 매핑
-        //jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, projectId);
+        jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, projectId, requestUserKey);
 
         try {
             transactionAdvice.initiateTransaction();
-
-            //테넌트 설정과 프로세스 인스턴스 생성
-            new TenantContext(company.getComCode());
-            String instId = processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", processMap.getDefId()));
-            ProcessInstance instance = processManager.getProcessInstance(instId);
-
-            //인스턴스에 지라 파라미터 세팅
-            Map jira = new HashMap();
-            jira.put("clientKey", clientKey);
-            jira.put("projectName", projectName);
-            jira.put("projectKey", projectKey);
-            jira.put("projectType", projectType);
-            jira.put("requestUserKey", requestUserKey);
-            instance.add("jira", jira, 0);
 
             //롤 매핑 Initiator 설정
             if (roleMappings != null && roleMappings.size() > 0) {
@@ -197,6 +187,7 @@ public class ProcessMapServiceImpl implements ProcessMapService {
             //롤 매핑 대상자 유저 설정
             for (Map roleMapping : roleMappings) {
                 String roleName = roleMapping.get("roleName").toString();
+                String userKey = roleMapping.get("userKey").toString();
                 String empCode = (String) roleMapping.get("empCode");
                 processManager.putRoleMapping(instId, roleName, empCode);
             }
@@ -208,6 +199,19 @@ public class ProcessMapServiceImpl implements ProcessMapService {
         } catch (Exception ex) {
             transactionAdvice.rollbackTransaction();
             throw new RuntimeException(ex);
+        }
+    }
+
+    private String initializeProcess(String defId) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
+            String instId = processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", defId));
+            transactionAdvice.commitTransaction();
+            return instId;
+
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
         }
     }
 }
