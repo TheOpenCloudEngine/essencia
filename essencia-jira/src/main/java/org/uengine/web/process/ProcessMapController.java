@@ -59,6 +59,7 @@ public class ProcessMapController {
                 response.setSuccess(true);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             response.setSuccess(false);
             response.getError().setMessage(ex.getMessage());
             if (ex.getCause() != null) response.getError().setCause(ex.getCause().getMessage());

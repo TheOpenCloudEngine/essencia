@@ -14,6 +14,9 @@ import org.uengine.web.jiraproject.JiraProject;
 import org.uengine.web.jiraproject.JiraProjectService;
 import org.uengine.web.util.ApplicationContextRegistry;
 
+import java.io.Serializable;
+import java.util.Map;
+
 /**
  * Created by jjy on 2016. 2. 2..
  */
@@ -46,6 +49,29 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             Role role = ((HumanActivity) activity).getRole();
             String roleName = role.getName(); // 롤 이름
 
+            //최초 시작한 인스턴스이고 지라 파라미터가 있는지 살핀다.
+            Serializable jiraSerializable = instance.get("jira");
+            if (instance.isNew() && jiraSerializable != null) {
+                Map jira = (Map) jiraSerializable;
+                String clientKey = (String) jira.get("clientKey");
+                String projectName = (String) jira.get("projectName");
+                String projectKey = (String) jira.get("projectKey");
+                String projectType = (String) jira.get("projectType");
+                String requestUserKey = (String) jira.get("requestUserKey");
+
+                //지라 프로젝트 생성
+                //String projectId = jiraApiService.createProject(clientKey, projectName, projectKey, projectType, requestUserKey);
+
+                //지라 프로젝트와 프로세스 인스턴스 매핑
+                projectService.mappingWithInstanceId(Long.parseLong(instanceId), clientKey, "9999");
+            }
+
+
+            //지라 프로젝트 생성
+            //String projectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
+            //지라 프로젝트와 프로세스 인스턴스 매핑
+            //jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, projectId);
+
 
             //jira 프로젝트와 연동된 인스턴스가 아니면 리턴한다.
             JiraProject jiraProject = projectService.selectByInstanceId(Long.parseLong(instanceId));
@@ -56,7 +82,7 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             //동일한 인스턴스와 트래이싱 태그가 지라 이슈로 운영중이면 리턴한다.
             JiraIssue runningIssue = jiraIssueService.selectByInstanceAndTracing(
                     Long.parseLong(instanceId), Long.parseLong(tracingTag));
-            if(runningIssue != null){
+            if (runningIssue != null) {
                 return;
             }
 
@@ -108,13 +134,7 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             jiraIssue.setIssueId(issueId);
             jiraIssueService.insert(jiraIssue);
 
-
-            //EssenceActivity essenceActivity = (EssenceActivity) processManager.getProcessInstance(getInstanceId()).getProcessDefinition().getActivity(tracingTag);
-            ///  jira:uengine mapping table insertion
-
         }
-
-
     }
 
     @Override

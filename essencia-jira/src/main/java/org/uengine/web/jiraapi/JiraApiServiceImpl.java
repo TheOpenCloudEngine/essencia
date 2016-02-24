@@ -33,6 +33,12 @@ public class JiraApiServiceImpl implements JiraApiService {
     }
 
     @Override
+    public String createProject(String clientKey, String name, String key, String type, String lead) throws Exception {
+        JiraApi jiraApi = serviceFactory.create(clientKey);
+        return jiraApi.createProject(name, key, type, lead);
+    }
+
+    @Override
     public String createIssue(String clientKey, String projectId, String summary, String issueType, String assignee, String reporter) throws Exception {
         JiraApi jiraApi = serviceFactory.create(clientKey);
         return jiraApi.createIssue(projectId, summary, issueType, assignee, reporter);

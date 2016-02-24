@@ -1,10 +1,12 @@
 package org.uengine.web.process;
 
 import org.metaworks.dao.TransactionAdvice;
+import org.metaworks.dao.TransactionContext;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uengine.codi.mw3.model.*;
+import org.uengine.kernel.*;
 import org.uengine.kernel.Role;
 import org.uengine.modeling.resource.ResourceManager;
 import org.uengine.modeling.resource.VersionManager;
@@ -18,6 +20,7 @@ import org.uengine.web.jiraproject.JiraProjectService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -157,73 +160,54 @@ public class ProcessMapServiceImpl implements ProcessMapService {
         //프로세스 생성 요청자 유저 생성.
         Employee requestEmployee = employeeService.createJiraEmployeeIfNotExist(request, requestUserKey);
 
-        //테넌트 설정과 프로세스 인스턴스 생성
-        new TenantContext(company.getComCode());
-        String instId = this.initializeProcess(processMap.getDefId());
-
-        //롤 매핑 Initiator 설정
-        transactionAdvice.initiateTransaction();
-        if (roleMappings != null && roleMappings.size() > 0) {
-            this.putRoleMapping(instId, "Initiator", requestEmployee.getEmpCode());
-        }
-
-        //롤 매핑 대상자 유저 생성 및 설정
+        //롤 매핑 대상자 유저 생성
         for (Map roleMapping : roleMappings) {
-            String roleName = roleMapping.get("roleName").toString();
             String userKey = roleMapping.get("userKey").toString();
-
             Employee mappingEmployee = employeeService.createJiraEmployeeIfNotExist(request, userKey);
-            this.putRoleMapping(instId, roleName, mappingEmployee.getEmpCode());
+            roleMapping.put("empCode", mappingEmployee.getEmpCode());
         }
 
         //지라 프로젝트 생성
-        String projectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
-
+        //String projectId = jiraApiService.createProject(request, projectName, projectKey, projectType, requestUserKey);
         //지라 프로젝트와 프로세스 인스턴스 매핑
-        jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, projectId);
+        //jiraProjectService.mappingWithInstanceId(Long.parseLong(instId), clientKey, projectId);
 
-        //프로세스 시작
-        try {
-            this.excuteProcess(instId);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void excuteProcess(String instId) throws Exception {
         try {
             transactionAdvice.initiateTransaction();
+
+            //테넌트 설정과 프로세스 인스턴스 생성
+            new TenantContext(company.getComCode());
+            String instId = processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", processMap.getDefId()));
+            ProcessInstance instance = processManager.getProcessInstance(instId);
+
+            //인스턴스에 지라 파라미터 세팅
+            Map jira = new HashMap();
+            jira.put("clientKey", clientKey);
+            jira.put("projectName", projectName);
+            jira.put("projectKey", projectKey);
+            jira.put("projectType", projectType);
+            jira.put("requestUserKey", requestUserKey);
+            instance.add("jira", jira, 0);
+
+            //롤 매핑 Initiator 설정
+            if (roleMappings != null && roleMappings.size() > 0) {
+                processManager.putRoleMapping(instId, "Initiator", requestEmployee.getEmpCode());
+            }
+
+            //롤 매핑 대상자 유저 설정
+            for (Map roleMapping : roleMappings) {
+                String roleName = roleMapping.get("roleName").toString();
+                String empCode = (String) roleMapping.get("empCode");
+                processManager.putRoleMapping(instId, roleName, empCode);
+            }
+            //프로세스 시작
             processManager.executeProcess(instId);
             processManager.applyChanges();
+
             transactionAdvice.commitTransaction();
         } catch (Exception ex) {
             transactionAdvice.rollbackTransaction();
-            throw new Exception(ex);
-        }
-    }
-
-    private void putRoleMapping(String instId, String roleName, String empCode) throws Exception {
-        try {
-            transactionAdvice.initiateTransaction();
-            processManager.putRoleMapping(instId, roleName, empCode);
-            transactionAdvice.commitTransaction();
-
-        } catch (Exception ex) {
-            transactionAdvice.rollbackTransaction();
-            throw new Exception(ex);
-        }
-    }
-
-    private String initializeProcess(String defId) throws Exception {
-        try {
-            transactionAdvice.initiateTransaction();
-            String instId = processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", defId));
-            transactionAdvice.commitTransaction();
-            return instId;
-
-        } catch (Exception ex) {
-            transactionAdvice.rollbackTransaction();
-            throw new Exception(ex);
+            throw new RuntimeException(ex);
         }
     }
 }
