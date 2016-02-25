@@ -71,9 +71,7 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
 
     @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)
     public ModalWindow monitorPopup() throws Exception{
-        InstanceMonitorPanel instanceMonitorPanel = new InstanceMonitorPanel();
-        instanceMonitorPanel.load(this.getInstanceId(), this.processManager);
-
+        InstanceMonitorPanel instanceMonitorPanel = this.createInstanceMonitorPanel();
         ModalWindow modal = new ModalWindow(instanceMonitorPanel, 900, 700);
 
         modal.setTitle("Process Monitor");
