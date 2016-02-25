@@ -32,4 +32,10 @@ public class JiraProjectServiceImpl implements JiraProjectService {
 
         return projectRepository.selectByInstanceId(instanceId);
     }
+
+    @Override
+    public JiraProject selectByClientKeyAndProjectId(String clientKey, String projectId) throws Exception {
+        JiraClient jiraClient = jiraClientService.selectByClientKey(clientKey);
+        return projectRepository.selectByClientIdAndProjectId(jiraClient.getId(), projectId);
+    }
 }

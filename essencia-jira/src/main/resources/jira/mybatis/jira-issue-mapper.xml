@@ -7,6 +7,7 @@
         <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="instanceId" column="instance_id" jdbcType="BIGINT"/>
         <result property="tracingTag" column="tracing_tag" jdbcType="BIGINT"/>
+        <result property="taskId" column="task_id" jdbcType="BIGINT"/>
         <result property="jiraClientId" column="jira_client_id" jdbcType="BIGINT"/>
         <result property="projectId" column="project_id" jdbcType="VARCHAR"/>
         <result property="issueId" column="issue_id" jdbcType="VARCHAR"/>
@@ -19,6 +20,7 @@
         (
         instance_id,
         tracing_tag,
+        task_id,
         jira_client_id,
         project_id,
         issue_id
@@ -26,6 +28,7 @@
         VALUES (
         #{instanceId},
         #{tracingTag},
+        #{taskId},
         #{jiraClientId},
         #{projectId},
         #{issueId}

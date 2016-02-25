@@ -12,6 +12,8 @@ public class JiraIssue {
 
     private Long tracingTag;
 
+    private Long taskId;
+
     private Long jiraClientId;
 
     private String projectId;
@@ -42,6 +44,14 @@ public class JiraIssue {
 
     public void setTracingTag(Long tracingTag) {
         this.tracingTag = tracingTag;
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
     public Long getJiraClientId() {
@@ -82,6 +92,7 @@ public class JiraIssue {
                 "id=" + id +
                 ", instanceId=" + instanceId +
                 ", tracingTag=" + tracingTag +
+                ", taskId=" + taskId +
                 ", jiraClientId=" + jiraClientId +
                 ", projectId='" + projectId + '\'' +
                 ", issueId='" + issueId + '\'' +

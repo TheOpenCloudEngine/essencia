@@ -13,7 +13,7 @@
 <!--<![endif]-->
 <head>
     <%@include file="../template/header.jsp" %>
-    <%@include file="../template/mw3_jira_common.jsp" %>
+    <%@include file="../template/aui_common.jsp" %>
     <script src="/jira/js/project-detail.js" type="text/javascript"></script>
 
     <link rel="stylesheet" href="/jira/plugins/highlight/styles/default.css" media="all">

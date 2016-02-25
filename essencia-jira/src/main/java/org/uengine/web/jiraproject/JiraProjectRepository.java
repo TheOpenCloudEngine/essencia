@@ -10,6 +10,6 @@ public interface JiraProjectRepository extends PersistentRepository<JiraProject,
 
     JiraProject selectByInstanceId(Long instanceId);
 
-    JiraProject selectByClientAndProjectId(Long jiraClientId, String jiraProjectId);
+    JiraProject selectByClientIdAndProjectId(Long jiraClientId, String projectId);
 
 }

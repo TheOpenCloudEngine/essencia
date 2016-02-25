@@ -10,4 +10,6 @@ public interface JiraProjectService {
     void mappingWithInstanceId(Long instanceId, String clientKey, String projectId, String initiator) throws Exception;
 
     JiraProject selectByInstanceId(Long instanceId);
+
+    JiraProject selectByClientKeyAndProjectId(String clientKey, String projectId) throws Exception;
 }

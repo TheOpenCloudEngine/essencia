@@ -34,10 +34,10 @@ public class JiraProjectRepositoryImpl extends PersistentRepositoryImpl<JiraProj
     }
 
     @Override
-    public JiraProject selectByClientAndProjectId(Long jiraClientId, String jiraProjectId) {
+    public JiraProject selectByClientIdAndProjectId(Long jiraClientId, String projectId) {
         Map map = new HashMap();
         map.put("jiraClientId", jiraClientId);
-        map.put("jiraProjectId", jiraProjectId);
-        return this.getSqlSessionTemplate().selectOne(this.getNamespace() + ".selectByClientAndProjectId", map);
+        map.put("projectId", projectId);
+        return this.getSqlSessionTemplate().selectOne(this.getNamespace() + ".selectByClientIdAndProjectId", map);
     }
 }

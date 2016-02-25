@@ -47,7 +47,7 @@
         instance_id = #{instanceId}
     </select>
 
-    <select id="selectByClientAndProjectId" parameterType="map" resultMap="JiraProjectMap">
+    <select id="selectByClientIdAndProjectId" parameterType="map" resultMap="JiraProjectMap">
         SELECT
         *
         FROM

@@ -101,6 +101,7 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             JiraIssue jiraIssue = new JiraIssue();
             jiraIssue.setInstanceId(Long.parseLong(instanceId));
             jiraIssue.setTracingTag(Long.parseLong(tracingTag));
+            jiraIssue.setTaskId(Long.parseLong(taskId));
             jiraIssue.setJiraClientId(jiraClient.getId());
             jiraIssue.setProjectId(projectId);
             jiraIssue.setIssueId(issueId);

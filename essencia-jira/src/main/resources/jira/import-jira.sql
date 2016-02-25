@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS uengine.jira_issue (
   id             INT(11)      NOT NULL AUTO_INCREMENT,
   instance_id    INT(11)      NOT NULL,
   tracing_tag    INT(11)      NOT NULL,
+  task_id        INT(11)      NOT NULL,
   jira_client_id INT(11)      NOT NULL,
   project_id     VARCHAR(255) NOT NULL,
   issue_id       VARCHAR(255) NOT NULL,

@@ -15,6 +15,9 @@ import org.uengine.codi.mw3.model.ProcessMap;
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
+import org.uengine.web.jiraapi.JiraApi;
+import org.uengine.web.jiraapi.JiraApiService;
+import org.uengine.web.jiraapi.JiraServiceFactory;
 import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.process.ProcessMapService;
 
@@ -22,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/view")
@@ -43,6 +47,9 @@ public class IndexController {
 
     @Autowired
     ProcessManagerRemote processManager;
+
+    @Autowired
+    JiraServiceFactory serviceFactory;
 
     /**
      * 인덱스 페이지로 이동한다.
@@ -81,11 +88,17 @@ public class IndexController {
             List<Role> roles = processMapService.getRoles(processMap.getDefId(), processMap.getComCode());
             view.addObject("roles", roles);
 
+            JiraApi jiraApi = serviceFactory.create(request);
+            List<Map> projectTypes = jiraApi.projectTypes();
+            view.addObject("projectTypes", projectTypes);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return view;
     }
+
+    //define-process
 
     /**
      * 이슈 액티비티 카드
@@ -117,15 +130,5 @@ public class IndexController {
         return new ModelAndView("page/process-monitor");
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public void test(HttpServletRequest request, HttpSession session) throws RemoteException {
-
-        new TenantContext("2");
-        org.uengine.kernel.ProcessDefinition definition = processManager.getProcessDefinition("Scrum Practice/KOSTA Essence.method");
-        Role[] roles = definition.getRoles();
-        System.out.println(roles.length);
-        //System.out.println(definition.toString());
-
-    }
 
 }

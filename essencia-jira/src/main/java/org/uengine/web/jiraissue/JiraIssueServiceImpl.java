@@ -109,7 +109,10 @@ public class JiraIssueServiceImpl implements JiraIssueService {
             new TenantContext(comCode);
             ProcessInstance instance = processManager.getProcessInstance(instanceId);
             Activity activity = instance.getProcessDefinition().getActivity(tracingTag);
+
+            //다음단계의 액티비티를 실행시켜야 함.
             activity.fireComplete(instance);
+            processManager.applyChanges();
 
             transactionAdvice.commitTransaction();
         } catch (Exception ex) {

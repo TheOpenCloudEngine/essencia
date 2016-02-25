@@ -12,6 +12,7 @@
 <!--<![endif]-->
 <head>
     <%@include file="../template/header.jsp" %>
+    <%@include file="../template/aui_common.jsp" %>
     <script src="/jira/js/index.js" type="text/javascript"></script>
 </head>
 

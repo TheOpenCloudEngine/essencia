@@ -36,7 +36,7 @@ public class JiraIssueController {
     @RequestMapping(value = "/updated", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity installed(HttpServletRequest request, @RequestBody Map payload) {
+    public ResponseEntity updated(HttpServletRequest request, @RequestBody Map payload) {
         try {
             String clientKey = jiraClientService.getClientKeyFromRequest(request);
             issueService.updated(clientKey, payload);
