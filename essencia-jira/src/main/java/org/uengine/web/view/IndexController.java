@@ -98,37 +98,4 @@ public class IndexController {
         return view;
     }
 
-    //define-process
-
-    /**
-     * 이슈 액티비티 카드
-     *
-     * @return Model And View
-     */
-    @RequestMapping(value = "/activity-card", method = RequestMethod.GET)
-    public ModelAndView activityCard(HttpServletRequest request, HttpSession session) {
-        return new ModelAndView("page/activity-card");
-    }
-
-    /**
-     * AlphaView
-     *
-     * @return Model And View
-     */
-    @RequestMapping(value = "/alpha-view", method = RequestMethod.GET)
-    public ModelAndView alphaView(HttpServletRequest request, HttpSession session) {
-        return new ModelAndView("page/alpha-view");
-    }
-
-    /**
-     * ProcessMonitor
-     *
-     * @return Model And View
-     */
-    @RequestMapping(value = "/process-monitor", method = RequestMethod.GET)
-    public ModelAndView processMonitor(HttpServletRequest request, HttpSession session) {
-        return new ModelAndView("page/process-monitor");
-    }
-
-
 }

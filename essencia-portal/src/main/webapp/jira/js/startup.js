@@ -85,7 +85,7 @@ var customUtil = {
         return url;
     },
     redirectMenu: function (path) {
-        var url = './' + path;
+        var url = path;
         window.location.href = this.addJiraParametersToUrl(url);
     },
     renderDialog: function (msg) {
@@ -132,9 +132,9 @@ $(function () {
         return null;
     };
 
-    //if(!getUrlParam('xdm_e') || !getUrlParam('cp')){
-    //    window.location.href = '/jira/page/invalid.jsp';
-    //}
+    if(!getUrlParam('xdm_e') || !getUrlParam('cp')){
+        window.location.href = '/jira/page/invalid.jsp';
+    }
 
     var baseUrl = getUrlParam('xdm_e') + getUrlParam('cp');
     $.getScript(baseUrl + '/atlassian-connect/all.js', function () {
@@ -144,7 +144,6 @@ $(function () {
     });
 
     $('#left-side-menu').find('a').click(function (event) {
-        console.log(event);
         event.preventDefault();
         if ($(this).data('path')) {
             customUtil.redirectMenu($(this).data('path'));
