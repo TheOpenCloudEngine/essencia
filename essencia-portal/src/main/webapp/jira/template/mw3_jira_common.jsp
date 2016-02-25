@@ -431,4 +431,4 @@
 <script type="text/javascript">
     var page_mode = "mw";
 </script>
-<%--<script src="/jira/js/startup.js"></script>--%>
+<script src="/jira/js/startup.js"></script>
