@@ -98,4 +98,9 @@ public class IndexController {
         return view;
     }
 
+    @RequestMapping(value = "/getting-started", method = RequestMethod.GET)
+    public ModelAndView gettingStarted(HttpServletRequest request, HttpSession session) {
+
+        return new ModelAndView("page/getting-started");
+    }
 }
