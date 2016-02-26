@@ -1,6 +1,6 @@
 <%if(value){ %>
-	<div style="padding:15px">
-		<span style="position:relative; top:-29px;background-color: white;"><h3><%= objectMetadata.displayName%></h3></span>
+	<div style="padding:0px">
+		<span style="position:relative; top:-10px;background-color: white;"><h3><%= objectMetadata.displayName%></h3></span>
 			<table style="width:100%;">
 			<%
 				for (var i=0; i<objectMetadata.fieldDescriptors.length; i++){
@@ -30,9 +30,30 @@
 
 			<%		for(var i=0; i<objectMetadata.serviceMethodContexts.length; i++){
 						var serviceMethod = objectMetadata.serviceMethodContexts[i];
+
+						if(serviceMethod.methodName != "moreOptions"){
 			%>
 						<%=methods[serviceMethod.methodName].here()%>
 			<%
+						}else{
+			%>
+					<div align="right">
+						<a onclick="<%=methods[serviceMethod.methodName].caller()%>" href="#">
+							<%
+							 if(value.metaworksContext && value.metaworksContext.where == "advanced"){%>
+								hide advanced options
+							 <%
+							 }else{
+							 %>
+								more options
+							<%
+							 }
+							 %>
+						</a>
+					</div>
+			<%
+
+						}
 					}
 			%>
 				<div style="clear:both"></div>

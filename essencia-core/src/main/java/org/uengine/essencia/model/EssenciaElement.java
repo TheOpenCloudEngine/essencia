@@ -3,6 +3,7 @@ package org.uengine.essencia.model;
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Available;
+import org.metaworks.annotation.Face;
 import org.metaworks.component.CheckBox;
 import org.uengine.essencia.context.EssenciaContext;
 
@@ -31,6 +32,7 @@ public class EssenciaElement implements ContextAware {
     }
 
     @Available(when= EssenciaContext.WHEN_EDIT)
+    @Face(displayName = "select")
     public CheckBox getCheckBox() {
 	return checkBox;
     }

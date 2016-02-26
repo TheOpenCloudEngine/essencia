@@ -39,6 +39,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
 
     private String aggregationAlphaState;
 
+    @Available(where=WHERE_ADVANCED)
     public String getAggregationAlphaState() {
         return aggregationAlphaState;
     }

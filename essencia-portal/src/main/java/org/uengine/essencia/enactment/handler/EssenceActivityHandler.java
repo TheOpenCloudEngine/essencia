@@ -53,6 +53,9 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
             this.activityCard = activityCard;
         }
 
+
+
+
     @Override
     public void load() throws Exception {
         super.load();
@@ -79,8 +82,10 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
 
         List<AlphaInstance> alphaInstanceList = new ArrayList<AlphaInstance>();
 
-        if(getParameters()!=null)
-        for(ParameterValue parameterValue : getParameters()){
+
+        //set target states when the output parameter value is an alphaInstance.
+        if(getOutputParameters()!=null)
+        for(ParameterValue parameterValue : getOutputParameters()){
 
 
             Object parameterValueValue = parameterValue.getValue();
@@ -98,8 +103,6 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
             if(parameterValueValue instanceof AlphaInstance)
                 alphaInstanceList.add((AlphaInstance) parameterValueValue);
 
-
-            //set target states for each alphaInstance parameters
             for(AlphaInstance alphaInstance : alphaInstanceList){
                 if(criterionByElementName.containsKey(alphaInstance.getAlpha().getName())){
                     Criterion criterion = criterionByElementName.get(alphaInstance.getAlpha().getName());

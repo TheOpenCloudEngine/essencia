@@ -50,6 +50,7 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 //	}
 
 	@Order(2)
+	@Available(where = WHERE_ADVANCED)
 	public String getBriefDescription() {
 
 //		if(!ClassSystemMode.getThreadLocalInstance().isDesignTime()){
@@ -297,7 +298,7 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 			List<LanguageElementInstance> elementInstanceList = new ArrayList<LanguageElementInstance>();
 
 			do{
-				LanguageElementInstance elementInstance = (LanguageElementInstance) pvv.getValue();
+				LanguageElementInstance elementInstance = (LanguageElementInstance) pvv.getValue(instance);
 				elementInstanceList.add(elementInstance);
 
 			}while(pvv.next());

@@ -23,13 +23,20 @@
        <%=fields.activityCard.here()%>
 
     </div>
-    <div role="tabpanel" class="tab-pane" id="input<%=objectId%>">
+	  <div role="tabpanel" class="tab-pane" id="input<%=objectId%>">
 
-		<div>
-			<%=fields.parameters.here()%>
-		</div>
+		  <div>
+			  <%=fields.inputParameters.here()%>
+		  </div>
 
-    </div>
+	  </div>
+	  <div role="tabpanel" class="tab-pane" id="output<%=objectId%>">
+
+		  <div>
+			  <%=fields.outputParameters.here()%>
+		  </div>
+
+	  </div>
   </div>
 
 </div>

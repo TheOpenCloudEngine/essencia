@@ -12,7 +12,7 @@ import org.uengine.essencia.model.State;
 import java.util.ArrayList;
 import java.util.List;
 
-@org.metaworks.annotation.Face(faceClass=org.metaworks.Face.class) //this prohibits recursive face replacement.
+@org.metaworks.annotation.Face(faceClass=org.metaworks.IgnoreFaceClassOfSuper.class) //this prohibits recursive face replacement.
 public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInstance> {
 
     @Group(name="Checkpoints")

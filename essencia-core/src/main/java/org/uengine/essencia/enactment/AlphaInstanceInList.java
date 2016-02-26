@@ -83,6 +83,8 @@ public class AlphaInstanceInList implements ContextAware{
 
         alphaInstanceInEditor.setLanguageElementInstance(leInstance);
 
+        if(leInstance==null) throw new Exception("There's no alpha value. It maybe removed by other people. Please refresh your screen.");
+
         //reset the className information so that the user interface can be loaded.
         leInstance.setClassName("codi/" + instance.getProcessDefinition().getId() + "#" + leInstance.getClassDefinition().getName());
 

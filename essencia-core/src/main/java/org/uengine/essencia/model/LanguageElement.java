@@ -29,22 +29,24 @@ import org.uengine.util.UEngineUtil;
 public abstract class LanguageElement extends ClassDefinition implements ContextAware, Serializable, FaceTransformer, IModelingTimeSensitive, MultilingualSupport {
 
 	private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
+	protected static final String WHERE_ADVANCED = "advanced";
 
 	protected TextContext name;
 
 	@Override
 	@Hidden
+	@Available(where = WHERE_ADVANCED)
 	public Attribute[] getFieldDescriptors() {
 		Attribute[] attributes = super.getFieldDescriptors();
 
-		if(attributes==null || attributes.length == 0){
-
-			Attribute attribute = new Attribute();
-			attribute.setName("Id");
-			attribute.setClassName("java.lang.String");
-
-			return new Attribute[]{attribute};
-		}
+//		if(attributes==null || attributes.length == 0){
+//
+//			Attribute attribute = new Attribute();
+//			attribute.setName("Id");
+//			attribute.setClassName("java.lang.String");
+//
+//			return new Attribute[]{attribute};
+//		}
 
 		return attributes;
 	}
@@ -70,6 +72,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 
 	protected TextContext description;
 	@Multilingual
+	@Available(where = WHERE_ADVANCED)
 		public String getDescription() {
 			return description.getText();
 		}
@@ -129,6 +132,13 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	@Hidden
 	public TagListFace getTagListFace() {
 		return tagListFace;
+	}
+
+	@Override
+	@Available(where = WHERE_ADVANCED)
+	@Order(2)
+	public String getDisplayName() {
+		return super.getDisplayName();
 	}
 
 	public void setTagListFace(TagListFace tagListFace) {
@@ -312,9 +322,6 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		}
 
 		multilingualBundle.putMultilingualText(language, propertyName, value);
-
-
-
 	}
 
 	@Override
@@ -322,5 +329,18 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		if(multilingualBundle==null) return null;
 
 		return multilingualBundle.getMultilingualText(language, propertyName);
+	}
+
+	@ServiceMethod(callByContent = true)
+	public void moreOptions(){
+		if(getMetaworksContext()!=null && WHERE_ADVANCED.equals(getMetaworksContext().getWhere())){
+			getMetaworksContext().setWhere(null);
+		}else{
+			if(getMetaworksContext()==null)
+				setMetaworksContext(new MetaworksContext());
+
+			getMetaworksContext().setWhere(WHERE_ADVANCED);
+//			getMetaworksContext().setWhere(WHERE_ADVANCED);
+		}
 	}
 }
