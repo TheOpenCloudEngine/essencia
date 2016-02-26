@@ -22,4 +22,14 @@ public interface JiraClientService {
     String getClientKeyFromRequest(HttpServletRequest request) throws Exception;
 
     String getClientKeyFromSession(HttpSession session) throws Exception;
+
+    String getProductContext(HttpServletRequest request);
+
+    String getProductBaseUrl(HttpServletRequest request);
+
+    String getRequestUserKey(HttpServletRequest request);
+
+    JiraClient selectByClientKey(String clientKey) throws Exception;
+
+    JiraClient selectById(Long id) throws Exception;
 }

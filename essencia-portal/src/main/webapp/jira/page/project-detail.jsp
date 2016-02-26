@@ -13,7 +13,7 @@
 <!--<![endif]-->
 <head>
     <%@include file="../template/header.jsp" %>
-    <%@include file="../template/mw3_jira_common.jsp" %>
+    <%@include file="../template/aui_common.jsp" %>
     <script src="/jira/js/project-detail.js" type="text/javascript"></script>
 
     <link rel="stylesheet" href="/jira/plugins/highlight/styles/default.css" media="all">
@@ -61,6 +61,13 @@
                                            style="text-transform: uppercase">
 
                                     <div class="description">Max. 10 characters.</div>
+                                </div>
+                                <div class="field-group"><label for="key">Project Type</label>
+                                    <select name="projectType" id="projectType" data-aui-validation-field required>
+                                        <c:forEach items="${projectTypes}" var="projectType" varStatus="status">
+                                            <option value="${projectType.key}">${projectType.formattedKey}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </fieldset>
                             <br>

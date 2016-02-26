@@ -25,6 +25,12 @@
   },
   "apiVersion": 1,
   "modules": {
+    "webhooks": [
+      {
+        "event": "jira:issue_updated",
+        "url": "/api/issue/updated"
+      }
+    ],
     "generalPages": [
       {
         "key": "essencia-index",
@@ -44,7 +50,7 @@
     },
     "jiraProjectTabPanels": [
       {
-        "url": "/api/view/process-monitor",
+        "url": "/jira-process-monitor.jsp?projectId={project.id}",
         "weight": 100,
         "key": "process-monitor",
         "name": {
@@ -52,7 +58,7 @@
         }
       },
       {
-        "url": "/api/view/alpha-view",
+        "url": "/jira-alpha-view.jsp?projectId={project.id}",
         "weight": 100,
         "key": "alpha-view",
         "name": {
@@ -62,7 +68,7 @@
     ],
     "webPanels": [
       {
-        "url": "/api/view/activityCard",
+        "url": "/jira-activity-card.jsp?projectId={project.id}&issueId={issue.id}",
         "location": "atl.jira.view.issue.left.context",
         "layout": {
           "width": "100%",

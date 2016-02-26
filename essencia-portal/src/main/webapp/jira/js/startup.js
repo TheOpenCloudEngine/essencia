@@ -85,7 +85,7 @@ var customUtil = {
         return url;
     },
     redirectMenu: function (path) {
-        var url = './' + path;
+        var url = path;
         window.location.href = this.addJiraParametersToUrl(url);
     },
     renderDialog: function (msg) {
@@ -125,27 +125,36 @@ var customUtil = {
 };
 $(function () {
     var getUrlParam = function (param) {
-        var codedParam = (new RegExp(param + '=([^&]*)')).exec(window.location.search)[1];
-        return decodeURIComponent(codedParam);
+        var codedParam = (new RegExp(param + '=([^&]*)')).exec(window.location.search)
+        if (codedParam) {
+            return decodeURIComponent(codedParam[1]);
+        }
+        return null;
     };
+
+    if(!getUrlParam('xdm_e') || !getUrlParam('cp')){
+        window.location.href = '/jira/page/invalid.jsp';
+    }
 
     var baseUrl = getUrlParam('xdm_e') + getUrlParam('cp');
     $.getScript(baseUrl + '/atlassian-connect/all.js', function () {
-        onPageLoadScript();
+        if (page_mode && page_mode == 'aui') {
+            onPageLoadScript();
+        }
     });
 
     $('#left-side-menu').find('a').click(function (event) {
-        console.log(event);
         event.preventDefault();
         if ($(this).data('path')) {
             customUtil.redirectMenu($(this).data('path'));
         }
     });
 
-    AJS.$('[name=close-button]').click(function (e) {
-        e.preventDefault();
-        AJS.dialog2('#normal-dialog').hide();
-        AJS.dialog2('#warning-dialog').hide();
-    });
-
+    if (page_mode && page_mode == 'aui') {
+        AJS.$('[name=close-button]').click(function (e) {
+            e.preventDefault();
+            AJS.dialog2('#normal-dialog').hide();
+            AJS.dialog2('#warning-dialog').hide();
+        });
+    }
 });

@@ -7,4 +7,5 @@ public interface CompanyService {
     void createJiraCompanyIfNotExist(String clientKey) throws Exception;
 
     Company selectByAlias(String clientKey) throws Exception;
+
 }

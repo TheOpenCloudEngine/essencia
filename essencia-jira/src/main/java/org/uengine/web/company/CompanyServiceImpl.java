@@ -54,6 +54,9 @@ public class CompanyServiceImpl implements CompanyService {
             company.setAlias(clientKey);
             ICompany companyByAlias = company.findByAlias();
             result.copyFrom(companyByAlias);
+            if(companyByAlias == null){
+                result = null;
+            }
 
             transactionAdvice.commitTransaction();
             return result;

@@ -1,30 +1,36 @@
 package org.uengine.web.view;
 
+import org.metaworks.widget.ModalWindow;
 import org.oce.garuda.multitenancy.TenantContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+<<<<<<< HEAD
 import org.uengine.codi.mw3.model.*;
 import org.uengine.kernel.ProcessDefinition;
+=======
+import org.uengine.codi.mw3.model.Company;
+import org.uengine.codi.mw3.model.ProcessMap;
+>>>>>>> 49f63e4d7a05952ff5221d97cd488beaccff895d
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
+import org.uengine.web.jiraapi.JiraApi;
+import org.uengine.web.jiraapi.JiraApiService;
+import org.uengine.web.jiraapi.JiraServiceFactory;
 import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.process.ProcessMapService;
-import org.uengine.web.util.JsonUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/view")
@@ -43,6 +49,12 @@ public class IndexController {
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    ProcessManagerRemote processManager;
+
+    @Autowired
+    JiraServiceFactory serviceFactory;
 
     /**
      * 인덱스 페이지로 이동한다.
@@ -69,9 +81,6 @@ public class IndexController {
         return view;
     }
 
-    @Autowired
-    ProcessManagerRemote processManager;
-
     @RequestMapping(value = "/project-detail", method = RequestMethod.GET)
     public ModelAndView projectDetail(HttpServletRequest request, HttpSession session,
                                       @RequestParam(defaultValue = "") String mapId) {
@@ -84,32 +93,19 @@ public class IndexController {
             List<Role> roles = processMapService.getRoles(processMap.getDefId(), processMap.getComCode());
             view.addObject("roles", roles);
 
+            JiraApi jiraApi = serviceFactory.create(request);
+            List<Map> projectTypes = jiraApi.projectTypes();
+            view.addObject("projectTypes", projectTypes);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return view;
     }
 
-    /**
-     * 이슈 액티비티 카드
-     *
-     * @return Model And View
-     */
-    @RequestMapping(value = "/activityCard", method = RequestMethod.GET)
-    public ModelAndView activityCard(HttpServletRequest request, HttpSession session) {
+    @RequestMapping(value = "/getting-started", method = RequestMethod.GET)
+    public ModelAndView gettingStarted(HttpServletRequest request, HttpSession session) {
 
-        return new ModelAndView("page/activityCard");
+        return new ModelAndView("page/getting-started");
     }
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public void test(HttpServletRequest request, HttpSession session) throws RemoteException {
-
-        new TenantContext("2");
-        org.uengine.kernel.ProcessDefinition definition = processManager.getProcessDefinition("Scrum Practice/KOSTA Essence.method");
-        Role[] roles = definition.getRoles();
-        System.out.println(roles.length);
-        //System.out.println(definition.toString());
-
-    }
-
 }

@@ -1,0 +1,17 @@
+{
+  "fields": {
+    "project": {
+      "id": "${projectId}"
+    },
+    "summary": "${summary}",
+    "issuetype": {
+      "id": "${issueType}"
+    },
+    "assignee": {
+      "name": "${assignee}"
+    },
+    "reporter": {
+      "name": "${reporter}"
+    }
+  }
+}

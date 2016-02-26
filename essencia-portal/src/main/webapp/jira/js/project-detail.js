@@ -31,6 +31,9 @@ var onPageLoadScript = function () {
     }
     createRoleMappingLayout();
 
+    AJS.$('#projectType').auiSelect2();
+
+
     marked.setOptions({
         highlight: function (code) {
             return hljs.highlightAuto(code).value;
@@ -47,18 +50,18 @@ var onPageLoadScript = function () {
         var roleMapping = [];
         $.each(form.find('[name=role-mapping]'), function(index,mapping){
             roleMapping.push({
-               name: $(mapping).find('[name=rolename]').val(),
-               userkey: $(mapping).find('[name=userkey]').val()
+               roleName: $(mapping).find('[name=rolename]').val(),
+               userKey: $(mapping).find('[name=userkey]').val()
             });
         });
 
         blockSubmitStart();
 
         var params = {
-            defId: defId,
-            comCode: comCode,
+            mapId: mapId,
             name : form.find('[name=name]').val(),
             key  : form.find('[name=key]').val(),
+            projectType: form.find('[name=projectType]').val(),
             roleMapping: roleMapping
         }
         $.ajax({
@@ -69,9 +72,13 @@ var onPageLoadScript = function () {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
-
+                    window.location.href = customUtil.addJiraParametersToUrl('./index');
                 } else {
-                    customUtil.renderWarningDialog('Failed to create Essencia projects.');
+                    if(response.error.message == 'permission'){
+                        customUtil.renderWarningDialog('You do not have permission to create a project. Only jira-administrators group members are enabled.');
+                    }else{
+                        customUtil.renderWarningDialog('Failed to create Essencia projects.');
+                    }
                 }
                 blockStop();
             },
