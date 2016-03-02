@@ -34,8 +34,6 @@
 
 
         var tenant = jiraSession.comCode;
-//        var tenant = '1';
-        console.log(tenant);
 
         var session = new MetaworksObject({
             __className: 'org.uengine.codi.mw3.model.Session',
