@@ -34,6 +34,13 @@
 
                 <div class="description"><a href="#">Can not find the desired project ?</a></div>
             </div>
+            <div class="buttons-container form-footer">
+                <div class="buttons">
+                    <div class="aui-button aui-button-primary"
+                            id="add-app">Add app
+                    </div>
+                </div>
+            </div>
         </form>
 
         <table id="processTable" class="aui aui-table-sortable">

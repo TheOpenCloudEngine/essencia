@@ -15,4 +15,6 @@ public interface JiraIssueService {
     void updated(String clientKey, Map payload) throws Exception;
 
     JiraIssue selectByJiraIssueInformation(String clientKey, String projectId, String issueId) throws Exception;
+
+    String getJiraIssueActivityStatus(JiraIssue jiraIssue) throws Exception;
 }

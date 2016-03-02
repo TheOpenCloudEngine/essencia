@@ -84,9 +84,13 @@ var customUtil = {
         }
         return url;
     },
-    redirectMenu: function (path) {
+    redirectMenu: function (path, target) {
         var url = path;
-        window.location.href = this.addJiraParametersToUrl(url);
+        if (target && target == 'new') {
+            window.open(this.addJiraParametersToUrl(url));
+        } else {
+            window.location.href = this.addJiraParametersToUrl(url);
+        }
     },
     renderDialog: function (msg) {
         $('#normal-dialog').find('[name=msg]').html(msg);
@@ -132,21 +136,30 @@ $(function () {
         return null;
     };
 
-    if(!getUrlParam('xdm_e') || !getUrlParam('cp')){
+    if (!getUrlParam('xdm_e') || !getUrlParam('cp')) {
         window.location.href = '/jira/page/invalid.jsp';
     }
 
     var baseUrl = getUrlParam('xdm_e') + getUrlParam('cp');
-    $.getScript(baseUrl + '/atlassian-connect/all.js', function () {
-        if (page_mode && page_mode == 'aui') {
+
+    if (page_mode && page_mode == 'aui') {
+        $.getScript(baseUrl + '/atlassian-connect/all.js', function () {
             onPageLoadScript();
-        }
-    });
+        });
+    }
+    if (page_mode && page_mode == 'mw') {
+        $.getScript(baseUrl + '/atlassian-connect/all.js', function () {
+
+        });
+    }
+    if (page_mode && page_mode == 'popup') {
+        //nothing
+    }
 
     $('#left-side-menu').find('a').click(function (event) {
         event.preventDefault();
         if ($(this).data('path')) {
-            customUtil.redirectMenu($(this).data('path'));
+            customUtil.redirectMenu($(this).data('path'), $(this).data('target'));
         }
     });
 

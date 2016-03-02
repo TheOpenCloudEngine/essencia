@@ -1,7 +1,5 @@
 package org.uengine.web.view;
 
-import org.metaworks.widget.ModalWindow;
-import org.oce.garuda.multitenancy.TenantContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +14,12 @@ import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
 import org.uengine.web.jiraapi.JiraApi;
-import org.uengine.web.jiraapi.JiraApiService;
 import org.uengine.web.jiraapi.JiraServiceFactory;
 import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.process.ProcessMapService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
 
@@ -102,5 +98,11 @@ public class IndexController {
     public ModelAndView gettingStarted(HttpServletRequest request, HttpSession session) {
 
         return new ModelAndView("page/getting-started");
+    }
+
+    @RequestMapping(value = "/support", method = RequestMethod.GET)
+    public ModelAndView support(HttpServletRequest request, HttpSession session) {
+
+        return new ModelAndView("page/support");
     }
 }

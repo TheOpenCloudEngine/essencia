@@ -45,6 +45,12 @@ public class JiraApiServiceImpl implements JiraApiService {
     }
 
     @Override
+    public String addComment(String clientKey, String issueId, String message) throws Exception {
+        JiraApi jiraApi = serviceFactory.create(clientKey);
+        return jiraApi.addComment(issueId, message);
+    }
+
+    @Override
     public String getDefaultIssueTypeIdOfProject(String clientKey, String projectId) throws Exception {
         JiraApi jiraApi = serviceFactory.create(clientKey);
         Map project = jiraApi.getProject(projectId);
@@ -63,5 +69,11 @@ public class JiraApiServiceImpl implements JiraApiService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String getIssueStatus(String clientKey, String issueId) throws Exception {
+        JiraApi jiraApi = serviceFactory.create(clientKey);
+        return jiraApi.getIssueStatus(issueId);
     }
 }

@@ -18,5 +18,9 @@ public interface JiraApiService {
     String createIssue(String clientKey, String projectId, String summary, String issueType,
                        String assignee, String reporter) throws Exception;
 
+    String addComment(String clientKey, String issueId, String message) throws Exception;
+
     String getDefaultIssueTypeIdOfProject(String clientKey, String projectId) throws Exception;
+
+    String getIssueStatus(String clientKey, String issueId) throws Exception;
 }
