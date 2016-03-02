@@ -29,28 +29,19 @@
 <script type="text/javascript">
     page_mode = "popup";
     $(function () {
-
-        //에센시아 프랙티스 콤포저 화면 전체를 불러와야한다.
-
-
         var tenant = jiraSession.comCode;
-//        var tenant = '1';
-        console.log(tenant);
-
         var session = new MetaworksObject({
             __className: 'org.uengine.codi.mw3.model.Session',
             jiraComCode: jiraSession.comCode,
             jiraEmpCode: '<%=empCode%>'
         }, 'body');
+
         session.jiraLogin(null, function () {
             var processAdminLayout = new MetaworksObject({
                 __className: 'org.uengine.processadmin.ProcessAdminLayout',
                 jiraTenant: tenant
             }, 'body');
-
-            processAdminLayout.showProcessAdmin(null, function () {
-
-            });
+            processAdminLayout.showProcessAdmin();
         });
     })
 </script>
