@@ -13,8 +13,8 @@
             <div class="aui-nav-heading"><strong>Project</strong></div>
             <ul class="aui-nav">
                 <li><a href="#" data-path="/api/view/list-project">Create Project</a></li>
-                <li><a href="#" data-path="/api/view/market-place">Market place</a></li>
-                <li><a href="#" data-path="/jira-define-process.jsp">Define Process</a></li>
+                <li><a href="#" data-path="/jira-market-place.jsp" data-target="new">Market place</a></li>
+                <li><a href="#" data-path="/jira-define-process.jsp" data-target="new">Define Process</a></li>
             </ul>
             <div class="aui-nav-heading"><strong>Support</strong></div>
             <ul class="aui-nav">

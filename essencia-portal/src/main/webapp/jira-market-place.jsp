@@ -14,11 +14,10 @@
     page_mode = "popup";
     $(function () {
 
-        //에센시아 프랙티스 콤포저 화면 전체를 불러와야한다.
+        //에센시아 마켓플레이스 화면을 불러온다.
 
 
         var tenant = jiraSession.comCode;
-        console.log(tenant);
 
     })
 </script>
