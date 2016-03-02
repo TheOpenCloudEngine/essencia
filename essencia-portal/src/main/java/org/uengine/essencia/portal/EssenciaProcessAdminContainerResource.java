@@ -1,6 +1,7 @@
 package org.uengine.essencia.portal;
 
 import org.metaworks.ServiceMethodContext;
+import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -26,4 +27,18 @@ public class EssenciaProcessAdminContainerResource extends ProcessAdminContainer
         processResource.newOpen();
     }
 
+    @Override
+    @Hidden
+    public void newProcess() throws Exception {
+    }
+
+    @Override
+    @Hidden
+    public void newClass() throws Exception {
+    }
+
+    @Override
+    @Hidden
+    public void newURLApplication() throws Exception {
+    }
 }
