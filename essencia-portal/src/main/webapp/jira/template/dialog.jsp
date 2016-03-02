@@ -32,13 +32,8 @@
     <!-- Dialog header -->
     <header class="aui-dialog2-header">
         <!-- The dialog's title -->
-        <h2 class="aui-dialog2-header-main">Always use sentence case</h2>
-        <!-- Actions to render on the right of the header -->
-        <div class="aui-dialog2-header-secondary">
-            <form class="aui" action="#">
-                <input class="text" type="search" name="search">
-            </form>
-        </div>
+        <h2 class="aui-dialog2-header-main">Essencia</h2>
+
         <!-- Close icon -->
         <a class="aui-dialog2-header-close">
             <span class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span>
@@ -52,11 +47,9 @@
     <footer class="aui-dialog2-footer">
         <!-- Actions to render on the right of the footer -->
         <div class="aui-dialog2-footer-actions">
-            <button name="submit-button" class="aui-button aui-button-primary">OK</button>
-            <button name="next-button" class="aui-button">Next</button>
             <button name="close-button" class="aui-button aui-button-link">Close</button>
         </div>
         <!-- Hint text is rendered on the left of the footer -->
-        <div class="aui-dialog2-footer-hint">this is a hint</div>
+        <div class="aui-dialog2-footer-hint">Essencia</div>
     </footer>
 </section>

@@ -99,4 +99,10 @@ public class IndexController {
 
         return new ModelAndView("page/getting-started");
     }
+
+    @RequestMapping(value = "/support", method = RequestMethod.GET)
+    public ModelAndView support(HttpServletRequest request, HttpSession session) {
+
+        return new ModelAndView("page/support");
+    }
 }

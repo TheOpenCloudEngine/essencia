@@ -19,7 +19,6 @@
             <div class="aui-nav-heading"><strong>Support</strong></div>
             <ul class="aui-nav">
                 <li><a href="#" data-path="/api/view/support">Uengine Support Teams</a></li>
-                <li><a href="#" data-path="/api/view/logging">Logging and Profiling</a></li>
             </ul>
         </div>
     </nav>
