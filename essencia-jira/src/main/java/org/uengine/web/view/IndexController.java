@@ -10,13 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-<<<<<<< HEAD
-import org.uengine.codi.mw3.model.*;
-import org.uengine.kernel.ProcessDefinition;
-=======
 import org.uengine.codi.mw3.model.Company;
 import org.uengine.codi.mw3.model.ProcessMap;
->>>>>>> 49f63e4d7a05952ff5221d97cd488beaccff895d
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
