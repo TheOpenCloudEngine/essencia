@@ -5,10 +5,13 @@ import org.oce.garuda.multitenancy.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uengine.codi.mw3.model.Company;
+import org.uengine.essencia.enactment.EssenceActivity;
 import org.uengine.kernel.Activity;
+import org.uengine.kernel.ActivityInstanceContext;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
+import org.uengine.web.jiraapi.JiraApiService;
 import org.uengine.web.jiraclient.JiraClient;
 import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.jiraproject.JiraProject;
@@ -35,6 +38,9 @@ public class JiraIssueServiceImpl implements JiraIssueService {
 
     @Autowired
     TransactionAdvice transactionAdvice;
+
+    @Autowired
+    private JiraApiService jiraApiService;
 
     @Override
     public JiraIssue selectById(Long id) {
@@ -98,7 +104,36 @@ public class JiraIssueServiceImpl implements JiraIssueService {
         //에센시아 이슈의 액티비티의 해당 단계를 완료시킨다.
         Company company = companyService.selectByAlias(clientKey);
         String comCode = company.getComCode();
-        this.completeActivity(comCode, Long.toString(jiraIssue.getInstanceId()), Long.toString(jiraIssue.getTracingTag()));
+        boolean success = false;
+        try {
+            this.completeActivity(comCode, Long.toString(jiraIssue.getInstanceId()), Long.toString(jiraIssue.getTracingTag()));
+            success = true;
+        } catch (Exception ex) {
+            success = false;
+        }
+
+        //에센시아 액티비티를 완료할 수 없을 경우 코멘트를 추가한다.
+        if (!success) {
+            String message = "{color:#d04437}Warning{color}\\n" +
+                    "{color:#d04437}You did not fill in all the required values.{color}\\n" +
+                    "\\n" +
+                    "Essencia process is idle, because they did not fill some value for proceeding to the next step of the essence .\\n" +
+                    "If you want to continue with this process, *re- open the issue* and enter the required values in the Activity-Card.\\n" +
+                    "\\n" +
+                    "Then click *Done* again, Essencia will create issue for the next step.";
+
+            jiraApiService.addComment(clientKey, issueId, message);
+        }
+        //에센시아 완료 코멘트를 추가한다.
+        else {
+            StringBuilder builder = new StringBuilder();
+            builder.append(
+                    "*Activity Complete.*\\n" +
+                            "\\n" +
+                            "Essencia have created the next step issue."
+            );
+            jiraApiService.addComment(clientKey, issueId, builder.toString());
+        }
 
     }
 
@@ -108,13 +143,48 @@ public class JiraIssueServiceImpl implements JiraIssueService {
 
             new TenantContext(comCode);
             ProcessInstance instance = processManager.getProcessInstance(instanceId);
-            Activity activity = instance.getProcessDefinition().getActivity(tracingTag);
+            EssenceActivity activity = (EssenceActivity) instance.getProcessDefinition().getActivity(tracingTag);
 
             //다음단계의 액티비티를 실행시켜야 함.
             activity.fireComplete(instance);
             processManager.applyChanges();
 
             transactionAdvice.commitTransaction();
+        } catch (Exception ex) {
+            transactionAdvice.rollbackTransaction();
+            throw new Exception(ex);
+        }
+    }
+
+    @Override
+    public String getJiraIssueActivityStatus(JiraIssue jiraIssue) throws Exception {
+        Long clientId = jiraIssue.getJiraClientId();
+        JiraClient jiraClient = jiraClientService.selectById(clientId);
+        String clientKey = jiraClient.getClientKey();
+        Company company = companyService.selectByAlias(clientKey);
+        String comCode = company.getComCode();
+        Long instanceId = jiraIssue.getInstanceId();
+        Long tracingTag = jiraIssue.getTracingTag();
+
+        return this.getActivityStatus(comCode, Long.toString(instanceId), Long.toString(tracingTag));
+    }
+
+    private String getActivityStatus(String comCode, String instanceId, String tracingTag) throws Exception {
+        try {
+            transactionAdvice.initiateTransaction();
+
+            new TenantContext(comCode);
+            ProcessInstance instance = processManager.getProcessInstance(instanceId);
+            EssenceActivity activity = (EssenceActivity) instance.getProcessDefinition().getActivity(tracingTag);
+
+            String status = activity.getStatus(instance);
+            String statusCode = activity.getStatusCode();
+            System.out.println(status);
+            System.out.println(statusCode);
+
+            transactionAdvice.commitTransaction();
+
+            return status;
         } catch (Exception ex) {
             transactionAdvice.rollbackTransaction();
             throw new Exception(ex);

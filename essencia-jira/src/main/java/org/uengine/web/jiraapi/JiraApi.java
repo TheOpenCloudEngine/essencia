@@ -61,8 +61,37 @@ public class JiraApi {
         }
     }
 
+    public String getIssueStatus(String issueId) throws Exception {
+        String apiPath = "/rest/api/2/issue/" + issueId;
+
+        Map params = new HashMap();
+        params.put("fields", "status");
+
+        String excuted = this.excuteGet(apiPath, params);
+        Map response = JsonUtils.unmarshal(excuted);
+
+        Map fields = (Map) response.get("fields");
+        Map statusMap = (Map) fields.get("status");
+        return (String) statusMap.get("name");
+    }
+
+    public String addComment(String issueId, String message) throws Exception {
+        ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
+        VelocityEngine velocityEngine = (VelocityEngine) context.getBean(VelocityEngine.class);
+
+        String apiPath = "/rest/api/2/issue/" + issueId + "/comment";
+
+        Map model = new HashMap();
+        model.put("message", message);
+
+        String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "jira/template/comment.json", "UTF-8", model);
+
+        String excuted = this.excutePost(apiPath, body);
+        return ((Map) JsonUtils.unmarshal(excuted)).get("id").toString();
+    }
+
     public String createIssue(String projectId, String summary, String issueType,
-                           String assignee, String reporter) throws Exception {
+                              String assignee, String reporter) throws Exception {
         ApplicationContext context = ApplicationContextRegistry.getApplicationContext();
         VelocityEngine velocityEngine = (VelocityEngine) context.getBean(VelocityEngine.class);
 

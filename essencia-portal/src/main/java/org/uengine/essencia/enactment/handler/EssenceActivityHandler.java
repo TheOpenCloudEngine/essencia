@@ -1,10 +1,13 @@
 package org.uengine.essencia.enactment.handler;
 
 import com.itextpdf.text.Meta;
+import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.AutowiredToClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Hidden;
+import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.model.MetaworksElement;
+import org.oce.garuda.multitenancy.TenantContext;
 import org.uengine.codi.mw3.model.ParameterValue;
 import org.uengine.codi.mw3.model.ProcessVariableValueList;
 import org.uengine.codi.mw3.model.WorkItemHandler;
@@ -34,27 +37,28 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
 
 
     ElementViewActionDelegate elementViewActionDelegate;
+
     @Hidden
     @AutowiredToClient
     public ElementViewActionDelegate getElementViewActionDelegate() {
         return elementViewActionDelegate;
     }
+
     public void setElementViewActionDelegate(ElementViewActionDelegate elementViewActionDelegate) {
         this.elementViewActionDelegate = elementViewActionDelegate;
     }
 
 
     ActivityCard activityCard;
+
     @Available(where = "detail")
-        public ActivityCard getActivityCard() {
-            return activityCard;
-        }
-        public void setActivityCard(ActivityCard activityCard) {
-            this.activityCard = activityCard;
-        }
+    public ActivityCard getActivityCard() {
+        return activityCard;
+    }
 
-
-
+    public void setActivityCard(ActivityCard activityCard) {
+        this.activityCard = activityCard;
+    }
 
     @Override
     public void load() throws Exception {
@@ -68,7 +72,6 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
         String tracingTag = getTracingTag();
 
 
-
         EssenceActivity essenceActivity = (EssenceActivity) processManager.getProcessInstance(getInstanceId()).getProcessDefinition().getActivity(tracingTag);
 
         activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
@@ -76,7 +79,7 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
         Activity activityInEssenceDefinition = essenceActivity.getActivityInEssenceDefinition();
 
         HashMap<String, Criterion> criterionByElementName = new HashMap<String, Criterion>();   // Map of Completion criteria of this activity
-        for(Criterion criterion : activityInEssenceDefinition.getCompletionCriteria()){
+        for (Criterion criterion : activityInEssenceDefinition.getCompletionCriteria()) {
             criterionByElementName.put(criterion.getElement().getName(), criterion);
         }
 
@@ -84,33 +87,33 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
 
 
         //set target states when the output parameter value is an alphaInstance.
-        if(getOutputParameters()!=null)
-        for(ParameterValue parameterValue : getOutputParameters()){
+        if (getOutputParameters() != null)
+            for (ParameterValue parameterValue : getOutputParameters()) {
 
 
-            Object parameterValueValue = parameterValue.getValue();
+                Object parameterValueValue = parameterValue.getValue();
 
-            if(parameterValue.getProcessVariableValueList()!=null){
+                if (parameterValue.getProcessVariableValueList() != null) {
 
-                parameterValueValue = parameterValue.getProcessVariableValueList().getDefaultValue();
+                    parameterValueValue = parameterValue.getProcessVariableValueList().getDefaultValue();
 
-                for(MetaworksElement metaworksElement : parameterValue.getProcessVariableValueList().getElements()){
-                    alphaInstanceList.add((AlphaInstance) metaworksElement.getValue());
+                    for (MetaworksElement metaworksElement : parameterValue.getProcessVariableValueList().getElements()) {
+                        alphaInstanceList.add((AlphaInstance) metaworksElement.getValue());
+                    }
+
                 }
 
-            }
+                if (parameterValueValue instanceof AlphaInstance)
+                    alphaInstanceList.add((AlphaInstance) parameterValueValue);
 
-            if(parameterValueValue instanceof AlphaInstance)
-                alphaInstanceList.add((AlphaInstance) parameterValueValue);
+                for (AlphaInstance alphaInstance : alphaInstanceList) {
+                    if (criterionByElementName.containsKey(alphaInstance.getAlpha().getName())) {
+                        Criterion criterion = criterionByElementName.get(alphaInstance.getAlpha().getName());
 
-            for(AlphaInstance alphaInstance : alphaInstanceList){
-                if(criterionByElementName.containsKey(alphaInstance.getAlpha().getName())){
-                    Criterion criterion = criterionByElementName.get(alphaInstance.getAlpha().getName());
-
-                    alphaInstance.setTargetStateName(criterion.getStateOrLevelOfDetail().getName());
+                        alphaInstance.setTargetStateName(criterion.getStateOrLevelOfDetail().getName());
+                    }
                 }
             }
-        }
     }
 
 

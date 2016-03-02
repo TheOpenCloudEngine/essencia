@@ -1,7 +1,5 @@
 package org.uengine.web.view;
 
-import org.metaworks.widget.ModalWindow;
-import org.oce.garuda.multitenancy.TenantContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,25 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-<<<<<<< HEAD
-import org.uengine.codi.mw3.model.*;
-import org.uengine.kernel.ProcessDefinition;
-=======
 import org.uengine.codi.mw3.model.Company;
 import org.uengine.codi.mw3.model.ProcessMap;
->>>>>>> 49f63e4d7a05952ff5221d97cd488beaccff895d
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
 import org.uengine.web.jiraapi.JiraApi;
-import org.uengine.web.jiraapi.JiraApiService;
 import org.uengine.web.jiraapi.JiraServiceFactory;
 import org.uengine.web.jiraclient.JiraClientService;
 import org.uengine.web.process.ProcessMapService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
 

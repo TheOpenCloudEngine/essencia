@@ -197,13 +197,6 @@ public class EssenceActivity extends HumanActivity {
 
         super.beforeExecute(instance);
     }
-//
-//    @Override
-//    protected void executeActivity(ProcessInstance instance) throws Exception {
-//
-//
-//        super.executeActivity(instance);
-//    }
 
     @Override
     public void fireComplete(ProcessInstance instance) throws Exception {
@@ -217,12 +210,7 @@ public class EssenceActivity extends HumanActivity {
             if(validationContext!=null && validationContext.size() > 0){
                 throw new NotCompletableException(validationContext);
             }
-
         }
-
         super.fireComplete(instance);
     }
-
-
-
 }

@@ -2,15 +2,41 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="org.uengine.web.jiraissue.JiraIssueService" %>
 <%@ page import="org.uengine.web.jiraissue.JiraIssue" %>
+<%@ page import="org.uengine.web.employee.EmployeeService" %>
+<%@ page import="org.uengine.codi.mw3.model.Employee" %>
+<%@ page import="org.uengine.web.jiraapi.JiraApiService" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@include file="jira/template/jwtvalidate.jsp" %>
 <%
+    String redirectQuery = "";
+    Map parameterMap = request.getParameterMap();
+    Iterator iterator = parameterMap.keySet().iterator();
+    while (iterator.hasNext()) {
+        String key = (String) iterator.next();
+        String value = ((String[]) parameterMap.get(key))[0];
+        if (redirectQuery.length() < 1) {
+            redirectQuery = redirectQuery + "?" + key + "=" + value;
+        } else {
+            redirectQuery = redirectQuery + "&" + key + "=" + value;
+        }
+    }
+
     String issueId = request.getParameter("issueId");
     String projectId = request.getParameter("projectId");
     String instanceId = null;
     String tracingTag = null;
     String taskId = null;
+
+    String requestUserKey = clientService.getRequestUserKey(request);
+    JiraApiService jiraApiService = (JiraApiService) context.getBean(JiraApiService.class);
+    Map user = jiraApiService.getUser(request, requestUserKey);
+    String emailAddress = user.get("emailAddress").toString();
+
+    EmployeeService employeeService = (EmployeeService) context.getBean(EmployeeService.class);
+    Employee employee = employeeService.findByEmailAndGlobalCom(emailAddress, requestUserKey, comCode);
+    String empCode = employee.getEmpCode();
+
 
     if (issueId == null || projectId == null) {
         response.sendRedirect("/jira/page/invalid.jsp");
@@ -24,19 +50,17 @@
         tracingTag = jiraIssue.getTracingTag().toString();
         taskId = jiraIssue.getTaskId().toString();
 
-    } else {
-        String redirectQuery = "";
-        Map parameterMap = request.getParameterMap();
-        Iterator iterator = parameterMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = (String) iterator.next();
-            String value = ((String[]) parameterMap.get(key))[0];
-            if (redirectQuery.length() < 1) {
-                redirectQuery = redirectQuery + "?" + key + "=" + value;
-            } else {
-                redirectQuery = redirectQuery + "&" + key + "=" + value;
-            }
+        String issueStatus = jiraApiService.getIssueStatus(clientKey, jiraIssue.getIssueId());
+
+        String activityStatus = issueService.getJiraIssueActivityStatus(jiraIssue);
+
+        //지라이슈는 Done 처리되었지만 액티비티는 Completed 상태가 아닐때
+        //액티비티를 완료하도록 안내하는 페이지를 띄운다.
+        if (issueStatus.equals("Done") && !activityStatus.equals("Completed")) {
+            response.sendRedirect("/jira/page/activity-not-completed.jsp" + redirectQuery);
         }
+
+    } else {
         response.sendRedirect("/jira/page/not-jira.jsp" + redirectQuery);
     }
 
@@ -52,20 +76,21 @@
 <body onload="dwr.engine.setActiveReverseAjax(true);">
 <script type="text/javascript">
     $(function () {
-        var workItem = new MetaworksObject({
-            __className: 'org.uengine.codi.mw3.model.WorkItem',
-            instId: '<%=instanceId %>',
-            taskId: '<%=taskId %>',
-            tracingTag: '<%=tracingTag %>',
-            type: 'process'
+        var session = new MetaworksObject({
+            __className: 'org.uengine.codi.mw3.model.Session',
+            jiraComCode: jiraSession.comCode,
+            jiraEmpCode: '<%=empCode%>'
         }, 'body');
+        session.jiraLogin(null, function () {
+            var workItem = new MetaworksObject({
+                __className: 'org.uengine.codi.mw3.model.WorkItem',
+                instId: '<%=instanceId %>',
+                taskId: '<%=taskId %>',
+                tracingTag: '<%=tracingTag %>',
+                jiraTenant: jiraSession.comCode
+            }, 'body');
 
-        workItem.activityCardPopup(null, function () {
-            // 서버단에서 해결하기 힘들기 때문에 스크립트를 통해 제어
-            // 1. info 삭제
-            // 2. workItem 껍데기 삭제 (객체 안에 어떠한 정보도 없기 때문에 삭제)
-            $('[classname="org.uengine.codi.mw3.model.WorkItem"]').next().remove();
-            $('[classname="org.uengine.codi.mw3.model.WorkItem"]').remove();
+            workItem.jiraActivityCardPopup();
         });
     })
 </script>
