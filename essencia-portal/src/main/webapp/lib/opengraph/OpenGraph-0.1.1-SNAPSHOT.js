@@ -18683,7 +18683,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _drawTrash() {
-        _trash = me._PAPER.image("/resources/images/symbol/trash.svg", 0, 0, _ctrlSize, _ctrlSize);
+        _trash = me._PAPER.image("resources/images/symbol/trash.svg", 0, 0, _ctrlSize, _ctrlSize);
         _trash.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_AREA);
         group.appendChild(_trash);
         me._add(_trash, rElement.id + OG.Constants.GUIDE_SUFFIX.TRASH);
@@ -18742,7 +18742,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _drawLaneQuarter(divideCount) {
-        _qUpper = me._PAPER.image("/resources/images/symbol/quarter-upper.png", 0, 0, _ctrlSize, _ctrlSize);
+        _qUpper = me._PAPER.image("resources/images/symbol/quarter-upper.png", 0, 0, _ctrlSize, _ctrlSize);
         _qUpper.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_AREA);
         group.appendChild(_qUpper);
         me._add(_qUpper, rElement.id + OG.Constants.GUIDE_SUFFIX.QUARTER_UPPER);
@@ -18751,7 +18751,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
             me.divideLane(element, OG.Constants.GUIDE_SUFFIX.QUARTER_UPPER);
         });
 
-        _qBisector = me._PAPER.image("/resources/images/symbol/quarter-bisector.png", 0, 0, _ctrlSize, _ctrlSize);
+        _qBisector = me._PAPER.image("resources/images/symbol/quarter-bisector.png", 0, 0, _ctrlSize, _ctrlSize);
         _qBisector.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_AREA);
         group.appendChild(_qBisector);
         me._add(_qBisector, rElement.id + OG.Constants.GUIDE_SUFFIX.QUARTER_BISECTOR);
@@ -18760,7 +18760,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
             me.divideLane(element, OG.Constants.GUIDE_SUFFIX.QUARTER_BISECTOR);
         });
 
-        _qThirds = me._PAPER.image("/resources/images/symbol/quarter-thirds.png", 0, 0, _ctrlSize, _ctrlSize);
+        _qThirds = me._PAPER.image("resources/images/symbol/quarter-thirds.png", 0, 0, _ctrlSize, _ctrlSize);
         _qThirds.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_AREA);
         group.appendChild(_qThirds);
         me._add(_qThirds, rElement.id + OG.Constants.GUIDE_SUFFIX.QUARTER_THIRDS);
@@ -18769,7 +18769,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
             me.divideLane(element, OG.Constants.GUIDE_SUFFIX.QUARTER_THIRDS);
         });
 
-        _qLow = me._PAPER.image("/resources/images/symbol/quarter-low.png", 0, 0, _ctrlSize, _ctrlSize);
+        _qLow = me._PAPER.image("resources/images/symbol/quarter-low.png", 0, 0, _ctrlSize, _ctrlSize);
         _qLow.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_AREA);
         group.appendChild(_qLow);
         me._add(_qLow, rElement.id + OG.Constants.GUIDE_SUFFIX.QUARTER_LOW);
@@ -19328,7 +19328,7 @@ OG.renderer.RaphaelRenderer.prototype.drawButton = function (element) {
     _bBoxRect.attr(me._CONFIG.DEFAULT_STYLE.COLLAPSE_BBOX);
     this._add(_bBoxRect, rElement.id + OG.Constants.COLLAPSE_BBOX_SUFFIX);
 
-    _rect1 = this._PAPER.image("/resources/images/symbol/subprocess.png", _lowerCenter.x - 10, _lowerCenter.y - 25, 20, 20);
+    _rect1 = this._PAPER.image("resources/images/symbol/subprocess.png", _lowerCenter.x - 10, _lowerCenter.y - 25, 20, 20);
 
     _rect1.attr({
         "stroke": element.shape.geom.style.map.stroke,
@@ -19372,7 +19372,7 @@ OG.renderer.RaphaelRenderer.prototype.drawLoopType = function (element) {
 
     switch (element.shape.LoopType) {
         case "Standard":
-            _rect1 = this._PAPER.image("/resources/images/symbol/loop_standard.png", _lowerCenter.x - 10, _lowerCenter.y - 25, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/loop_standard.png", _lowerCenter.x - 10, _lowerCenter.y - 25, 20, 20);
             break;
 
         case "MIParallel":
@@ -19425,31 +19425,31 @@ OG.renderer.RaphaelRenderer.prototype.drawTaskType = function (element) {
 
     switch (element.shape.TaskType) {
         case "User":
-            _rect1 = this._PAPER.image("/resources/images/symbol/User.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/User.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "Send":
-            _rect1 = this._PAPER.image("/resources/images/symbol/Send.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/Send.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "Receive":
-            _rect1 = this._PAPER.image("/resources/images/symbol/Receive.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/Receive.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "Manual":
-            _rect1 = this._PAPER.image("/resources/images/symbol/Manual.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/Manual.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "Service":
-            _rect1 = this._PAPER.image("/resources/images/symbol/Service.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/Service.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "BusinessRule":
-            _rect1 = this._PAPER.image("/resources/images/symbol/BusinessRule.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/BusinessRule.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "Script":
-            _rect1 = this._PAPER.image("/resources/images/symbol/Script.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/Script.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "Mapper":
-            _rect1 = this._PAPER.image("/resources/images/symbol/Mapper.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/Mapper.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
         case "WebService":
-            _rect1 = this._PAPER.image("/resources/images/symbol/WebService.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("resources/images/symbol/WebService.png", _upperLeft.x + 5, _upperLeft.y + 5, 20, 20);
             break;
 
     }
@@ -19485,7 +19485,7 @@ OG.renderer.RaphaelRenderer.prototype.drawStatus = function (element) {
 
     switch (element.shape.status) {
         case "Completed":
-            _rect1 = this._PAPER.image("/images/opengraph/complete.png", _upperRight.x - 25, _upperRight.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("images/opengraph/complete.png", _upperRight.x - 25, _upperRight.y + 5, 20, 20);
             break;
         case "Running":
             _rect = this._PAPER.rect(envelope.getUpperLeft().x - 10, envelope.getUpperLeft().y - 10, envelope.getWidth() + 20, envelope.getHeight() + 20);
@@ -19495,7 +19495,7 @@ OG.renderer.RaphaelRenderer.prototype.drawStatus = function (element) {
             _rect.attr("fill-opacity", "1");
             _rect.attr("stroke-dasharray", "--");
 
-            _rect1 = this._PAPER.image("/images/opengraph/running.png", _upperRight.x - 25, _upperRight.y + 5, 20, 20);
+            _rect1 = this._PAPER.image("images/opengraph/running.png", _upperRight.x - 25, _upperRight.y + 5, 20, 20);
             break;
     }
 
@@ -19543,7 +19543,7 @@ OG.renderer.RaphaelRenderer.prototype.drawCheckInclusion = function (element) {
     envelope = geometry.getBoundary();
     _lowerRight = envelope.getLowerRight();
 
-    _rect1 = this._PAPER.image("/resources/images/symbol/complete.png", _lowerRight.x, _lowerRight.y - 20, 20, 20);
+    _rect1 = this._PAPER.image("resources/images/symbol/complete.png", _lowerRight.x, _lowerRight.y - 20, 20, 20);
 
     this._add(_rect1, rElement.id + OG.Constants.INCLUSION_SUFFIX);
     _rect1.insertAfter(rElement);
@@ -19574,7 +19574,7 @@ OG.renderer.RaphaelRenderer.prototype.drawExceptionType = function (element) {
 
     switch (element.shape.exceptionType) {
         case "error":
-            _rect = this._PAPER.image("/images/activity_status/i_status_CANCELLED.png", _upperRight.x - 25, _upperRight.y + 5, 20, 20);
+            _rect = this._PAPER.image("images/activity_status/i_status_CANCELLED.png", _upperRight.x - 25, _upperRight.y + 5, 20, 20);
             break;
     }
 
@@ -21662,10 +21662,12 @@ OG.renderer.RaphaelRenderer.prototype.addHistory = function () {
 
 
     //캔버스가 서버로부터 받은 데이터를 적용시키는 과정이 아닐 경우 브로드캐스트 수행.
-    if(!me._CANVAS.getRemoteDuring()){
-        OG.RemoteHandler.broadCastCanvas(me._CANVAS, function(canvas){
+    if(me._CANVAS.getRemotable()){
+        if(!me._CANVAS.getRemoteDuring()){
+            OG.RemoteHandler.broadCastCanvas(me._CANVAS, function(canvas){
 
-        });
+            });
+        }
     }
 };
 
@@ -26916,9 +26918,11 @@ OG.handler.EventHandler.prototype = {
      */
     selectAll: function () {
         var me = this;
+        var elements = [];
         $(me._RENDERER.getRootElement()).find("[_type=" + OG.Constants.NODE_TYPE.SHAPE + "]").each(function (index, element) {
-            me.selectShape(element);
+            elements.push(element);
         });
+        me.selectShapes(elements);
     },
 
     /**
