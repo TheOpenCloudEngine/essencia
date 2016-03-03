@@ -2,7 +2,9 @@ var onPageLoadScript = function () {
     var mapId = $('#mapId').val();
     var defId = $('#defId').val();
     var comCode = $('#comCode').val();
-    var processMwService;
+
+    var url = '/jira-process-map.jsp?defId=' + defId;
+    $('#process-map-iframe').attr('src', customUtil.addJiraParametersToUrl(url));
 
     var createRoleMappingLayout = function () {
 
@@ -43,15 +45,15 @@ var onPageLoadScript = function () {
         $('#marked-content').html(marked(data));
     });
 
-    AJS.$('#add-project-form').on('aui-valid-submit', function(event) {
+    AJS.$('#add-project-form').on('aui-valid-submit', function (event) {
         event.preventDefault();
 
         var form = $('#add-project-form');
         var roleMapping = [];
-        $.each(form.find('[name=role-mapping]'), function(index,mapping){
+        $.each(form.find('[name=role-mapping]'), function (index, mapping) {
             roleMapping.push({
-               roleName: $(mapping).find('[name=rolename]').val(),
-               userKey: $(mapping).find('[name=userkey]').val()
+                roleName: $(mapping).find('[name=rolename]').val(),
+                userKey: $(mapping).find('[name=userkey]').val()
             });
         });
 
@@ -59,8 +61,8 @@ var onPageLoadScript = function () {
 
         var params = {
             mapId: mapId,
-            name : form.find('[name=name]').val(),
-            key  : form.find('[name=key]').val(),
+            name: form.find('[name=name]').val(),
+            key: form.find('[name=key]').val(),
             projectType: form.find('[name=projectType]').val(),
             roleMapping: roleMapping
         }
@@ -74,9 +76,9 @@ var onPageLoadScript = function () {
                 if (response.success) {
                     window.location.href = customUtil.addJiraParametersToUrl('./index');
                 } else {
-                    if(response.error.message == 'permission'){
+                    if (response.error.message == 'permission') {
                         customUtil.renderWarningDialog('You do not have permission to create a project. Only jira-administrators group members are enabled.');
-                    }else{
+                    } else {
                         customUtil.renderWarningDialog('Failed to create Essencia projects.');
                     }
                 }

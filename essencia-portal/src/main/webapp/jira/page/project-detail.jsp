@@ -42,6 +42,15 @@
                 </li>
             </ul>
             <div class="tabs-pane active-pane" id="tabs-create">
+                <br>
+
+                <h3>Process Map</h3>
+
+                <p>You can see detail "Activity Card", which contains the competency who should do the activity, and the
+                    input/output alphas and work-products, and the checkpoints of completion criteria. To see these
+                    details, double-click the activity.</p>
+                <iframe frameborder=no scrolling=no style="width: 100%; height: 400px;overflow: hidden;"
+                        id="process-map-iframe"></iframe>
 
                 <div class="aui-group">
                     <div class="aui-item">
@@ -95,11 +104,6 @@
                             <input type="hidden" value="${processMap.defId}" id="defId">
                             <input type="hidden" value="${processMap.comCode}" id="comCode">
                         </form>
-                    </div>
-                    <div class="aui-item">
-                        <br>
-                        <h4>Process Map</h4>
-                        <img width="300" src="/jira/images/sample1.png">
                     </div>
                 </div>
             </div>
