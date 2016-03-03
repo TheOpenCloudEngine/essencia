@@ -119,6 +119,7 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
 
                 Practice practice = (Practice) element;
 
+                if(practice.getOutgoingRelations()!=null)
                 for(Relation relation : practice.getOutgoingRelations()){
                     if(relation.getTargetElement() instanceof Alpha){
                         AlphaGameBoard alphaGameBoard = new AlphaGameBoard(instance.getInstanceId(), (Alpha)relation.getTargetElement(), alphaInstancesMap);
