@@ -130,6 +130,12 @@ public class ProcessMapServiceImpl implements ProcessMapService {
         try {
             transactionAdvice.initiateTransaction();
             new TenantContext(comCode);
+
+            defId = VersionManager.getProductionResourcePath("codi", defId);
+
+            if (defId == null)
+                throw new NoSuchProcessDefinitionException();
+
             org.uengine.kernel.ProcessDefinition definition = processManager.getProcessDefinition(defId);
             Role[] roles = definition.getRoles();
 
