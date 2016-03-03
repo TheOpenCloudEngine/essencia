@@ -296,9 +296,10 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
                 essenceActivity.setActivityInEssenceDefinition(activityInPracticeDefinition);
                 essenceActivity.setRole(Role.forName(activityInPracticeDefinition.getCompetency().getName()));//TODO: should be getCompetency().getName()
 
-                essenceActivity.initInputOutputParameters(); //Refresh the parameters
-
             }
+
+            essenceActivity.initInputOutputParameters(); //Refresh the parameters
+
 
 
         }
