@@ -156,7 +156,7 @@ $(function () {
         //nothing
     }
 
-    $('#left-side-menu').find('a').click(function (event) {
+    $('[name="jira-redirect"]').click(function (event) {
         event.preventDefault();
         if ($(this).data('path')) {
             customUtil.redirectMenu($(this).data('path'), $(this).data('target'));
