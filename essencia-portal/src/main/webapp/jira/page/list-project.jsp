@@ -32,16 +32,44 @@
                     Search</label>
                 <input class="text" type="text" id="project_name" name="project_name" title="Name">
 
-                <div class="description"><a href="#">Can not find the desired project ?</a></div>
-            </div>
-            <div class="buttons-container form-footer">
-                <div class="buttons">
-                    <div class="aui-button aui-button-primary"
-                            id="add-app">Add app
-                    </div>
-                </div>
+                <div class="description"><a name="jira-redirect" href="#" data-path="/jira-market-place.jsp"
+                                            data-target="new">Can not find the desired project ?</a></div>
             </div>
         </form>
+
+
+        <div class="aui-message">
+            <p class="title">
+                <strong>How to start a project with practices?</strong>
+            </p>
+
+            <p>First, You can easily start using the
+                <a name="jira-redirect" href="#" data-path="/jira-market-place.jsp"
+                   data-target="new">Marketplace</a>.
+            </p>
+            <br>
+
+            <p>Also you can create a project from your <a name="add-app" href="#">resource repository</a>,
+                It will show available process files list.
+            </p>
+
+            <p>Initially, the resource repository will be empty.
+                You should create a method file using <a name="jira-redirect" href="#"
+                                                         data-path="/jira-define-process.jsp"
+                                                         data-target="new">define process</a>,
+                run how to define process at <a name="jira-redirect" href="#"
+                                                     data-path="/api/view/getting-started">getting stared</a></p>
+
+            <br>
+            <a class="aui-button aui-button-primary"
+               name="jira-redirect" href="#" data-path="/jira-market-place.jsp"
+               data-target="new">Marketplace
+            </a>
+            <a class="aui-button aui-button-primary"
+               name="add-app">Add app from repository
+            </a>
+        </div>
+
 
         <table id="processTable" class="aui aui-table-sortable">
             <thead>

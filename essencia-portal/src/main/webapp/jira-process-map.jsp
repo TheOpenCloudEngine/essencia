@@ -11,6 +11,8 @@
     Employee employee = employeeService.createJiraEmployeeIfNotExist(request, requestUserKey);
     String empCode = employee.getEmpCode();
 
+    String defId = request.getParameter("defId");
+
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,7 +28,6 @@
     page_mode = "popup";
     var tenant = jiraSession.comCode;
     $(function () {
-
         var session = new MetaworksObject({
             __className: 'org.uengine.codi.mw3.model.Session',
             jiraComCode: jiraSession.comCode,
@@ -34,10 +35,13 @@
         }, 'body');
         session.jiraLogin(null, function () {
             var panel = new MetaworksObject({
-                __className: 'org.uengine.processadmin.ProcessAdminAddProcessMapPanel',
-                jiraTenant: jiraSession.comCode
+                __className: 'org.uengine.web.process.ProcessMapPanel',
+                jiraTenant: jiraSession.comCode,
+                defId: '<%=defId%>'
             }, 'body');
-            panel.loadJira();
+            panel.loadJira(null, function () {
+                $('body').css('overflow', 'hidden');
+            });
         });
     })
 </script>
