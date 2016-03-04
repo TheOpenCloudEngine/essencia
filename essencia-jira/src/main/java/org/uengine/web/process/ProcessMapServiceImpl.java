@@ -198,6 +198,8 @@ public class ProcessMapServiceImpl implements ProcessMapService {
                 processManager.putRoleMapping(instId, roleName, empCode);
             }
             //프로세스 시작
+            ProcessInstance processInstance = processManager.getProcessInstance(instId);
+            processInstance.setProperty("0","jira",true);
             processManager.executeProcess(instId);
             processManager.applyChanges();
 

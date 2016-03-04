@@ -52,6 +52,15 @@ public class JIRAIssueActivityFilter implements ActivityFilter {
             Role role = ((HumanActivity) activity).getRole();
             String roleName = role.getName(); // 롤 이름
 
+            //인스턴스에 지라 프로퍼티가 없으면 리턴한다.
+            Serializable jiraProperty = instance.getProperty("0", "jira");
+            if (jiraProperty == null) {
+                return;
+            }
+            if (!(boolean) jiraProperty) {
+                return;
+            }
+
             //jira 프로젝트와 연동된 인스턴스가 아니면 리턴한다.
             JiraProject jiraProject = projectService.selectByInstanceId(Long.parseLong(instanceId));
             if (jiraProject == null) {
