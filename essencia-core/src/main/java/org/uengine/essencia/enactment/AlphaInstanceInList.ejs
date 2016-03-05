@@ -32,7 +32,11 @@
             %>
     <td<%=rowSpan%>><%
 
-          if (alphaInstance.valueMap[fd.name] && alphaInstance.valueMap[fd.name].__className) {%>
+          if (alphaInstance.valueMap[fd.name] && alphaInstance.valueMap[fd.name].__className) {
+              alphaInstance.valueMap[fd.name].metaworksContext = {when:'view'};
+
+        %>
+
             <%=mw3.locateObject(alphaInstance.valueMap[fd.name])%>
         <%}else{%>
             <%=alphaInstance.valueMap[fd.name]%>

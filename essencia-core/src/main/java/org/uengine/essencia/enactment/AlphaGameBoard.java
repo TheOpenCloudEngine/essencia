@@ -166,8 +166,23 @@ public class AlphaGameBoard extends MetaworksContext {
     @ServiceMethod(inContextMenu = true, target = ServiceMethod.TARGET_SELF)
     @Available(when="edit")
     public AlphaGameBoard addAlphaInstance(@Payload("instanceId") String instanceId, @Payload("alpha") Alpha alpha) throws Exception {
+
+        //TODO: [tunning] find why there is no proper className firstly
+        if(alpha.getFieldDescriptors()==null){
+            LanguageElementInstance alphaInstance = alpha.createObjectInstance();
+
+            ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
+            ProcessInstance instance = processManagerRemote.getProcessInstance(instanceId);
+
+            alphaInstance.setClassName("codi/" + instance.getProcessDefinition().getId() + "#" + alphaInstance.getClassDefinition().getName());
+
+            alphaInstance.fillClassDefinition(alphaInstance.getClassName());
+            alpha = (Alpha) alphaInstance.getLanguageElement();
+        }
+
         LanguageElementInstance alphaInstance = alpha.createObjectInstance();
         alphaInstance.setBeanProperty("Id", "New " + alpha.getName());
+        alphaInstance.setId("New " + alpha.getName());
 
         ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
 

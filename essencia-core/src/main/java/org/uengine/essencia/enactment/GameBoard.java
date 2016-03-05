@@ -90,14 +90,30 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
                 Alpha alpha = (Alpha)element;
                 List<AlphaInstanceInList> alphaInstanceInLists = alpha.getInstanceInLists(instance, !editable /*means not sorted*/);
 
+                //In case of kernel alpha (root alpha), if there are no existing alpha instance at all, add empty new instance for placeholder.
                 if(alphaInstanceInLists==null || alphaInstanceInLists.size()==0){
                     alphaInstanceInLists = new ArrayList<AlphaInstanceInList>();
 
                     AlphaInstance alphaInstance = alpha.createObjectInstance();
                     alphaInstance.setId(alpha.getName());
+                    alphaInstance.setBeanProperty("Id", alpha.getName());
 
                     AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList(alphaInstance, instance, 0);
+                    alphaInstanceInList.setMetaworksContext(new MetaworksContext());
+                    alphaInstanceInList.getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
                     alphaInstanceInLists.add(alphaInstanceInList);
+
+                    {//store the generated one
+                        ProcessVariableValue processVariableValue;
+
+                        processVariableValue = new ProcessVariableValue();
+                        processVariableValue.setName(alpha.getName());
+
+                        processVariableValue.moveToAdd();
+                        processVariableValue.setValue(alphaInstance);
+
+                        instance.set("", processVariableValue);
+                    }
 
                 }
 

@@ -77,11 +77,19 @@ public class AlphaInstanceInList implements ContextAware{
         alphaInstanceInEditor.setInstanceId(instanceId);
         alphaInstanceInEditor.setVariablePointer(variablePointer);
 
-
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
         LanguageElementInstance leInstance = (LanguageElementInstance) variablePointer.getValue(instance);
 
         alphaInstanceInEditor.setLanguageElementInstance(leInstance);
+
+        //set the languageElement edit context.
+        {
+            if (alphaInstanceInEditor.getLanguageElementInstance().getMetaworksContext() == null)
+                alphaInstanceInEditor.getLanguageElementInstance().setMetaworksContext(new MetaworksContext());
+
+            alphaInstanceInEditor.getLanguageElementInstance().getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+        }
+
 
         if(leInstance==null) throw new Exception("There's no alpha value. It maybe removed by other people. Please refresh your screen.");
 
