@@ -90,7 +90,33 @@
                 jiraTenant: jiraSession.comCode
             }, 'body');
 
-            workItem.jiraActivityCardPopup();
+            workItem.jiraActivityCardPopup(null, function () {
+                $('.target_popup').css('width', '100%');
+
+                var width = console.log($('.target_popup').width());
+                if (width < 600) {
+                    return;
+                }
+                var tbody = $('[name=activityCard]').find('tbody');
+                var header = $(tbody.find('tr').get(0));
+                var activityTr = $(tbody.find('tr').get(1));
+                var view = $(activityTr.find('td').get(0));
+                var desc = $(activityTr.find('td').get(1));
+                var clone = desc.clone();
+                var newTr = $('<tr></tr>');
+
+                view.attr('colspan', '2');
+                view.css('width', '100%');
+                view.find('svg').attr('width', '100%');
+
+                clone.attr('colspan', '2');
+                clone.css('width', '100%');
+
+                newTr.append(clone);
+                desc.remove();
+
+                header.after(newTr);
+            });
         });
     })
 </script>
