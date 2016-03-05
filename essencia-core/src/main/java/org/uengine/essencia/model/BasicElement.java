@@ -24,7 +24,7 @@ import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.face.AttributeListFace;
 import org.uengine.util.UEngineUtil;
 
-public abstract class BasicElement extends LanguageElement implements IElement, SerializationSensitive {
+public abstract class BasicElement extends LanguageElement implements IElement {
 
 //	protected TextContext name;
 //	@Order(1)
@@ -485,13 +485,6 @@ public abstract class BasicElement extends LanguageElement implements IElement, 
 
 	}
 
-	@Override
-	public void afterDeserialization() {
-	}
-
-	@Override
-	public void beforeSerialization() {
-	}
 
 //	public List<AttributeInstance> createDefaultPropertyValues() {
 //

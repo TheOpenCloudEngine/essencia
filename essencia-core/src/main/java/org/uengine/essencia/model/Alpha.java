@@ -16,11 +16,13 @@ import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.model.face.list.ListFace;
 import org.uengine.essencia.model.face.list.StateListFace;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.kernel.NeedArrangementToSerialize;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ObjectInstance;
+import org.uengine.util.UEngineUtil;
 
-public class Alpha extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement {
+public class Alpha extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement, NeedArrangementToSerialize {
 
     private String concern;
     private transient SelectBox concernSelectBox;
@@ -211,4 +213,37 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     }
 
 
+    @Override
+    public void beforeSerialization() {
+
+        //// if there is no attributes defined, add Id attribute by default.
+        if(getFieldDescriptors()==null || getFieldDescriptors().length == 0){
+            Attribute attribute = createIdAttribute();
+
+            setFieldDescriptors(new Attribute[]{attribute});
+        }else{
+            for(Attribute attribute : getFieldDescriptors()){
+                if(attribute.getName().equals("Id")) return;
+            }
+
+            //if there is no attribute named "Id", add Id attribute first order.
+            Attribute[] attributes = getFieldDescriptors();
+            attributes = (Attribute[]) UEngineUtil.addArrayElementAtFirst(attributes, createIdAttribute());
+
+            setFieldDescriptors(attributes);
+        }
+    }
+
+    @Override
+    public void afterDeserialization() {
+
+    }
+
+    public Attribute createIdAttribute() {
+        Attribute attribute = new Attribute();
+
+        attribute.setName("Id");
+        attribute.setClassName("java.lang.String");
+        return attribute;
+    }
 }

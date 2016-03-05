@@ -790,6 +790,14 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
                 refreshActivityCriteria(criterion);
             }
         }
+
+        for(IElement element : getElementList()){
+
+            if(element instanceof NeedArrangementToSerialize){
+                ((NeedArrangementToSerialize) element).beforeSerialization();
+            }
+
+        }
     }
 
     private void refreshActivityCriteria(Criterion criterion) {

@@ -153,4 +153,14 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 
         return this;
     }
+
+    @Override
+    public void afterMWDeserialization() {
+
+    }
+
+    @Override
+    public void beforeMWSerialization() {
+
+    }
 }
