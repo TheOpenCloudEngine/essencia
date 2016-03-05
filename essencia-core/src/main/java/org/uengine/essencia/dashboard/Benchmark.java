@@ -73,7 +73,7 @@ public class Benchmark {
 
         Navigation navigation = new Navigation(session);
         navigation.setPerspectiveMode(Perspective.MODE_PERSONAL);
-        navigation.setPerspectiveType(Perspective.TYPE_FOLLOWING);
+        navigation.setPerspectiveType(Perspective.TYPE_NEWSFEED);
         navigation.setPerspectiveValue("2"); //why 2?
 
         String[] instanceIds;
