@@ -42,10 +42,12 @@
                         for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
                             var state = alphaGameBoard.alpha.states[j];
 
-                            if(alphaInstance.currentStateName == state.name)
-                                break;
 
                             %><button type="button" class="btn btn-default tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>"> <%=state.name%> </button><br><%
+
+                                if(alphaInstance.currentStateName == state.name)
+                                    break;
+
                         }
                     }
 
@@ -80,7 +82,7 @@
                         for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
                             var state = alphaGameBoard.alpha.states[j];
 
-                            if(alphaInstance.currentStateName == state.name || alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
+                            if(!alphaInstance.currentStateName || (j>0 && alphaInstance.currentStateName == alphaGameBoard.alpha.states[j-1].name) || alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
                         %><button type="button" class="btn btn-success tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>"> <%=state.name%> </button><br><%
                             }
                         }
@@ -121,7 +123,7 @@
                             var state = alphaGameBoard.alpha.states[j];
 
                             if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
-                                if(alphaInstance.currentStateName == state.name){
+                                if(!alphaInstance.currentStateName || (j>0 && alphaInstance.currentStateName == alphaGameBoard.alpha.states[j-1].name)){
                                     isDone = false;
                                 }
 
@@ -132,7 +134,7 @@
                                 %><button type="button" class="btn btn-info tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>"> <%=state.name%> </button><br><%
                             }
 
-                            if(alphaInstance.currentStateName == state.name){
+                            if(!alphaInstance.currentStateName || (j>0 && alphaInstance.currentStateName == alphaGameBoard.alpha.states[j-1].name)){
                                     isDone = false;
                             }
                         }

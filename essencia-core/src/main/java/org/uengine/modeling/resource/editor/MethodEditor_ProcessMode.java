@@ -8,11 +8,12 @@ import org.uengine.modeling.modeler.ProcessModeler;
 import org.uengine.modeling.resource.IEditor;
 import org.uengine.modeling.resource.IResource;
 import org.uengine.modeling.resource.Serializer;
+import org.uengine.modeling.resource.Simulatable;
 
 /**
  * Created by jjy on 2015. 11. 10..
  */
-public class MethodEditor_ProcessMode extends ProcessModeler implements IEditor<EssenceProcessDefinition> {
+public class MethodEditor_ProcessMode extends ProcessModeler implements IEditor<EssenceProcessDefinition> , Simulatable {
 
     @Override
     public void setEditingObject(EssenceProcessDefinition object) {
@@ -68,4 +69,17 @@ public class MethodEditor_ProcessMode extends ProcessModeler implements IEditor<
         }
 
 
+    @Override
+    public Object simulator(IResource resource) {
+        MethodEditor methodEditor = null;
+        try {
+            methodEditor = new MethodEditor();
+            return methodEditor.simulator(resource);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

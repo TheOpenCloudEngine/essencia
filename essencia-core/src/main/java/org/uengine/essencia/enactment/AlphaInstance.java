@@ -112,6 +112,9 @@ public class AlphaInstance extends LanguageElementInstance {
         if(alpha.getStates()!=null)
         for(State state : alpha.getStates()){
             if(state.isAllChecked(this))
+//                if(state == alpha.getStates().get(alpha.getStates().size() - 1)){ //if last
+//                    setCurrentStateName("completed");
+//                } else
                 setCurrentStateName(state.getName());
             else
                 break;
