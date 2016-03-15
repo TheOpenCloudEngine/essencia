@@ -78,17 +78,32 @@
                     if(alphaGameBoard){
 
                         var alphaInstance = alphaGameBoard.alphaInstances[0].languageElementInstance;
+                        var nextOfCurrent = false;
+                        var running = false;
+                        var total = alphaInstance.subAlphaInstanceCount;
 
                         for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
                             var state = alphaGameBoard.alpha.states[j];
 
-                            if(!alphaInstance.currentStateName || (j>0 && alphaInstance.currentStateName == alphaGameBoard.alpha.states[j-1].name) || alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
-                        %><button type="button" class="btn btn-success tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>"> <%=state.name%> </button><br><%
+                            if(alphaInstance.currentStateName != state.name && (nextOfCurrent || running)){
+                                %><button type="button" class="btn btn-success tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>"> <%=state.name%> </button><br><%
                             }
+
+                            if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"] > 0){
+                                total = total - alphaInstance.stateDetailsByStateName[state.name]["WIPCount"];
+                                running = (total > 0);
+                            }
+
+                            if(alphaInstance.currentStateName == state.name){
+                                nextOfCurrent = true;
+                            }else
+                                if(nextOfCurrent) nextOfCurrent = false;
                         }
                     }
 
-                    %>
+
+
+                        %>
                     </div>
 
                 </td>
@@ -117,25 +132,34 @@
 
                         var alphaInstance = alphaGameBoard.alphaInstances[0].languageElementInstance;
 
-                        var isDone = alphaInstance.currentStateName;
+                        var nextOfCurrent = false;
+                        var running = false;
+                        var beforeCurrent = alphaInstance.currentStateName;
+                        var total = alphaInstance.subAlphaInstanceCount;
 
-                        for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
+                       for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
                             var state = alphaGameBoard.alpha.states[j];
 
-                            if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"]){
-                                if(!alphaInstance.currentStateName || (j>0 && alphaInstance.currentStateName == alphaGameBoard.alpha.states[j-1].name)){
-                                    isDone = false;
-                                }
 
-                                continue;
-                            }
 
-                            if(!isDone){
+                            if(!beforeCurrent && !nextOfCurrent && !running){
                                 %><button type="button" class="btn btn-info tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>"> <%=state.name%> </button><br><%
                             }
 
-                            if(!alphaInstance.currentStateName || (j>0 && alphaInstance.currentStateName == alphaGameBoard.alpha.states[j-1].name)){
-                                    isDone = false;
+                            if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"] > 0){
+                                total = total - alphaInstance.stateDetailsByStateName[state.name]["WIPCount"];
+
+                                running = (total > 0);
+                            }
+
+
+                            if(alphaInstance.currentStateName == state.name){
+                                nextOfCurrent = true;
+                                beforeCurrent = false;
+                            }else {
+                                if (nextOfCurrent){
+                                    nextOfCurrent = false;
+                                }
                             }
                         }
                     }

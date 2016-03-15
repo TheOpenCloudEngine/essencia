@@ -178,81 +178,120 @@ public class AlphaInstance extends LanguageElementInstance {
 
         int totalCount = 0;
 
-        if(getAlpha().getOutgoingRelations()!=null)
-        for(Relation relation : getAlpha().getOutgoingRelations()){
-
-            BasicElement element = (BasicElement) relation.getTargetElement();
-
-            if(element instanceof Alpha){
-                Alpha subAlpha = (Alpha)element;
-
-                List<AlphaInstance> subAlphaInstances = subAlpha.getInstances(instance);
-
-                if(subAlphaInstances!=null){
-
-                    //reset state details first.
-                    for(State state : getAlpha().getStates()){
-                        setStateDetails(state.getName(), STATE_PROP_KEY_WorkInProgressCount, null);
+        if(getAlpha().getOutgoingRelations()!=null) {
 
 
+            // count sub alpha instances firstly.
+            for(Relation relation : getAlpha().getOutgoingRelations()) { //for root alphas
+
+                BasicElement element = (BasicElement) relation.getTargetElement();
+
+                if (element instanceof Alpha) {
+                    Alpha subAlpha = (Alpha) element;
+
+                    List<AlphaInstance> subAlphaInstances = subAlpha.getInstances(instance);
+
+                    if (subAlphaInstances != null) {
+
+                        for (AlphaInstance subAlphaInstance : subAlphaInstances) {
+                            if (subAlphaInstance == null) continue; //ignore deleted ones
+
+                            totalCount++;
+                        }
                     }
+                }
+            }
 
 
+            setSubAlphaInstanceCount(totalCount);
 
-                    int minStateOrder = 1000;
 
-                    for(AlphaInstance subAlphaInstance : subAlphaInstances){
-                        String aggregationAlphaStateName = null;
+            for (Relation relation : getAlpha().getOutgoingRelations()) { //for root alphas
 
-                        if(subAlphaInstance==null) continue; //ignore deleted ones
+                BasicElement element = (BasicElement) relation.getTargetElement();
 
-                        totalCount++;
+                if (element instanceof Alpha) {
+                    Alpha subAlpha = (Alpha) element;
 
-                        if(subAlphaInstance.getCurrentState()!=null) {
-                            Alpha realAlpha = (Alpha) practiceDefinition.getElementByName(subAlphaInstance.getAlpha().getName());
+                    List<AlphaInstance> subAlphaInstances = subAlpha.getInstances(instance);
 
-                            subAlphaInstance.setLanguageElement(realAlpha);
+                    if (subAlphaInstances != null) {
 
-                            aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
-
+                        //reset state details first.
+                        for (State state : getAlpha().getStates()) {
+                            setStateDetails(state.getName(), STATE_PROP_KEY_WorkInProgressCount, null);
                         }
 
-                        //don't validate. sometimes there is nothing related between super and sub alpha
-                        //getAlpha().findState(aggregationAlphaStateName);
-                        if(!UEngineUtil.isNotEmpty(aggregationAlphaStateName))
-                            continue;
+                        int minStateOrder = 1000;
 
-                        int runningCntOfThisState = 0;
-                        Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
+                        boolean subAlphaIsConnectedWithAggregation = false;
 
-                        if(wipCntObject!=null)
-                            runningCntOfThisState = (int)wipCntObject;
+                        for (AlphaInstance subAlphaInstance : subAlphaInstances) {
+                            String aggregationAlphaStateName = null;
 
-                        setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, runningCntOfThisState + 1);
+                            if (subAlphaInstance == null) continue; //ignore deleted ones
 
+                            if (subAlphaInstance.getCurrentState() != null) {
+                                Alpha realAlpha = (Alpha) practiceDefinition.getElementByName(subAlphaInstance.getAlpha().getName());
 
-                        int order = 0;
-                        for(State state : getAlpha().getStates()){
-                            if(state.getName().equals(aggregationAlphaStateName)){
-                                break;
+                                subAlphaInstance.setLanguageElement(realAlpha);
+
+                                aggregationAlphaStateName = subAlphaInstance.getCurrentState().getAggregationAlphaState();
                             }
-                            order ++;
+
+                            //don't validate. sometimes there is nothing related between super and sub alpha
+                            //getAlpha().findState(aggregationAlphaStateName);
+                            if (!UEngineUtil.isNotEmpty(aggregationAlphaStateName))
+                                continue;
+
+                            subAlphaIsConnectedWithAggregation = true;
+
+                            int runningCntOfThisState = 0;
+                            Object wipCntObject = getStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
+
+                            if (wipCntObject != null)
+                                runningCntOfThisState = (int) wipCntObject;
+
+                            setStateDetails(aggregationAlphaStateName, STATE_PROP_KEY_WorkInProgressCount, ++runningCntOfThisState);
+
                         }
 
-                        if(minStateOrder > order) {
 
-                            setCurrentStateName(aggregationAlphaStateName);
-                            minStateOrder = order;
+                        if(subAlphaIsConnectedWithAggregation) {
+                            //calculate the parent alpha's current state
+                            boolean neverStarted = true;
+                            for (State state : getAlpha().getStates()) {
+                                Object wipCntObject = getStateDetails(state.getName(), STATE_PROP_KEY_WorkInProgressCount); //count of 'work in progress'
+
+                                int runningCntOfThisState = 0;
+
+                                if (wipCntObject != null)
+                                    runningCntOfThisState = (int) wipCntObject;
+
+                                if (runningCntOfThisState == 0) {
+                                    setCurrentStateName(state.getName());
+                                } else if (runningCntOfThisState > 0) {
+                                    setCurrentStateName(state.getName());
+
+                                    neverStarted = false;
+
+                                    break;
+                                }
+                            }
+
+                            if(neverStarted) setCurrentStateName(null);
                         }
+
+
+
                     }
 
                 }
 
             }
-
         }
 
-        setSubAlphaInstanceCount(totalCount);
+
     }
 
     int subAlphaInstanceCount;
