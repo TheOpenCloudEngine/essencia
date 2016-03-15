@@ -62,7 +62,7 @@ public class MethodResource extends DefaultResource {
             IEditor editor = ((ProcessAdminEditorPanel) editorPanel).getEditor();
             if (editor instanceof MethodEditor) {
                 MethodCanvas methodCanvas = (MethodCanvas) ((MethodEditor) editor).getCanvas();
-                methodCanvas.setJoinEditing(true);
+                methodCanvas.setJoinEditing(this.isJoin());
                 methodCanvas.setResourcePath(getPath());
                 methodCanvas.setRemoteUserKey(session.getUser().getUserId());
                 methodCanvas.setRemoteUserName(session.getUser().getName());
