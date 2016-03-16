@@ -3,9 +3,12 @@ package org.uengine.essencia.portal;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.widget.ModalWindow;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.processadmin.ImportPopup;
 import org.uengine.processadmin.ProcessAdminContainerResource;
 
 import java.io.File;
@@ -40,5 +43,10 @@ public class EssenciaProcessAdminContainerResource extends ProcessAdminContainer
     @Override
     @Hidden
     public void newURLApplication() throws Exception {
+    }
+
+    @Override
+    public void importResource() throws Exception {
+        MetaworksRemoteService.wrapReturn(new ModalWindow(new ImportPopup(this), 500, 200));
     }
 }
