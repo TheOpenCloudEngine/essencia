@@ -29013,6 +29013,8 @@ OG.handler.RemoteHandler.prototype = {
                 if (serverUser.sessionId && serverUser.sessionId == sessionId) {
                     canvas.setRemoteEditable(serverUser.editable);
                     canvas.setRemoteIsMaster(serverUser.isMaster);
+
+                    $(canvas.getRootElement()).trigger('remoteStatusUpdated', [serverUser]);
                 }
                 if (serverUser.isMaster) {
                     remoteUsers.push(me.convertRemoteUser(serverUser));
@@ -29042,31 +29044,31 @@ OG.handler.RemoteHandler.prototype = {
                 } else {
                     userDiv.append('<span>' + remoteUser.getName() + ' </span>');
 
-                    if(canvas.getRemoteIsMaster()){
+                    if (canvas.getRemoteIsMaster()) {
                         var controller;
-                        if(!remoteUser.editable){
+                        if (!remoteUser.editable) {
                             controller = $('<button>Read Only</button>');
-                            controller.data('identifier' , identifier);
-                            controller.data('mode' , 'readonly');
-                            controller.data('user' , remoteUser);
-                        }else{
+                            controller.data('identifier', identifier);
+                            controller.data('mode', 'readonly');
+                            controller.data('user', remoteUser);
+                        } else {
                             controller = $('<button>Editable</button>');
-                            controller.data('identifier' , identifier);
-                            controller.data('mode' , 'editable');
-                            controller.data('user' , remoteUser);
+                            controller.data('identifier', identifier);
+                            controller.data('mode', 'editable');
+                            controller.data('user', remoteUser);
                         }
                         userDiv.append(controller);
 
-                        controller.click(function(){
+                        controller.click(function () {
                             var clickedIdentifier = $(this).data('identifier');
                             var clickedMode = $(this).data('mode');
                             var user = $(this).data('user');
-                            if(clickedMode === 'readonly'){
+                            if (clickedMode === 'readonly') {
                                 user.setEditable(true);
-                            }else{
+                            } else {
                                 user.setEditable(false);
                             }
-                            me.updateUserState(clickedIdentifier,user,function(){
+                            me.updateUserState(clickedIdentifier, user, function () {
 
                             });
                         });
@@ -29123,6 +29125,7 @@ OG.handler.RemoteHandler.prototype = {
         canvas.setRemoteDuring(true);
         canvas.loadJSON(canvasData);
         canvas.setRemoteDuring(false);
+        $(canvas.getRootElement()).trigger('updateCanvas', [canvasData]);
     },
 
     /**
