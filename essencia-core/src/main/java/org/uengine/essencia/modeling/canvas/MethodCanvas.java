@@ -45,8 +45,18 @@ public class MethodCanvas extends EssenciaCanvas {
         super(modelerType);
     }
 
+    public Object symbolContent;
+
+    public Object getSymbolContent() {
+        return symbolContent;
+    }
+
+    public void setSymbolContent(Object symbolContent) {
+        this.symbolContent = symbolContent;
+    }
+
     @Available(when = {MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
-    @ServiceMethod(payload = {"clipboard", "modelerType", "elementViewList", "relationViewList"}, target = ServiceMethodContext.TARGET_APPEND, eventBinding = CANVAS_DROP)
+    @ServiceMethod(payload = {"symbolContent", "clipboard", "modelerType", "elementViewList", "relationViewList"}, target = ServiceMethodContext.TARGET_APPEND, eventBinding = CANVAS_DROP)
     @Override
     /**
      * Practice Merge
@@ -56,7 +66,14 @@ public class MethodCanvas extends EssenciaCanvas {
 
         Object[] returnArr = initReturnArr();
 
-        Object content = clipboard.getContent();
+        Object content = null;
+        if (clipboard == null || clipboard.getId() == null) {
+            content = this.getSymbolContent();
+        } else if (clipboard.getId().equals(CANVAS_DROP)) {
+            content = this.getSymbolContent();
+        } else {
+            content = clipboard.getContent();
+        }
 
         if (content instanceof EssenciaKernelSymbol) {
 
@@ -81,13 +98,13 @@ public class MethodCanvas extends EssenciaCanvas {
                 RelationView relationView = makeRelationViewFromSymbol((Symbol) content);
 
                 returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, relationView);
-                wrapReturn (returnArr);
+                wrapReturn(returnArr);
             } else {
                 elementView = makeElementViewFromSymbol((Symbol) content);
 
                 returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
 
-                if(false) {  //turn on if you want to use broadcasting changes
+                if (false) {  //turn on if you want to use broadcasting changes
 
                     MethodCanvas lightMe = new MethodCanvas();
                     lightMe.setModelerType(getModelerType());
@@ -101,12 +118,10 @@ public class MethodCanvas extends EssenciaCanvas {
                     }, new Object[]{new ToAppend(lightMe, elementView)});
                 }
 
-                wrapReturn (returnArr);
+                wrapReturn(returnArr);
 
                 return;
             }
-
-
 
 
         } else if (content instanceof MethodResource) {
@@ -118,7 +133,7 @@ public class MethodCanvas extends EssenciaCanvas {
 
 //                practice = (PracticeDefinition) ObjectRepository.getInstance().get(((PracticeResource) content).getPath());
 
-                EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition)resourceManager.getStorage().getObject((MethodResource)content);
+                EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition) resourceManager.getStorage().getObject((MethodResource) content);
 
                 practice = essenceProcessDefinition.getPracticeDefinition();
 
@@ -176,7 +191,7 @@ public class MethodCanvas extends EssenciaCanvas {
             wrapReturn(returnArr);
         }
 
-        wrapReturn (returnArr);
+        wrapReturn(returnArr);
     }
 
     private void autoRelocationFromPractice(List<ElementView> list) {
@@ -185,7 +200,7 @@ public class MethodCanvas extends EssenciaCanvas {
             if (elementVeiw instanceof PracticeView) {
                 elementVeiw.setX(96);
                 elementVeiw.setY(96);
-                if (elementVeiw.getToEdge()!=null) {
+                if (elementVeiw.getToEdge() != null) {
                     String[] toEdges = elementVeiw.getToEdge().split(",");
                     firstLevel = Arrays.asList(toEdges);
                     autoRelocateByRelation(toEdges, list);
@@ -301,12 +316,12 @@ public class MethodCanvas extends EssenciaCanvas {
             r.getRelationView().setId(newId);
 
             IElement to = p.pickElementByViewId(r.getRelationView().getTo());
-            if(to!=null) {
+            if (to != null) {
                 to.getElementView().setFromEdge(to.getElementView().getFromEdge().replace(oldId, newId));
             }
 
             IElement from = p.pickElementByViewId(r.getRelationView().getFrom());
-            if(from!=null){
+            if (from != null) {
                 from.getElementView().setToEdge(from.getElementView().getToEdge().replace(oldId, newId));
             }
         }
@@ -315,42 +330,48 @@ public class MethodCanvas extends EssenciaCanvas {
 
 
     boolean joinEditing;
-        public boolean isJoinEditing() {
-            return joinEditing;
-        }
-        public void setJoinEditing(boolean joinEditing) {
-            this.joinEditing = joinEditing;
-        }
+
+    public boolean isJoinEditing() {
+        return joinEditing;
+    }
+
+    public void setJoinEditing(boolean joinEditing) {
+        this.joinEditing = joinEditing;
+    }
 
     String resourcePath;
-        public String getResourcePath() {
-            return resourcePath;
-        }
-        public void setResourcePath(String resourcePath) {
-            this.resourcePath = resourcePath;
-        }
+
+    public String getResourcePath() {
+        return resourcePath;
+    }
+
+    public void setResourcePath(String resourcePath) {
+        this.resourcePath = resourcePath;
+    }
 
     String remoteUserName;
-        public String getRemoteUserName() {
-            return remoteUserName;
-        }
 
-        public void setRemoteUserName(String remoteUserName) {
-            this.remoteUserName = remoteUserName;
-        }
+    public String getRemoteUserName() {
+        return remoteUserName;
+    }
+
+    public void setRemoteUserName(String remoteUserName) {
+        this.remoteUserName = remoteUserName;
+    }
 
     String remoteUserKey;
-        public String getRemoteUserKey() {
-            return remoteUserKey;
-        }
 
-        public void setRemoteUserKey(String remoteUserKey) {
-            this.remoteUserKey = remoteUserKey;
-        }
+    public String getRemoteUserKey() {
+        return remoteUserKey;
+    }
+
+    public void setRemoteUserKey(String remoteUserKey) {
+        this.remoteUserKey = remoteUserKey;
+    }
 
     @ServiceMethod(callByContent = true)
-    public void sendChanges(){
-        for(ArrayList<String> sessionsForThisCanvas : MethodResource.sessions.values()){
+    public void sendChanges() {
+        for (ArrayList<String> sessionsForThisCanvas : MethodResource.sessions.values()) {
             //Browser.withAllSessions();
         }
     }

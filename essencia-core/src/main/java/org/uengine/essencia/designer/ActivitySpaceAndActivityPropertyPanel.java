@@ -61,6 +61,8 @@ public class ActivitySpaceAndActivityPropertyPanel extends EssenciaPropertyPanel
         ((AbstractActivity) getElement()).beforeApply();
 
         getElementView().setElement(getElement());
+
+        //getElementView().setChanged(true);
         return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(getElementView(), true)};
     }
 

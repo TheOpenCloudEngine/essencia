@@ -26,8 +26,8 @@ public abstract class EssenciaCanvas extends Canvas implements ContextAware {
 
 	public final static String CANVAS_DROP = "canvasdrop";
 
-	@AutowiredFromClient
-	public Clipboard clipboard;
+//	@AutowiredFromClient
+//	public Clipboard clipboard;
 	protected MetaworksContext metaworksContext;
 	protected String modelerType;
 
