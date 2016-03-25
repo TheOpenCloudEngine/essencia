@@ -16656,11 +16656,12 @@ OG.renderer.RaphaelRenderer.prototype.drawShape = function (position, shape, siz
 
     //신규 Lane 또는 Pool 이 그려졌을 경우 처리
     if (!id && (me.isLane(groupNode) || me.isPool(groupNode))) {
-        if (preventDrop) {
-            me.putInnerShapeToPool(groupNode);
-        } else {
-            me.setDropablePool(groupNode);
-        }
+        //if (preventDrop) {
+        //    me.putInnerShapeToPool(groupNode);
+        //} else {
+        //    me.setDropablePool(groupNode);
+        //}
+        me.putInnerShapeToPool(groupNode);
     }
 
     if ($(shape).attr('auto_draw') == 'yes') {
@@ -22383,20 +22384,20 @@ OG.renderer.RaphaelRenderer.prototype.checkBridgeEdge = function (element) {
         toRoot = me.getRootGroupOfShape(toShape);
     }
 
-    //E_Start 인 경우 시작 플로우 스타일을 생성한다.
-    if (fromShape && fromShape.shape instanceof OG.shape.bpmn.E_Start) {
-        me.setShapeStyle(element, {"arrow-start": "open_oval"});
-    }
-
     if (fromShape && toShape && fromRoot && toRoot) {
         //양쪽 모두 루트 캔버스 하위의 엘리먼트라면 기본 처리한다.
         if (fromRoot.id === fromShape.id && toShape.id === toRoot.id) {
             me.setShapeStyle(element, {"stroke-dasharray": ''});
             return;
         }
-        //양쪽 루트그룹의 아이디가 틀리다면 대쉬어래이 처리
+        //양쪽 모두 Lane 으로 부터 파생되었으면 기본 처리한다.
+        if (me.isLane(fromRoot) && me.isLane(toRoot)) {
+            me.setShapeStyle(element, {"stroke-dasharray": ''});
+            return;
+        }
+        //양쪽 루트그룹의 아이디가 틀리면 대쉬어래이 처리
         if (fromRoot.id !== toRoot.id) {
-            me.setShapeStyle(element, {"stroke-dasharray": '- '});
+            me.setShapeStyle(element, {"arrow-start": "open_oval","stroke-dasharray": '- '});
             return;
         }
     }
