@@ -30,20 +30,20 @@ public class EssenciaProcessAdminContainerResource extends ProcessAdminContainer
         processResource.newOpen();
     }
 
-    @Override
-    @Hidden
-    public void newProcess() throws Exception {
-    }
-
-    @Override
-    @Hidden
-    public void newClass() throws Exception {
-    }
-
-    @Override
-    @Hidden
-    public void newURLApplication() throws Exception {
-    }
+//    @Override
+//    @Hidden
+//    public void newProcess() throws Exception {
+//    }
+//
+//    @Override
+//    @Hidden
+//    public void newClass() throws Exception {
+//    }
+//
+//    @Override
+//    @Hidden
+//    public void newURLApplication() throws Exception {
+//    }
 
     @Override
     public void importResource() throws Exception {
