@@ -24606,7 +24606,7 @@ OG.handler.EventHandler.prototype = {
                     renderer.removeAllVirtualEdge();
                     var shapeId = $(target).attr('_shape_id');
                     var newShape;
-                    eval('newShape = new '+shapeId + '()');
+                    eval('newShape = new ' + shapeId + '()');
 
                     var style = target.shape.geom.style;
                     var boundary = renderer.getBoundary(target);
@@ -24614,7 +24614,9 @@ OG.handler.EventHandler.prototype = {
                     var height = boundary.getHeight();
 
                     var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
-                    renderer._CANVAS.connect(target, rectShape, null, null, null, null, true);
+                    $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
+
+                    renderer._CANVAS.connect(target, rectShape, null, null, null, null);
 
                 }
             }
