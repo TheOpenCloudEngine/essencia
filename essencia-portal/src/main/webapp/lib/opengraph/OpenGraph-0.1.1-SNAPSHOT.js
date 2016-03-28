@@ -24413,6 +24413,7 @@ OG.handler.EventHandler.prototype = {
                     if (element.shape) {
                         var isConnectable = me._isConnectable(element.shape);
                         var isConnectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE);
+                        var isRectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE);
                         var isEdge = $(element).attr("_shape") === OG.Constants.SHAPE_TYPE.EDGE;
 
                         if (isConnectMode) {
@@ -24428,6 +24429,28 @@ OG.handler.EventHandler.prototype = {
                             } else {
                                 me._RENDERER.removeAllVirtualEdge();
                             }
+                        }
+
+                        if (isRectMode === 'active') {
+                            //새로운 것 만드는 과정
+                            var eventOffset = me._getOffset(event);
+
+                            var target = renderer.getTargetfromVirtualEdge();
+                            renderer.removeAllVirtualEdge();
+                            var shapeId = $(target).attr('_shape_id');
+                            var newShape;
+                            eval('newShape = new ' + shapeId + '()');
+
+                            var style = target.shape.geom.style;
+                            var boundary = renderer.getBoundary(target);
+                            var width = boundary.getWidth();
+                            var height = boundary.getHeight();
+
+                            var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
+                            $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
+
+                            renderer._CANVAS.connect(target, rectShape, null, null, null, null);
+
                         }
                     }
                 }
