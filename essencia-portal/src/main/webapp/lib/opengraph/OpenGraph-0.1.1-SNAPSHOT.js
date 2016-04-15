@@ -6740,7 +6740,9 @@ OG.common.Constants = {
 		LINE : "_GUIDE_LINE",
 		LINE_CONNECT_MODE: "LINE_CONNECT_MODE",
 		LINE_VIRTUAL_EDGE: "LINE_VIRTUAL_EDGE",
+		RECT_CONNECT_MODE: "RECT_CONNECT_MODE",
 		TRASH: "_GUIDE_TRASH",
+		RECT: "_GUIDE_RECT",
 		QUARTER_UPPER: "QUARTER_UPPER",
 		QUARTER_LOW: "QUARTER_LOW",
 		QUARTER_BISECTOR: "QUARTER_BISECTOR",
@@ -17727,7 +17729,7 @@ OG.renderer.RaphaelRenderer.prototype.redrawConnectedEdge = function (element, e
  * @return {Element} 연결된 Edge 엘리먼트
  * @override
  */
-OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style, label) {
+OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style, label, preventTrigger) {
 
     var isEssensia;
     var rEdge = this._getREleById(OG.Util.isElement(edge) ? edge.id : edge);
@@ -17848,7 +17850,9 @@ OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style,
 
     if (fromShape && toShape) {
         // connectShape event fire
-        $(this._PAPER.canvas).trigger('connectShape', [edge, fromShape, toShape]);
+        if(!preventTrigger){
+            $(this._PAPER.canvas).trigger('connectShape', [edge, fromShape, toShape]);
+        }
     }
     me.trimConnectInnerVertice(edge);
     me.trimConnectIntersection(edge);
@@ -18032,7 +18036,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
         geometry = rElement ? rElement.node.shape.geom : null,
         envelope,
         group, guide,
-        _bBoxRect, _line, _linePath1, _linePath2,
+        _bBoxRect, _line, _linePath1, _linePath2,_rect,
         _upperLeft, _upperRight, _lowerLeft, _lowerRight, _leftCenter, _upperCenter, _rightCenter, _lowerCenter,
         _ulRect, _urRect, _lwlRect, _lwrRect, _lcRect, _ucRect, _rcRect, _lwcRect,
         _size = me._CONFIG.GUIDE_RECT_SIZE, _hSize = OG.Util.round(_size / 2),
@@ -18248,6 +18252,23 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
         controllers.push(_line);
     }
 
+    function _drawRect() {
+        _rect = me._PAPER.rect(_upperRight.x + _ctrlMargin, _upperRight.y, _ctrlSize, _ctrlSize);
+        _rect.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_RECT_AREA);
+
+        group.appendChild(_rect);
+
+        me._add(_rect, rElement.id + OG.Constants.GUIDE_SUFFIX.RECT);
+
+        guide.rect = _rect.node;
+        controllers.push(_rect);
+    }
+
+    function _redrawRect() {
+        _rect = me._getREleById(rElement.id + OG.Constants.GUIDE_SUFFIX.RECT);
+        controllers.push(_rect);
+    }
+
     function _drawLaneQuarter(divideCount) {
         _qUpper = me._PAPER.image("resources/images/symbol/quarter-upper.png", 0, 0, _ctrlSize, _ctrlSize);
         _qUpper.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_AREA);
@@ -18378,9 +18399,11 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
                 _redrawLaneQuarter(me.enableDivideCount(element));
             }
             if (isLane && me.isTopGroup(element) && _isConnectable) {
+                _redrawRect();
                 _redrawLine();
             }
             if (!isLane && _isConnectable) {
+                _redrawRect();
                 _redrawLine();
             }
             _redrawTrash();
@@ -18409,9 +18432,11 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
                 _drawLaneQuarter(me.enableDivideCount(element));
             }
             if (isLane && me.isTopGroup(element) && _isConnectable) {
+                _drawRect();
                 _drawLine();
             }
             if (!isLane && _isConnectable) {
+                _drawRect();
                 _drawLine();
             }
 
@@ -21125,6 +21150,7 @@ OG.renderer.RaphaelRenderer.prototype.getTargetfromVirtualEdge = function () {
  */
 OG.renderer.RaphaelRenderer.prototype.removeAllVirtualEdge = function () {
     $(this.getRootGroup()).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE, false);
+    $(this.getRootGroup()).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE, false);
     return this.remove(OG.Constants.GUIDE_SUFFIX.LINE_VIRTUAL_EDGE);
 };
 
@@ -23644,6 +23670,27 @@ OG.handler.EventHandler.prototype = {
                         $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE, 'active');
                     }
                 });
+
+                $(guide.rect).bind({
+                    click: function (event) {
+                        eventOffset = me._getOffset(event);
+                        virtualEdge = me._RENDERER.createVirtualEdge(eventOffset.x, eventOffset.y, element);
+                        if (virtualEdge) {
+                            $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE, 'created');
+                        }
+                    }
+                });
+
+                $(guide.rect).draggable({
+                    start: function (event) {
+                        me.deselectAll();
+                        me._RENDERER.removeAllConnectGuide();
+                        me._RENDERER.removeAllVirtualEdge();
+                        eventOffset = me._getOffset(event);
+                        virtualEdge = me._RENDERER.createVirtualEdge(eventOffset.x, eventOffset.y, element);
+                        $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE, 'active');
+                    }
+                });
             }
         }
     },
@@ -24366,6 +24413,7 @@ OG.handler.EventHandler.prototype = {
                     if (element.shape) {
                         var isConnectable = me._isConnectable(element.shape);
                         var isConnectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE);
+                        var isRectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE);
                         var isEdge = $(element).attr("_shape") === OG.Constants.SHAPE_TYPE.EDGE;
 
                         if (isConnectMode) {
@@ -24381,6 +24429,28 @@ OG.handler.EventHandler.prototype = {
                             } else {
                                 me._RENDERER.removeAllVirtualEdge();
                             }
+                        }
+
+                        if (isRectMode === 'active') {
+                            //새로운 것 만드는 과정
+                            var eventOffset = me._getOffset(event);
+
+                            var target = renderer.getTargetfromVirtualEdge();
+                            renderer.removeAllVirtualEdge();
+                            var shapeId = $(target).attr('_shape_id');
+                            var newShape;
+                            eval('newShape = new ' + shapeId + '()');
+
+                            var style = target.shape.geom.style;
+                            var boundary = renderer.getBoundary(target);
+                            var width = boundary.getWidth();
+                            var height = boundary.getHeight();
+
+                            var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
+                            $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
+
+                            renderer._CANVAS.connect(target, rectShape, null, null, null, null);
+
                         }
                     }
                 }
@@ -24528,7 +24598,7 @@ OG.handler.EventHandler.prototype = {
         };
 
         // 배경클릭한 경우 deselect 하도록
-        $(rootEle).bind("click", function () {
+        $(rootEle).bind("click", function (event) {
             if (!$(this).data("dragBox")) {
                 me.deselectAll();
                 renderer.removeRubberBand(rootEle);
@@ -24538,6 +24608,7 @@ OG.handler.EventHandler.prototype = {
             //가상선 액티브인 경우 삭제
             root = renderer.getRootGroup();
             var isConnectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE);
+            var isRectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE);
             if (isConnectMode) {
                 if (isConnectMode === 'created') {
                     $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE, 'active');
@@ -24546,11 +24617,38 @@ OG.handler.EventHandler.prototype = {
                     renderer.removeAllVirtualEdge();
                 }
             }
+            if (isRectMode) {
+                if (isRectMode === 'created') {
+                    $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE, 'active');
+                }
+                if (isRectMode === 'active') {
+                    //새로운 것 만드는 과정
+                    var eventOffset = me._getOffset(event);
+
+                    var target = me._RENDERER.getTargetfromVirtualEdge();
+                    renderer.removeAllVirtualEdge();
+                    var shapeId = $(target).attr('_shape_id');
+                    var newShape;
+                    eval('newShape = new ' + shapeId + '()');
+
+                    var style = target.shape.geom.style;
+                    var boundary = renderer.getBoundary(target);
+                    var width = boundary.getWidth();
+                    var height = boundary.getHeight();
+
+                    var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
+                    $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
+
+                    renderer._CANVAS.connect(target, rectShape, null, null, null, null);
+
+                }
+            }
         });
 
         $(rootEle).bind("mousemove", function (event) {
             var isConnectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE);
-            if (isConnectMode === 'active') {
+            var isRectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE);
+            if (isConnectMode === 'active' || isRectMode === 'active') {
                 eventOffset = me._getOffset(event);
                 renderer.updateVirtualEdge(eventOffset.x, eventOffset.y);
             }
@@ -24586,7 +24684,8 @@ OG.handler.EventHandler.prototype = {
             // 마우스 영역 드래그하여 선택 처리
             $(rootEle).bind("mousedown", function (event) {
                 var isConnectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE);
-                if (isConnectMode === 'active') {
+                var isRectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE);
+                if (isConnectMode === 'active' || isRectMode === 'active') {
                     return;
                 }
                 var eventOffset = me._getOffset(event);
@@ -24595,7 +24694,8 @@ OG.handler.EventHandler.prototype = {
             });
             $(rootEle).bind("mousemove", function (event) {
                 var isConnectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE);
-                if (isConnectMode === 'active') {
+                var isRectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE);
+                if (isConnectMode === 'active' || isRectMode === 'active') {
                     $(this).removeData("dragBox_first");
                     return;
                 }
@@ -24619,7 +24719,8 @@ OG.handler.EventHandler.prototype = {
             });
             $(rootEle).bind("mouseup", function (event) {
                 var isConnectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.LINE_CONNECT_MODE);
-                if (isConnectMode === 'active') {
+                var isRectMode = $(root).data(OG.Constants.GUIDE_SUFFIX.RECT_CONNECT_MODE);
+                if (isConnectMode === 'active' || isRectMode === 'active') {
                     return;
                 }
                 if ("start" == $(this).data("rubber_band_status")) {
@@ -29307,6 +29408,14 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
                 "stroke-opacity": 0.2,
                 cursor: "pointer"
             },
+            GUIDE_RECT_AREA: {
+                stroke: "black",
+                fill: "#ffffff",
+                "fill-opacity": 0,
+                "stroke-width": 1,
+                "stroke-opacity": 1,
+                cursor: "pointer"
+            },
             RUBBER_BAND: {stroke: "#0000FF", opacity: 0.2, fill: "#0077FF"},
             DROP_OVER_BBOX: {stroke: "#0077FF", fill: "none", opacity: 0.3, "shape-rendering": "crispEdges"},
             LABEL: {"font-size": 12, "font-color": "black", "fill": "white"},
@@ -29624,7 +29733,7 @@ OG.graph.Canvas.prototype = {
      * @param {String} label Label
      * @return {Element} 연결된 Edge 엘리먼트
      */
-    connect: function (fromElement, toElement, style, label, fromP, toP) {
+    connect: function (fromElement, toElement, style, label, fromP, toP, preventTrigger) {
         var fromTerminal, toTerminal, edge, fromPosition, toPosition;
 
         if (fromP) {
@@ -29651,7 +29760,7 @@ OG.graph.Canvas.prototype = {
 
 
         // connect
-        edge = this._RENDERER.connect(fromTerminal, toTerminal, edge, style, label);
+        edge = this._RENDERER.connect(fromTerminal, toTerminal, edge, style, label, preventTrigger);
 
         if (edge) {
             this._HANDLER.setClickSelectable(edge, edge.shape.SELECTABLE);
