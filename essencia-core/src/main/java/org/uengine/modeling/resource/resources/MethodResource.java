@@ -41,7 +41,7 @@ public class MethodResource extends DefaultResource {
     @AutowiredFromClient
     public Session session;
 
-    @ServiceMethod(callByContent = true, except = "children", eventBinding = EventContext.EVENT_DBLCLICK, inContextMenu = true, target = ServiceMethodContext.TARGET_POPUP)
+    @ServiceMethod(callByContent = true, except = "children", inContextMenu = true, target = ServiceMethodContext.TARGET_POPUP)
     public void joinEditing() throws Exception {
 
 //        if (!sessions.containsKey(getPath()))
