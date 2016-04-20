@@ -17,7 +17,7 @@
         <module>plugin</module>
     </modules>
 
-    <groupId>com.atlassian.jwt</groupId>
+    <groupId>org.uengine</groupId>
     <artifactId>jwt-parent</artifactId>
     <version>1.5.7-SNAPSHOT</version>
     <name>Atlassian JWT Parent</name>
