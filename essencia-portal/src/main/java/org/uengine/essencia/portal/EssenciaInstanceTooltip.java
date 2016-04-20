@@ -5,6 +5,7 @@ import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.uengine.codi.mw3.model.InstanceView;
 import org.uengine.codi.mw3.model.InstanceViewDetail;
@@ -15,6 +16,7 @@ import org.uengine.social.InstanceMonitorPanel;
 import org.uengine.social.SocialBPMInstanceTooltip;
 
 @Scope("prototype")
+@Order(10)
 @Component
 public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
     public EssenciaInstanceTooltip() throws Exception {
