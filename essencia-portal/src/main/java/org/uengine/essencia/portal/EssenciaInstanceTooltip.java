@@ -15,7 +15,6 @@ import org.uengine.kernel.ProcessInstance;
 import org.uengine.social.InstanceMonitorPanel;
 import org.uengine.social.SocialBPMInstanceTooltip;
 
-@Scope("prototype")
 @Order(10)
 @Component
 public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
