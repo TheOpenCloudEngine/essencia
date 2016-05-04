@@ -34,6 +34,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
     private String description;
     private List<IElement> elementList;
     private List<IRelation> relationList;
+    private String baseKernel;
 
     public PracticeDefinition() {
         ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
@@ -815,5 +816,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
     @Override
     public void afterDeserialization() {
 
+    }
+
+    public void setBaseKernel(String baseKernel) {
+        this.baseKernel = baseKernel;
+    }
+
+    public String getBaseKernel() {
+        return baseKernel;
     }
 }

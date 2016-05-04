@@ -23,7 +23,6 @@ public class MethodComposer extends PracticeDefiner {
     }
 
 
-
     ElementViewActionDelegate elementViewActionDelegate;
     @Hidden
     @AutowiredToClient
@@ -40,6 +39,8 @@ public class MethodComposer extends PracticeDefiner {
      */
     public PracticeDefinition createPracticeDefinition() {
         PracticeDefinition pd = new PracticeDefinition();
+
+        pd.setBaseKernel(getBaseKernel());
 
         pd.setElementList(ElementUtil.convertToElementList(((EssenciaCanvas) getCanvas()).getSafeElementViewList()));
         pd.setRelationList(ElementUtil.convertToRelationList(((EssenciaCanvas) getCanvas()).getSafeRelationViewList()));

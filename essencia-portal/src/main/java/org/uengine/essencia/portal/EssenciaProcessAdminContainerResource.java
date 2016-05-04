@@ -1,5 +1,6 @@
 package org.uengine.essencia.portal;
 
+import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
@@ -23,11 +24,17 @@ public class EssenciaProcessAdminContainerResource extends ProcessAdminContainer
     @ServiceMethod(inContextMenu = true, target = ServiceMethodContext.TARGET_POPUP)
     public void newMethod() throws Exception {
 
-        DefaultResource processResource = new DefaultResource();
-        processResource.setPath(getPath() + "/New Method.method");
-        processResource.setParent(this);
+        ModalWindow popup = new ModalWindow(new NewMethodPopup(this), 500, 200);
+        popup.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+        popup.setTitle("Create new method :  Select Kernel");
+        MetaworksRemoteService.wrapReturn(popup);
 
-        processResource.newOpen();
+//
+//        DefaultResource processResource = new DefaultResource();
+//        processResource.setPath(getPath() + "/New Method.method");
+//        processResource.setParent(this);
+//
+//        processResource.newOpen();
     }
 
 //    @Override

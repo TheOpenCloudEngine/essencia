@@ -26,8 +26,20 @@ public class PracticeDefiner extends DefaultModeler {
         setPalette(new EssenciaPalette());
     }
 
+
+    String baseKernel;
+        public String getBaseKernel() {
+            return baseKernel;
+        }
+        public void setBaseKernel(String baseKernel) {
+            this.baseKernel = baseKernel;
+        }
+
+
     @Override
     public void setModel(IModel model) throws Exception {
+
+
         if( model != null ){
             List<ElementView> elementViewList = new ArrayList<ElementView>();
             List<RelationView> relationViewList = new ArrayList<RelationView>();
@@ -45,6 +57,8 @@ public class PracticeDefiner extends DefaultModeler {
 
             getCanvas().setElementViewList(elementViewList);
             getCanvas().setRelationViewList(relationViewList);
+
+            setBaseKernel(practice.getBaseKernel());
         }
     }
 
@@ -60,6 +74,8 @@ public class PracticeDefiner extends DefaultModeler {
 
     public PracticeDefinition makePracticeFromCanvas(Canvas canvas) throws Exception {
         PracticeDefinition practice = new PracticeDefinition();
+
+        practice.setBaseKernel(getBaseKernel());
 
         TextContext practiceName = new TextContext();
 

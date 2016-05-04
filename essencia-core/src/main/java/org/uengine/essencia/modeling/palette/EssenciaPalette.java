@@ -17,7 +17,9 @@ import org.uengine.modeling.Palette;
 
 public class EssenciaPalette extends CompositePalette {
 
-    public EssenciaPalette() {
+    public EssenciaPalette() {this(null);}
+
+    public EssenciaPalette(String kernel) {
         super();
         setName("Essencia Palette");
 
@@ -42,7 +44,8 @@ public class EssenciaPalette extends CompositePalette {
         PracticeDefinition practice = null;
 
         try {
-            practice = KernelUtil.getInstance().getPracticeDefinition();
+            //TODO:  multiple kernel
+            practice = KernelUtil.getInstance().getPracticeDefinition(kernel);
         } catch (Exception e) {
             e.printStackTrace();
         }

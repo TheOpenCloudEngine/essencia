@@ -7,6 +7,8 @@ import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
+import org.uengine.essencia.modeling.palette.EssenciaPalette;
+import org.uengine.essencia.util.KernelUtil;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.ProcessVariable;
 import org.uengine.modeling.resource.IEditor;
@@ -29,6 +31,15 @@ public class MethodEditor extends MethodComposer implements IEditor<EssenceProce
 
     @Override
     public void setEditingObject(EssenceProcessDefinition object) {
+        setBaseKernel(object.getPracticeDefinition().getBaseKernel());
+
+        if(!KernelUtil.DEFAULT_KERNEL.equals(object.getPracticeDefinition().getBaseKernel())){
+            try {
+                setPalette(new EssenciaPalette(object.getPracticeDefinition().getBaseKernel()));
+            }catch(Exception e){
+                e.printStackTrace(); // should be messaged to user as well even if it shows the editor with the default kernel anyhow.
+            }
+        }
 
         try {
             setModel(object.getPracticeDefinition());

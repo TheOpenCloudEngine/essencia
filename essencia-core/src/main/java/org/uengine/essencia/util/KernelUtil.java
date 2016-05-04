@@ -4,6 +4,7 @@ import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.view.KernelLanguageViewable;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.modeling.ElementView;
+import org.uengine.modeling.resource.Serializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public final class KernelUtil {
     private volatile static KernelUtil instance;
+
+    public static final String DEFAULT_KERNEL = "default";
 
     private PracticeDefinition practiceDefinition;
 
@@ -39,13 +42,20 @@ public final class KernelUtil {
     }
 
     public PracticeDefinition getPracticeDefinition() {
+        return getPracticeDefinition(null);
+    }
+
+
+    public PracticeDefinition getPracticeDefinition(String kernel) {
         PracticeDefinition returnDefinition = null;
         try {
-            returnDefinition = (PracticeDefinition) deepCopy(this.practiceDefinition);
+            if(kernel==null)
+                return (PracticeDefinition) deepCopy(this.practiceDefinition);
+
+            return (PracticeDefinition) Serializer.deserialize(Thread.currentThread().getContextClassLoader().getResourceAsStream("org/uengine/essencia/model/kernel/" + kernel + ".kernel"));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return returnDefinition;
     }
 
     public List<Alpha> getKernelAlphaList() {
@@ -835,5 +845,11 @@ public final class KernelUtil {
         competencyLevel.setBriefDescription(briefDescription);
         competencyLevel.setLevel(level);
         return competencyLevel;
+    }
+
+    public static void main(String... args) throws Exception {
+
+        Serializer.serialize(KernelUtil.getInstance().getPracticeDefinition(), System.out);
+
     }
 }

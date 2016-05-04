@@ -23,6 +23,9 @@ public class StateListFace extends ListFace<State> {
         practiceDefinition.arrangeRelations();
         alpha = (Alpha) practiceDefinition.getElementByName(alpha.getName());
 
+        if(alpha==null)
+            throw new RuntimeException("Please apply once before amending states from the kernel and try it after opening the properties dialog again.");
+
         if(alpha.getIncomingRelations()==null || alpha.getIncomingRelations().size() == 0){
             throw new RuntimeException("There is no parent alpha to amend state.");
         }
