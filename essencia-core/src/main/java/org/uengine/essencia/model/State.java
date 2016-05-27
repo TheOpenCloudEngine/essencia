@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.metaworks.ServiceMethodContext;
@@ -34,7 +35,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     private Alpha parentAlpha;
 
     private List<CheckPoint> checkPoints;
-    private transient CheckPointListFace listFace;
+//    private transient CheckPointListFace listFace;
 
 
     private String aggregationAlphaState;
@@ -48,7 +49,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
         this.aggregationAlphaState = aggregationAlphaState;
     }
 
-    @Hidden
+    @Face(faceClass = CheckPointListFace.class)
     public List<CheckPoint> getCheckPoints() {
         return checkPoints;
     }
@@ -57,14 +58,14 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
         this.checkPoints = checkPoints;
     }
 
-    @Face(displayName = "CheckPoint")
-    public CheckPointListFace getListFace() {
-        return listFace;
-    }
-
-    public void setListFace(CheckPointListFace listFace) {
-        this.listFace = listFace;
-    }
+//    @Face(displayName = "CheckPoint")
+//    public CheckPointListFace getListFace() {
+//        return listFace;
+//    }
+//
+//    public void setListFace(CheckPointListFace listFace) {
+//        this.listFace = listFace;
+//    }
 
 
 //    @Order(2)
@@ -86,7 +87,7 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     }
 
     public State() {
-        setListFace(new CheckPointListFace());
+        setCheckPoints(new ArrayList<CheckPoint>());
     }
 
     public State(String name) {
@@ -122,16 +123,16 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
 
     @Override
     public void setUpElement() {
-        setListFace(new CheckPointListFace());
-        if (getCheckPoints() != null) {
-            getListFace().fillElements(getCheckPoints());
-            getCheckPoints().clear();
-        }
+//        setListFace(new CheckPointListFace());
+//        if (getCheckPoints() != null) {
+//            getListFace().fillElements(getCheckPoints());
+//            getCheckPoints().clear();
+//        }
     }
 
     @Override
     public void beforeApply() {
-        setCheckPoints(getListFace().createValue());
+  //      setCheckPoints(getListFace().createValue());
     }
 
     @Override

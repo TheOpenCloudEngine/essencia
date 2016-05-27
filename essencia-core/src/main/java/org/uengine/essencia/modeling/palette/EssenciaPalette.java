@@ -43,12 +43,12 @@ public class EssenciaPalette extends CompositePalette {
 
         PracticeDefinition practice = null;
 
-        try {
+//        try {
             //TODO:  multiple kernel
             practice = KernelUtil.getInstance().getPracticeDefinition(kernel);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         EssenciaKernelSymbol symbol = null;
         KernelLanguageViewable view = null;

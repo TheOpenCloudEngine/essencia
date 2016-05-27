@@ -34,11 +34,11 @@ public class MethodEditor extends MethodComposer implements IEditor<EssenceProce
         setBaseKernel(object.getPracticeDefinition().getBaseKernel());
 
         if(!KernelUtil.DEFAULT_KERNEL.equals(object.getPracticeDefinition().getBaseKernel())){
-            try {
+//            try {
                 setPalette(new EssenciaPalette(object.getPracticeDefinition().getBaseKernel()));
-            }catch(Exception e){
-                e.printStackTrace(); // should be messaged to user as well even if it shows the editor with the default kernel anyhow.
-            }
+//            }catch(Exception e){
+//                e.printStackTrace(); // should be messaged to user as well even if it shows the editor with the default kernel anyhow.
+//            }
         }
 
         try {

@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Essence.Foundation.*;
@@ -95,7 +96,7 @@ public class LevelOfDetail extends State{// implements IElement, FaceTransformer
 //    }
 
     public LevelOfDetail() {
-        setListFace(new CheckPointListFace());
+        setCheckPoints(new ArrayList<CheckPoint>());
     }
 
     public LevelOfDetail(String name) {

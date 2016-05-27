@@ -104,16 +104,16 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 
 	@Override
 	public void setUpElement() {
-		setListFace(new CheckPointListFace());
-		if (getList() != null) {
-			getListFace().fillElements(getList());
-			getList().clear();
-		}
+//		setListFace(new CheckPointListFace());
+//		if (getList() != null) {
+//			getListFace().fillElements(getList());
+//			getList().clear();
+//		}
 	}
 
 	@Override
 	public void beforeApply() {
-		setList(getListFace().createValue());
+	//	setList(getListFace().createValue());
 	}
 
 //	//TODO: modify IElement

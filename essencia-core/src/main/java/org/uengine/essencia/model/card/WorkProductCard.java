@@ -38,7 +38,7 @@ public class WorkProductCard extends BasicCard {
 
             getView().setId(String.valueOf(trcTag++));
 
-            if (((WorkProduct) element).getListFace().getEssenciaElementList().size() + ((WorkProduct) element).getListFace().getEssenciaElementList().size() > trcTag) {
+            if (((WorkProduct) element).getStates().size() + ((WorkProduct) element).getStates().size() > trcTag) {
                 getView().setToEdge(String.valueOf(trcTag));
                 makeRelation("");
             }

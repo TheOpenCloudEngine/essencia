@@ -42,7 +42,16 @@ public class NewMethodPopup {
         }
 
     String baseKernel;
-    @Range(options={"OMG Essence Kernel 1.0", "OMG Essence Kernel (Korean)"}, values={KernelUtil.DEFAULT_KERNEL, "essence_kor"})
+    @Range(options={
+            "OMG Essence Kernel 1.0",
+            "OMG Essence Kernel (Korean)",
+            "OMG Essence Kernel (Russian)",
+        },
+            values={
+                    KernelUtil.DEFAULT_KERNEL,
+                    "essence_kor",
+                    "essence_ru",
+            })
     @Order(10)
         public String getBaseKernel() {
             return baseKernel;

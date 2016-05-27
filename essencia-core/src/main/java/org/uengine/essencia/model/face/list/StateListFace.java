@@ -3,6 +3,7 @@ package org.uengine.essencia.model.face.list;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.model.MetaworksElement;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.EssenciaElement;
@@ -13,7 +14,7 @@ import org.uengine.modeling.resource.editor.MethodEditor;
 
 import java.util.ArrayList;
 
-public class StateListFace extends ListFace<State> {
+public class StateListFace extends org.metaworks.widget.ListFace<State> {
 
 
     @ServiceMethod(callByContent = true)
@@ -33,17 +34,17 @@ public class StateListFace extends ListFace<State> {
         Alpha kernel = (Alpha) alpha.getIncomingRelations().get(0).getSourceElement();
         if(kernel!=null){
 
-            setEssenciaElementList(new ArrayList<EssenciaElement>());
+            setElements(new ArrayList<MetaworksElement>());
 
 
             for(State state : kernel.getStates()){
-                EssenciaElement essenciaElement = new EssenciaElement();
+                MetaworksElement essenciaElement = new MetaworksElement();
                 essenciaElement.setValue(state);
                 essenciaElement.setMetaworksContext(new MetaworksContext());
                 essenciaElement.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
                 state.setUpElement();
                 state.setAggregationAlphaState(state.getName());
-                getEssenciaElementList().add(essenciaElement);
+                getElements().add(essenciaElement);
             }
 //            getEssenciaElementList();
         }

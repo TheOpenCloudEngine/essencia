@@ -11,6 +11,7 @@ import org.uengine.essencia.enactment.LanguageElementInstance;
 import org.uengine.essencia.enactment.WorkProductInstance;
 import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.model.card.WorkProductCard;
+import org.uengine.essencia.model.face.list.LeveOfDetailListFace;
 import org.uengine.essencia.model.face.list.LevelOfDetailListFace;
 import org.uengine.essencia.model.face.list.ListFace;
 import org.uengine.essencia.model.face.list.StateListFace;
@@ -26,17 +27,17 @@ public class WorkProduct extends Alpha{//BasicElement implements ContextTransfor
 //
 
     @Override
-    @Face(displayName = "Levels Of Detail")
+    @Face(displayName = "Levels Of Detail",  faceClass = LeveOfDetailListFace.class)
     public List<State> getStates() {
         return super.getStates();
     }
 
-
-    @Override
-    @Face(displayName = "Levels of detail")
-    public ListFace getListFace() {
-        return super.getListFace();
-    }
+//
+//    @Override
+//    @Face(displayName = "Levels of detail")
+//    public ListFace getListFace() {
+//        return super.getListFace();
+//    }
 
     @Hidden
     public List<LevelOfDetail> getLevelOfDetails() {
@@ -68,7 +69,8 @@ public class WorkProduct extends Alpha{//BasicElement implements ContextTransfor
 //    }
 
     public WorkProduct() {
-        setListFace(new LevelOfDetailListFace());
+  //      setListFace(new LevelOfDetailListFace());
+        setStates(new ArrayList<State>());
     }
 
     public WorkProduct(String name) {
@@ -90,7 +92,7 @@ public class WorkProduct extends Alpha{//BasicElement implements ContextTransfor
     @Override
     public void transformContext() {
         ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
-        ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
+  //      ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
     }
 
     @Override
@@ -107,10 +109,10 @@ public class WorkProduct extends Alpha{//BasicElement implements ContextTransfor
         return workProduct;
     }
 
-    @Override
-    protected ListFace createListFace(){
-        return new LevelOfDetailListFace();
-    }
+//    @Override
+//    protected ListFace createListFace(){
+//        return new LevelOfDetailListFace();
+//    }
 
 
 

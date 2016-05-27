@@ -20,6 +20,7 @@ import org.uengine.kernel.NeedArrangementToSerialize;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ObjectInstance;
+import org.uengine.uml.model.face.AttributeListFace;
 import org.uengine.util.UEngineUtil;
 
 public class Alpha extends BasicElement implements Concernable, ContextTransformer, CardViewable, FaceTransformer, XMIResourceElement, NeedArrangementToSerialize {
@@ -30,29 +31,33 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     private List<LanguageElement> childElements;
 
     private List<State> states;
-    private transient ListFace listFace;
+    //private transient ListFace listFace;
 
     public Alpha() {
+        setStates(new ArrayList<State>());
         setConcernBox(new EssenciaConcernSelectBox());
     }
 
-    @Hidden
+    //@Hidden
+    @Face(faceClass = StateListFace.class)
     public List<State> getStates() {
-        return this.states;
+        return states;
     }
 
     public void setStates(List<State> states) {
         this.states = states;
     }
 
-    @Face(displayName = "State")
-    public ListFace getListFace() {
-        return listFace;
-    }
 
-    public void setListFace(ListFace listFace) {
-        this.listFace = listFace;
-    }
+
+//    @Face(displayName = "State")
+//    public ListFace getListFace() {
+//        return listFace;
+//    }
+//
+//    public void setListFace(ListFace listFace) {
+//        this.listFace = listFace;
+//    }
 
     @Hidden
     public List<LanguageElement> getChildElements() {
@@ -111,13 +116,13 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
     @Override
     public void transformContext() {
-        if (getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getOwner().getName())) {
-            ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
-            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_VIEW);
-        } else {
-            ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
-            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
-        }
+//        if (getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getOwner().getName())) {
+//            ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
+//            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_VIEW);
+//        } else {
+//            ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
+//            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
+//        }
     }
 
     @Override
@@ -132,18 +137,18 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
         return alpha;
     }
 
-    protected ListFace createListFace(){
-        return new StateListFace();
-    }
+//    protected ListFace createListFace(){
+//        return new StateListFace();
+//    }
 
     @Override
     public void setUpElement() {
         super.setUpElement();
-        setListFace(createListFace());
-        if (getStates() != null) {
-            getListFace().fillElements(getStates());
-            getStates().clear();
-        }
+        //setStates(new ArrayList<State>());
+//        if (getStates() != null) {
+//            getListFace().fillElements(getStates());
+//            getStates().clear();
+//        }
 
         setConcernBox(new EssenciaConcernSelectBox());
         getConcernBox().setSelected(getConcern());
@@ -153,7 +158,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     @Override
     public void beforeApply() {
         super.beforeApply();
-        setStates(getListFace().createValue());
+//        setStates(getListFace().createValue());
 
         setConcern(getConcernBox().getSelected());
         setConcernBox(null);
