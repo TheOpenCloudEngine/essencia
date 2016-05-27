@@ -128,7 +128,7 @@ public class MethodComposer extends PracticeDefiner {
     @Override
     public void setModel(IModel model) throws Exception {
 
-        setElementViewActionDelegate(new DefaultElementViewActionDelegate());
+        setElementViewActionDelegate(new EssenciaDefaultElementViewActionDelegate());
 
         super.setModel(model);
     }

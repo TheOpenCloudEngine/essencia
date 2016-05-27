@@ -1,9 +1,11 @@
 package org.uengine.essencia.portal;
 
 
+import org.metaworks.Remover;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.util.KernelUtil;
@@ -99,6 +101,8 @@ public class NewMethodPopup {
         processResource.save(processDefinition);
 
         processResource.reopen();
+
+        MetaworksRemoteService.addReturn(new Remover(new ModalWindow()));
 
     }
 }
