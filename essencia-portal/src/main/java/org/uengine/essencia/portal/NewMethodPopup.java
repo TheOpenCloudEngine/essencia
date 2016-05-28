@@ -1,6 +1,7 @@
 package org.uengine.essencia.portal;
 
 
+import org.metaworks.Refresh;
 import org.metaworks.Remover;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
@@ -102,7 +103,14 @@ public class NewMethodPopup {
 
         processResource.reopen();
 
+
+        ProcessAdminResourceNavigator navigator = new ProcessAdminResourceNavigator();
+        MetaworksRemoteService.autowire(navigator);
+        navigator.load();
+
+
         MetaworksRemoteService.addReturn(new Remover(new ModalWindow()));
+        MetaworksRemoteService.addReturn(new Refresh(navigator));
 
     }
 }
