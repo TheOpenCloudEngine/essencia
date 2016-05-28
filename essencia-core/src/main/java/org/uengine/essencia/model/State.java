@@ -9,6 +9,7 @@ import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.model.card.DetailCard;
 import org.uengine.essencia.model.card.StateCard;
+import org.uengine.essencia.model.face.AggregationAlphaStateSelector;
 import org.uengine.essencia.model.face.list.CheckPointListFace;
 import org.uengine.essencia.model.view.StateView;
 import org.uengine.modeling.ElementView;
@@ -40,7 +41,8 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
 
     private String aggregationAlphaState;
 
-    @Available(where=WHERE_ADVANCED)
+    //@Available(where=WHERE_ADVANCED)
+    @Face(faceClass = AggregationAlphaStateSelector.class)
     public String getAggregationAlphaState() {
         return aggregationAlphaState;
     }
