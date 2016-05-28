@@ -45,14 +45,24 @@ public class NewMethodPopup {
 
     String baseKernel;
     @Range(options={
-            "OMG Essence Kernel 1.0",
+            "OMG Essence Kernel (English)",
+            "OMG Essence Kernel (Portuguese)",
+            "OMG Essence Kernel (Deutsch)",
+            "OMG Essence Kernel (Swedish)",
             "OMG Essence Kernel (Korean)",
             "OMG Essence Kernel (Russian)",
+            "OMG Essence Kernel (Chinese)",
+            "OMG Essence Kernel (Japanese)",
         },
             values={
                     KernelUtil.DEFAULT_KERNEL,
-                    "essence_kor",
+                    "essence_pt",
+                    "essence_de",
+                    "essence_sw",
+                    "essence_ko",
                     "essence_ru",
+                    "essence_cn",
+                    "essence_jp",
             })
     @Order(10)
         public String getBaseKernel() {
