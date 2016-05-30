@@ -26,10 +26,29 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
     @AutowiredFromClient
     public Alpha alpha;
 
+    public AggregationAlphaStateSelector(){
+        super();
+        getMetaworksContext().setHow("unloaded");
+    }
+
     @Override
     public void setValueToFace(String value) {
 
-        if (alpha == null || methodEditor == null) return;
+       //  test if the FaceWrapper machanism is problematic.
+
+        // end of test
+
+        if (alpha == null || methodEditor == null) {
+            getOptionNames().add("Right-click & 'amend from kernel'");
+            //getOptionNames().add("reference from kernel");
+            getMetaworksContext().setHow("unloaded");
+            getOptionValues().add("");
+
+
+            setSelected(value);
+
+            return;
+        }
 
         PracticeDefinition practiceDefinition = methodEditor.createPracticeDefinition();
         practiceDefinition.arrangeRelations();
@@ -61,6 +80,9 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
         setOptionValues(getOptionNames());
 
         getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+        getMetaworksContext().setHow("loaded");
+
+        setSelected(value);
 
     }
 
@@ -70,20 +92,13 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
         return getSelected();
     }
 
-//    Alpha alpha;
-//
-//    @Override
-//    public void visitHolderObjectOfField(Alpha holderObject) {
-//        alpha = holderObject;
-//    }
 
-
-    @ServiceMethod(callByContent = true, onLoad = true, inContextMenu = true)
+    @ServiceMethod(callByContent = true, onLoad = true, inContextMenu = true, bindingFor = "this", eventBinding = "change", how="unloaded", target=ServiceMethod.TARGET_SELF)
     @Order(100)
     public void amendFromKernel(@AutowiredFromClient Alpha alpha, @AutowiredFromClient MethodEditor methodEditor) {
         this.alpha = (alpha);
         this.methodEditor = methodEditor;
 
-        setValueToFace(null);
+        setValueToFace(getSelected());
     }
 }
