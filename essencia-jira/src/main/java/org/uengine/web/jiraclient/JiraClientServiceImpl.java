@@ -1,6 +1,6 @@
 package org.uengine.web.jiraclient;
 
-import com.atlassian.jwt.core.http.JavaxJwtRequestExtractor;
+import org.uengine.jwt.core.http.JavaxJwtRequestExtractor;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.JWSVerifier;
