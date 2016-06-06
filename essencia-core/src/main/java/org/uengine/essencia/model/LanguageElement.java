@@ -28,7 +28,7 @@ import org.uengine.uml.model.ClassDefinition;
 import org.uengine.uml.model.ObjectInstance;
 import org.uengine.util.UEngineUtil;
 
-@Face(ejsPath = "dwr/metaworks/genericfaces/ElementFace.ejs")
+//@Face(ejsPath = "dwr/metaworks/genericfaces/ElementFace.ejs")
 public abstract class LanguageElement extends ClassDefinition implements ContextAware, Serializable, FaceTransformer, IModelingTimeSensitive, MultilingualSupport {
 
 	private static final long serialVersionUID = GlobalContext.SERIALIZATION_UID;
@@ -38,7 +38,8 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 
 	@Override
 	@Hidden
-	@Available(where = WHERE_ADVANCED)
+	//@Available(where = WHERE_ADVANCED)
+	@Group(name="Advanced")
 	public Attribute[] getFieldDescriptors() {
 		Attribute[] attributes = super.getFieldDescriptors();
 
@@ -75,7 +76,9 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 
 	protected TextContext description;
 	@Multilingual
-	@Available(where = WHERE_ADVANCED)
+	//@Group(name="Advanced")
+	//@Available(where = WHERE_ADVANCED)
+	@Order(3)
 		public String getDescription() {
 			return description.getText();
 		}
@@ -138,7 +141,8 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	}
 
 	@Override
-	@Available(where = WHERE_ADVANCED)
+	//@Available(where = WHERE_ADVANCED)
+	@Group(name="Advanced")
 	@Order(2)
 	public String getDisplayName() {
 		return super.getDisplayName();
@@ -334,7 +338,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		return multilingualBundle.getMultilingualText(language, propertyName);
 	}
 
-	@ServiceMethod(callByContent = true)
+	//@ServiceMethod(callByContent = true)
 	public void moreOptions(){
 		if(getMetaworksContext()!=null && WHERE_ADVANCED.equals(getMetaworksContext().getWhere())){
 			getMetaworksContext().setWhere(null);

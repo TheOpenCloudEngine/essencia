@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.metaworks.annotation.Face;
@@ -24,7 +25,8 @@ public class Competency extends BasicElement implements Concernable, ContextTran
     private List<CompetencyLevel> competencyLevels;
     private transient CompetencyLevelListFace listFace;
 
-    @Hidden
+    //@Hidden
+    @Face(faceClass = CompetencyLevelListFace.class)
     public List<CompetencyLevel> getCompetencyLevels() {
         return competencyLevels;
     }
@@ -56,20 +58,21 @@ public class Competency extends BasicElement implements Concernable, ContextTran
         this.concernSelectBox = concern;
     }
 
-    @Order(5)
-    @Face(displayName = "CompetencyLevel")
-    public CompetencyLevelListFace getListFace() {
-        return listFace;
-    }
-
-    public void setListFace(CompetencyLevelListFace listFace) {
-        this.listFace = listFace;
-    }
+//    @Order(5)
+//    @Face(displayName = "CompetencyLevel")
+//    public CompetencyLevelListFace getListFace() {
+//        return listFace;
+//    }
+//
+//    public void setListFace(CompetencyLevelListFace listFace) {
+//        this.listFace = listFace;
+//    }
 
     public Competency() {
         setConcernBox(new EssenciaConcernSelectBox());
 
-        setListFace(new CompetencyLevelListFace());
+        setCompetencyLevels(new ArrayList<CompetencyLevel>());
+        //setListFace(new CompetencyLevelListFace());
     }
 
     @Override
@@ -102,10 +105,10 @@ public class Competency extends BasicElement implements Concernable, ContextTran
     public void transformContext() {
         if (getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getOwner().getName())) {
             ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
-            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_VIEW);
+            //ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_VIEW);
         } else {
             ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
-            ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
+           // ContextUtil.setWhen(getListFace(), EssenciaContext.WHEN_EDIT);
         }
     }
 
@@ -126,11 +129,11 @@ public class Competency extends BasicElement implements Concernable, ContextTran
     @Override
     public void setUpElement() {
         super.setUpElement();
-        setListFace(new CompetencyLevelListFace());
-        if (getCompetencyLevels() != null) {
-            getListFace().fillElements(getCompetencyLevels());
-            getCompetencyLevels().clear();
-        }
+//        setListFace(new CompetencyLevelListFace());
+//        if (getCompetencyLevels() != null) {
+//            getListFace().fillElements(getCompetencyLevels());
+//            getCompetencyLevels().clear();
+//        }
 
         setConcernBox(new EssenciaConcernSelectBox());
         getConcernBox().setSelected(getConcern());
@@ -140,7 +143,7 @@ public class Competency extends BasicElement implements Concernable, ContextTran
     @Override
     public void beforeApply() {
         super.beforeApply();
-        setCompetencyLevels(getListFace().createValue());
+//        setCompetencyLevels(getListFace().createValue());
 
         setConcern(getConcernBox().getSelected());
         setConcernBox(null);

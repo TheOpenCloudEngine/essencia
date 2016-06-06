@@ -40,19 +40,19 @@ public class ActivitySpaceAndActivityPropertyPanel extends EssenciaPropertyPanel
         super(elementView);
         ((AbstractActivity) getElement()).setUpElement(elementList);
 
-        if (getElement().getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getElement().getOwner().getName()) && getElement() instanceof ActivitySpace) {
-            ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
-            ContextUtil.setWhen(((ActivitySpace) getElement()).getInputFace(), EssenciaContext.WHEN_VIEW);
-            for (AbstractSelectBoxFace a : ((ActivitySpace) getElement()).getInputFace().getAbstractSelectBoxFaceList()) {
-                ContextUtil.setWhen(a, EssenciaContext.WHEN_VIEW);
-            }
-            ContextUtil.setWhen(((ActivitySpace) getElement()).getCompletionCriterionFace(), EssenciaContext.WHEN_VIEW);
-            for (AbstractSelectBoxFace a : ((ActivitySpace) getElement()).getCompletionCriterionFace().getAbstractSelectBoxFaceList()) {
-                ContextUtil.setWhen(a, EssenciaContext.WHEN_VIEW);
-            }
-        } else {
+//        if (getElement().getOwner() != null && EssenciaContext.ESSENCE_KERNEL.equals(getElement().getOwner().getName()) && getElement() instanceof ActivitySpace) {
+//            ContextUtil.setWhen(this, EssenciaContext.WHEN_VIEW);
+//            ContextUtil.setWhen(((ActivitySpace) getElement()).getInputFace(), EssenciaContext.WHEN_VIEW);
+//            for (AbstractSelectBoxFace a : ((ActivitySpace) getElement()).getInputFace().getAbstractSelectBoxFaceList()) {
+//                ContextUtil.setWhen(a, EssenciaContext.WHEN_VIEW);
+//            }
+//            ContextUtil.setWhen(((ActivitySpace) getElement()).getCompletionCriterionFace(), EssenciaContext.WHEN_VIEW);
+//            for (AbstractSelectBoxFace a : ((ActivitySpace) getElement()).getCompletionCriterionFace().getAbstractSelectBoxFaceList()) {
+//                ContextUtil.setWhen(a, EssenciaContext.WHEN_VIEW);
+//            }
+//        } else {
             ContextUtil.setWhen(this, EssenciaContext.WHEN_EDIT);
-        }
+//        }
     }
 
     @Face(displayName = "Apply")
