@@ -10546,6 +10546,24 @@ OG.shape.IShape = function () {
 	this.CONNECTABLE = true;
 
 	/**
+	 * From 연결 가능여부 (From(Shape) => To)
+	 * @type Boolean
+	 */
+	this.ENABLE_FROM = true;
+
+	/**
+	 * To 연결 가능여부 (From => To(Shape))
+	 * @type Boolean
+	 */
+	this.ENABLE_TO = true;
+
+	/**
+	 * TO 연결 가능여부
+	 * @type Boolean
+	 */
+	this.ENABLE_FROM = true;
+
+	/**
 	 * Self 연결 가능여부
 	 * @type Boolean
 	 */
@@ -10934,6 +10952,7 @@ OG.shape.From = function (label) {
 	this.LABEL_EDITABLE = false;
 	this.DELETABLE = false;
 	this.CONNECT_STYLE_CHANGE = false;
+	this.ENABLE_TO = false;
 };
 OG.shape.From.prototype = new OG.shape.GeomShape();
 OG.shape.From.superclass = OG.shape.GeomShape;
@@ -11269,6 +11288,7 @@ OG.shape.To = function (label) {
 	this.LABEL_EDITABLE = false;
 	this.DELETABLE = false;
 	this.CONNECT_STYLE_CHANGE = false;
+	this.ENABLE_FROM = false;
 };
 OG.shape.To.prototype = new OG.shape.GeomShape();
 OG.shape.To.superclass = OG.shape.GeomShape;
@@ -17883,13 +17903,13 @@ OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style,
         toXY = this._getPositionFromTerminal(to);
     }
 
+    //셀프 커넥션 처리
     isSelf = fromShape && toShape && fromShape.id === toShape.id;
     if (isSelf) {
         fromXY = toXY = fromShape.shape.geom.getBoundary().getRightCenter();
     }
 
     if (fromShape && toShape) {
-
         if (fromShape.attributes._shape_id.value == "OG.shape.bpmn.Value_Chain" || toShape.attributes._shape_id.value == "OG.shape.bpmn.Value_Chain") {
             _style["arrow-end"] = "none";
         } else if (fromShape.attributes._shape_id.value == "OG.shape.bpmn.Value_Chain_Module" || toShape.attributes._shape_id.value == "OG.shape.bpmn.Value_Chain_Module") {
@@ -17904,7 +17924,7 @@ OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style,
         $(this._PAPER.canvas).trigger(beforeEvent);
         if (beforeEvent.isPropagationStopped()) {
             this.remove(edge);
-            return false;
+            return null;
         }
     }
 
@@ -24692,8 +24712,17 @@ OG.handler.EventHandler.prototype = {
                                     return;
                                 }
                                 me._RENDERER.removeAllVirtualEdge();
-                                me._RENDERER._CANVAS.connect(target, element, null, connectText)
-                                renderer.addHistory();
+                                //From,To 가능여부 확인
+                                if (!me._isConnectableFrom(target.shape)) {
+                                    isConnectable = false;
+                                }
+                                if (!me._isConnectableTo(element.shape)) {
+                                    isConnectable = false;
+                                }
+                                if (isConnectable) {
+                                    me._RENDERER._CANVAS.connect(target, element, null, connectText)
+                                    renderer.addHistory();
+                                }
                             } else {
                                 me._RENDERER.removeAllVirtualEdge();
                             }
@@ -24714,11 +24743,19 @@ OG.handler.EventHandler.prototype = {
                             var width = boundary.getWidth();
                             var height = boundary.getHeight();
 
-                            var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
-                            $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
+                            //From,To 가능여부 확인
+                            if (!me._isConnectableFrom(target.shape)) {
+                                isConnectable = false;
+                            }
+                            if (!me._isConnectableTo(target.shape)) {
+                                isConnectable = false;
+                            }
+                            if (isConnectable) {
+                                var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
+                                $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
 
-                            renderer._CANVAS.connect(target, rectShape, null, null, null, null);
-
+                                renderer._CANVAS.connect(target, rectShape, null, null, null, null);
+                            }
                         }
                     }
                 }
@@ -24904,11 +24941,20 @@ OG.handler.EventHandler.prototype = {
                     var width = boundary.getWidth();
                     var height = boundary.getHeight();
 
-                    var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
-                    $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
+                    //From,To 가능여부 확인
+                    var isConnectable = me._isConnectable(target.shape);
+                    if (!me._isConnectableFrom(target.shape)) {
+                        isConnectable = false;
+                    }
+                    if (!me._isConnectableTo(target.shape)) {
+                        isConnectable = false;
+                    }
+                    if (isConnectable) {
+                        var rectShape = renderer._CANVAS.drawShape([eventOffset.x, eventOffset.y], newShape, [width, height], style);
+                        $(renderer._PAPER.canvas).trigger('duplicated', [target, rectShape]);
 
-                    renderer._CANVAS.connect(target, rectShape, null, null, null, null);
-
+                        renderer._CANVAS.connect(target, rectShape, null, null, null, null);
+                    }
                 }
             }
         });
@@ -27851,6 +27897,16 @@ OG.handler.EventHandler.prototype = {
         return me._CONFIG.CONNECTABLE && shape.CONNECTABLE;
     },
 
+    _isConnectableFrom: function (shape) {
+        var me = this;
+        return shape.ENABLE_FROM;
+    },
+
+    _isConnectableTo: function (shape) {
+        var me = this;
+        return shape.ENABLE_TO;
+    },
+
     _isSelfConnectable: function (shape) {
         var me = this;
         return me._CONFIG.SELF_CONNECTABLE && shape.SELF_CONNECTABLE;
@@ -28693,11 +28749,18 @@ OG.handler.EventHandler.prototype = {
                                     if (connectableDirection && frontElement) {
                                         var point = [newX, newY];
                                         var terminal = renderer.createTerminalString(frontElement, point);
-                                        if (connectableDirection === 'from') {
-                                            renderer.connect(terminal, null, element, element.shape.geom.style);
-                                        }
-                                        if (connectableDirection === 'to') {
-                                            renderer.connect(null, terminal, element, element.shape.geom.style);
+                                        var isConnectable = me._isConnectable(frontElement.shape);
+                                        if(isConnectable){
+                                            if (connectableDirection === 'from') {
+                                                if (me._isConnectableFrom(frontElement.shape)) {
+                                                    renderer.connect(terminal, null, element, element.shape.geom.style);
+                                                }
+                                            }
+                                            if (connectableDirection === 'to') {
+                                                if (me._isConnectableTo(frontElement.shape)) {
+                                                    renderer.connect(null, terminal, element, element.shape.geom.style);
+                                                }
+                                            }
                                         }
                                     }
                                     if (connectableDirection && !frontElement) {
@@ -29975,15 +30038,16 @@ OG.graph.Canvas.prototype = {
      * @param {String} id Element ID 지정 (Optional)
      * @return {Element} Group DOM Element with geometry
      */
-    drawTransformer: function (position, label, inputs, outputs, id) {
+    drawTransformer: function (position, label, inputs, outputs, drawData, id) {
         var me = this, shape, element, style, envelope, i, toShape, fromShape, toElement, fromElement, textShape, textElement;
         shape = new OG.shape.Transformer(label);
 
-        if(!Array.isArray(inputs) || !Array.isArray(outputs)){
+        if (!Array.isArray(inputs) || !Array.isArray(outputs)) {
             return null;
         }
         var lines = Math.max(inputs.length, outputs.length);
         element = me.drawShape(position, shape, [120, 30 + (lines * 25)], style, id);
+
         envelope = element.shape.geom.getBoundary();
 
         $.each(inputs, function (idx, input) {
@@ -29993,6 +30057,11 @@ OG.graph.Canvas.prototype = {
             toShape = new OG.shape.To();
             toElement = me.drawShape([envelope.getUpperLeft().x + 15, envelope.getUpperLeft().y + (idx * 25) + 40], toShape, [5, 5], {"r": 5});
             element.appendChild(toElement);
+            var data = JSON.parse(JSON.stringify(drawData));
+            data['type'] = 'input';
+            data['name'] = input;
+            data['parentId'] = element.id;
+            me.setCustomData(toElement, data);
         });
 
         $.each(outputs, function (idx, output) {
@@ -30002,6 +30071,11 @@ OG.graph.Canvas.prototype = {
             fromShape = new OG.shape.From();
             fromElement = me.drawShape([envelope.getUpperRight().x - 15, envelope.getUpperRight().y + (idx * 25) + 40], fromShape, [5, 5], {"r": 5});
             element.appendChild(fromElement);
+            var data = JSON.parse(JSON.stringify(drawData));
+            data['type'] = 'output';
+            data['name'] = output;
+            data['parentId'] = element.id;
+            me.setCustomData(fromElement, data);
         });
 
         if (!id) {
@@ -30100,8 +30174,6 @@ OG.graph.Canvas.prototype = {
         // draw edge
         edge = this._RENDERER.drawShape(null, new OG.EdgeShape(fromPosition, toPosition));
         edge = this._RENDERER.trimEdgeDirection(edge, fromElement, toElement);
-        // edge 방위 설정
-
 
         // connect
         edge = this._RENDERER.connect(fromTerminal, toTerminal, edge, style, label, preventTrigger);
