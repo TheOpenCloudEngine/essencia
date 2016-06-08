@@ -55,7 +55,6 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
     public List<CheckPoint> getCheckPoints() {
         return checkPoints;
     }
-
     public void setCheckPoints(List<CheckPoint> checkPoints) {
         this.checkPoints = checkPoints;
     }

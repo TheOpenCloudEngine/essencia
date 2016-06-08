@@ -50,7 +50,9 @@ public abstract class BasicElement extends LanguageElement implements IElement {
 //	}
 
 	@Order(2)
-	@Available(where = WHERE_ADVANCED)
+//	@Available(where = WHERE_ADVANCED)
+//	@Group(name="Advanced")
+
 	public String getBriefDescription() {
 
 //		if(!ClassSystemMode.getThreadLocalInstance().isDesignTime()){
