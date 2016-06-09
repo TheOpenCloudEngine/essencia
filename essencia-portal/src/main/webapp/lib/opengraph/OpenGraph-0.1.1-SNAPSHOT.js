@@ -23452,7 +23452,11 @@ OG.handler.EventHandler.prototype = {
                 return correctionConditions;
             }
 
-            //모든 Shape 의 중심점을 조건에 포함한다.
+            //모든 Shape 의 중심점,상하좌우 끝을 조건에 포함한다.
+            var moveBoundary = renderer.getBoundary(element);
+            var moveCenter = moveBoundary.getCentroid();
+            var moveHeight = moveBoundary.getHeight();
+            var moveWidth = moveBoundary.getWidth();
             var allShapes = renderer.getAllShapes();
             $.each(allShapes, function (idx, shape) {
                 if (renderer.isEdge(shape)) {
@@ -23463,12 +23467,127 @@ OG.handler.EventHandler.prototype = {
                 }
                 var boundary = renderer.getBoundary(shape);
                 var center = boundary.getCentroid();
+                var upperLeft = boundary.getUpperLeft();
+                var lowerRight = boundary.getLowerRight();
 
-                //vertical boundary range
+
+                //top boundary range
+                correctionConditions.push({
+                    condition: {
+                        minY: (upperLeft.y - moveHeight / 2) - delay,
+                        maxY: (upperLeft.y - moveHeight / 2) + delay
+                    },
+                    fixedPosition: {
+                        y: (upperLeft.y - moveHeight / 2)
+                    },
+                    guidePosition: {
+                        y: upperLeft.y
+                    },
+                    id: idx
+                });
+                correctionConditions.push({
+                    condition: {
+                        minY: (upperLeft.y + moveHeight / 2) - delay,
+                        maxY: (upperLeft.y + moveHeight / 2) + delay
+                    },
+                    fixedPosition: {
+                        y: (upperLeft.y + moveHeight / 2)
+                    },
+                    guidePosition: {
+                        y: upperLeft.y
+                    },
+                    id: idx
+                });
+
+                //low boundary range
+                correctionConditions.push({
+                    condition: {
+                        minY: (lowerRight.y + moveHeight / 2) - delay,
+                        maxY: (lowerRight.y + moveHeight / 2) + delay
+                    },
+                    fixedPosition: {
+                        y: (lowerRight.y + moveHeight / 2)
+                    },
+                    guidePosition: {
+                        y: lowerRight.y
+                    },
+                    id: idx
+                });
+                correctionConditions.push({
+                    condition: {
+                        minY: (lowerRight.y - moveHeight / 2) - delay,
+                        maxY: (lowerRight.y - moveHeight / 2) + delay
+                    },
+                    fixedPosition: {
+                        y: (lowerRight.y - moveHeight / 2)
+                    },
+                    guidePosition: {
+                        y: lowerRight.y
+                    },
+                    id: idx
+                });
+
+                //left boundary range
+                correctionConditions.push({
+                    condition: {
+                        minX: (upperLeft.x - moveWidth / 2) - delay,
+                        maxX: (upperLeft.x - moveWidth / 2) + delay
+                    },
+                    fixedPosition: {
+                        x: (upperLeft.x - moveWidth / 2)
+                    },
+                    guidePosition: {
+                        x: upperLeft.x
+                    },
+                    id: idx
+                });
+                correctionConditions.push({
+                    condition: {
+                        minX: (upperLeft.x + moveWidth / 2) - delay,
+                        maxX: (upperLeft.x + moveWidth / 2) + delay
+                    },
+                    fixedPosition: {
+                        x: (upperLeft.x + moveWidth / 2)
+                    },
+                    guidePosition: {
+                        x: upperLeft.x
+                    },
+                    id: idx
+                });
+
+                //right boundary range
+                correctionConditions.push({
+                    condition: {
+                        minX: (lowerRight.x + moveWidth / 2) - delay,
+                        maxX: (lowerRight.x + moveWidth / 2) + delay
+                    },
+                    fixedPosition: {
+                        x: (lowerRight.x + moveWidth / 2)
+                    },
+                    guidePosition: {
+                        x: lowerRight.x
+                    },
+                    id: idx
+                });
+                correctionConditions.push({
+                    condition: {
+                        minX: (lowerRight.x - moveWidth / 2) - delay,
+                        maxX: (lowerRight.x - moveWidth / 2) + delay
+                    },
+                    fixedPosition: {
+                        x: (lowerRight.x - moveWidth / 2)
+                    },
+                    guidePosition: {
+                        x: lowerRight.x
+                    },
+                    id: idx
+                });
+
+                //center vertical boundary range
                 correctionConditions.push({
                     condition: {
                         minX: center.x - delay,
-                        maxX: center.x + delay,
+                        maxX: center.x + delay
                     },
                     fixedPosition: {
                         x: center.x
@@ -23479,7 +23598,7 @@ OG.handler.EventHandler.prototype = {
                     id: idx
                 });
 
-                //horizontal boundary range
+                //center horizontal boundary range
                 correctionConditions.push({
                     condition: {
                         minY: center.y - delay,
@@ -23496,9 +23615,6 @@ OG.handler.EventHandler.prototype = {
             });
 
             //연결된 Shape 들의 터미널이 수평,수직으로 교차하는 순간을 조건에 포함한다.
-            var moveBoundary = renderer.getBoundary(element);
-            var moveCenter = moveBoundary.getCentroid();
-
             var edges = [];
             var prevEdges = renderer.getPrevEdges(element);
             var nextEdges = renderer.getNextEdges(element);
@@ -23567,7 +23683,7 @@ OG.handler.EventHandler.prototype = {
                 });
             });
             return correctionConditions;
-        }
+        };
 
         //엘리먼트 이동시 범위조건에 따라 새로운 포지션을 계산한다.
         //조건이 일치할 시 스틱가이드를 생선한다.
@@ -23581,7 +23697,7 @@ OG.handler.EventHandler.prototype = {
             var center = {
                 x: centroid.x + dx,
                 y: centroid.y + dy
-            }
+            };
 
             var calculateFixedPosition = function (expectedPosition) {
                 if (!expectedPosition) {
@@ -23999,17 +24115,127 @@ OG.handler.EventHandler.prototype = {
         var isEdge = $(element).attr("_shape") === OG.Constants.SHAPE_TYPE.EDGE ? true : false;
         var renderer = me._RENDERER;
 
+        var boundary = me._RENDERER.getBoundary(element);
+        var uP = boundary.getUpperCenter().y;
+        var lwP = boundary.getLowerCenter().y;
+        var lP = boundary.getLeftCenter().x;
+        var rP = boundary.getRightCenter().x;
+        var bWidth = boundary.getWidth();
+        var bHeight = boundary.getHeight();
+
         var calculateResizeCorrectionConditions = function (direction) {
             //조건집합
             var correctionConditions = [];
-            var boundary = me._RENDERER.getBoundary(element);
-            var uP = boundary.getUpperCenter().y;
-            var lwP = boundary.getLowerCenter().y;
-            var lP = boundary.getLeftCenter().x;
-            var rP = boundary.getRightCenter().x;
             var minSize = me._CONFIG.GUIDE_MIN_SIZE;
             var laneMinSize = me._CONFIG.LANE_MIN_SIZE;
             var groupInnerSapce = me._CONFIG.GROUP_INNER_SAPCE;
+
+            //모든 Shape 의 중심점,상하좌우 끝을 조건에 포함한다.
+            //이 조건은 다른 조건과 달리 리사이즈 최소 보정치 계산과 함께 하기 때문에 min,max 가 반대이다.
+            var delay = me._CONFIG.EDGE_MOVE_DELAY_SIZE;
+            var allShapes = renderer.getAllShapes();
+            $.each(allShapes, function (idx, shape) {
+                if (renderer.isEdge(shape)) {
+                    return;
+                }
+                if (shape.id === element.id) {
+                    return;
+                }
+                var boundary = renderer.getBoundary(shape);
+                var center = boundary.getCentroid();
+                var upperLeft = boundary.getUpperLeft();
+                var lowerRight = boundary.getLowerRight();
+
+                //top boundary range
+                correctionConditions.push({
+                    condition: {
+                        maxY: upperLeft.y - delay,
+                        minY: upperLeft.y + delay
+                    },
+                    fixedPosition: {
+                        y: upperLeft.y
+                    },
+                    guidePosition: {
+                        y: upperLeft.y
+                    },
+                    id: idx
+                });
+
+                //low boundary range
+                correctionConditions.push({
+                    condition: {
+                        maxY: lowerRight.y - delay,
+                        minY: lowerRight.y + delay
+                    },
+                    fixedPosition: {
+                        y: lowerRight.y
+                    },
+                    guidePosition: {
+                        y: lowerRight.y
+                    },
+                    id: idx
+                });
+
+                //left boundary range
+                correctionConditions.push({
+                    condition: {
+                        maxX: upperLeft.x - delay,
+                        minX: upperLeft.x + delay
+                    },
+                    fixedPosition: {
+                        x: upperLeft.x
+                    },
+                    guidePosition: {
+                        x: upperLeft.x
+                    },
+                    id: idx
+                });
+
+                //right boundary range
+                correctionConditions.push({
+                    condition: {
+                        maxX: lowerRight.x - delay,
+                        minX: lowerRight.x + delay
+                    },
+                    fixedPosition: {
+                        x: lowerRight.x
+                    },
+                    guidePosition: {
+                        x: lowerRight.x
+                    },
+                    id: idx
+                });
+
+                //center vertical boundary range
+                correctionConditions.push({
+                    condition: {
+                        maxX: center.x - delay,
+                        minX: center.x + delay
+                    },
+                    fixedPosition: {
+                        x: center.x
+                    },
+                    guidePosition: {
+                        x: center.x
+                    },
+                    id: idx
+                });
+
+                //center horizontal boundary range
+                correctionConditions.push({
+                    condition: {
+                        maxY: center.y - delay,
+                        minY: center.y + delay,
+                    },
+                    fixedPosition: {
+                        y: center.y
+                    },
+                    guidePosition: {
+                        y: center.y
+                    },
+                    id: idx
+                });
+            });
 
             function addRightCtrlCondition() {
                 correctionConditions.push({
@@ -24392,7 +24618,6 @@ OG.handler.EventHandler.prototype = {
                     laneRightHandleMoveright();
                 }
             }
-
             return correctionConditions;
         };
         //element가 가지고있는 범위조건에 따라 새로운 포지션을 계산한다.
@@ -24452,16 +24677,29 @@ OG.handler.EventHandler.prototype = {
                         conditionsPassToFix = false;
                     }
                 }
-
                 if (conditionsPassToFix) {
                     conditionsPassCandidates.push(correctionCondition);
                 }
             });
+
+            //$.each(conditionsPassCandidates, function (index, conditionsPassCandidate) {
+            //    fixedPosition = calculateFixedPosition(conditionsPassCandidate.fixedPosition);
+            //});
+
+            //console.log(correctionConditions,conditionsPassCandidates);
             $.each(conditionsPassCandidates, function (index, conditionsPassCandidate) {
                 fixedPosition = calculateFixedPosition(conditionsPassCandidate.fixedPosition);
+                var guidePosition = conditionsPassCandidate.guidePosition;
+                if (guidePosition) {
+                    renderer.drawStickGuide(guidePosition);
+                }
             });
+            if (!conditionsPassCandidates.length) {
+                renderer.removeAllStickGuide();
+            }
 
             return fixedPosition;
+
         };
 
         var upHandle = function (handleName) {
@@ -24494,34 +24732,106 @@ OG.handler.EventHandler.prototype = {
 
         if (isResizable === true) {
             if (!isEdge) {
-
                 for (var _handleName in guide) {
                     var handles = ['ul', 'uc', 'ur', 'rc', 'lwr', 'lwc', 'lwl', 'lc'];
                     var indexOfHandle = handles.indexOf(_handleName);
                     if (indexOfHandle === -1) {
                         continue;
                     }
-                    var indexOfAcrossHandle = (indexOfHandle + 4) >= 8 ? indexOfHandle - 4 : indexOfHandle + 4;
-                    var _acrossHandle = guide[handles[indexOfAcrossHandle]];
                     $(guide[_handleName]).data('handleName', _handleName);
-                    $(guide[_handleName]).data('acrossHandle', _acrossHandle);
-                    $(guide[_handleName]).data('acrossHandleName', handles[indexOfAcrossHandle]);
-
                     $(guide[_handleName]).draggable({
                         start: function (event) {
                             var handleName = $(this).data('handleName');
                             var eventOffset = me._getOffset(event);
+                            var hx = renderer.getAttr(guide[handleName], "x");
+                            var hy = renderer.getAttr(guide[handleName], "y");
+                            var hWidth = renderer.getAttr(guide[handleName], "width");
+                            var hHeight = renderer.getAttr(guide[handleName], "height");
                             $(this).data("start", {x: eventOffset.x, y: eventOffset.y});
                             $(this).data("offset", {
-                                x: eventOffset.x - me._num(renderer.getAttr(guide[handleName], "x")),
-                                y: eventOffset.y - me._num(renderer.getAttr(guide[handleName], "y"))
+                                x: eventOffset.x - me._num(hx + hWidth / 2),
+                                y: eventOffset.y - me._num(hy + hHeight / 2)
                             });
+
                             $(this).data('correctionConditions', calculateResizeCorrectionConditions(handleName));
                             renderer.removeRubberBand(renderer.getRootElement());
                         },
                         drag: function (event) {
                             var handleName = $(this).data('handleName');
-                            var acrossHandle = $(this).data('acrossHandle');
+                            var eventOffset = me._getOffset(event),
+                                start = $(this).data("start"),
+                                offset = $(this).data("offset");
+                            var hWidth = renderer.getAttr(guide[handleName], "width");
+                            var hHeight = renderer.getAttr(guide[handleName], "height");
+                            var newXY = correctionConditionAnalysis($(this), {
+                                x: eventOffset.x - offset.x,
+                                y: eventOffset.y - offset.y
+                            });
+                            var newX = me._grid(newXY.x);
+                            var newY = me._grid(newXY.y);
+                            var newWidth, newHeight
+                            var newUp = uP;
+                            var newLwp = lwP;
+                            var newLp = lP;
+                            var newRp = rP;
+                            $(this).css({"position": "", "left": "", "top": ""});
+                            if (upHandle(handleName)) {
+                                newUp = newY;
+                            }
+                            if (lowHandle(handleName)) {
+                                newLwp = newY;
+                            }
+                            if (rightHandle(handleName)) {
+                                newRp = newX;
+                            }
+                            if (leftHandle(handleName)) {
+                                newLp = newX;
+                            }
+                            newWidth = Math.abs(newRp - newLp);
+                            newHeight = Math.abs(newLwp - newUp);
+
+                            renderer.setAttr(guide.ul, {
+                                x: newLp - hWidth / 2,
+                                y: newUp - hHeight / 2
+                            });
+                            renderer.setAttr(guide.uc, {
+                                x: (newLp + newRp) / 2 - hWidth / 2,
+                                y: newUp - hHeight / 2
+                            });
+                            renderer.setAttr(guide.ur, {
+                                x: newRp - hWidth / 2,
+                                y: newUp - hHeight / 2
+                            });
+                            renderer.setAttr(guide.lc, {
+                                x: newLp - hWidth / 2,
+                                y: (newUp + newLwp) / 2 - hHeight / 2
+                            });
+                            renderer.setAttr(guide.rc, {
+                                x: newRp - hWidth / 2,
+                                y: (newUp + newLwp) / 2 - hHeight / 2
+                            });
+                            renderer.setAttr(guide.lwl, {
+                                x: newLp - hWidth / 2,
+                                y: newLwp - hHeight / 2
+                            });
+                            renderer.setAttr(guide.lwc, {
+                                x: (newLp + newRp) / 2 - hWidth / 2,
+                                y: newLwp - hHeight / 2
+                            });
+                            renderer.setAttr(guide.lwr, {
+                                x: newRp - hWidth / 2,
+                                y: newLwp - hHeight / 2
+                            });
+                            renderer.setAttr(guide.bBox, {
+                                x: newLp,
+                                y: newUp,
+                                width: newWidth,
+                                height: newHeight
+                            });
+                            renderer.removeAllConnectGuide();
+                        },
+                        stop: function (event) {
+                            var handleName = $(this).data('handleName');
                             var eventOffset = me._getOffset(event),
                                 start = $(this).data("start"),
                                 offset = $(this).data("offset");
@@ -24531,91 +24841,36 @@ OG.handler.EventHandler.prototype = {
                             });
                             var newX = me._grid(newXY.x);
                             var newY = me._grid(newXY.y);
-                            var newWidth;
-                            var newHeight;
-                            $(this).css({"position": "", "left": "", "top": ""});
-
-                            if (upHandle(handleName) || lowHandle(handleName)) {
-                                newHeight = Math.abs(me._grid(me._num(renderer.getAttr(acrossHandle, "y")) - newY));
+                            var newUp = uP;
+                            var newLwp = lwP;
+                            var newLp = lP;
+                            var newRp = rP;
+                            if (upHandle(handleName)) {
+                                newUp = newY;
                             }
-                            if (rightHandle(handleName) || leftHandle(handleName)) {
-                                newWidth = Math.abs(me._grid(me._num(renderer.getAttr(acrossHandle, "x")) - newX));
+                            if (lowHandle(handleName)) {
+                                newLwp = newY;
                             }
-
-                            if (newWidth) {
-                                if (rightHandle(handleName)) {
-                                    renderer.setAttr(guide.ur, {x: newX});
-                                    renderer.setAttr(guide.rc, {x: newX});
-                                    renderer.setAttr(guide.lwr, {x: newX});
-                                    renderer.setAttr(guide.bBox, {width: newWidth});
-                                }
-                                if (leftHandle(handleName)) {
-                                    renderer.setAttr(guide.ul, {x: newX});
-                                    renderer.setAttr(guide.lc, {x: newX});
-                                    renderer.setAttr(guide.lwl, {x: newX});
-                                    renderer.setAttr(guide.bBox, {
-                                        x: OG.Util.round(newX + me._num(renderer.getAttr(acrossHandle, "width")) / 2),
-                                        width: newWidth
-                                    });
-                                }
-                                renderer.setAttr(guide.uc, {x: OG.Util.round((me._num(renderer.getAttr(acrossHandle, "x")) + newX) / 2)});
-                                renderer.setAttr(guide.lwc, {x: OG.Util.round((me._num(renderer.getAttr(acrossHandle, "x")) + newX) / 2)});
+                            if (rightHandle(handleName)) {
+                                newRp = newX;
                             }
-
-                            if (newHeight) {
-                                if (upHandle(handleName)) {
-                                    renderer.setAttr(guide.ul, {y: newY});
-                                    renderer.setAttr(guide.uc, {y: newY});
-                                    renderer.setAttr(guide.ur, {y: newY});
-                                    renderer.setAttr(guide.bBox, {
-                                        y: OG.Util.round(newY + me._num(renderer.getAttr(acrossHandle, "height")) / 2),
-                                        height: newHeight
-                                    });
-                                }
-                                if (lowHandle(handleName)) {
-                                    renderer.setAttr(guide.lwl, {y: newY});
-                                    renderer.setAttr(guide.lwc, {y: newY});
-                                    renderer.setAttr(guide.lwr, {y: newY});
-                                    renderer.setAttr(guide.bBox, {height: newHeight});
-                                }
-                                renderer.setAttr(guide.lc, {y: OG.Util.round((me._num(renderer.getAttr(acrossHandle, "y")) + newY) / 2)});
-                                renderer.setAttr(guide.rc, {y: OG.Util.round((me._num(renderer.getAttr(acrossHandle, "y")) + newY) / 2)});
+                            if (leftHandle(handleName)) {
+                                newLp = newX;
                             }
-                            renderer.removeAllConnectGuide();
-                        },
-                        stop: function (event) {
+                            var newWidth = Math.abs(newRp - newLp);
+                            var newHeight = Math.abs(newLwp - newUp);
+                            var du = uP - newUp;
+                            var dlw = newLwp - lwP;
+                            var dl = lP - newLp;
+                            var dr = newRp - rP;
 
-                            var handleName = $(this).data('handleName');
-                            var eventOffset = me._getOffset(event),
-                                start = $(this).data("start"),
-                                offset = $(this).data("offset");
-                            var newXY = correctionConditionAnalysis($(this), {
-                                x: eventOffset.x,
-                                y: eventOffset.y
-                            });
-
-                            var dx, dy;
-                            var du = 0, dlw = 0, dl = 0, dr = 0;
+                            //다른 selected 엘리먼트 리사이즈용 변수
+                            var stBoundary,stUp,stLwp,stLp,stRp,
+                                newStUp,newStLwp,newStLp,newStRp,
+                                stDu,stDlw,stDl,stDr;
 
                             $(this).css({"position": "absolute", "left": "0px", "top": "0px"});
                             if (element && element.shape.geom) {
-                                if (upHandle(handleName)) {
-                                    dy = me._grid(start.y - newXY.y);
-                                    du = dy;
-                                }
-                                if (lowHandle(handleName)) {
-                                    dy = me._grid(newXY.y - start.y);
-                                    dlw = dy;
-                                }
-                                if (leftHandle(handleName)) {
-                                    dx = me._grid(start.x - newXY.x);
-                                    dl = dx;
-                                }
-                                if (rightHandle(handleName)) {
-                                    dx = me._grid(newXY.x - start.x);
-                                    dr = dx;
-                                }
-
                                 if (renderer.isLane(element)) {
                                     renderer.resizeLane(element, [du, dlw, dl, dr]);
                                 } else {
@@ -24627,8 +24882,53 @@ OG.handler.EventHandler.prototype = {
                                     me.setResizable(element, _guide, me._isResizable(element.shape));
                                     me.setConnectable(element, _guide, me._isConnectable(element.shape));
                                 }
-                            }
 
+                                //선택된 다른 엘리먼트들의 리사이즈 처리
+                                $.each(me._getSelectedElement(), function (idx, selected) {
+                                    if(selected.id === element.id){
+                                        return;
+                                    }
+                                    if (renderer.isShape(selected) && !renderer.isEdge(selected)) {
+                                        stBoundary = renderer.getBoundary(selected);
+                                        stUp = stBoundary.getUpperCenter().y;
+                                        stLwp = stBoundary.getLowerCenter().y;
+                                        stLp = stBoundary.getLeftCenter().x;
+                                        stRp = stBoundary.getRightCenter().x;
+                                        newStUp = stUp;
+                                        newStLwp = stLwp;
+                                        newStLp = stLp;
+                                        newStRp = stRp;
+                                        if (upHandle(handleName)) {
+                                            newStUp = stLwp - newHeight;
+                                        }
+                                        if (lowHandle(handleName)) {
+                                            newStLwp = stUp + newHeight;
+                                        }
+                                        if (rightHandle(handleName)) {
+                                            newStRp = stLp + newWidth;
+                                        }
+                                        if (leftHandle(handleName)) {
+                                            newStLp = stRp - newWidth;
+                                        }
+                                        stDu = stUp - newStUp;
+                                        stDlw = newStLwp - stLwp;
+                                        stDl = stLp - newStLp;
+                                        stDr = newStRp - stRp;
+
+                                        if (renderer.isLane(selected)) {
+                                            renderer.resizeLane(selected, [stDu, stDlw, stDl, stDr]);
+                                        } else {
+                                            renderer.resize(selected, [stDu, stDlw, stDl, stDr]);
+                                        }
+                                        renderer.removeGuide(selected);
+                                        var _stGuide = renderer.drawGuide(selected);
+                                        if (_stGuide) {
+                                            me.setResizable(selected, _stGuide, me._isResizable(selected.shape));
+                                            me.setConnectable(selected, _stGuide, me._isConnectable(selected.shape));
+                                        }
+                                    }
+                                });
+                            }
                             renderer.removeAllConnectGuide();
                             renderer.addHistory();
                         }
@@ -28017,38 +28317,20 @@ OG.handler.EventHandler.prototype = {
             var reativePoints = [];
             var type = $(spot).data('type');
             var vertices = element.shape.geom.getVertices();
+            var allVertices;
 
-            //서클타입 스팟인 경우 이웃한 변곡점 집합
-            if (type === OG.Constants.CONNECT_GUIDE_SUFFIX.SPOT_CIRCLE) {
-                var index = $(spot).data('index');
-                if (vertices[index - 1]) {
-                    reativePoints.push(vertices[index - 1]);
-                }
-                if (vertices[index + 1]) {
-                    reativePoints.push(vertices[index + 1]);
-                }
-            }
-
-            //사각타입 스팟인 경우 선분의 양 변곡과 그 이웃한 변곡의 집합.
-            if (type === OG.Constants.CONNECT_GUIDE_SUFFIX.SPOT_RECT) {
-                var prev = $(spot).data('prev');
-                var next = $(spot).data('next');
-                if (vertices[prev - 1]) {
-                    reativePoints.push(vertices[prev - 1]);
-                }
-                if (vertices[prev]) {
-                    reativePoints.push(vertices[prev]);
-                }
-                if (vertices[next]) {
-                    reativePoints.push(vertices[next]);
-                }
-                if (vertices[next + 1]) {
-                    reativePoints.push(vertices[next + 1]);
-                }
-            }
+            //모든 엣지의 변곡점 집합
+            var allEdges = renderer.getAllEdges();
+            $.each(allEdges, function (idx, edge) {
+                allVertices = edge.shape.geom.getVertices();
+                $.each(allVertices, function (i, vertice) {
+                    reativePoints.push(vertice);
+                });
+            });
 
             //서클 타입 스팟이고, 마지막 변곡점인 경우 shape 바운더리의 십자 영역을 번위조건에 추가한다.
             if (type === OG.Constants.CONNECT_GUIDE_SUFFIX.SPOT_CIRCLE) {
+                var index = $(spot).data('index');
                 if (index === 0 || index === vertices.length - 1) {
                     $.each(root.childNodes, function (idx, childNode) {
 
@@ -28117,12 +28399,12 @@ OG.handler.EventHandler.prototype = {
                     },
                     id: idx
                 });
-            })
+            });
 
             // spot 에 데이터 저장
             $(spot).data('correctionConditions', correctionConditions);
 
-        }
+        };
 
         //스팟이 가지고있는 범위조건에 따라 새로운 포지션을 계산한다.
         var correctionConditionAnalysis = function (spot, offset) {
@@ -28185,59 +28467,12 @@ OG.handler.EventHandler.prototype = {
                 if (conditionsPass) {
                     conditionsPassCandidates.push(correctionCondition);
                 }
-            })
-            if (conditionsPassCandidates.length === 0) {
-                return fixedPosition;
-            }
-            if (conditionsPassCandidates.length === 1) {
-                $(spot).data('lastCorrectionId', conditionsPassCandidates[0].id);
-                return calculateFixedPosition(conditionsPassCandidates[0].fixedPosition);
-            }
-            if (conditionsPassCandidates.length > 1) {
-
-                //범위조건 후보군들이 중복된 x좌표나 중복된 y좌표를 가지고 있지 않을경우,
-                //각자가 가지고 있는 x,y 모두 충족하는 좌표를 되돌려준다.
-                var IntersectionPosition = {};
-                var isIntersection = false;
-                $.each(conditionsPassCandidates, function (idx, correctionCondition) {
-                    if (correctionCondition.fixedPosition.x) {
-                        if (IntersectionPosition.x) {
-                            isIntersection = true;
-                        } else {
-                            IntersectionPosition.x = correctionCondition.fixedPosition.x
-                        }
-                    }
-                    if (correctionCondition.fixedPosition.y) {
-                        if (IntersectionPosition.y) {
-                            isIntersection = true;
-                        } else {
-                            IntersectionPosition.y = correctionCondition.fixedPosition.y
-                        }
-                    }
-                });
-                if (!isIntersection) {
-                    return calculateFixedPosition(IntersectionPosition);
-                }
-
-                //범위조건 후보군들이 중복된 x좌표나 중복된 y좌표를 가지고 있을 경우,하나의 범위조건을 되돌린다.
-                //후보 선정 기준은 마지막 사용된 범위조건의 캐쉬값이다.
-                var selectedCorrection;
-                var lastCorrectionId = $(spot).data('lastCorrectionId');
-                if (lastCorrectionId) {
-                    $.each(conditionsPassCandidates, function (idx, correctionCondition) {
-                        if (correctionCondition.id === lastCorrectionId) {
-                            selectedCorrection = correctionCondition;
-                        }
-                    });
-                    if (!selectedCorrection) {
-                        selectedCorrection = conditionsPassCandidates[0];
-                    }
-                } else {
-                    selectedCorrection = conditionsPassCandidates[0];
-                }
-                return calculateFixedPosition(selectedCorrection.fixedPosition);
-            }
-        }
+            });
+            $.each(conditionsPassCandidates, function (index, conditionsPassCandidate) {
+                fixedPosition = calculateFixedPosition(conditionsPassCandidate.fixedPosition);
+            });
+            return fixedPosition;
+        };
 
         var isConnectableSpot = function (spot) {
             var isConnectable;
@@ -28254,7 +28489,7 @@ OG.handler.EventHandler.prototype = {
                 }
             }
             return isConnectable;
-        }
+        };
 
         $(element).bind({
             mousemove: function (event) {
@@ -28750,7 +28985,7 @@ OG.handler.EventHandler.prototype = {
                                         var point = [newX, newY];
                                         var terminal = renderer.createTerminalString(frontElement, point);
                                         var isConnectable = me._isConnectable(frontElement.shape);
-                                        if(isConnectable){
+                                        if (isConnectable) {
                                             if (connectableDirection === 'from') {
                                                 if (me._isConnectableFrom(frontElement.shape)) {
                                                     renderer.connect(terminal, null, element, element.shape.geom.style);
