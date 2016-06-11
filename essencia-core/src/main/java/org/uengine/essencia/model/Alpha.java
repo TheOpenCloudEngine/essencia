@@ -201,6 +201,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
         if(stateName==null) return null; //throw new IllegalArgumentException("Finding state name is null");
 
+        if(getStates()!=null)
         for(State state : getStates()){
             if(stateName.equals(state.getName())){
                 return state;

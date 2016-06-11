@@ -1,0 +1,114 @@
+
+
+<%
+
+if(value){
+
+
+
+    var alpha = value.alpha;%>
+
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><H1> <a name="<%=alpha.name%>" style="color:black"><%=alpha.name%></a> <%=methods.contextMenus.here()%></h1>
+    </div>
+
+    <%if(alpha.description && alpha.description.trim().length > 0){%>
+    <div class="panel-body">
+        <p><%=alpha.description%></p>
+    </div>
+    <%}%>
+
+
+
+
+<table class="table table-bordered active">
+
+    <tr>
+
+        <th></th>
+        <%
+
+        if(alpha.states){
+
+            var firstState = true;
+
+                for(var i in alpha.states){
+            var state = alpha.states[i];
+        %><th>
+                    <%=state.name%><%=(state.aggregationAlphaState ? "(" + state.aggregationAlphaState + ")" : "")%>
+             </th>
+            <%
+                firstState = false;
+
+            }
+            }
+            %>
+    </tr>
+
+    <tr>
+<%
+
+    if(alpha.states){
+
+        //var firstState = true;
+%>
+    <td>
+<%
+
+    for(var index in value.alphaInstances){
+        var alphaInstance = value.alphaInstances[index];
+
+        if(alphaInstance.languageElementInstance && alphaInstance.languageElementInstance.currentStateName==null){
+%><%=mw3.locateObject(alphaInstance)%><%
+        }
+                }
+
+        %>
+        </td>
+
+        <%
+        for(var i in alpha.states){
+            var state = alpha.states[i];
+            %><td>
+                <%
+
+                  for(var index in value.alphaInstances){
+                    var alphaInstance = value.alphaInstances[index];
+
+                    if(alphaInstance.languageElementInstance && alphaInstance.languageElementInstance.currentStateName == state.name){
+                        %><%=mw3.locateObject(alphaInstance)%><%
+                    }
+                  }
+
+                %>
+            </td>
+<%
+            //firstState = false;
+
+        }
+    }
+  %>
+    </tr>
+
+
+</table>
+
+    <%
+
+    if(alpha.outgoingRelations){
+
+    %><table height='10px'><td width=20px><div onclick="$(event.target).closest('table').css('height', '100%')"></div></td><td>
+
+        <%=fields.childAlphaGameBoards.here()%>
+
+    </td></table><%
+    }
+}
+
+%>
+
+
+
+</div>

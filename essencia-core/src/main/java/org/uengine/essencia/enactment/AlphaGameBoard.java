@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Face(ejsPathMappingByContext = {"{how:'agile', face:'dwr/metaworks/org/uengine/essencia/enactment/AlphaGameBoard_agile_board.ejs'}"})
 public class AlphaGameBoard extends MetaworksContext {
 
     public AlphaGameBoard(String instanceId, Alpha alpha, Map<String, List<AlphaInstanceInList>> alphaInstancesMap) {
@@ -32,6 +33,7 @@ public class AlphaGameBoard extends MetaworksContext {
 
         setMetaworksContext(new MetaworksContext());
         getMetaworksContext().setWhere("gameboard");
+        getMetaworksContext().setHow("agile");//agile as default
 
 //        AlphaInstanceList alphaInstanceList = new AlphaInstanceList();
 //        alphaInstanceList.setLanguageElementType(alpha);
