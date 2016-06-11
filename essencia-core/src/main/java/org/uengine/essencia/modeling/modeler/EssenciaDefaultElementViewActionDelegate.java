@@ -17,7 +17,7 @@ public class EssenciaDefaultElementViewActionDelegate extends DefaultElementView
     @Override
     public void onDoubleClick(ElementView elementView) {
         if(elementView instanceof LanguageElementView){
-            MetaworksRemoteService.wrapReturn(new ModalWindow(new EssenciaPropertyPanel(elementView)));
+            MetaworksRemoteService.wrapReturn(new ModalWindow(new EssenciaPropertyPanel(elementView), 800, 600));
         }else
 
             MetaworksRemoteService.wrapReturn(new PropertySettingDialog(elementView));

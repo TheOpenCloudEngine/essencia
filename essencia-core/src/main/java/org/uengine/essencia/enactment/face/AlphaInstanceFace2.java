@@ -53,6 +53,8 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
 
         setCheckPointInstanceGroups(new ArrayList<CheckPointInstanceGroup>());
 
+        fillStates();
+
         if(getAlpha()!=null && getAlpha().getStates()!=null)
         for(State state : getAlpha().getStates()){
 
@@ -85,6 +87,8 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
 
     }
 
+
+
     @Override
     public AlphaInstance createValueFromFace() {
 
@@ -110,6 +114,8 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
         if(getAlphaPlanningPanel()!=null){
             getAlphaPlanningPanel().applyToAlphaInstance(alphaInstance);
         }
+
+        //alphaInstance.fillStates(); //it is not available since the tenant information is not available until tenantAware method is called
 
         return alphaInstance;
     }

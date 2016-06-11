@@ -4,6 +4,7 @@ import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uengine.codi.mw3.model.Application;
 import org.uengine.codi.mw3.model.InstanceViewDetail;
@@ -45,19 +46,22 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
             this.alphaInstancesMap = alphaInstancesMap;
         }
 
-//    String instanceId;
-//    @Id
-//        public String getInstanceId() {
-//            return instanceId;
-//        }
-//        public void setInstanceId(String instanceId) {
-//            this.instanceId = instanceId;
-//        }
-
-
 
     public GameBoard(ProcessInstance instance, boolean editable) throws Exception {
         load(instance, editable);
+    }
+
+    @Autowired
+    public ProcessManagerRemote processManagerRemote;
+
+
+    @ServiceMethod(eventBinding = "refresh")
+    public void refresh() throws Exception{
+
+        ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
+
+        load(instance, true);
+
     }
 
     public void load(ProcessInstance instance, boolean editable) throws Exception {
@@ -74,6 +78,7 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
         if(editable) {
             setMetaworksContext(new MetaworksContext());
             getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+            getMetaworksContext().setHow("agile");
         }
 
         practiceDefinition.arrangeRelations();
@@ -139,7 +144,9 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
                 for(Relation relation : practice.getOutgoingRelations()){
                     if(relation.getTargetElement() instanceof Alpha){
                         AlphaGameBoard alphaGameBoard = new AlphaGameBoard(instance.getInstanceId(), (Alpha)relation.getTargetElement(), alphaInstancesMap);
+                        alphaGameBoard.getMetaworksContext().setHow(""); //for the kernel, use old style
                         getAlphaGameBoards().add(alphaGameBoard);
+
                     }
                 }
 

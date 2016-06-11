@@ -5,6 +5,7 @@ import java.util.List;
 
 import Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory;
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.Group;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.Order;
 import org.metaworks.component.SelectBox;
@@ -40,10 +41,10 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
     //@Hidden
     @Face(faceClass = StateListFace.class)
+    @Group(name = "States")
     public List<State> getStates() {
         return states;
     }
-
     public void setStates(List<State> states) {
         this.states = states;
     }
@@ -200,6 +201,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
         if(stateName==null) return null; //throw new IllegalArgumentException("Finding state name is null");
 
+        if(getStates()!=null)
         for(State state : getStates()){
             if(stateName.equals(state.getName())){
                 return state;

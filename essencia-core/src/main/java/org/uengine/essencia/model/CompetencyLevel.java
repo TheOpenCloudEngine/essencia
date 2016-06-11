@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.metaworks.annotation.Face;
@@ -13,8 +14,8 @@ import org.uengine.modeling.IElement;
 
 public class CompetencyLevel extends LanguageElement implements IElement, FaceTransformer {
 
-	private List<CheckPoint> list;
-	private transient CheckPointListFace listFace;
+	private List<CheckPoint> checkPoints;
+//	private transient CheckPointListFace listFace;
 
 //	private String name;
 	private String briefDescription;
@@ -40,24 +41,24 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 		this.briefDescription = briefDescription;
 	}
 
-	@Hidden
-	public List<CheckPoint> getList() {
-		return list;
+	@Face(faceClass = CheckPointListFace.class)
+	public List<CheckPoint> getCheckPoints() {
+		return checkPoints;
 	}
 
-	public void setList(List<CheckPoint> list) {
-		this.list = list;
+	public void setCheckPoints(List<CheckPoint> list) {
+		this.checkPoints = list;
 	}
 
-	@Face(displayName = "CheckPoint")
-	@Order(4)
-	public CheckPointListFace getListFace() {
-		return listFace;
-	}
-
-	public void setListFace(CheckPointListFace listFace) {
-		this.listFace = listFace;
-	}
+//	@Face(displayName = "CheckPoint")
+//	@Order(4)
+//	public CheckPointListFace getListFace() {
+//		return listFace;
+//	}
+//
+//	public void setListFace(CheckPointListFace listFace) {
+//		this.listFace = listFace;
+//	}
 
 	@Order(3)
 	public int getLevel() {
@@ -69,7 +70,8 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 	}
 
 	public CompetencyLevel() {
-		setListFace(new CheckPointListFace());
+		setCheckPoints(new ArrayList<CheckPoint>());
+		//setListFace(new CheckPointListFace());
 	}
 
 	public Essence.Competency.CompetencyLevel toXmi() {
@@ -79,7 +81,7 @@ public class CompetencyLevel extends LanguageElement implements IElement, FaceTr
 		competencyLevel.setName(getName());
 		competencyLevel.setBriefDescription(getBriefDescription());
 		competencyLevel.setLevel(getLevel());
-		for (CheckPoint checkPoint : getList()) {
+		for (CheckPoint checkPoint : getCheckPoints()) {
 			competencyLevel.getChecklistItem().add(checkPoint.toXmi());
 		}
 		return competencyLevel;

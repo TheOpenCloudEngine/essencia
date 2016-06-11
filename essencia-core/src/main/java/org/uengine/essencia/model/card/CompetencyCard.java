@@ -28,7 +28,7 @@ public class CompetencyCard extends BasicCard{
 		y = 80;
 		int addedWidth = 16;
 		
-		for(CompetencyLevel competencyLevel : ((Competency)element).getListFace().createValue()){
+		for(CompetencyLevel competencyLevel : ((Competency)element).getCompetencyLevels()){
 			setSymbol(new CompetencyLevelView().createSymbol());
 			setView(competencyLevel.createView());
 			

@@ -108,6 +108,8 @@ public class AlphaInstance extends LanguageElementInstance {
 
         alpha.getStates();
 
+
+
         //// calculate Current State
         if(alpha.getStates()!=null)
         for(State state : alpha.getStates()){
@@ -302,6 +304,17 @@ public class AlphaInstance extends LanguageElementInstance {
         public void setSubAlphaInstanceCount(int subAlphaInstanceCount) {
             this.subAlphaInstanceCount = subAlphaInstanceCount;
         }
+
+
+    public void fillStates() {
+        if(getClassName()!=null && (getAlpha()==null || getAlpha().getStates()==null)){
+            try {
+                fillClassDefinition(getClassName());
+            } catch (Exception e) {
+                throw new RuntimeException("failed to fill up alpha definition", e);
+            }
+        }
+    }
 
     /** Rather use Criteria.isReachedToState() instead. **/
 

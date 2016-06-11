@@ -1,14 +1,18 @@
 
+
 <%
 
 if(value){
+
+
 
     var alpha = value.alpha;%>
 
 
 <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading"><H1> <a name="<%=alpha.name%>" style="color:black"><%=alpha.name%></a></h1> </div>
+    <div class="panel-heading"><H1> <a name="<%=alpha.name%>" style="color:black"><%=alpha.name%></a> <%=methods.contextMenus.here()%></h1>
+    </div>
 
     <%if(alpha.description && alpha.description.trim().length > 0){%>
     <div class="panel-body">
@@ -73,6 +77,7 @@ if(value){
         }
     }
     %>
+        <th></th>
 
     </tr>
 
@@ -93,5 +98,7 @@ if(value){
 }
 
 %>
+
+
 
 </div>

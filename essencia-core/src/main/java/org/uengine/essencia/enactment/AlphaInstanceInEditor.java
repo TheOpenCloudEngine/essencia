@@ -56,6 +56,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
         if(getLanguageElementInstance() instanceof AlphaInstance){
             AlphaInstance alphaInstance = ((AlphaInstance) getLanguageElementInstance());
+            alphaInstance.fillStates();
             alphaInstance.calculateState();
 
 
@@ -118,26 +119,33 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
         BeanUtils.copyProperties(this, alphaInstanceInList);
         alphaInstanceInList.setMetaworksContext(new MetaworksContext());
         alphaInstanceInList.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+        alphaInstanceInList.getMetaworksContext().setHow("agile");
+
+        if(true) { //if agile mode
+            MetaworksRemoteService.wrapReturn(new ToEvent(new GameBoard(), "refresh"), new Remover(new ModalWindow()));
+
+            return;
+        }
 
         if(alphaInstanceListToRefresh!=null){
             MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh), new Remover(new ModalWindow()));
 
-            HashMap<String, String> pushUserMap = new HashMap<String, String>();
-            pushUserMap.put("3","3");
-
-            MetaworksRemoteService.pushClientObjectsFiltered(
-                    new OtherSessionFilter(pushUserMap, session.getUser().getUserId().toUpperCase()),
-                    new Object[]{new Refresh(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh)});
+//            HashMap<String, String> pushUserMap = new HashMap<String, String>();
+//            pushUserMap.put("3","3");
+//
+//            MetaworksRemoteService.pushClientObjectsFiltered(
+//                    new OtherSessionFilter(pushUserMap, session.getUser().getUserId().toUpperCase()),
+//                    new Object[]{new Refresh(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh)});
 
         }else{
             MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Remover(new ModalWindow()));
 
-            HashMap<String, String> pushUserMap = new HashMap<String, String>();
-            pushUserMap.put("4","4");
-
-            MetaworksRemoteService.pushClientObjectsFiltered(
-                    new OtherSessionFilter(pushUserMap, session.getUser().getUserId().toUpperCase()),
-                    new Object[]{new Refresh(alphaInstanceInList)});
+//            HashMap<String, String> pushUserMap = new HashMap<String, String>();
+//            pushUserMap.put("4","4");
+//
+//            MetaworksRemoteService.pushClientObjectsFiltered(
+//                    new OtherSessionFilter(pushUserMap, session.getUser().getUserId().toUpperCase()),
+//                    new Object[]{new Refresh(alphaInstanceInList)});
         }
     }
 

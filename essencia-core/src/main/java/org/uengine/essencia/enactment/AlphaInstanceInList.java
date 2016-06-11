@@ -20,7 +20,10 @@ import java.util.Map;
  * Created by jjy on 2015. 12. 23..
  */
 
-@Face(ejsPathForArray = "dwr/metaworks/org/uengine/essencia/enactment/AlphaInstanceTableFace.ejs")
+@Face(
+        ejsPathForArray = "dwr/metaworks/org/uengine/essencia/enactment/AlphaInstanceTableFace.ejs",
+        ejsPathMappingByContext = "{how:'agile', face:'dwr/metaworks/org/uengine/essencia/enactment/AlphaInstanceInList_agile_board.ejs'}"
+)
 public class AlphaInstanceInList implements ContextAware{
 
     public AlphaInstanceInList(LanguageElementInstance objectInstance, ProcessInstance instance, int index) {
@@ -69,7 +72,7 @@ public class AlphaInstanceInList implements ContextAware{
     @Autowired
     public ProcessManagerRemote processManagerRemote;
 
-    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true)
+    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true, mouseBinding = "double-click")
     @Available(when=MetaworksContext.WHEN_EDIT)
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
 
@@ -96,7 +99,7 @@ public class AlphaInstanceInList implements ContextAware{
         //reset the className information so that the user interface can be loaded.
         leInstance.setClassName("codi/" + instance.getProcessDefinition().getId() + "#" + leInstance.getClassDefinition().getName());
 
-        ModalWindow modalWindow = new ModalWindow(alphaInstanceInEditor, 500, 400, "Edit Alpha Instance");
+        ModalWindow modalWindow = new ModalWindow(alphaInstanceInEditor, 1000, 700, "Edit Alpha Instance");
         modalWindow.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
         MetaworksRemoteService.wrapReturn(modalWindow);
     }
@@ -115,6 +118,9 @@ public class AlphaInstanceInList implements ContextAware{
         instance.set("",  processVariableValue);
 
         processManagerRemote.applyChanges();
+
+        setMetaworksContext(new MetaworksContext());
+        getMetaworksContext().setHow("agile");
 
 
         //getLanguageElementInstance().setId("___deleted____");
