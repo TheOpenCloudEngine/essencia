@@ -1,0 +1,120 @@
+<!--replace-->
+
+
+
+<%
+if(mw3.when == 'filter'){
+%>
+<a href="#" onClick="<%=methods.processListFilter.caller()%>"><span class="icon-file3 left_menu_icon"></span><%=value.name%></a>
+<%
+}else{
+%>
+	<%
+	if(value){
+	if(mw3.when == 'new' || mw3.when == 'edit'){
+	if(mw3.how != 'run'){
+	%>
+	<div class="form_table2">
+		<table style="width: 100%;" border="1" cellspacing="0" >
+			<tbody>
+			<tr>
+				<td width="70"><%=mw3.localize("$Byname")%></td>
+				<td><%=value.defId%></td>
+			</tr>
+			<tr>
+				<td><%=mw3.localize("$DisplayName")%></td>
+				<td><%=fields.name.here({when: 'edit'})%></td>
+			</tr>
+			<tr>
+				<td><%=mw3.localize("$Icon")%></td>
+				<td><%=fields.iconFile.here()%></td>
+			</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+	<div id="editiconpop">
+		<%=fields.iconColor.here()%>
+		<div></div>
+	</div>
+	<%
+	}
+	%>
+	<%=fields.roleMappingPanel.here()%>
+
+	<div id="btnline" style="border-top:1px solid #E3E8F2; padding-top:8px;">
+		<ul>
+			<%
+			if(mw3.how == 'run'){
+			%>
+			<%=methods.save.here()%>
+			<%
+			}else{
+			%>
+			<li><a id="wBtn" href="#" onClick="<%=methods.remove.caller()%>"><span><%=mw3.localize("$Delete")%></span></a></li>
+			<li><a id="wBtn" href="#" onClick="<%=methods.close.caller()%>"><span><%=mw3.localize("$Cancel")%></span></a></li>
+			<li><a id="wBtn" href="#" onClick="<%=methods.save.caller()%>"><span><%=mw3.localize("$SaveAndClose")%></span></a></li>
+			<%
+			}
+			%>
+		</ul>
+	</div>
+	<%
+	}else{
+		var session = mw3.getAutowiredObject('org.uengine.codi.mw3.model.Session');
+
+		var admin = false;
+		if(session && session.employee)
+			admin = session.employee.isAdmin;
+
+	if( true || admin ){
+	%>
+	<div class="editicon" onclick="<%=methods.modify.caller()%>"></div>
+	<%
+	}
+	%>
+
+<%
+
+	var description = value.name;
+	var thumbnailURL;
+
+	if(value.previewer){
+		thumbnailURL = value.previewer.thumbnailURL;
+		description = value.previewer.description;
+	}
+
+
+
+
+%>
+
+<div class="col-sm-6 col-md-4" id="objDiv_<%=objectId%>">
+	<div class="thumbnail">
+
+		<%
+		if(thumbnailURL){
+		%>
+		<img data-src="holder.js/100%x200" alt="100%x200" src='<%=thumbnailURL%>' data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+
+		<%}%>
+		<div class="caption">
+			<h3><%=value.name%></h3>
+			<p><%=description%></p>
+
+				<p><a href="#" class="btn btn-primary" role="button" onclick="<%=methods.startWithRoleMapping.caller()%>">Run</a> <a href="#" class="btn btn-default" role="button" onclick="<%=methods.remove.caller()%>">Remove</a></p>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<%
+	}
+	}
+	}
+	%>

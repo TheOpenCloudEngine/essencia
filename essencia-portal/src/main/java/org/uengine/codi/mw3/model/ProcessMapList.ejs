@@ -1,0 +1,31 @@
+<%
+	if(value){
+
+		if(value.processMapList){
+%>
+
+
+<div class="bs-example" data-example-id="thumbnails-with-custom-content">
+	<div class="row">
+
+
+<%
+			for (var i=0; i<value.processMapList.length; i++){
+%>
+						<%=mw3.locateObject(value.processMapList[i])%>
+<%
+			}
+%>
+		</ul>
+
+<br><br>
+		<button onclick="<%=methods.addApp.caller()%>"><%=mw3.localize("$AddFromLibrary")%></button>
+
+	</div>
+</div>
+
+
+<%
+		}
+	}
+%>	

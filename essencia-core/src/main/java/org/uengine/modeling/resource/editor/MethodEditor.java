@@ -58,6 +58,7 @@ public class MethodEditor extends MethodComposer implements IEditor<EssenceProce
         try {
             EssenceProcessDefinition processDefinition;
 
+
             if(getObjStr()!=null) {
                 processDefinition = (EssenceProcessDefinition) Serializer.deserialize(getObjStr());
             }else{
@@ -107,4 +108,6 @@ public class MethodEditor extends MethodComposer implements IEditor<EssenceProce
             throw new RuntimeException(e);
         }
     }
+
+
 }

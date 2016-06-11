@@ -115,7 +115,7 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
             }
         }
 
-        if(getClassName()==null || getClassName().indexOf("#") == -1) {
+        if(getLanguageElement()!=null && (getClassName()==null || getClassName().indexOf("#") == -1 )) {
             String resourcePath = (String) TransactionContext.getThreadLocalInstance().getSharedContext("resourceManager.resourcePath");
             if(resourcePath==null) {
                 resourcePath = "";
