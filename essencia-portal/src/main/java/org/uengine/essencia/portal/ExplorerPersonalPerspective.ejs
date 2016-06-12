@@ -1,0 +1,18 @@
+<%
+if(value){
+%>
+
+<div class="depth1">
+    <div class="fist_menu">
+        <ul>
+            <li class="selected_navi"><a onClick="<%=methods.projectExplorer.caller()%>" href="#"><span class="icon-feed left_menu_icon"></span><span class="left_menu_text"><%=mw3.localize("$ProjectExplorer")%></span></a></li>
+            <li class="selected_navi"><a onClick="<%=methods.processExplorer.caller()%>" href="#"><span class="icon-feed left_menu_icon"></span><span class="left_menu_text"><%=mw3.localize("$ProcessExplorer")%></span></a></li>
+            <li><a onClick="<%=methods.calendar.caller()%>" href="#"><span class="icon-calendar left_menu_icon"></span><span class="left_menu_text"><%=mw3.localize("$Calendar")%></span></a></li>
+        </ul>
+        <div>
+        </div>
+
+
+<%
+}
+%>

@@ -1,5 +1,6 @@
 package org.uengine.essencia.portal;
 
+import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dao.TransactionContext;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by jangjinyoung on 2016. 6. 11..
  */
-//@Component
+@Component
 @Scope("prototype")
 public class Explorer extends SNS {
 
@@ -59,7 +60,8 @@ public class Explorer extends SNS {
 
             PerspectiveWindow perspectiveWindow = new PerspectiveWindow(session);
 
-            ContentWindow contentWindow = createNewInstancePanel(session);;
+//            ContentWindow contentWindow = new ContentWindow();
+//            contentWindow.setPanel(new ProcessExplorer(session));
 
             westLayout.setCenter(perspectiveWindow);
             westLayout.setUseHideBar(true);
@@ -68,17 +70,35 @@ public class Explorer extends SNS {
 
 
             Layout eastLayout = new Layout();
-            eastLayout.setWest(new ListWindow());//null list panel
-            eastLayout.setCenter(contentWindow);
-            eastLayout.setOptions("togglerLength_open:0, spacing_open:0, spacing_closed:0, south__spacing_open:5, west__spacing_open:5, west__size:0"); //make instance list panel invisible (size 0)
-            eastLayout.setName("east");
-            eastLayout.setUseHideBar(false);
 
+
+            //ListWindow emptyListWindow = new ListWindow();
+
+            ListWindow listWindow = createInstanceListWindow(session);
+            InstanceList instanceList = ((ListPanel)listWindow.getPanel()).getInstanceListPanel().getInstanceList();
+
+            if(instanceList.getMetaworksContext()==null)
+                instanceList.setMetaworksContext(new MetaworksContext());
+
+            instanceList.getMetaworksContext().setWhere("pinterest");
+
+           // emptyListWindow.setPanel(listWindow);//new ProcessExplorer(session));
+
+
+
+//            emptyListWindow.setPanel(new ListPanel());
+            //eastLayout.setWest(createInstanceListWindow(session));
+
+//            eastLayout.setCenter(new ListWindow());
+//            eastLayout.setOptions("togglerLength_open:0, spacing_open:0, spacing_closed:0, south__spacing_open:5, west__spacing_open:5, west__size:0"); //make instance list panel invisible (size 0)
+//            eastLayout.setName("east");
+//            eastLayout.setUseHideBar(false);
+//
             Layout outerLayout = new Layout();
             outerLayout.setOptions("togglerLength_open:0, spacing_open:0, spacing_closed:0, west__spacing_open:1, north__size:52, west__size: 100");
 
             outerLayout.setWest(westLayout);
-            outerLayout.setCenter(eastLayout);
+            outerLayout.setCenter(listWindow);
             outerLayout.setName("center");
             outerLayout.setUseHideBar(false);
 
