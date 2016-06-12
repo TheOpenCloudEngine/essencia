@@ -3,6 +3,7 @@ package org.uengine.essencia.dashboard;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Face;
+import org.metaworks.annotation.Payload;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.MultiSelectBox;
 import org.metaworks.component.SelectBox;
@@ -25,7 +26,7 @@ import java.util.List;
 //@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class Benchmark {
 
-    private static final int DEFAULT_LOAD_INSTANCE_CNT = 5;
+    private static final int DEFAULT_LOAD_INSTANCE_CNT = 0;
     static String[] colors = {
             "192, 57, 43",
             "41, 128, 185",
@@ -76,13 +77,15 @@ public class Benchmark {
         navigation.setPerspectiveType(Perspective.TYPE_NEWSFEED);
         navigation.setPerspectiveValue("2"); //why 2?
 
-        String[] instanceIds;
+        String[] instanceIds = new String[]{};
         if(getTargetInstances()!=null){
             instanceIds = getTargetInstances().getSelected().split(", ");
         }else{
             setTargetInstances(new MultiSelectBox());
             getTargetInstances().getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 
+
+            //Load default
 
             IInstance instances = Instance.load(navigation, 0, 50);
             List instanceIdList = new ArrayList<String>();
@@ -102,11 +105,15 @@ public class Benchmark {
 
             instanceIds = new String[instanceIdList.size()];
             instanceIdList.toArray(instanceIds);
+
         }
+
 
         String[] alphas = {"Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"};
 
         setChart(new Radar());
+        getChart().setWidth(400);
+        getChart().setHeight(400);
         getChart().setRadarData(new ArrayList<RadarData>());
 
 
@@ -119,7 +126,12 @@ public class Benchmark {
 
             if(!(processDefinition instanceof EssenceProcessDefinition)) continue;
 
-            GameBoard gameBoard = new GameBoard(instance, true);
+            GameBoard gameBoard = null;
+            try {
+                gameBoard = new GameBoard(instance, true);
+            }catch (Exception e){
+                continue; //TODO: temporary disabled.
+            }
 
             RadarData pointOfEachAlphas = new RadarData();
             pointOfEachAlphas.setLabel(instance.getName());
@@ -139,7 +151,7 @@ public class Benchmark {
                         Alpha alphaInObject = ((AlphaInstance) languageElementInstance).getAlpha();
                         for(int j=0; j< alphaInObject.getStates().size(); j++){
                             if(alphaInObject.getStates().get(j).getName().equals(alphaInstance.getCurrentStateName())){
-                                point = j * 6 / alphaInObject.getStates().size();
+                                point = (j+1) * 6 / alphaInObject.getStates().size();
                             }
                         }
 
@@ -149,7 +161,7 @@ public class Benchmark {
                     }
                 }
 
-                pointOfEachAlphas.getData().add(point + 1);
+                pointOfEachAlphas.getData().add(point);
             }
 
 
@@ -162,4 +174,31 @@ public class Benchmark {
             getChart().getPerspectives().add(label);
 
     }
+
+    @ServiceMethod(mouseBinding = "drop")
+    public void drop(@AutowiredFromClient Session session, @Payload("targetInstances") SelectBox targetInstances) throws Exception {
+
+        if(session.getClipboard() instanceof InstanceDrag){
+
+            InstanceDrag instanceDrag = (InstanceDrag) session.getClipboard();
+            Instance instance = new Instance();
+            instance.setInstId(instanceDrag.getInstanceId());
+
+            if(getTargetInstances().getSelected()==null) getTargetInstances().setSelected(instance.getInstId().toString());
+
+            else
+                getTargetInstances().setSelected(getTargetInstances().getSelected()+ ", " + instance.getInstId());
+
+            load();
+        }
+
+    }
+
+
+    @AutowiredFromClient(onDrop = true)
+    public IInstance dropInstance;
+
+    @AutowiredFromClient(onDrop = true)
+    public InstanceDrag dropInstanceDrag;
+
 }
