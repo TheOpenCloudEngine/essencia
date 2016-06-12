@@ -79,6 +79,7 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
             setMetaworksContext(new MetaworksContext());
             getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
             getMetaworksContext().setHow("agile");
+            getMetaworksContext().setWhere("full");
         }
 
         practiceDefinition.arrangeRelations();

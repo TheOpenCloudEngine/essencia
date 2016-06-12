@@ -4,7 +4,16 @@
 
 
             <!--header-->
-            <tr><th width="75px"></th>
+    <tr>
+
+    <%
+        var colspan = 100;
+
+        if(mw3.where=='full'){
+    %>
+            <th width="75px"></th>
+
+    <%}%>
 
                 <%
 
@@ -19,10 +28,10 @@
 
             </tr>
 
-
-
-            <tr><td><!--font color="#222"> done</font--></td>
-
+    <tr>
+    <% if(mw3.where=='full'){%>
+            <td><!--font color="#222"> done</font--></td>
+    <%}%>
                 <%
 
                     if(value.alphaGameBoards)
@@ -58,13 +67,21 @@
 
             </tr>
 
+            <tr>
+    <% if(mw3.where=='full'){%>
+            <td><div class="tag"> now</div></td>
 
-            <tr><td><div class="tag"> now</div></td><td align="center" colspan="7"><hr style="color: #7f8c8d; border-color: #7f8c8d; background-color: #7f8c8d; margin: 0px"></td> </tr>
+    <%}%>
+
+            <td align="center" colspan="<%=colspan%>"><hr style="color: #7f8c8d; border-color: #7f8c8d; background-color: #7f8c8d; margin: 0px"></td> </tr>
 
 
-            <tr><td><!--font color="#222">working</font--></td>
+            <tr>
 
-                <%
+    <% if(mw3.where=='full'){%>
+
+                <td><!--font color="#222">working</font--></td>
+    <% }
 
                 if(value.alphaGameBoards)
                 for (var i=0; i<value.alphaGameBoards.length; i++){
@@ -114,10 +131,24 @@
 
             <!--todo states-->
 
-            <tr><td><div class="tag"> to-do</div></td><td align="center" colspan="7"><hr style="color: #7f8c8d; border-color: #7f8c8d; background-color: #7f8c8d; margin: 0px"></td> </tr>
+            <tr>
 
-            <tr><td><!--font color="#222">to do</font--></td>
+            <% if(mw3.where=='full'){%>
+
+                <td><div class="tag"> to-do</div></td>
+
+            <%}%>
+
+                <td align="center" colspan="<%=colspan%>"><hr style="color: #7f8c8d; border-color: #7f8c8d; background-color: #7f8c8d; margin: 0px"></td>
+            </tr>
+
+            <tr>
+
+            <% if(mw3.where=='full'){%>
+
+                <td><!--font color="#222">to do</font--></td>
             <%
+            }
 
                 if(value.alphaGameBoards)
                 for (var i=0; i<value.alphaGameBoards.length; i++){
@@ -176,7 +207,11 @@
     <hr>
 
         <%=methods.toggleEditable.here()%>
+
+    <% if(mw3.where=='full'){%>
 <%=fields.alphaGameBoards.here()%>
+
+    <%}%>
 
 
 </div>
