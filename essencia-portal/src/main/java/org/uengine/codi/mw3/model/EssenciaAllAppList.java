@@ -56,6 +56,13 @@ public class EssenciaAllAppList extends SocialBPMAppList {
         MetaworksRemoteService.autowire(benchmark);
         benchmark.load();
 
-        MetaworksRemoteService.wrapReturn(new ModalWindow(benchmark, 700, 700, "Alpha Status Comparison"));
+        Popup popup = new Popup();
+        popup.setPanel(benchmark);
+        popup.setName("Benchmark");
+        popup.setHeight(500);
+        popup.setWidth(450);
+        popup.setAnimate(true);
+
+        MetaworksRemoteService.wrapReturn(popup);
     }
 }
