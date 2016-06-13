@@ -1,12 +1,12 @@
 package org.uengine.web.jiraclient;
 
-import com.atlassian.jwt.SigningAlgorithm;
-import com.atlassian.jwt.core.writer.JsonSmartJwtJsonBuilder;
-import com.atlassian.jwt.core.writer.JwtClaimsBuilder;
-import com.atlassian.jwt.core.writer.NimbusJwtWriterFactory;
-import com.atlassian.jwt.httpclient.CanonicalHttpUriRequest;
-import com.atlassian.jwt.writer.JwtJsonBuilder;
-import com.atlassian.jwt.writer.JwtWriterFactory;
+import org.uengine.jwt.SigningAlgorithm;
+import org.uengine.jwt.core.writer.JsonSmartJwtJsonBuilder;
+import org.uengine.jwt.core.writer.JwtClaimsBuilder;
+import org.uengine.jwt.core.writer.NimbusJwtWriterFactory;
+import org.uengine.jwt.httpclient.CanonicalHttpUriRequest;
+import org.uengine.jwt.writer.JwtJsonBuilder;
+import org.uengine.jwt.writer.JwtWriterFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
