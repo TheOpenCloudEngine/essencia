@@ -5,6 +5,7 @@ if(value){
 <div class="depth1">
     <div class="fist_menu">
         <ul>
+            <li><a onClick="<%=methods.newProject.caller()%>" href="#"><span class="icon-pen left_menu_icon"></span><span class="left_menu_text"><%=mw3.localize("$NEW")%></span></a></li>
             <li class="selected_navi"><a onClick="<%=methods.projectExplorer.caller()%>" href="#"><span class="icon-users left_menu_icon"></span><span class="left_menu_text"><%=mw3.localize("$ProjectExplorer")%></span></a></li>
             <li><a onClick="<%=methods.processExplorer.caller()%>" href="#"><span class="icon-shuffle left_menu_icon"></span><span class="left_menu_text"><%=mw3.localize("$ProcessExplorer")%></span></a></li>
             <li><a onClick="<%=methods.calendar.caller()%>" href="#"><span class="icon-calendar left_menu_icon"></span><span class="left_menu_text"><%=mw3.localize("$Calendar")%></span></a></li>

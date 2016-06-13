@@ -4,6 +4,7 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dao.TransactionContext;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.Label;
 import org.metaworks.widget.Window;
 import org.metaworks.widget.layout.Layout;
@@ -58,10 +59,15 @@ public class Explorer extends SNS {
 
             Layout westLayout = new Layout();
 
-            PerspectiveWindow perspectiveWindow = new PerspectiveWindow(session);
+            PerspectiveWindow perspectiveWindow = new PerspectiveWindow();{
+                PerspectivePanel perspectivePanel = new ExplorerPerspectivePanel();
+                perspectivePanel.load(session);
+                perspectivePanel.setViewMode("m_left");
+                perspectiveWindow.setPanel(perspectivePanel);
+                perspectiveWindow.setPerspectivePanel(perspectivePanel);
 
-//            ContentWindow contentWindow = new ContentWindow();
-//            contentWindow.setPanel(new ProcessExplorer(session));
+            }
+
 
             westLayout.setCenter(perspectiveWindow);
             westLayout.setUseHideBar(true);

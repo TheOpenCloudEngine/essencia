@@ -8,8 +8,8 @@ import org.uengine.codi.mw3.model.*;
 /**
  * Created by jangjinyoung on 2016. 6. 12..
  */
-@Component
-@Scope("prototype")
+//@Component
+//@Scope("prototype")
 public class ExplorerPerspectivePanel extends PerspectivePanel {
     public ExplorerPerspectivePanel() throws Exception {
     }

@@ -25,6 +25,16 @@ public class ExplorerPersonalPerspective extends PersonalPerspective {
     }
 
     @ServiceMethod
+    public void newProject() throws Exception {
+        ListWindow listWindow = new ListWindow();
+        listWindow.setPanel(SNS.createNewInstancePanel(session));
+
+        MetaworksRemoteService.wrapReturn(listWindow);
+
+    }
+
+
+    @ServiceMethod
     public void projectExplorer() throws Exception {
 
         ListWindow listWindow = SNS.createInstanceListWindow(session);
@@ -51,7 +61,13 @@ public class ExplorerPersonalPerspective extends PersonalPerspective {
 
     @Override
     public Object[] calendar() throws Exception {
-        return super.calendar();
+        Object[] sessionAndListPanel = super.calendar();
+
+        ListPanel listPanel = (ListPanel) sessionAndListPanel[1];
+        ListWindow listWindow = new ListWindow();
+        listWindow.setPanel(listPanel);
+
+        return new Object[]{sessionAndListPanel[0], listWindow};
     }
 
 }

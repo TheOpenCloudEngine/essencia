@@ -50,7 +50,7 @@ public class EssenciaAllAppList extends SocialBPMAppList {
 
 
     @ServiceMethod(target=ServiceMethod.TARGET_POPUP)
-    public void showDashboard() throws Exception {
+    public void showCompare() throws Exception {
 
         Benchmark benchmark = new Benchmark();
         MetaworksRemoteService.autowire(benchmark);
@@ -64,5 +64,24 @@ public class EssenciaAllAppList extends SocialBPMAppList {
         popup.setAnimate(true);
 
         MetaworksRemoteService.wrapReturn(popup);
+    }
+
+    @ServiceMethod(target= ServiceMethodContext.TARGET_APPEND)
+    @Override
+    public Object[] goSNS() throws Exception {
+        SNS sns = new SNS();
+        sns.load(session);
+        topPanel.setTopCenterTitle("Workspace");
+        return new Object[]{new Refresh(sns), new Refresh(topPanel),
+                new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
+    }
+
+    @ServiceMethod(target= ServiceMethodContext.TARGET_APPEND)
+    public Object[] showDashboard() throws Exception {
+        SNS sns = MetaworksRemoteService.getComponent(SNS.class);
+        sns.load(session);
+        topPanel.setTopCenterTitle("Dashboard");
+        return new Object[]{new Refresh(sns), new Refresh(topPanel),
+                new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE)};
     }
 }
