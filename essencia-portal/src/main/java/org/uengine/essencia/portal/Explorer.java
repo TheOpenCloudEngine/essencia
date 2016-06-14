@@ -78,28 +78,10 @@ public class Explorer extends SNS {
             Layout eastLayout = new Layout();
 
 
-            //ListWindow emptyListWindow = new ListWindow();
+            ListWindow listWindow = new ListWindow();
+            ProcessExplorer processExplorer = new ProcessExplorer(session);
+            listWindow.setPanel(processExplorer);
 
-            ListWindow listWindow = createInstanceListWindow(session);
-            InstanceList instanceList = ((ListPanel)listWindow.getPanel()).getInstanceListPanel().getInstanceList();
-
-            if(instanceList.getMetaworksContext()==null)
-                instanceList.setMetaworksContext(new MetaworksContext());
-
-            instanceList.getMetaworksContext().setWhere("pinterest");
-
-           // emptyListWindow.setPanel(listWindow);//new ProcessExplorer(session));
-
-
-
-//            emptyListWindow.setPanel(new ListPanel());
-            //eastLayout.setWest(createInstanceListWindow(session));
-
-//            eastLayout.setCenter(new ListWindow());
-//            eastLayout.setOptions("togglerLength_open:0, spacing_open:0, spacing_closed:0, south__spacing_open:5, west__spacing_open:5, west__size:0"); //make instance list panel invisible (size 0)
-//            eastLayout.setName("east");
-//            eastLayout.setUseHideBar(false);
-//
             Layout outerLayout = new Layout();
             outerLayout.setOptions("togglerLength_open:0, spacing_open:0, spacing_closed:0, west__spacing_open:1, north__size:52, west__size: 100");
 

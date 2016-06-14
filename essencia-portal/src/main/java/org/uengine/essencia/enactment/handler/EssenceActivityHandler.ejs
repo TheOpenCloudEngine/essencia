@@ -12,8 +12,11 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#activityCard<%=objectId%>" aria-controls="home" role="tab" data-toggle="tab">Activity Card</a></li>
+
+<% if(mw3.when!='compete'){%>
     <li role="presentation"><a href="#input<%=objectId%>" aria-controls="profile" role="tab" data-toggle="tab">Inputs</a></li>
     <li role="presentation"><a href="#output<%=objectId%>" aria-controls="profile" role="tab" data-toggle="tab">Outputs</a></li>
+<%}%>
   </ul>
 
   <!-- Tab panes -->
@@ -23,6 +26,9 @@
        <%=fields.activityCard.here()%>
 
     </div>
+
+<% if(mw3.when!='compete'){%>
+
 	  <div role="tabpanel" class="tab-pane" id="input<%=objectId%>">
 
 		  <div>
@@ -37,6 +43,8 @@
 		  </div>
 
 	  </div>
+<%}%>
+
   </div>
 
 </div>

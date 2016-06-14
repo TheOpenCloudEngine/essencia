@@ -209,6 +209,8 @@ public class EssenceActivity extends HumanActivity {
             for (LanguageElement criterion1 : getActivityInEssenceDefinition().getCompletionCriteria()) {
                 Criterion criterion = (Criterion) criterion1;   //TODO: why entrycriteria is not named as criterion and Criterion class.
 
+                if(criterion.getState()==null) continue;
+
                 ValidationContext validationContext = criterion.investigateCompletable(instance);
 
                 if (validationContext != null && validationContext.size() > 0) {

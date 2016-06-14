@@ -1,0 +1,24 @@
+<div style="padding: 15px">
+    <h2><%=mw3.localize("$ProcessDetail")%></h2>
+    <p>
+        <%=mw3.localize("$ProcessDetail.PressElement")%>
+    </p>
+
+    <% if(value.methodView){%>
+
+    <h3>Essence View</h3>
+    <div style="height:800px;position:relative"><%=fields.methodView.here()%></div>
+    <%}%>
+
+    <h3>BPMN View</h3>
+    <div style="height:800px;position:relative"><%=fields.processView.here()%></div>
+
+    <h2><%=mw3.localize("$ProcessRun")%></h2>
+    <p>
+        <%=mw3.localize("$RoleMapping")%>
+    </p>
+    <div style="height: 80px">
+        <%=fields.roleMappingDefinitions.here()%>
+    </div>
+
+</div>

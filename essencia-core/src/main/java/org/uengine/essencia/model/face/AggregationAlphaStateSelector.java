@@ -72,6 +72,8 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
 
             setOptionNames(new ArrayList<String>());
 
+            getOptionNames().add("");
+
             for (State state : kernel.getStates()) {
                 getOptionNames().add(state.getName());
             }
