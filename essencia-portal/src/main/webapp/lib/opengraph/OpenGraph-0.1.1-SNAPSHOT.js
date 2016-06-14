@@ -30250,7 +30250,7 @@ OG.graph.Canvas.prototype = {
         });
         slider.dialog({
                 title: "Slider",
-                position: {my: "right top", at: "right top", of: container},
+                position: option.position ? option.position : {my: "right top", at: "right top", of: container},
                 height: option.height ? option.height : 300,
                 width: option.width ? option.width : 250,
                 dialogClass: "no-close",
@@ -30270,13 +30270,16 @@ OG.graph.Canvas.prototype = {
         expandBtn.bind('click', function () {
             //접혀있는 상태라면
             if ($(this).data('collape')) {
-                $(this).data('collape', false);
+                var height = $(this).data('collape');
+                sliderParent.height(height);
                 slider.show();
+                $(this).data('collape', false);
             }
             //접혀있지 않은 상태라면
             else {
-                $(this).data('collape', true);
+                $(this).data('collape', sliderParent.height());
                 slider.hide();
+                sliderParent.height(40);
             }
         });
 
@@ -30321,7 +30324,7 @@ OG.graph.Canvas.prototype = {
         sliderImage.attr('id', container.id + 'sliderImage');
 
         sliderNavigator = $('<div class="sliderNavigator">' +
-            '<div style="position: absolute;top: 2px;left: 2px;bottom: 2px;right: 2px;border: 2px solid blue;"></div>' +
+            '<div style="position: absolute;top: 2px;left: 2px;bottom: 2px;right: 2px;border: 2px solid #3e77ff;"></div>' +
             '</div>');
         sliderNavigator.css({
             position: 'absolute',
