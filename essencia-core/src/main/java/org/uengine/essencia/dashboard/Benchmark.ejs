@@ -1,4 +1,4 @@
-<div style="padding: 5px; margin: auto">
+<div style="padding: 15px; margin: auto">
 
 <table>
     <td><%=fields.targetInstances.here()%></td>
@@ -6,9 +6,14 @@
 </table>
 
 <br>
-
+<% if(value.chart){%>
 
 <%=fields.chart.here()%>
 
+<%}else{%>
+
+    <h2>Drag and drop instances here</h2>
+
+<%}%>
 
 </div>

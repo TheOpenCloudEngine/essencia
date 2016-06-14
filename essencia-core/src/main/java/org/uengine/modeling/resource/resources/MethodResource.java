@@ -79,6 +79,9 @@ public class MethodResource extends DefaultResource {
 
         ProcessDefinition processDefinition = (ProcessDefinition) editingObject;
 
+        processDefinition.setName(getDisplayName());
+
+
 //		{//Extract Class Definitions and deploy them, and replace the class definition itself with a link
 //
 //			for (ProcessVariable processVariable : processDefinition.getProcessVariables()) {

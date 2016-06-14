@@ -311,7 +311,7 @@ public class AlphaInstance extends LanguageElementInstance {
             try {
                 fillClassDefinition(getClassName());
             } catch (Exception e) {
-                throw new RuntimeException("failed to fill up alpha definition", e);
+//                throw new RuntimeException("failed to fill up alpha definition", e);
             }
         }
     }

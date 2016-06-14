@@ -10,10 +10,16 @@
 <ul>
 <%
 
+        var checkpoints = value.state.checkPoints;
+        if(checkpoints.__className && checkpoints.__className.indexOf("FaceWrapped") > 0){
+            checkpoints = checkpoints.value;
+        }
 
-         for(var i in value.state.checkPoints){
 
-             var checkPoint = value.state.checkPoints[i];
+         for(var i in checkpoints){
+
+             var checkPoint = checkpoints[i];
+
 
 %>
     <h1><%=checkPoint.name%></h1>

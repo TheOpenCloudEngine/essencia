@@ -6,6 +6,7 @@ import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.uengine.codi.mw3.model.Popup;
 import org.uengine.essencia.enactment.EssenceActivity;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.CardViewable;
@@ -35,7 +36,15 @@ public class ElementViewActionDelegateForCardView extends ElementViewActionDeleg
             EssenceActivity essenceActivity = (EssenceActivity) ((ActivityView) elementView).getElement();
             ActivityCard activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
 
-            MetaworksRemoteService.wrapReturn(new ModalWindow(activityCard, 700, 500, "Card View"));
+//            Popup popup = new Popup();
+//            popup.setPanel(activityCard);
+//            popup.setWidth(1000);
+//            popup.setHeight(600);
+//
+//            MetaworksRemoteService.wrapReturn(popup);
+
+            MetaworksRemoteService.wrapReturn(new ModalWindow(activityCard, 800, 500, "Card View"));
+
         }else if(elementView instanceof StateView) {
             State state = (State) ((StateView)elementView).getElement();
             StateDetail stateDetail = new StateDetail();
@@ -51,7 +60,17 @@ public class ElementViewActionDelegateForCardView extends ElementViewActionDeleg
 
                 Card card = ((CardViewable) languageElement).createCardView();
 
-                MetaworksRemoteService.wrapReturn(new ModalWindow(card, 500, 400, "Card View"));
+//                Popup popup = new Popup();
+//                popup.setPanel(card);
+//                popup.setWidth(1000);
+//                popup.setHeight(600);
+//                popup.setName("Card View");
+//                popup.setSticky(false);
+//                MetaworksRemoteService.wrapReturn(popup);
+
+
+                MetaworksRemoteService.wrapReturn(new ModalWindow(card, 800, 500, "Card View"));
+
             }
         }else{
             super.onDoubleClick(elementView);
