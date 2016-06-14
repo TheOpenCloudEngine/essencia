@@ -180,6 +180,10 @@ public class MethodCanvas extends EssenciaCanvas {
                 getElementViewList().addAll(ElementUtil.convertToElementViewList(practice.getElementList()));
                 getRelationViewList().addAll(ElementUtil.convertToRelationViewList(practice.getRelationList()));
 
+                for (RelationView relationView : getRelationViewList()) {
+                    relationView.setNeedReconnect(true);
+                }
+
                 autoRelocationFromPractice(getElementViewList());
 
             } catch (Exception e) {
