@@ -55,6 +55,7 @@ public class Explorer extends SNS {
         }
 
         TopPanel topPanel = new TopPanel(session);
+
         {
 
             Layout westLayout = new Layout();
