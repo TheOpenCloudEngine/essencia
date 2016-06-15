@@ -54,7 +54,7 @@ public class Explorer extends SNS {
 
         }
 
-        TopPanel topPanel = new TopPanel(session);
+        //TopPanel topPanel = new TopPanel(session);
 
         {
 
@@ -63,7 +63,7 @@ public class Explorer extends SNS {
             PerspectiveWindow perspectiveWindow = new PerspectiveWindow();{
                 PerspectivePanel perspectivePanel = new ExplorerPerspectivePanel();
                 perspectivePanel.load(session);
-                perspectivePanel.setViewMode("m_left");
+                perspectivePanel.setViewMode(phone ? "s_left" : "m_left");
                 perspectiveWindow.setPanel(perspectivePanel);
                 perspectiveWindow.setPerspectivePanel(perspectivePanel);
 
@@ -83,8 +83,10 @@ public class Explorer extends SNS {
             ProcessExplorer processExplorer = new ProcessExplorer(session);
             listWindow.setPanel(processExplorer);
 
+            int westSize = phone ? 50 : 100;
+
             Layout outerLayout = new Layout();
-            outerLayout.setOptions("togglerLength_open:0, spacing_open:0, spacing_closed:0, west__spacing_open:1, north__size:52, west__size: 100");
+            outerLayout.setOptions("togglerLength_open:0, spacing_open:0, spacing_closed:0, west__spacing_open:1, north__size:52, west__size: " + westSize);
 
             outerLayout.setWest(westLayout);
             outerLayout.setCenter(listWindow);
