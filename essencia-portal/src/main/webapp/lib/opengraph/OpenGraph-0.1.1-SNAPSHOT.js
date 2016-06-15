@@ -30316,7 +30316,7 @@ OG.graph.Canvas.prototype = {
             width: option.width + 'px'
         });
         slider.dialog({
-                title: "Slider",
+                title: option.title ? option.title : "Zoom",
                 position: option.position ? option.position : {my: "right top", at: "right top", of: container},
                 height: option.height ? option.height : 300,
                 width: option.width ? option.width : 250,
@@ -30402,7 +30402,7 @@ OG.graph.Canvas.prototype = {
             background: 'transparent'
         });
 
-        //네비게이터가 이동되었을경우의 이벤트
+//네비게이터가 이동되었을경우의 이벤트
         onNavigatorMove = function () {
             var svg, svgW, svgH, imgW, imgH, xRate, yRate, xOffset, yOffset, sliderX, sliderY;
             svg = me._RENDERER.getRootElement();
@@ -30488,20 +30488,20 @@ OG.graph.Canvas.prototype = {
         sliderImageWrapper.append(sliderImage);
         sliderImageWrapper.append(sliderNavigator);
 
-        //캔버스 삭제시 슬라이더도 삭제
+//캔버스 삭제시 슬라이더도 삭제
         $(container).on("remove", function () {
             me.removeSlider();
         });
 
-        //기존에 등록된 슬라이더 삭제
+//기존에 등록된 슬라이더 삭제
         if (this._CONFIG.SLIDER) {
             me.removeSlider();
         }
 
-        //슬라이더를 캔버스에 등록
+//슬라이더를 캔버스에 등록
         this._CONFIG.SLIDER = slider;
 
-        //슬라이더 업데이트
+//슬라이더 업데이트
         this.updateSlider(this._CONFIG.SCALE * 100);
     },
     updateNavigatior: function () {
@@ -30534,7 +30534,8 @@ OG.graph.Canvas.prototype = {
             left: (vx * xImgRate) + 'px',
             top: (vy * yImgRate) + 'px'
         })
-    },
+    }
+    ,
     updateSlider: function (val) {
         var me = this;
         if (!this._CONFIG.SLIDER) {
@@ -30560,7 +30561,8 @@ OG.graph.Canvas.prototype = {
         sliderImage.attr('src', srcURL);
 
         me.updateNavigatior();
-    },
+    }
+    ,
     /**
      * 확대 축소 슬라이더를 삭제한다.
      */
@@ -30569,7 +30571,8 @@ OG.graph.Canvas.prototype = {
             this._CONFIG.SLIDER.dialog("destroy");
             this._CONFIG.SLIDER.remove();
         }
-    },
+    }
+    ,
 
     /**
      * Shape 을 캔버스에 위치 및 사이즈 지정하여 드로잉한다.
@@ -30761,7 +30764,8 @@ OG.graph.Canvas.prototype = {
      */
     reconnect: function (edge) {
         return this._RENDERER.reconnect(edge);
-    },
+    }
+    ,
 
     /**
      * 두개의 Shape 을 Edge 로 연결한다.
