@@ -17845,6 +17845,73 @@ OG.renderer.RaphaelRenderer.prototype.redrawConnectedEdge = function (element, e
     }
 };
 
+
+/**
+ * 연결된 터미널의 vertices 를 초기화하여 재연결한다.
+ *
+ * @param {Element} edge Edge Shape
+ * @return {Element} 연결된 Edge 엘리먼트
+ * @override
+ */
+OG.renderer.RaphaelRenderer.prototype.reconnect = function (edge) {
+
+    var rEdge = this._getREleById(OG.Util.isElement(edge) ? edge.id : edge);
+    if (rEdge) {
+        edge = rEdge.node;
+    } else {
+        return null;
+    }
+
+    var from, to;
+    var me = this, fromShape, toShape, fromXY, toXY,
+        isSelf;
+
+    from = $(edge).attr("_from");
+    to = $(edge).attr("_to");
+    if (from) {
+        fromShape = this._getShapeFromTerminal(from);
+    }
+    if (to) {
+        toShape = this._getShapeFromTerminal(to);
+    }
+    if (!fromShape || !toShape) {
+        return edge;
+    }
+
+    // 연결 포지션 초기화
+    from = this.createDefaultTerminalString(fromShape);
+    to = this.createDefaultTerminalString(toShape);
+
+    fromXY = this._getPositionFromTerminal(from);
+    toXY = this._getPositionFromTerminal(to);
+
+    // 연결 노드 정보 설정
+    $(edge).attr("_from", from);
+    $(edge).attr("_to", to);
+
+
+    var geometry = edge.shape.geom;
+    var vertices = geometry.getVertices();
+    var newVertieces = [vertices[0], vertices[vertices.length - 1]];
+
+    newVertieces[0].x = fromXY.x;
+    newVertieces[0].y = fromXY.y;
+
+    newVertieces[1].x = toXY.x;
+    newVertieces[1].y = toXY.y;
+
+
+    // 라인 드로잉
+    edge = this.drawEdge(new OG.PolyLine(newVertieces), edge.shape.geom.style, edge ? edge.id : null);
+
+    me.trimConnectInnerVertice(edge);
+    me.trimConnectIntersection(edge);
+    me.trimEdge(edge);
+    me.checkBridgeEdge(edge);
+
+    return edge;
+};
+
 /**
  * 두개의 터미널을 연결하고, 속성정보에 추가한다.
  *
@@ -18264,7 +18331,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _drawGuide() {
-        if(!_isResizable){
+        if (!_isResizable) {
             return;
         }
         _ulRect = me._PAPER.rect(_upperLeft.x - _hSize, _upperLeft.y - _hSize, _size, _size);
@@ -18314,7 +18381,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _redrawGuide() {
-        if(!_isResizable){
+        if (!_isResizable) {
             return;
         }
         _ulRect = me._getREleById(rElement.id + OG.Constants.GUIDE_SUFFIX.UL);
@@ -18337,7 +18404,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _drawTrash() {
-        if(!_isDeletable){
+        if (!_isDeletable) {
             return;
         }
         _trash = me._PAPER.image("resources/images/symbol/trash.svg", 0, 0, _ctrlSize, _ctrlSize);
@@ -18359,7 +18426,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _redrawTrash() {
-        if(!_isDeletable){
+        if (!_isDeletable) {
             return;
         }
         _trash = me._getREleById(rElement.id + OG.Constants.GUIDE_SUFFIX.TRASH);
@@ -18367,7 +18434,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _drawLine() {
-        if(!_isConnectable){
+        if (!_isConnectable) {
             return;
         }
         _line = me._PAPER.rect(_upperRight.x + _ctrlMargin, _upperRight.y, _ctrlSize, _ctrlSize);
@@ -18404,7 +18471,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _redrawLine() {
-        if(!_isConnectable){
+        if (!_isConnectable) {
             return;
         }
         _line = me._getREleById(rElement.id + OG.Constants.GUIDE_SUFFIX.LINE);
@@ -18414,7 +18481,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _drawTextLine(i, text) {
-        if(!_isConnectable){
+        if (!_isConnectable) {
             return;
         }
         var minText = text;
@@ -18452,7 +18519,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _redrawTextLine(i, text) {
-        if(!_isConnectable){
+        if (!_isConnectable) {
             return;
         }
         _line = me._getREleById(rElement.id + OG.Constants.GUIDE_SUFFIX.LINE_TEXT + i);
@@ -18462,7 +18529,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _drawRect() {
-        if(!_isConnectCloneable){
+        if (!_isConnectCloneable) {
             return;
         }
         _rect = me._PAPER.rect(_upperRight.x + _ctrlMargin, _upperRight.y, _ctrlSize, _ctrlSize);
@@ -18477,7 +18544,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     }
 
     function _redrawRect() {
-        if(!_isConnectCloneable){
+        if (!_isConnectCloneable) {
             return;
         }
         _rect = me._getREleById(rElement.id + OG.Constants.GUIDE_SUFFIX.RECT);
@@ -18696,7 +18763,7 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
 OG.renderer.RaphaelRenderer.prototype.drawStickGuide = function (position) {
 //console.log(position);
     //console.log(canvas._CONFIG.SCALE);
-    var me = this, path,pathX,pathY;
+    var me = this, path, pathX, pathY;
 
     if (!position) {
         return;
@@ -20538,7 +20605,7 @@ OG.renderer.RaphaelRenderer.prototype.drawConnectGuide = function (element) {
     }
 
     // 선택할수 없는 엘리먼트일경우 패스.
-    if(!me._CANVAS._HANDLER._isSelectable(element.shape)){
+    if (!me._CANVAS._HANDLER._isSelectable(element.shape)) {
         return null;
     }
 
@@ -21218,7 +21285,7 @@ OG.renderer.RaphaelRenderer.prototype.createDefaultTerminalString = function (el
         }
     }
     return terminal;
-}
+};
 
 /**
  * 터미널로부터 부모 Shape element 로의 퍼센테이지 좌표를 반환한다.
@@ -22664,7 +22731,7 @@ OG.renderer.RaphaelRenderer.prototype.getRootGroupOfShape = function (element) {
  * @param {Element,String} Element 또는 ID
  */
 OG.renderer.RaphaelRenderer.prototype.checkBridgeEdge = function (element) {
-    var me = this,fromStyleChangable,toStyleChangable;
+    var me = this, fromStyleChangable, toStyleChangable;
     var rElement = me._getREleById(OG.Util.isElement(element) ? element.id : element);
 
     if (!rElement) {
@@ -30684,6 +30751,17 @@ OG.graph.Canvas.prototype = {
         this._RENDERER.redrawConnectedEdge(element);
     }
     ,
+
+    /**
+     * 연결된 터미널의 vertices 를 초기화한다.
+     *
+     * @param {Element} edge Edge Shape
+     * @return {Element} 연결된 Edge 엘리먼트
+     * @override
+     */
+    reconnect: function (edge) {
+        return this._RENDERER.reconnect(edge);
+    },
 
     /**
      * 두개의 Shape 을 Edge 로 연결한다.
