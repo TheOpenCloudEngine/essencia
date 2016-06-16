@@ -9,6 +9,7 @@ import org.uengine.essencia.designer.ActivitySpaceAndActivityPropertyPanel;
 import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
 import org.uengine.essencia.modeling.canvas.EssenciaCanvas;
+import org.uengine.essencia.modeling.modeler.EssenciaDefaultElementViewActionDelegate;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.essencia.util.ElementUtil;
 import org.uengine.modeling.ElementView;
@@ -55,6 +56,15 @@ public class ActivityView extends LanguageElementView {
 
     @Override
     public Object showProperty() throws Exception {
+
+        //TODO: the below logics must be moved to EssenciaPropertyPopup and remove  class - ActivitySpaceAndActivityPropertyPanel
+        if(elementViewActionDelegate!=null && !(elementViewActionDelegate instanceof EssenciaDefaultElementViewActionDelegate)){
+            elementViewActionDelegate.onDoubleClick(this);
+
+            return null;
+        }
+
+
         List<ElementView> list = new ArrayList<ElementView>();
         for (ElementView e : essenciaCanvas.getSafeElementViewList()) {
             if (e instanceof AlphaView) {
@@ -82,11 +92,11 @@ public class ActivityView extends LanguageElementView {
             }
         }
 
-        return super.showProperty();
+//        return super.showProperty();
 
-//        ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
-//        ContextUtil.setHow(panel, "dynamicSize");
-//        return new ModalWindow(panel, 900, 800, "Essencia Element Properties Editor [ " + getLabel() + "]");
+        ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
+        ContextUtil.setHow(panel, "dynamicSize");
+        return new ModalWindow(panel, 900, 800, "Essencia Element Properties Editor [ " + getLabel() + "]");
     }
 
 }

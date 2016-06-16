@@ -19,6 +19,10 @@ public class WorkProductCard extends BasicCard {
 
         setName(element.getName());
         setDescription(element.getDescription());
+
+        setDetail(new Detail());
+        getDetail().setDescription(element.getDescription());
+
         setImg(IMG_LOCATION + element.getElementView().getShapeId() + IMG_EXTENSION);
 
         x = 120;

@@ -58,7 +58,7 @@ public class EssenciaPropertyPanel implements ContextAware {
 
     public EssenciaPropertyPanel(ElementView elementView) {
         setElementView(elementView);
-        setElement( elementView.getElement());
+        setElement(elementView.getElement());
 
         if (getElement() instanceof FaceTransformer) {
             ((FaceTransformer) getElement()).setUpElement();

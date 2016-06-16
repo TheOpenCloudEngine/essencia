@@ -178,6 +178,8 @@ public class Benchmark {
     @ServiceMethod(mouseBinding = "drop")
     public void drop(@AutowiredFromClient Session session, @Payload("targetInstances") SelectBox targetInstances) throws Exception {
 
+        if(session==null) return;
+
         if(session.getClipboard() instanceof InstanceDrag){
 
             InstanceDrag instanceDrag = (InstanceDrag) session.getClipboard();

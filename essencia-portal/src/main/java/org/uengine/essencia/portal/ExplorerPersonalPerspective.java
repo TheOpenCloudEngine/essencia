@@ -14,14 +14,14 @@ public class ExplorerPersonalPerspective extends PersonalPerspective {
     public Object[] loadAllICanSee() throws Exception {
         Object[] sessionAndListPanel = super.loadAllICanSee();
 
-        ListPanel listPanel = (ListPanel) sessionAndListPanel[1];
+        ListPanel listPanel = (ListPanel) sessionAndListPanel[0];
         ListWindow listWindow = new ListWindow();
         listWindow.setPanel(listPanel);
         listPanel.getInstanceListPanel().getInstanceList().setMetaworksContext(new MetaworksContext());
         listPanel.getInstanceListPanel().getInstanceList().getMetaworksContext().setWhere("pinterest");
 
 
-        return new Object[]{sessionAndListPanel[0], listWindow};
+        return new Object[]{listWindow};
     }
 
     @ServiceMethod
@@ -63,11 +63,11 @@ public class ExplorerPersonalPerspective extends PersonalPerspective {
     public Object[] calendar() throws Exception {
         Object[] sessionAndListPanel = super.calendar();
 
-        ListPanel listPanel = (ListPanel) sessionAndListPanel[1];
+        ListPanel listPanel = (ListPanel) sessionAndListPanel[0];
         ListWindow listWindow = new ListWindow();
         listWindow.setPanel(listPanel);
 
-        return new Object[]{sessionAndListPanel[0], listWindow};
+        return new Object[]{listWindow};
     }
 
 }

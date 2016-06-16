@@ -7,7 +7,7 @@ import org.uengine.modeling.Symbol;
 /**
  * @author jyj
  */
-public class LevelOfDetailView extends LanguageElementView {
+public class LevelOfDetailView extends StateView {
 	public final static String SHAPE_ID = "OG.shape.essencia.LevelOfDetail";
 	
 	public LevelOfDetailView(){
