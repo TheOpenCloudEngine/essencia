@@ -6,12 +6,14 @@
 
     <% if(value.methodView){%>
 
-    <h3>Essence View</h3>
+    <h3>Structural View (Essence) <%=methods.behavioralView.here()%></h3>
     <div style="height:800px;position:relative"><%=fields.methodView.here()%></div>
-    <%}%>
+    <%}else{%>
 
-    <h3>BPMN View</h3>
+    <h3>Behavioral View (BPMN) <%=methods.structuralView.here()%></h3>
     <div style="height:800px;position:relative"><%=fields.processView.here()%></div>
+
+    <%}%>
 
     <h2><%=mw3.localize("$ProcessRun")%></h2>
     <p>

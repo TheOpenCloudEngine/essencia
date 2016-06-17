@@ -189,10 +189,35 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         }.run(returnProcessDefinition);
 
 
+        Role rootRole = returnProcessDefinition.getRole("rootRole");
+        boolean newRootRole = false;
+
+        if(rootRole==null) {
+            newRootRole = true;
+
+            rootRole = Role.forName("rootRole");
+            {
+                rootRole.setDisplayName("");
+                returnProcessDefinition.addRole(rootRole);
+
+                ElementView roleView = rootRole.createView();
+
+                //            roleView.setWidth(calculateLaneWidth(competency.getName()) + 40 + 192);
+                roleView.setHeight(128 * returnProcessDefinition.getRoles().length);
+                roleView.setX(48 + (roleView.getWidth()) / 2);
+                roleView.setY(40 + (roleView.getHeight()) / 2);
+                roleView.setShapeId("OG.shape.HorizontalLaneShape");
+                roleView.setLabel("");
+                roleView.setId("rootRole");
+
+                rootRole.setElementView(roleView);
+            }
+        }
+
         for (IElement element : getElements(Activity.class)) {
             Role role = null;
             ElementView roleView = null;
-            int laneCnt = 0;
+            int laneCnt = 0;  //due to the rootRole, it should be 0
             ElementView humanView = null;
 
             Activity activityInPracticeDefinition = (Activity) element;
@@ -216,11 +241,12 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
                 role.setDisplayName(role.getName());
                 returnProcessDefinition.addRole(role);
 
-                laneCnt = returnProcessDefinition.getRoles().length - 1;
+                laneCnt = returnProcessDefinition.getRoles().length - 2;
 
             }
 
             roleView = role.getElementView();
+
 
             if(roleView == null){
                 roleView = role.createView();
@@ -234,6 +260,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
                 role.setElementView(roleView);
             }
+
+            //for rootRole
+            roleView.setParent(rootRole.getElementView().getId());
 
             //make essence activity
             final String nameOfFindingActivity = ((Activity) element).getName();
@@ -304,6 +333,38 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
 
         }
+
+        //getting max width and apply it to all and rootRole
+
+        if(newRootRole){
+            double maxWidth = 0;
+            for (Role role : returnProcessDefinition.getRoles()) {
+
+                if (role.getElementView().getWidth() > maxWidth)
+                    maxWidth = role.getElementView().getWidth();
+
+            }
+
+            for (Role role : returnProcessDefinition.getRoles()) {
+                ElementView roleView = role.getElementView();
+                roleView.setWidth(maxWidth);
+                roleView.setX(48 + (roleView.getWidth()) / 2);
+            }
+
+
+            ElementView roleView = rootRole.getElementView();
+
+            roleView.setHeight(128 * (returnProcessDefinition.getRoles().length - 1));
+
+            int labelSize = 20;
+            roleView.setWidth(maxWidth + labelSize /*label size*/);
+            roleView.setX(48 - labelSize + (roleView.getWidth()) / 2);
+            roleView.setY(40 + (roleView.getHeight()) / 2 );
+
+        }
+
+
+
 //        if (returnProcessDefinition.getChildActivities().size() != 0) {
 //            EndEvent e = new EndEvent();
 //            e.setTracingTag("99");
@@ -727,8 +788,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
         Map<String, IElement> elementMap = new HashMap<String, IElement>();
 
+        Practice rootPractice = null;
         for(IElement element : getElementList()){
             elementMap.put(element.getElementView().getId(), element);
+
+            if(element instanceof Practice){
+                rootPractice = (Practice) element;
+            }
         }
 
 
@@ -737,7 +803,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             String from = relation.getRelationView().getFrom();
             String to = relation.getRelationView().getTo();
 
-            //danggling link will be ignored
+            //danggling link will be automatically connected to method (root)
+            if(from == null && rootPractice!=null) from = rootPractice.getElementView().getId();
+
             if(to==null || from==null) continue;
 
             from = from.split("_TERMINAL")[0];

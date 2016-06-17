@@ -27,6 +27,7 @@ public class EssenceProcessDefinition extends ProcessDefinition{
                     LanguageElementInstance languageElementInstance = (LanguageElementInstance)processVariable.getDefaultValue();
 
                     languageElementInstance.setLanguageElement((BasicElement) getPracticeDefinition().getElementByName(languageElementInstance.getLanguageElement().getName()));
+                    languageElementInstance.beforeSerialization();
                 }
             }
 
@@ -35,5 +36,29 @@ public class EssenceProcessDefinition extends ProcessDefinition{
         }
 
         super.beforeSerialization();
+    }
+
+    @Override
+    public void afterDeserialization() {
+        super.afterDeserialization();
+
+        if(practiceDefinition!=null){
+            if(getProcessVariables()!=null)
+                for(ProcessVariable processVariable : getProcessVariables()){
+                    if(processVariable.getDefaultValue() instanceof LanguageElementInstance){
+                        LanguageElementInstance languageElementInstance = (LanguageElementInstance)processVariable.getDefaultValue();
+
+                        languageElementInstance.setLanguageElement((BasicElement) getPracticeDefinition().getElementByName(languageElementInstance.getLanguageElement().getName()));
+                        languageElementInstance.afterDeserialization();
+                    }
+                }
+
+
+            practiceDefinition.afterDeserialization();
+        }
+
+        super.afterDeserialization();
+
+
     }
 }

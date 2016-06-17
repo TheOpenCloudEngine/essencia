@@ -219,4 +219,27 @@ public class EssenceActivity extends HumanActivity {
             }
         super.fireComplete(instance);
     }
+
+    @Override
+    public void afterDeserialization() {
+        super.afterDeserialization();
+
+        replaceWithRealAlphaDefinitions(getActivityInEssenceDefinition().getCompletionCriteria());
+        replaceWithRealAlphaDefinitions(getActivityInEssenceDefinition().getEntryCriteria());
+    }
+
+    private void replaceWithRealAlphaDefinitions(List<? extends Criterion> criterions) {
+        if(criterions!=null && ((EssenceProcessDefinition)getProcessDefinition()).getPracticeDefinition()!=null)
+        for (LanguageElement criterion1 : criterions) {
+            Criterion criterion = (Criterion) criterion1;   //TODO: why entrycriteria is not named as criterion and Criterion class.
+
+            if(criterion.getState()==null) continue;
+
+            if(criterion.getState().getParentAlpha().getStates()==null){
+                Alpha alpha = (Alpha) ((EssenceProcessDefinition)getProcessDefinition()).getPracticeDefinition().getElementByName(criterion.getState().getParentAlpha().getName());
+
+                criterion.getState().setParentAlpha(alpha);
+            }
+        }
+    }
 }

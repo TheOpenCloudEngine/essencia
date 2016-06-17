@@ -17,6 +17,8 @@ import org.uengine.essencia.model.card.StateDetail;
 import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.LanguageElementView;
 import org.uengine.essencia.model.view.StateView;
+import org.uengine.kernel.bpmn.SubProcess;
+import org.uengine.kernel.bpmn.view.SubProcessView;
 import org.uengine.kernel.view.ActivityView;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.ElementViewActionDelegate;
@@ -72,6 +74,8 @@ public class ElementViewActionDelegateForCardView extends ElementViewActionDeleg
                 MetaworksRemoteService.wrapReturn(new ModalWindow(card, 800, 500, "Card View"));
 
             }
+        }else if(elementView instanceof SubProcessView){
+            //nothing.
         }else{
             super.onDoubleClick(elementView);
         }

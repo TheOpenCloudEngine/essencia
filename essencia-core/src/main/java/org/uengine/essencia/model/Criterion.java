@@ -101,6 +101,7 @@ public class Criterion extends LanguageElement {
                 if(alphaInstances!=null)
                 for (AlphaInstance alphaInstance : alphaInstances) {
                     if(alphaInstance!=null) {
+                        alphaInstance.setLanguageElement(alpha); //alpha in the alphaInstance will be empty since it is heavy, so it should be re-assigned.
                         alphaInstance.calculateState();
 
                         if(!isMet(alphaInstance)){
