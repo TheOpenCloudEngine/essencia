@@ -542,13 +542,13 @@ public class XMIAdapter {
             }
 
             if (((Essence.ActivitySpaceAndActivity.ActivitySpace) essenceElement).getInput() != null) {
-                as.setInputList(new ArrayList<Alpha>());
+                as.setInput(new ArrayList<Alpha>());
                 for (Essence.AlphaAndWorkProduct.Alpha essenceAlpha : ((Essence.ActivitySpaceAndActivity.ActivitySpace) essenceElement).getInput()) {
                     Alpha alpha = new Alpha();
                     alpha.setName(essenceAlpha.getName());
                     alpha.setDescription(essenceAlpha.getDescription());
                     alpha.setBriefDescription(essenceAlpha.getBriefDescription());
-                    as.getInputList().add(alpha);
+                    as.getInput().add(alpha);
                 }
             }
             element = as;

@@ -852,10 +852,12 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
                 activityInPracticeDefinition.setCompetency(competency);
             }
 
+            if(activityInPracticeDefinition.getEntryCriteria()!=null)
             for(EntryCriterion criterion : activityInPracticeDefinition.getEntryCriteria()){
                 refreshActivityCriteria(criterion);
             }
 
+            if(activityInPracticeDefinition.getCompletionCriteria()!=null)
             for(CompletionCriterion criterion : activityInPracticeDefinition.getCompletionCriteria()){
                 refreshActivityCriteria(criterion);
             }

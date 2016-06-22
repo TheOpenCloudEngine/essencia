@@ -675,7 +675,7 @@ public final class KernelUtil {
                 String[] temp = activitySpaceArr[i].split("\n");
                 if (i == 0) {
                     activitySpace = createActivitySpace(temp[i], temp[i + 1], temp[i + 2]);
-                    activitySpace.setInputList(new ArrayList<Alpha>());
+                    activitySpace.setInput(new ArrayList<Alpha>());
                     activitySpace.setCompletionCriteria(new ArrayList<CompletionCriterion>());
                     continue;
                 } else {
@@ -685,7 +685,7 @@ public final class KernelUtil {
                                 String[] inputAlphas = temp[1].split(",");
                                 for (String inputAlpha : inputAlphas) {
                                     alpha = createAlpha(inputAlpha, "", "", "");
-                                    activitySpace.getInputList().add(alpha);
+                                    activitySpace.getInput().add(alpha);
                                 }
                             }
                             j++;

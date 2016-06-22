@@ -3,36 +3,23 @@ package org.uengine.essencia.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.metaworks.annotation.Face;
 import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Order;
-import org.metaworks.component.SelectBox;
-import org.uengine.essencia.component.EssenciaConcernSelectBox;
 import org.uengine.essencia.context.EssenciaContext;
-import org.uengine.essencia.model.card.ActivitySpaceCard;
-import org.uengine.essencia.model.card.Card;
-import org.uengine.essencia.model.face.ActivitySpaceCriterionFace;
-import org.uengine.essencia.model.face.InputAlphaFace;
 import org.uengine.essencia.model.view.ActivitySpaceView;
 import org.uengine.essencia.model.view.ActivityView;
 import org.uengine.essencia.util.ContextUtil;
-import org.uengine.modeling.IElement;
 
-public class ActivitySpace extends AbstractActivity{
+public class ActivitySpace extends Activity{
 
     private List<Activity> childActivities;
 
-    private List<Alpha> inputList;
-    private transient InputAlphaFace inputFace;
-
-    @Hidden
-    public List<Alpha> getInputList() {
-        return inputList;
-    }
-
-    public void setInputList(List<Alpha> inputList) {
-        this.inputList = inputList;
-    }
+    private List<Alpha> input;
+        public List<Alpha> getInput() {
+            return input;
+        }
+        public void setInput(List<Alpha> input) {
+            this.input = input;
+        }
 
     @Hidden
     public List<Activity> getChildActivities() {
@@ -43,64 +30,11 @@ public class ActivitySpace extends AbstractActivity{
         this.childActivities = childActivities;
     }
 
-    @Order(5)
-    @Face(displayName = "Input")
-    public InputAlphaFace getInputFace() {
-        return inputFace;
-    }
-
-    public void setInputFace(InputAlphaFace inputFace) {
-        this.inputFace = inputFace;
-    }
 
     public ActivitySpace() {
-        setConcernBox(new EssenciaConcernSelectBox());
-
+        super();
     }
 
-    @Override
-    public void setUpElement(List<IElement> elementList) {
-
-        super.setUpElement(elementList);
-
-        setInputFace(new InputAlphaFace());
-        getInputFace().fill(elementList);
-
-        setCompletionCriterionFace(new ActivitySpaceCriterionFace());
-        getCompletionCriterionFace().fill(elementList);
-
-        this.elementListFromCanvas = elementList;
-
-        super.setUpElement();
-        if (getInputList() != null) {
-            getInputFace().fillElements(getInputList());
-            getInputList().clear();
-        }
-        if (getCompletionCriteria() != null) {
-            getCompletionCriterionFace().fillElements(getCompletionCriteria());
-            getCompletionCriteria().clear();
-        }
-
-
-    }
-
-    @Override
-    public void beforeApply() {
-
-        super.beforeApply();
-
-        if(getInputFace()!=null)
-            setInputList(getInputFace().createValue());
-
-        if(getCompletionCriterionFace()!=null)
-            setCompletionCriteria(((ActivitySpaceCriterionFace)getCompletionCriterionFace()).createValue());
-    }
-
-    @Override
-    public Card createCardView() {
-        Card card = new ActivitySpaceCard(this);
-        return card;
-    }
 
     @Override
     public void transformContext() {
@@ -120,7 +54,7 @@ public class ActivitySpace extends AbstractActivity{
         activitySpace.setDescription(getDescription());
         activitySpace.setBriefDescription(getBriefDescription());
 
-        for (LanguageElement e : getInputList()) {
+        for (LanguageElement e : getInput()) {
             Alpha essenciaAlpha = (Alpha) e;
 
             for (Essence.Foundation.LanguageElement languageElement : practice.getOwnedElements()) {

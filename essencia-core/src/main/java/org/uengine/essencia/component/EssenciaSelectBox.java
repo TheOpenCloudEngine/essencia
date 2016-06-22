@@ -28,7 +28,7 @@ public class EssenciaSelectBox extends SelectBox {
         if ("".equals(activitySpace.getName())) {
             return;
         }
-        for (LanguageElement e : activitySpace.getInputList()) {
+        for (LanguageElement e : activitySpace.getInput()) {
             Alpha alpha = (Alpha)e;
             super.add(alpha.getName(), alpha.getName());
         }
