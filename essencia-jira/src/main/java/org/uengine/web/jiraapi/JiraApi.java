@@ -18,6 +18,7 @@ import org.uengine.web.exception.ServiceException;
 import org.uengine.web.util.ApplicationContextRegistry;
 import org.uengine.web.util.HttpUtils;
 import org.uengine.web.util.JsonUtils;
+import org.uengine.web.util.StringUtils;
 
 import java.io.*;
 import java.security.NoSuchAlgorithmException;

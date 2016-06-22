@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.uengine.codi.mw3.model.Company;
-import org.uengine.codi.mw3.model.ProcessMap;
+import org.uengine.codi.mw3.model.*;
 import org.uengine.kernel.Role;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.web.company.CompanyService;
@@ -20,6 +19,7 @@ import org.uengine.web.process.ProcessMapService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -81,7 +81,15 @@ public class IndexController {
             ProcessMap processMap = processMapService.getProcessMapByMapId(mapId);
             view.addObject("processMap", processMap);
 
-            List<Role> roles = processMapService.getRoles(processMap.getDefId(), processMap.getComCode());
+            List<Role> roleDefinitions = processMapService.getRoles(processMap.getDefId(), processMap.getComCode());
+            List<Role> roles = new ArrayList<>();
+
+            for (Role role : roleDefinitions) {
+                if ("rootRole".equals(role.getName()) || "Initiator".equalsIgnoreCase(role.getName())) {
+                    continue;
+                }
+                roles.add(role);
+            }
             view.addObject("roles", roles);
 
             JiraApi jiraApi = serviceFactory.create(request);

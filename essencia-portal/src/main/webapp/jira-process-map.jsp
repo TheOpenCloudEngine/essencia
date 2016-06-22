@@ -24,6 +24,7 @@
 </head>
 
 <body onload="dwr.engine.setActiveReverseAjax(true);">
+<div id="ggg" class="ui-layout-center ui-layout-pane ui-layout-pane-center"></div>
 <script type="text/javascript">
     page_mode = "popup";
     var tenant = jiraSession.comCode;
@@ -38,7 +39,7 @@
                 __className: 'org.uengine.web.process.ProcessMapPanel',
                 jiraTenant: jiraSession.comCode,
                 defId: '<%=defId%>'
-            }, 'body');
+            }, document.getElementById('objDiv_' + session.__objectId));
             panel.loadJira(null, function () {
                 $('body').css('overflow', 'hidden');
             });

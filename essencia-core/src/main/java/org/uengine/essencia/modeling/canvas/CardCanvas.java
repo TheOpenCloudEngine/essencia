@@ -7,4 +7,7 @@ import org.uengine.modeling.Canvas;
  */
 public class CardCanvas extends Canvas {
 
+    public CardCanvas() {
+        this.setNavigator(false);
+    }
 }

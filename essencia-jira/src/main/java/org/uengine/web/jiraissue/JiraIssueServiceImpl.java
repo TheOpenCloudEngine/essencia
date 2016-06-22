@@ -75,8 +75,13 @@ public class JiraIssueServiceImpl implements JiraIssueService {
         String projectId = (String) project.get("id"); //프로젝트 아이디
 
         Map changelog = (Map) payload.get("changelog");
-        List<Map> items = (List) changelog.get("items"); //체인지 로그
 
+        //체인지 로그가 없다면 리턴한다.
+        if(changelog == null){
+            return;
+        }
+
+        List<Map> items = (List) changelog.get("items"); //체인지 로그
 
         //이슈이벤트가 완료처리(Done) 으로 인해 발생한 것이 아니면 리턴한다.
         Map statusMap = null;

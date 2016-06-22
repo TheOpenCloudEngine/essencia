@@ -46,7 +46,7 @@ public class ProcessMapController {
             String requestUserKey = jiraClientService.getRequestUserKey(request);
             String mapId = params.get("mapId").toString();
             String projectName = params.get("name").toString();
-            String projectKey = params.get("key").toString();
+            String projectKey = params.get("key").toString().toUpperCase();
             String projectType = params.get("projectType").toString();
             List<Map> roleMapping = (List) params.get("roleMapping");
 

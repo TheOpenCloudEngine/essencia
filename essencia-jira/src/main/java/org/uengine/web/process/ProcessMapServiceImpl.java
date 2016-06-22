@@ -173,6 +173,9 @@ public class ProcessMapServiceImpl implements ProcessMapService {
             roleMapping.put("empCode", mappingEmployee.getEmpCode());
         }
 
+        //롤 데피니션.
+        List<Role> roleDefinitions = this.getRoles(processMap.getDefId(), processMap.getComCode());
+
         //테넌트 설정과 프로세스 인스턴스 생성
         new TenantContext(company.getComCode());
         String instId = this.initializeProcess(processMap.getDefId());
@@ -190,6 +193,13 @@ public class ProcessMapServiceImpl implements ProcessMapService {
                 processManager.putRoleMapping(instId, "Initiator", requestEmployee.getEmpCode());
             }
 
+            //롤 매핑 rootRole 설정
+            for (Role role : roleDefinitions) {
+                if ("rootRole".equals(role.getName())) {
+                    processManager.putRoleMapping(instId, "rootRole", requestEmployee.getEmpCode());
+                }
+            }
+
             //롤 매핑 대상자 유저 설정
             for (Map roleMapping : roleMappings) {
                 String roleName = roleMapping.get("roleName").toString();
@@ -199,7 +209,7 @@ public class ProcessMapServiceImpl implements ProcessMapService {
             }
             //프로세스 시작
             ProcessInstance processInstance = processManager.getProcessInstance(instId);
-            processInstance.setProperty("0","jira",true);
+            processInstance.setProperty("0", "jira", true);
             processManager.executeProcess(instId);
             processManager.applyChanges();
 

@@ -1,12 +1,15 @@
 package org.uengine.web.company;
 
 import org.metaworks.dao.TransactionAdvice;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.oce.garuda.multitenancy.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.uengine.codi.mw3.model.Company;
 import org.uengine.codi.mw3.model.ICompany;
+import org.uengine.codi.mw3.model.TenantLifecycle;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +39,13 @@ public class CompanyServiceImpl implements CompanyService {
             company.setComName(clientKey);
             company.setAlias(clientKey);
             company.createDatabaseMe();
+
+            String tenantId = company.getComCode();
+            new TenantContext(tenantId); // From now, tenant will be recognized.
+
+            TenantLifecycle tenantLifecycle = MetaworksRemoteService.getComponent(TenantLifecycle.class);
+            if(tenantLifecycle!=null)
+                tenantLifecycle.onNewTenantSubscribe(tenantId);
 
             transactionAdvice.commitTransaction();
         } catch (Exception ex) {
