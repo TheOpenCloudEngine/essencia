@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<main>
+    <section class="wpl wpl__header-block text-center">
+        <div class="grid grid-1 vertical-padding-standard">
+            <div class="column colspan-all text-center">
+                <div class="p--oversized block block--heading-text-block"><h1>Cloud Security Statement</h1></div>
+            </div>
+        </div>
+    </section>
+    <section class="wpl wpl__divider wpl__divider--small-yellow text-left">
+        <div class="grid grid-1">
+            <div class="column colspan-all text-left">
+                <hr>
+            </div>
+        </div>
+    </section>
+    <section class="wpl text-left">
+        <div class="grid grid-8 vertical-padding-standard">
+            <div class="column colspan-6 text-center push push-1">
+                <div class="text-left"><h3>Overview</h3>
+
+                    <p>Atlassian Cloud is the hosting platform designed and used by us to deliver Atlassian applications
+                        as a service. Each subscriber's Atlassian Cloud applications are physically located on a server
+                        in a dedicated, locked cage at our data center partners. Our data center partners provide power,
+                        network and backup services. Atlassian owns the servers and is responsible for provisioning,
+                        monitoring, and managing the servers, and for providing support to Atlassian Cloud
+                        subscribers.</p>
+
+                    <p>&nbsp;</p>
+
+                    <h3>Data storage</h3>
+
+                    <p>Our Atlassian Cloud platform was designed and optimized by us specifically to host Atlassian
+                        applications and has multiple levels of redundancy built in. The applications themselves run on
+                        a separate front-end hardware node than that on which the data is stored. Hardware failure of
+                        the compute node is recovered automatically. Application data is stored on a RAID 10 (mirrored
+                        and striped) storage node which is replicated to a secondary storage node every four hours. If
+                        the primary storage node has a problem or becomes unavailable, the applications can be switched
+                        over to the secondary storage node.</p>
+
+                    <p>&nbsp;</p>
+
+                    <h3>Facilities</h3>
+
+                    <p>Access to the data centers is limited to authorized personnel only, as verified by biometric
+                        identity verification measures. Physical security measures include: on-premises security guards,
+                        closed circuit video monitoring, man traps, and additional intrusion protection measures. Within
+                        the data center, all Atlassian equipment is stored in locked cages designed to be
+                        earthquake-proof.</p>
+
+                    <p>Our data centres are located in geographically diverse locations across the United States.</p>
+
+                    <p>&nbsp;</p>
+
+                    <h3>People and access</h3>
+
+                    <p>Our global support team maintains an account on all cloud systems and applications for the
+                        purposes of maintenance and support. This support team accesses hosted applications and data
+                        only for purposes of application health monitoring and performing system or application
+                        maintenance, and upon customer request via our support system. Within Atlassian, only authorized
+                        Atlassian employees have access to application data. Authentication is done via individual
+                        passphrase-protected public keys, rather than passwords, and the servers only accept incoming
+                        SSH connections from Atlassian and internal data center locations. Atlassian Cloud is designed
+                        to allow application data to be accessible only with appropriate credentials, such that one
+                        customer cannot access another customer's data without explicit knowledge of that other
+                        customers' login information. Customers are responsible for maintaining the security of their
+                        own login information.</p>
+
+                    <p>The Atlassian operations team monitors the Atlassian Cloud platform 24x7 from operation centers
+                        in Sydney, San Francisco, and Amsterdam. Information about system uptime is publicly <a
+                                href="https://www.atlassian.com/cloud/status">available here</a>.</p>
+
+                    <p>&nbsp;</p>
+
+                    <h3>Certification</h3>
+
+                    <p>To augment 3rd party application penetration testing we have performed, we have selected data
+                        center providers that maintain industry-standard certifications.</p>
+
+                    <p>Our data centers are SOC-1 (formerly SAS 70) compliant. These certifications address physical
+                        security, system availability, network and IP backbone access, customer provisioning and problem
+                        management.</p>
+
+                    <p>&nbsp;</p>
+
+                    <h3>Backups</h3>
+
+                    <p>Application database backups for Atlassian Cloud occur on the following frequencies: On-site
+                        backups are performed daily and retained for seven days; Tape backups are taken weekly, which
+                        are then stored off-site and retained for four weeks. All backup data is encrypted.</p>
+
+                    <p>&nbsp;</p>
+
+                    <h3>Privacy</h3>
+
+                    <p>Atlassian understands the importance of ensuring the privacy of your personally identifiable
+                        information. For more information, please see our <a
+                                href="https://www.atlassian.com/company/privacy">Privacy Statement</a>.</p>
+
+                    <p>NOTE: This Security Statement applies to the Atlassian Cloud service. For questions regarding
+                        Atlassian's legacy hosted services (such as JIRA Studio, JIRA Enterprise Hosted and Confluence
+                        Enterprise Hosted), please <a href="https://www.atlassian.com/company/contact">contact us</a>.
+                    </p>
+
+                    <p>Effective as of March 20, 2015.</p></div>
+            </div>
+        </div>
+    </section>
+    <div class="grow-3994-script">
+        <script type="text/javascript"> /* Free Plan - GROW-3994 */
+        var grow3994 = function () {
+            (function ($) {
+                $(".grow-3994-control").hide();
+                $(".grow-3994-variation").show();
+                $(".grow-3994-cta .button").text("Get started free");
+                $(".grow-3994-variation.tab-content").hide();
+                if (typeof $('body').matchHeight !== "undefined") {
+                    $(".imkt-equalheights-child").matchHeight({remove: true});
+                }
+                $(".grow-3994-class-toggle").each(function () {
+                    var toggleClassname = "";
+                    var classes = $(this).attr("class").split("grow-3994-class-toggle-data-");
+                    if (classes.length > 1) {
+                        toggleClassname = classes[1].split(" ")[0];
+                    }
+                    $(this).toggleClass(toggleClassname);
+                });
+                $(".grow-3994-variation.tab-content").each(function () {
+                    var $content = $(this);
+                    var tabName = "";
+                    var classes = $content.attr("class").split("tab-data-");
+                    if (classes.length > 1) {
+                        tabName = classes[1].split(" ")[0];
+                    }
+                    if (tabName) {
+                        var activeTab = $(".section-tabs .tab-navigation .tab-menu li.active a");
+                        if (activeTab.attr("data-additional-content") === "section." + tabName) {
+                            $content.show();
+                        }
+                    }
+                });
+            })(jQuery);
+        }; </script>
+    </div>
+</main>
+</body>
+</html>
