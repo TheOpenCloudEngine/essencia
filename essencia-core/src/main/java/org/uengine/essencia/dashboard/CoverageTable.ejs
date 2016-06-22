@@ -1,0 +1,57 @@
+<table>
+
+    <tr>
+<%
+
+    var alphas = ["Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"];
+
+    for(var index in alphas){
+
+        var alpha = alphas[index];
+
+    %><th><%=alpha%></th><%
+
+
+    }
+
+
+
+%>
+
+    </tr>
+
+<%
+
+    for(var i=0; i<7; i++){
+
+%>
+    <tr>
+        <%
+
+           for(var index in alphas){
+
+            var alpha = alphas[index];
+
+            var coveragesByStateIndex = value.coverages[alpha];
+
+            if(coveragesByStateIndex && coveragesByStateIndex[i]){
+                var coverage = coveragesByStateIndex[i];
+
+                %><td style="background-color: rgb(<%=coverage.red%>,<%=coverage.green%>,<%=coverage.blue%>)"><%=coverage.name%></td><%
+
+            }
+
+        %><td><%=coverage.name%></td><%
+
+
+        }
+
+
+
+        %>
+
+    </tr>
+
+<%}%>
+
+</table>

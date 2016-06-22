@@ -170,4 +170,17 @@ public class State extends LanguageElement implements IElement, FaceTransformer 
 
         return modal;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof State){
+            State state = (State) obj;
+
+            if(getName()==null || state.getName() == null) return false;
+
+            return getName().equals(state.getName());
+        }
+
+        return false;
+    }
 }

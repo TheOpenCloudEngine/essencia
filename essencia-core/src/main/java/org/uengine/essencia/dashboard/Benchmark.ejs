@@ -8,11 +8,15 @@
 <br>
 <% if(value.chart && value.chart.radarData && value.chart.radarData.length > 0){%>
 
-<%=fields.chart.here()%>
+    <%=fields.chart.here()%>
 
-<%}else{%>
+<%}if (value.coverageTable){%>
 
-    <h2>Drag and drop instances here</h2>
+    <%=fields.coverageTable.here()%>
+
+<%} else{%>
+
+    <h2>Drag and drop projects or practices here</h2>
 
 <%}%>
 

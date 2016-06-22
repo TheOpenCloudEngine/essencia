@@ -253,4 +253,14 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
         attribute.setClassName("java.lang.String");
         return attribute;
     }
+
+    public int indexOfState(State state) {
+        for(int i=0; i<getStates().size(); i++){
+            if(getStates().get(i).equals(state)){
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }

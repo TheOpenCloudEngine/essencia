@@ -12,13 +12,17 @@ import org.metaworks.widget.chart.RadarData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.mw3.model.*;
 import org.uengine.essencia.enactment.*;
-import org.uengine.essencia.model.Alpha;
-import org.uengine.essencia.model.PracticeDefinition;
-import org.uengine.kernel.ProcessInstance;
+import org.uengine.essencia.model.*;
+import org.uengine.essencia.model.Activity;
+import org.uengine.kernel.*;
+import org.uengine.modeling.resource.VersionManager;
 import org.uengine.processmanager.ProcessManagerRemote;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jjy on 2016. 1. 3..
@@ -42,6 +46,9 @@ public class Benchmark {
             "52, 73, 94",
     };
 
+    static String[] alphas = {"Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"};
+
+
     SelectBox targetInstances;
         public SelectBox getTargetInstances() {
             return targetInstances;
@@ -57,6 +64,15 @@ public class Benchmark {
         public void setChart(Radar chart) {
             this.chart = chart;
         }
+
+    CoverageTable coverageTable;
+        public CoverageTable getCoverageTable() {
+            return coverageTable;
+        }
+        public void setCoverageTable(CoverageTable coverageTable) {
+            this.coverageTable = coverageTable;
+        }
+
 
     @AutowiredFromClient
     public Session session;
@@ -109,7 +125,6 @@ public class Benchmark {
         }
 
 
-        String[] alphas = {"Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"};
 
         setChart(new Radar());
         getChart().setWidth(400);
@@ -192,8 +207,148 @@ public class Benchmark {
                 getTargetInstances().setSelected(getTargetInstances().getSelected()+ ", " + instance.getInstId());
 
             load();
+        }else if(session.getClipboard() instanceof DefinitionDrag){
+
+            DefinitionDrag definitionDrag = (DefinitionDrag) session.getClipboard();
+
+            if(getDefinitionIds()==null){
+                setDefinitionIds(new ArrayList<String>());
+            }
+
+            getDefinitionIds().add(definitionDrag.getId());
+
+
+            loadPracticeBenchmark();
         }
 
+    }
+
+
+    List<String> definitionIds;
+        public List<String> getDefinitionIds() {
+            return definitionIds;
+        }
+        public void setDefinitionIds(List<String> definitionIds) {
+            this.definitionIds = definitionIds;
+        }
+
+
+
+    private void loadPracticeBenchmark() throws RemoteException {
+
+        List<CoverageTable> coverageTables = new ArrayList<CoverageTable>();
+
+        for(int i=0; i<definitionIds.size(); i++){
+            CoverageTable coverageTable1 = new CoverageTable();
+//            coverageTable1.setColorRed(colors[i * 3]);
+//            coverageTable1.setColorGreen(colors[i * 3 + 1]);
+//            coverageTable1.setColorBlue(colors[i * 3 + 2]);
+
+            String rgb = colors[i];
+            String[] rgbs = rgb.split(", ");
+
+            int red = new Integer(rgbs[0]);
+            int green = new Integer(rgbs[1]);
+            int blue = new Integer(rgbs[2]);
+
+
+            coverageTables.add(coverageTable1);
+
+            org.uengine.kernel.ProcessDefinition processDefinition = processManagerRemote.getProcessDefinition(VersionManager.getProductionResourcePath("codi", definitionIds.get(i)));
+            PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)processDefinition).getPracticeDefinition();
+
+            List<Activity> activities = practiceDefinition.getElements(org.uengine.essencia.model.Activity.class);
+
+            coverageTable1.setCoverages(new HashMap<String, Map<Integer, Coverage>>());
+
+            Coverage coverage = new Coverage();
+            coverage.setRed(red);
+            coverage.setGreen(green);
+            coverage.setBlue(blue);
+
+
+            for(Activity activity : activities) {
+                for (Criterion criterion : activity.getEntryCriteria()) {
+                    markCoverage(coverageTable1, coverage, criterion);
+                }
+
+                for (Criterion criterion : activity.getCompletionCriteria()) {
+                    markCoverage(coverageTable1, coverage, criterion);
+                }
+            }
+
+
+        }
+
+
+        ///// merging coverage table into one.
+
+        setCoverageTable(new CoverageTable());
+        getCoverageTable().setCoverages(new HashMap<String, Map<Integer, Coverage>>());
+
+        for(CoverageTable coverageTable1 : coverageTables){
+
+            for(int stateIdex = 0; stateIdex < alphas.length; stateIdex++){
+                String stateName = alphas[stateIdex];
+
+                Map<Integer, Coverage> coverageByStateIndex = coverageTable1.getCoverages().get(stateName);
+
+                if(coverageByStateIndex!=null){
+                    if(!getCoverageTable().getCoverages().containsKey(stateName)){
+                        getCoverageTable().getCoverages().put(stateName, new HashMap<Integer, Coverage>());
+                    }
+
+                    boolean started = false;
+                    Coverage coverage = null;
+                    for(int i = 0; i<7; i++){
+                        if(coverageByStateIndex.containsKey(i)){
+                            started = !started;
+                            coverage = coverageByStateIndex.get(i);
+                        }
+
+                        if(started){
+                            if(!getCoverageTable().getCoverages().get(stateName).containsKey(i)){
+                                getCoverageTable().getCoverages().get(stateName).put(i, coverage);
+                            }
+
+                            Coverage mergingCoverage = getCoverageTable().getCoverages().get(stateName).get(i);
+
+                            mergingCoverage.add(coverage);
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        for(Map<Integer, Coverage> coverageByStateNames : getCoverageTable().getCoverages().values()){
+
+            for(Coverage coverage: coverageByStateNames.values()){
+                coverage.merge();
+            }
+        }
+
+    }
+
+    private void markCoverage(CoverageTable coverageTable1, Coverage coverage, Criterion criterion) {
+
+        if(criterion.getState()==null) return; //ignore work product.
+
+        int stateIndex = criterion.getState().getParentAlpha().indexOfState(criterion.getState());
+
+        String alphaName = criterion.getState().getParentAlpha().getName();
+        if (!coverageTable1.getCoverages().containsKey(alphaName)) {
+            coverageTable1.getCoverages().put(alphaName, new HashMap<Integer, Coverage>());
+            //new Coverage());
+        }
+
+        Map<Integer, Coverage> coverageByStateIndex = coverageTable1.getCoverages().get(alphaName);
+
+        Coverage copy = coverage.copy();
+        copy.setName(criterion.getState().getName());
+
+        coverageByStateIndex.put(stateIndex, copy);
     }
 
 
@@ -202,5 +357,8 @@ public class Benchmark {
 
     @AutowiredFromClient(onDrop = true)
     public InstanceDrag dropInstanceDrag;
+
+    @AutowiredFromClient(onDrop = true)
+    public DefinitionDrag dropDefinitionDrag;
 
 }
