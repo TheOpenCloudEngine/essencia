@@ -19,9 +19,7 @@ import org.uengine.web.process.ProcessMapService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/view")
@@ -112,5 +110,27 @@ public class IndexController {
     public ModelAndView support(HttpServletRequest request, HttpSession session) {
 
         return new ModelAndView("page/support");
+    }
+
+    /**
+     * API 페이지로 이동한다.
+     *
+     * @return Model And View
+     */
+    @RequestMapping(value = "/console", method = RequestMethod.GET)
+    public ModelAndView api(HttpSession session) {
+
+        return new ModelAndView("page/api");
+    }
+
+    /**
+     * Document 페이지로 이동한다.
+     *
+     * @return Model And View
+     */
+    @RequestMapping(value = "/document", method = RequestMethod.GET)
+    public ModelAndView document(HttpSession session) {
+
+        return new ModelAndView("page/document");
     }
 }

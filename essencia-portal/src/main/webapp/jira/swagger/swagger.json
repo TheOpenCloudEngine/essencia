@@ -1,0 +1,2017 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ESSENCIA API",
+    "description": "ESSENCIA REST API CONSOLE",
+    "version": "1.0.0"
+  },
+  "host": "dev.essencia.live",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/rest/v1",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "summary": "List user",
+        "description": "list of user",
+        "parameters": [
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of users"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create User",
+        "description": "create user",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/user/{_id}": {
+      "get": {
+        "summary": "Get User",
+        "description": "get user",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "User"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update User",
+        "description": "update user",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "user body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete User",
+        "description": "delete user",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+
+
+    "/company": {
+      "get": {
+        "summary": "List company",
+        "description": "list of company",
+        "parameters": [
+        ],
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of company"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Company",
+        "description": "create company",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "company",
+            "in": "body",
+            "description": "company body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/company/{_id}": {
+      "get": {
+        "summary": "Get Company",
+        "description": "get company",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "company id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "200": {
+            "description": "Company"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update Company",
+        "description": "update company",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "company id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "company",
+            "in": "body",
+            "description": "company body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Company",
+        "description": "delete company",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "company id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+
+
+    "/process": {
+      "get": {
+        "summary": "List process",
+        "description": "list of process",
+        "parameters": [
+        ],
+        "tags": [
+          "Process"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of process"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Process",
+        "description": "create process",
+        "parameters": [
+          {
+            "name": "process",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/process/{_id}": {
+      "get": {
+        "summary": "Get Process",
+        "description": "get process",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process"
+        ],
+        "responses": {
+          "200": {
+            "description": "Process"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update Process",
+        "description": "update process",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "process",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Process",
+        "description": "delete process",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+
+
+    "/map": {
+      "get": {
+        "summary": "List process map",
+        "description": "list of process map",
+        "parameters": [
+        ],
+        "tags": [
+          "Process Map"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of process map"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Process Map",
+        "description": "create process Map",
+        "parameters": [
+          {
+            "name": "process map",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process Map"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/map/{_id}": {
+      "get": {
+        "summary": "Get Process map",
+        "description": "get process map",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "process map id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Map"
+        ],
+        "responses": {
+          "200": {
+            "description": "Process"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update Process map",
+        "description": "update process map",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "process map id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "process map",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process Map"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Process map",
+        "description": "delete process map",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "process map id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Map"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+
+    "/process/{processId}/var": {
+      "get": {
+        "summary": "List process's var list",
+        "description": "list of process's var list",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Var"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of process var"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create process's var",
+        "description": "create process's var",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "process var",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process Var"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/process/{processId}/var/{varId}": {
+      "get": {
+        "summary": "Get process's var",
+        "description": "get process's var",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "varId",
+            "in": "path",
+            "description": "var id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Var"
+        ],
+        "responses": {
+          "200": {
+            "description": "Process"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update process var",
+        "description": "update process var",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "varId",
+            "in": "path",
+            "description": "var id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "process var",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process Var"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete process's var",
+        "description": "delete process's var",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "varId",
+            "in": "path",
+            "description": "var id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Var"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+
+
+    "/process/{processId}/rolemapping": {
+      "get": {
+        "summary": "List process's rolemapping list",
+        "description": "list of process's rolemapping list",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Role Mapping"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of process rolemapping"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create process's rolemapping",
+        "description": "create process's rolemapping",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "process rolemapping",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process Role Mapping"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/process/{processId}/rolemapping/{mappingId}": {
+      "get": {
+        "summary": "Get process's rolemapping",
+        "description": "get process's rolemapping",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mappingId",
+            "in": "path",
+            "description": "rolemapping id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Role Mapping"
+        ],
+        "responses": {
+          "200": {
+            "description": "Process"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update process rolemapping",
+        "description": "update process rolemapping",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mappingId",
+            "in": "path",
+            "description": "rolemapping id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "process rolemapping",
+            "in": "body",
+            "description": "process body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Process"
+            }
+          }
+        ],
+        "tags": [
+          "Process Role Mapping"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete process's rolemapping",
+        "description": "delete process's rolemapping",
+        "parameters": [
+          {
+            "name": "processId",
+            "in": "path",
+            "description": "process id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mappingId",
+            "in": "path",
+            "description": "rolemapping id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Process Role Mapping"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+
+
+
+    "/jira-project": {
+      "get": {
+        "summary": "List jira-project",
+        "description": "list of jira-project",
+        "parameters": [
+        ],
+        "tags": [
+          "Jira Project"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of jira-project"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create jira-project",
+        "description": "create jira-project",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "jira-project",
+            "in": "body",
+            "description": "jira-project body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Jira Project"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/jira-project/{_id}": {
+      "get": {
+        "summary": "Get jira-project",
+        "description": "get jira-project",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "jira-project id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Jira Project"
+        ],
+        "responses": {
+          "200": {
+            "description": "jira-project"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update jira-project",
+        "description": "update jira-project",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "jira-project id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "jira-project",
+            "in": "body",
+            "description": "jira-project body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Jira Project"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete jira-project",
+        "description": "delete jira-project",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "jira-project id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Jira Project"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+
+
+
+    "/jira-issue": {
+      "get": {
+        "summary": "List jira-issue",
+        "description": "list of jira-issue",
+        "parameters": [
+        ],
+        "tags": [
+          "Jira Issue"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of jira-issue"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create jira-issue",
+        "description": "create jira-issue",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "jira-issue",
+            "in": "body",
+            "description": "jira-issue body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Jira Issue"
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    },
+    "/jira-issue/{_id}": {
+      "get": {
+        "summary": "Get jira-issue",
+        "description": "get jira-issue",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "jira-issue id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Jira Issue"
+        ],
+        "responses": {
+          "200": {
+            "description": "jira-issue"
+          },
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update jira-issue",
+        "description": "update jira-issue",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "jira-issue id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "jira-project",
+            "in": "body",
+            "description": "jira-issue body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "tags": [
+          "Jira Issue"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          },
+          "409": {
+            "description": "CONFLICT"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete jira-issue",
+        "description": "delete jira-issue",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "description": "jira-issue id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Jira Issue"
+        ],
+        "responses": {
+          "204": {
+            "description": "NO_CONTENT"
+          },
+          "401": {
+            "description": "UNAUTHORIZED"
+          },
+          "400": {
+            "description": "BAD_REQUEST"
+          },
+          "404": {
+            "description": "NOT_FOUND"
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED"
+          }
+        },
+        "security": [
+          {
+            "management_key": []
+          },
+          {
+            "management_secret": []
+          }
+        ]
+      }
+    }
+
+
+
+
+  },
+  "securityDefinitions": {
+    "management_key": {
+      "type": "apiKey",
+      "name": "management-key",
+      "in": "header"
+    },
+    "management_secret": {
+      "type": "apiKey",
+      "name": "management-secret",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "userPassword": {
+          "type": "string"
+        },
+        "level": {
+          "type": "number"
+        }
+      }
+    },
+    "Process": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isdeleted": {
+          "type": "number"
+        },
+        "isadhoc": {
+          "type": "number"
+        },
+        "isarchive": {
+          "type": "number"
+        },
+        "issubprocess": {
+          "type": "number"
+        },
+        "iseventhandler": {
+          "type": "number"
+        },
+        "rootinstid": {
+          "type": "string"
+        },
+        "maininstid": {
+          "type": "string"
+        },
+        "maindefverid": {
+          "type": "string"
+        },
+        "mainacttrctag": {
+          "type": "string"
+        },
+        "mainexecscope": {
+          "type": "string"
+        },
+        "abstrcpath": {
+          "type": "string"
+        }
+      }
+    },
+    "Client": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "clientTrust": {
+          "type": "string"
+        },
+        "clientType": {
+          "type": "string"
+        },
+        "activeClient": {
+          "type": "string"
+        },
+        "authorizedGrantTypes": {
+          "type": "string"
+        },
+        "webServerRedirectUri": {
+          "type": "string"
+        },
+        "refreshTokenValidity": {
+          "type": "string"
+        },
+        "codeLifetime": {
+          "type": "number"
+        },
+        "refreshTokenLifetime": {
+          "type": "number"
+        },
+        "accessTokenLifetime": {
+          "type": "number"
+        },
+        "jwtTokenLifetime": {
+          "type": "number"
+        }
+      }
+    },
+    "AccessToken": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "string"
+        },
+        "oauthUserId": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -8,7 +8,9 @@
             <ul class="aui-nav">
                 <li><a name="jira-redirect" href="#" data-path="/api/view/index">About</a></li>
                 <li><a name="jira-redirect" href="#" data-path="/api/view/getting-started">Getting started</a></li>
-                <li><a href="http://essencia.eu-gb.mybluemix.net/">Essencia Home</a></li>
+                <li><a href="http://dev.essencia.live/">Essencia Home</a></li>
+                <li><a href="http://dev.essencia.live/api/view/console">Rest API</a></li>
+                <li><a href="http://dev.essencia.live/api/view/document">Documentation</a></li>
             </ul>
             <div class="aui-nav-heading"><strong>Project</strong></div>
             <ul class="aui-nav">

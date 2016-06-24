@@ -266,6 +266,8 @@
     }
 
     $(document).ready(function () {
+        mw3.checkUpdates();
+
         document.body.addEventListener("DOMNodeInserted", function (ev) {
             //console.log('DOMNodeInserted');
             //console.log(ev);
