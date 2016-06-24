@@ -47,7 +47,7 @@ public class MethodComposer extends PracticeDefiner {
 
         for (org.uengine.essencia.model.Activity activity : pd.getElements(org.uengine.essencia.model.Activity.class)) {
 
-
+            if(activity.getEntryCriteria()!=null)
             for (int i=0; i<activity.getEntryCriteria().size(); i++) {
 
                 LanguageElement e = activity.getEntryCriteria().get(i);
@@ -57,6 +57,7 @@ public class MethodComposer extends PracticeDefiner {
                 }
             }
 
+            if(activity.getCompletionCriteria()!=null)
             for (int i=0; i<activity.getCompletionCriteria().size(); i++) {
 
                 LanguageElement e = activity.getCompletionCriteria().get(i);

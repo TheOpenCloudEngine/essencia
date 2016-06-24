@@ -19,7 +19,7 @@ if(mw3.when == 'filter'){
 			<tbody>
 			<tr>
 				<td width="70"><%=mw3.localize("$Byname")%></td>
-				<td><%=value.defId%></td>
+				<td><%=value.defId.split(".")[0]%></td>
 			</tr>
 			<tr>
 				<td><%=mw3.localize("$DisplayName")%></td>
@@ -100,7 +100,7 @@ if(mw3.when == 'filter'){
 
 		<%}%>
 		<div class="caption">
-			<h3><%=value.name%> <%=fields.definitionDrag.here()%></h3>
+			<h3><%=value.name.split(".")[0]%> <%=fields.definitionDrag.here()%></h3>
 			<p><%=description%></p>
 
 				<p><a href="#" class="btn btn-primary" role="button" onclick="<%=methods.startWithRoleMapping.caller()%>"><%=mw3.localize("$Open")%></a>

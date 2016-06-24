@@ -15,7 +15,7 @@ import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.Symbol;
 
-public class ActivitySpaceView extends LanguageElementView implements KernelLanguageViewable{
+public class ActivitySpaceView extends ActivityView implements KernelLanguageViewable{
 	public final static String SHAPE_ID = "OG.shape.essencia.ActivitySpace";
 	
 	@AutowiredFromClient

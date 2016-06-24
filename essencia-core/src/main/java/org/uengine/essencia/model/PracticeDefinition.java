@@ -873,7 +873,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
     }
 
     private void refreshActivityCriteria(Criterion criterion) {
-        if(criterion.getState()!=null) {
+        if(criterion.getState()!=null && criterion.getState().getParentAlpha()!=null) {
             Alpha realAlpha = getElement(criterion.getState().getParentAlpha().getName(), Alpha.class);
             criterion.getState().setParentAlpha(realAlpha);
         }

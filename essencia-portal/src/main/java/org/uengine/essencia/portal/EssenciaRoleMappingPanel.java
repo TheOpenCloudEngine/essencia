@@ -7,12 +7,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.uengine.codi.mw3.model.RoleMappingPanel;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
+import org.uengine.essencia.model.Practice;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.modeling.modeler.ProcessCanvas;
 import org.uengine.modeling.modeler.ProcessModeler;
 import org.uengine.modeling.resource.VersionManager;
 import org.uengine.social.ElementViewActionDelegateForInstanceMonitoring;
+
+import java.util.List;
 
 /**
  * Created by jjy on 2016. 6. 13..
@@ -21,6 +24,36 @@ import org.uengine.social.ElementViewActionDelegateForInstanceMonitoring;
 @Component
 @Scope("prototype")
 public class EssenciaRoleMappingPanel extends RoleMappingPanel{
+
+    String practiceName;
+
+        public String getPracticeName() {
+            return practiceName;
+        }
+
+        public void setPracticeName(String practiceName) {
+            this.practiceName = practiceName;
+        }
+
+    String practiceDescription;
+        public String getPracticeDescription() {
+            return practiceDescription;
+        }
+
+        public void setPracticeDescription(String practiceDescription) {
+            this.practiceDescription = practiceDescription;
+        }
+
+    String practiceBriefDescription;
+
+        public String getPracticeBriefDescription() {
+            return practiceBriefDescription;
+        }
+
+        public void setPracticeBriefDescription(String practiceBriefDescription) {
+            this.practiceBriefDescription = practiceBriefDescription;
+        }
+
 
     MethodComposer methodView;
         public MethodComposer getMethodView() {
@@ -49,6 +82,18 @@ public class EssenciaRoleMappingPanel extends RoleMappingPanel{
         methodView.setModel(essenceProcessDefinition.getPracticeDefinition());
         methodView.setElementViewActionDelegate(MetaworksRemoteService.getComponent(ElementViewActionDelegateForInstanceMonitoring.class));
 
+
+        List<Practice> practices = essenceProcessDefinition.getPracticeDefinition().getElements(Practice.class);
+
+        if(practices.size() > 0){
+            Practice practice = practices.get(0);
+            setPracticeName(practice.getName());
+            setPracticeBriefDescription(practice.getBriefDescription());
+            setPracticeDescription(practice.getDescription());
+        }else{
+            setPracticeName(essenceProcessDefinition.getName());
+            setPracticeBriefDescription(essenceProcessDefinition.getShortDescription());
+        }
     }
 
     @Override

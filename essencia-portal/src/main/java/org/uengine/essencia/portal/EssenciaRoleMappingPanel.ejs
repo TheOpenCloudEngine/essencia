@@ -1,8 +1,16 @@
 <div style="padding: 15px">
-    <h2><%=mw3.localize("$ProcessDetail")%></h2>
+    <h2><%=value.practiceName%></h2>
     <p>
-        <%=mw3.localize("$ProcessDetail.PressElement")%>
+        <%=value.practiceBriefDescription%>
     </p>
+
+<%if (value.practiceDescription){%>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <%=value.practiceDescription%>
+        </div>
+    </div>
+<%}%>
 
     <% if(value.methodView){%>
 

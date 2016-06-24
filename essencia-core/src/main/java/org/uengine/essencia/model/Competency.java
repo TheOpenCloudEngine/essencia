@@ -84,7 +84,7 @@ public class Competency extends BasicElement implements Concernable, ContextTran
             Role role = (Role) obj;
             return getName().equals(role.getName());
         }
-        return false;
+        return super.equals(obj);
     }
 
     @Override

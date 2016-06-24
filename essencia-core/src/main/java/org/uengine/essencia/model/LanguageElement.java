@@ -14,6 +14,7 @@ import org.metaworks.annotation.*;
 import org.metaworks.annotation.Face;
 import org.metaworks.website.MetaworksFile;
 import org.metaworks.widget.ModalWindow;
+import org.uengine.codi.mw3.admin.WebEditorFace;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.enactment.LanguageElementInstance;
@@ -79,6 +80,7 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	//@Group(name="Advanced")
 	//@Available(where = WHERE_ADVANCED)
 	@Order(3)
+	@Face(faceClass = WebEditorFace.class)
 		public String getDescription() {
 			return description.getText();
 		}
