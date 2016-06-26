@@ -146,9 +146,11 @@ public class Activity extends AbstractActivity {
         if (obj instanceof Competency) {
             Competency competency = (Competency) obj;
 
-            return getCompetency().getName().equals(competency.getName());
+            if(getCompetency() != null) {
+                return getCompetency().getName().equals(competency.getName());
+            }
         }
-        return false;
+        return super.equals(obj);
     }
 
     @Override
