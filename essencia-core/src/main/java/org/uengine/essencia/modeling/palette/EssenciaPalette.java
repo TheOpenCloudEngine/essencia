@@ -14,6 +14,7 @@ import org.uengine.essencia.util.KernelUtil;
 import org.uengine.modeling.CompositePalette;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.Palette;
+import org.uengine.modeling.PaletteWindow;
 
 public class EssenciaPalette extends CompositePalette {
 
@@ -31,13 +32,13 @@ public class EssenciaPalette extends CompositePalette {
          * adding kernel elements
          */
 
-        Palette customerPalette = new Palette();
+        PaletteWindow customerPalette = new PaletteWindow();
         customerPalette.setName("Kernel - Customer");
 
-        Palette solutionPalette = new Palette();
+        PaletteWindow solutionPalette = new PaletteWindow();
         solutionPalette.setName("Kernel - Solution");
 
-        Palette endeavorPalette = new Palette();
+        PaletteWindow endeavorPalette = new PaletteWindow();
         endeavorPalette.setName("Kernel - Endeavor");
 
 

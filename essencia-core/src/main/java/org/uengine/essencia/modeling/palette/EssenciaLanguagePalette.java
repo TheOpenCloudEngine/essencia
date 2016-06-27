@@ -8,8 +8,9 @@ import org.uengine.essencia.model.view.CompetencyView;
 import org.uengine.essencia.model.view.PracticeView;
 import org.uengine.essencia.model.view.WorkProductView;
 import org.uengine.modeling.Palette;
+import org.uengine.modeling.PaletteWindow;
 
-public class EssenciaLanguagePalette extends Palette{
+public class EssenciaLanguagePalette extends PaletteWindow{
 		
 	public EssenciaLanguagePalette(){
 		super();
