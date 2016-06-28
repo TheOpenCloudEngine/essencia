@@ -3,13 +3,15 @@
     <tr>
 <%
 
-    var alphas = ["Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"];
+
+
+    var alphas = value.kernelAlphas;//["Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"];
 
     for(var index in alphas){
 
         var alpha = alphas[index];
 
-    %><th><%=alpha%></th><%
+    %><th><%=alpha.name%></th><%
 
 
     }
@@ -28,22 +30,24 @@
     <tr>
         <%
 
-           for(var index in alphas){
+        for(var j in alphas){
 
-            var alpha = alphas[index];
+            var alpha = alphas[j];
 
-            var coveragesByStateIndex = value.coverages[alpha];
+           // if(i >= alpha.states.value.length) continue;
+
+            var coveragesByStateIndex = value.coverages[alpha.name];
 
             if(coveragesByStateIndex && coveragesByStateIndex[i]){
                 var coverage = coveragesByStateIndex[i];
 
-                %><td style="background-color: rgb(<%=coverage.red%>,<%=coverage.green%>,<%=coverage.blue%>)"><%=coverage.name%></td><%
+                %><td style="background-color: rgb(<%=coverage.red%>,<%=coverage.green%>,<%=coverage.blue%>)"><%=alpha.states.value[i] ? alpha.states.value[i].name : ''%></td><%
+
+            }else{
+
+        %><td><%=alpha.states.value[i] ? alpha.states.value[i].name : ''%></td><%
 
             }
-
-        %><td><%=coverage.name%></td><%
-
-
         }
 
 

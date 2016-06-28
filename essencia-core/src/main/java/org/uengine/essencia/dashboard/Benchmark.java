@@ -14,7 +14,9 @@ import org.uengine.codi.mw3.model.*;
 import org.uengine.essencia.enactment.*;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.Activity;
+import org.uengine.essencia.util.KernelUtil;
 import org.uengine.kernel.*;
+import org.uengine.modeling.Relation;
 import org.uengine.modeling.resource.VersionManager;
 import org.uengine.processmanager.ProcessManagerRemote;
 
@@ -238,6 +240,8 @@ public class Benchmark {
 
         List<CoverageTable> coverageTables = new ArrayList<CoverageTable>();
 
+
+
         for(int i=0; i<definitionIds.size(); i++){
             CoverageTable coverageTable1 = new CoverageTable();
 //            coverageTable1.setColorRed(colors[i * 3]);
@@ -257,6 +261,8 @@ public class Benchmark {
             org.uengine.kernel.ProcessDefinition processDefinition = processManagerRemote.getProcessDefinition(VersionManager.getProductionResourcePath("codi", definitionIds.get(i)));
             PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)processDefinition).getPracticeDefinition();
 
+           // processDefinition.beforeSerialization();
+
             List<Activity> activities = practiceDefinition.getElements(org.uengine.essencia.model.Activity.class);
 
             coverageTable1.setCoverages(new HashMap<String, Map<Integer, Coverage>>());
@@ -268,10 +274,15 @@ public class Benchmark {
 
 
             for(Activity activity : activities) {
+
+                if(activity instanceof ActivitySpace) continue; //skip ActivitySpaces
+
+                if(activity.getEntryCriteria()!=null)
                 for (Criterion criterion : activity.getEntryCriteria()) {
                     markCoverage(coverageTable1, coverage, criterion);
                 }
 
+                if(activity.getCompletionCriteria()!=null)
                 for (Criterion criterion : activity.getCompletionCriteria()) {
                     markCoverage(coverageTable1, coverage, criterion);
                 }
@@ -300,7 +311,7 @@ public class Benchmark {
 
                     boolean started = false;
                     Coverage coverage = null;
-                    for(int i = 0; i<7; i++){
+                    for(int i = 6; i>=0; i--){
                         if(coverageByStateIndex.containsKey(i)){
                             started = !started;
                             coverage = coverageByStateIndex.get(i);
@@ -329,15 +340,38 @@ public class Benchmark {
             }
         }
 
+
+
+        PracticeDefinition kernel = KernelUtil.getInstance().getPracticeDefinition();
+        getCoverageTable().setKernelAlphas(kernel.getElements(Alpha.class));
+
+
     }
 
     private void markCoverage(CoverageTable coverageTable1, Coverage coverage, Criterion criterion) {
 
         if(criterion.getState()==null) return; //ignore work product.
 
-        int stateIndex = criterion.getState().getParentAlpha().indexOfState(criterion.getState());
+        String alphaName = null;
+        int stateIndex = 0;
 
-        String alphaName = criterion.getState().getParentAlpha().getName();
+        if(criterion.getState().getAggregationAlphaState()==null){  //means alpha in the kernel
+            stateIndex = criterion.getState().getParentAlpha().indexOfState(criterion.getState());
+            alphaName = criterion.getState().getParentAlpha().getName();
+        }else{  //means we need to find the kernel connected with the aggregationAlphaStateName
+            for(Relation relation : criterion.getState().getParentAlpha().getIncomingRelations()){
+                if(relation.getSourceElement()!=null && relation.getSourceElement() instanceof Alpha){
+                    Alpha kernel = (Alpha) relation.getSourceElement();
+
+                    stateIndex = kernel.indexOfState(criterion.getState().getAggregationAlphaState());
+
+                    alphaName = kernel.getName();
+                }
+            }
+
+            if(alphaName==null) return; //if there's no kernel found, skip this mark.
+        }
+
         if (!coverageTable1.getCoverages().containsKey(alphaName)) {
             coverageTable1.getCoverages().put(alphaName, new HashMap<Integer, Coverage>());
             //new Coverage());
@@ -346,7 +380,7 @@ public class Benchmark {
         Map<Integer, Coverage> coverageByStateIndex = coverageTable1.getCoverages().get(alphaName);
 
         Coverage copy = coverage.copy();
-        copy.setName(criterion.getState().getName());
+        //copy.setName(criterion.getState().getName());
 
         coverageByStateIndex.put(stateIndex, copy);
     }

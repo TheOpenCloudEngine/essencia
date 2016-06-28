@@ -32,14 +32,14 @@ public class Coverage {
             this.blue = blue;
         }
 
-    String name;
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+//    String name;
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
 
 
     public void add(Coverage coverage) {

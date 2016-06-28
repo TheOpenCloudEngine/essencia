@@ -512,4 +512,5 @@ public abstract class BasicElement extends LanguageElement implements IElement {
 		public List<Relation> getIncomingRelations() {
 			return incomingRelations;
 		}
+
 }

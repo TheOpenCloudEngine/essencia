@@ -1,5 +1,9 @@
 package org.uengine.essencia.dashboard;
 
+import org.uengine.essencia.model.Alpha;
+import org.uengine.essencia.model.PracticeDefinition;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +18,15 @@ public class CoverageTable {
         }
         public void setCoverages(Map<String, Map<Integer, Coverage>> coverages) {
             this.coverages = coverages;
+        }
+
+
+    List<Alpha> kernelAlphas;
+        public List<Alpha> getKernelAlphas() {
+            return kernelAlphas;
+        }
+        public void setKernelAlphas(List<Alpha> kernelAlphas) {
+            this.kernelAlphas = kernelAlphas;
         }
 
 
