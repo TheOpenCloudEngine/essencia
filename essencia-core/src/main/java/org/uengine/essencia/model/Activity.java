@@ -289,11 +289,27 @@ public class Activity extends AbstractActivity {
                     org.eclipse.emf.common.util.EList<Essence.AlphaAndWorkProduct.State> states = ((Essence.AlphaAndWorkProduct.Alpha) languageElement)
                             .getStates();
                     for (Essence.AlphaAndWorkProduct.State state : states) {
-                        if (((Essence.AlphaAndWorkProduct.Alpha) languageElement).getName().equals(criterion.getState().getParentAlpha().getName())
-                                && state.getName().equals(criterion.getState().getName())) {
-                            completionCriterion.setState(state);
-                            completionCriterion.getState().setAlpha((Essence.AlphaAndWorkProduct.Alpha) languageElement);
-                            break;
+                        if(criterion.getState() != null) {
+                            if (((Essence.AlphaAndWorkProduct.Alpha) languageElement).getName().equals(criterion.getState().getParentAlpha().getName())
+                                    && state.getName().equals(criterion.getState().getName())) {
+                                completionCriterion.setState(state);
+                                completionCriterion.getState().setAlpha((Essence.AlphaAndWorkProduct.Alpha) languageElement);
+                                break;
+                            }
+
+                        } else {
+                            boolean aggregationAlphaState = true;
+                            for(State levelOfState : criterion.getLevelOfDetail().getParentAlpha().getStates()) {
+                                if(!(state.getName().equals(levelOfState.getAggregationAlphaState()))) {
+                                    aggregationAlphaState = false;
+                                }
+                            }
+
+                            if(aggregationAlphaState) {
+                                completionCriterion.setState(state);
+                                completionCriterion.getState().setAlpha((Essence.AlphaAndWorkProduct.Alpha) languageElement);
+                                break;
+                            }
                         }
                     }
                 }
@@ -313,11 +329,13 @@ public class Activity extends AbstractActivity {
                             .getLevelOfDetail();
 
                     for (Essence.AlphaAndWorkProduct.LevelOfDetail levelOfDetail : levelOfDetails) {
-                        if (((Essence.AlphaAndWorkProduct.WorkProduct) languageElement).getName().equals(
-                                criterion.getLevelOfDetail().getParentWorkProduct().getName())
-                                && levelOfDetail.getName().equals(criterion.getLevelOfDetail().getName())) {
-                            output.setLevelOfDetail(levelOfDetail);
-                            output.getLevelOfDetail().setWorkProduct((Essence.AlphaAndWorkProduct.WorkProduct) languageElement);
+                        if(criterion.getLevelOfDetail() != null) {
+                            if (((Essence.AlphaAndWorkProduct.WorkProduct) languageElement).getName().equals(
+                                    criterion.getLevelOfDetail().getParentWorkProduct().getName())
+                                    && levelOfDetail.getName().equals(criterion.getLevelOfDetail().getName())) {
+                                output.setLevelOfDetail(levelOfDetail);
+                                output.getLevelOfDetail().setWorkProduct((Essence.AlphaAndWorkProduct.WorkProduct) languageElement);
+                            }
                         }
                     }
                 }

@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.uengine.contexts.TextContext;
 import org.uengine.essencia.model.Activity;
@@ -24,7 +25,6 @@ import org.uengine.essencia.model.Competency;
 import org.uengine.essencia.model.CompetencyLevel;
 import org.uengine.essencia.model.CompletionCriterion;
 import org.uengine.essencia.model.Criterion;
-import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.LevelOfDetail;
 import org.uengine.essencia.model.Practice;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -36,7 +36,6 @@ import org.uengine.kernel.GlobalContext;
 import org.uengine.modeling.*;
 import org.uengine.uml.model.CompositionRelation;
 import org.uengine.uml.ui.CompositionRelationView;
-import org.uengine.util.FileUtil;
 
 import Essence.ActivitySpaceAndActivity.AbstractActivity;
 import Essence.ActivitySpaceAndActivity.EntryCriterion;
@@ -59,23 +58,24 @@ public class XMIAdapter {
         this.practiceDefinition = practiceDefinition;
     }
 
-    public void toXmi() {
+    public File toXmi() {
         Essence.Foundation.FoundationPackage.eINSTANCE.eClass();
 
         Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(ResourceType,
                 new XMLResourceFactoryImpl());
 
-        ResourceSet resSet = new ResourceSetImpl();
-
-        Resource resource = resSet.createResource(URI.createFileURI("./essencia.xmi"));
+        ResourceSet resourceSet = new ResourceSetImpl();
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+        resourceSet.getPackageRegistry().put(Essence.Foundation.FoundationPackage.eNS_URI, Essence.Foundation.FoundationPackage.eINSTANCE);
+        Resource resource = resourceSet.createResource(URI.createFileURI("./essencia.xmi"));
 
         Essence.Foundation.Practice practice = addEssenceElement();
-
         practice = addEssenceElementAssociation(practice);
 
         resource.getContents().add(practice);
+        save(resourceSet);
 
-        save(resSet);
+        return new File("./essencia.xmi");
     }
 
     /*
@@ -177,9 +177,9 @@ public class XMIAdapter {
      */
     private Essence.Foundation.LanguageElement matchEssencia2EssenceElement(IElement essenciaEle, Essence.Foundation.Practice practice) {
         Essence.Foundation.LanguageElement element = null;
-        if (essenciaEle instanceof Activity) {
+        if (essenciaEle.getClass() == Activity.class && essenciaEle.getClass() != ActivitySpace.class) {
             element = getEssenceElement(essenciaEle.getName(), Essence.ActivitySpaceAndActivity.Activity.class, practice);
-        } else if (essenciaEle instanceof ActivitySpace) {
+        } else if (essenciaEle.getClass() == ActivitySpace.class && essenciaEle.getClass() != Activity.class) {
             element = getEssenceElement(essenciaEle.getName(), Essence.ActivitySpaceAndActivity.ActivitySpace.class, practice);
         } else if (essenciaEle instanceof Alpha) {
             element = getEssenceElement(essenciaEle.getName(), Essence.AlphaAndWorkProduct.Alpha.class, practice);
