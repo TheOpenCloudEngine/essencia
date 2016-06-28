@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.io.File;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -22,7 +23,6 @@ import org.uengine.essencia.util.ElementUtil;
 import org.uengine.kernel.*;
 import org.uengine.kernel.view.HumanActivityView;
 import org.uengine.modeling.*;
-import org.uengine.uml.model.Attribute;
 import org.uengine.util.ActivityFor;
 
 public class PracticeDefinition implements Serializable, IModel, ContextAware, NeedArrangementToSerialize {
@@ -725,9 +725,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         }
     }
 
-    public void toXmi() {
+    public File toXmi() {
         XMIAdapter xmiAdapter = new XMIAdapter(this);
-        xmiAdapter.toXmi();
+        return xmiAdapter.toXmi();
     }
 
     public void afterDeserialize() {
