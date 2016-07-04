@@ -60,6 +60,8 @@ public class MethodComposer extends PracticeDefiner {
             if(activity.getCompletionCriteria()!=null)
             for (int i=0; i<activity.getCompletionCriteria().size(); i++) {
 
+                if(activity instanceof ActivitySpace) continue;  //TODO:  remove this sometime
+
                 LanguageElement e = activity.getCompletionCriteria().get(i);
 
                 Criterion completionCriterion = (Criterion)e;

@@ -837,6 +837,25 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         }
 
         arranged = true;
+
+
+        // if there are danggling elements, make them connected to root practice.
+        for(IElement element : getElementList()){
+            if(element instanceof BasicElement
+                    &&
+                    (((BasicElement) element).getIncomingRelations()==null || ((BasicElement) element).getIncomingRelations().size()==0) && !(element instanceof Practice)){
+
+                Relation relation = new Relation();
+                relation.setSourceElement(rootPractice);
+                relation.setTargetElement(element);
+
+                ((BasicElement) element).incomingRelations = new ArrayList<Relation>();
+
+                ((BasicElement) element).getIncomingRelations().add(relation);
+
+            }
+        }
+
     }
 
     @Override
