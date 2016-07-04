@@ -1,5 +1,7 @@
 package org.uengine.essencia.modeling.canvas;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.lucene.util.ArrayUtil;
 import org.directwebremoting.ScriptSession;
 import org.directwebremoting.ScriptSessionFilter;
 import org.metaworks.MetaworksContext;
@@ -119,50 +121,53 @@ public class MethodCanvas extends EssenciaCanvas {
 
 
         } else if (content instanceof MethodResource) {
-
-            PracticeDefinition practice = null;
-
             try {
                 ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 
-//                practice = (PracticeDefinition) ObjectRepository.getInstance().get(((PracticeResource) content).getPath());
-
                 EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition) resourceManager.getStorage().getObject((MethodResource) content);
+                PracticeDefinition practice = essenceProcessDefinition.getPracticeDefinition();
 
-                practice = essenceProcessDefinition.getPracticeDefinition();
-
-                reissueId(practice);
-
-                // find dropped kernel Element
-                ElementView practiceRootElementView = findPracticeRootElement(practice.getElementList());
-                String[] practiceRootElementViewsToEdges = findToEdge(practiceRootElementView);
-
+                // find canvas root elementView and practice root elementView
                 ElementView canvasRootElementView = findCanvasRootElement(getElementViewList());
+                ElementView practiceRootElementView = findPracticeRootElement(practice.getElementList()).getElementView();
 
-                // custom duplicate element
-                HashMap<IElement, ElementView> duplicateElementList = findAndCustomDuplicateElement(practiceRootElementViewsToEdges, practice.getElementList());
-                List<ElementView> duplicateChildElementList = findAndCustomDuplicateChildElement(duplicateElementList, practice.getElementList(), practice.getRelationList());
+                // if new canvas
+                if(getElementViewList() != null && getElementViewList().size() > 0) {
+                    // find dropped kernel Element
+                    String[] practiceRootElementViewsToEdges = findToEdge(practiceRootElementView);
 
-                // remove practice duplicate element list
-                List<IElement> removeElementList = findDuplicateElement(duplicateElementList);
-                removeElementList.add(practice.getElementList().get(0));
-                practice.getElementList().removeAll(removeElementList);
-                // add duplicate elements child
-                getElementViewList().addAll(duplicateChildElementList);
+                    // custom duplicate element
+                    HashMap<IElement, ElementView> duplicateElementList = findAndCustomDuplicateElement(practiceRootElementViewsToEdges, practice.getElementList());
+                    customDuplicateChildElement(duplicateElementList, practice.getElementList(), practice.getRelationList());
 
-                // reconnect not duplicate practice kernel element
-                customNotDuplicatePracticeElement(canvasRootElementView, practiceRootElementView, practice);
-                // add element list and relation list
-                getElementViewList().addAll(convertIElementListToElementViewList(practice.getElementList()));
-                getRelationViewList().addAll(convertIRelationListToRelationViewList(practice.getRelationList()));
+                    // remove practice duplicate element list
+                    List<IElement> removeElementList = findDuplicateElement(duplicateElementList);
+                    customPracticeRootElementToEdge(findPracticeRootElement(practice.getElementList()), removeElementList);
+                    removeElementList.add(findPracticeRootElement(practice.getElementList()));
+                    practice.getElementList().removeAll(removeElementList);
 
-                // sort
-                sortCanvasElementViewList(getElementViewList());
+                    // reconnect not duplicate practice kernel element
+                    customNotDuplicatePracticeElement(canvasRootElementView, practiceRootElementView, practice);
 
-                // replace
-                replaceElement(findToEdge(canvasRootElementView));
+                    // add element list and relation list
+                    getElementViewList().addAll(convertIElementListToElementViewList(practice.getElementList()));
+                    getRelationViewList().addAll(convertIRelationListToRelationViewList(practice.getRelationList()));
 
-                for(RelationView relationView : getRelationViewList()) {
+                    // replace
+                    replaceElement(findToEdge(canvasRootElementView));
+
+                // if loaded canvas
+                } else {
+                    // add element list and relation list
+                    getElementViewList().addAll(convertIElementListToElementViewList(practice.getElementList()));
+                    getRelationViewList().addAll(convertIRelationListToRelationViewList(practice.getRelationList()));
+
+                    // replace
+                    replaceElement(findToEdge(practiceRootElementView));
+                }
+
+                // redraw relationView
+                for (RelationView relationView : getRelationViewList()) {
                     relationView.setNeedReconnect(true);
                 }
 
@@ -175,52 +180,7 @@ public class MethodCanvas extends EssenciaCanvas {
             returnArr[1] = new Refresh(this);
             wrapReturn(returnArr);
         }
-
         wrapReturn(returnArr);
-    }
-
-    private void autoRelocationFromPractice(List<ElementView> list) {
-
-        for (ElementView elementView : list) {
-            if (elementView instanceof PracticeView) {
-                elementView.setX(96);
-                elementView.setY(96);
-                if (elementView.getToEdge() != null) {
-                    String[] toEdges = elementView.getToEdge().split(",");
-                    firstLevel = Arrays.asList(toEdges);
-                    autoRelocateByRelation(toEdges, list);
-                }
-            }
-        }
-    }
-
-    List<String> firstLevel = null;
-    double x = 96;
-    double y = 96;
-
-    private void autoRelocateByRelation(String[] edges, List<ElementView> list) {
-        for (int i = 0; i < edges.length; i++) {
-            for (ElementView view : list) {
-                if (edges[i].equals(view.getFromEdge())) {
-                    if (firstLevel.contains(edges[i])) {
-                        x = 96 + 64 + Math.round((view.getWidth()));
-                        if (i > 0) {
-                            y = y + 32 + Math.round((view.getHeight()));
-                        }
-                    } else if (i == 0) {
-                        x = x + 64 + Math.round((view.getWidth()));
-                    } else {
-                        y = y + 32 + Math.round((view.getHeight()));
-                    }
-                    view.setX(x);
-                    view.setY(y);
-                    if (view.getToEdge() != null) {
-                        String[] toEdges = view.getToEdge().split(",");
-                        autoRelocateByRelation(toEdges, list);
-                    }
-                }
-            }
-        }
     }
 
     private ElementView findCanvasRootElement(List<ElementView> canvasElementViewList) {
@@ -235,12 +195,12 @@ public class MethodCanvas extends EssenciaCanvas {
         return canvasRootElementView;
     }
 
-    private ElementView findPracticeRootElement(List<IElement> practiceElementList) {
-        ElementView practiceRootElementView = null;
+    private IElement findPracticeRootElement(List<IElement> practiceElementList) {
+        IElement practiceRootElementView = null;
         // find definition root elementView
         for(IElement element : practiceElementList) {
             if(element instanceof Practice) {
-                practiceRootElementView = element.getElementView();
+                practiceRootElementView = element;
                 break;
             }
         }
@@ -264,8 +224,7 @@ public class MethodCanvas extends EssenciaCanvas {
         return duplicatePracticeElementList;
     }
 
-    private List<ElementView> findAndCustomDuplicateChildElement(HashMap<IElement, ElementView> duplicateElement, List<IElement> practiceElementList, List<IRelation> practiceRelationList) {
-        List<ElementView> duplicateChildElementList = new ArrayList<>();
+    private void customDuplicateChildElement(HashMap<IElement, ElementView> duplicateElement, List<IElement> practiceElementList, List<IRelation> practiceRelationList) {
         // canvasElement add duplicated practiceElement's child
         for(Map.Entry<IElement, ElementView> entry : duplicateElement.entrySet()) {
             IElement element = entry.getKey();
@@ -291,13 +250,26 @@ public class MethodCanvas extends EssenciaCanvas {
                 childElement.getElementView().setX(duplicateCanvasChildElementViewList.get(0).getX());
                 // child set y
                 childElement.getElementView().setY(duplicateCanvasChildElementViewList.get(duplicateCanvasChildElementViewList.size() - 1).getY() + 92);
-                duplicateChildElementList.add(childElement.getElementView());
             }
         }
-        return duplicateChildElementList;
+    }
+
+    private void customPracticeRootElementToEdge(IElement practiceRootElementView, List<IElement> removeElementList) {
+        String[] rootElementToEdges = findToEdge(practiceRootElementView.getElementView());
+
+        for(String rootElementToEdge : rootElementToEdges) {
+            for (IElement element : removeElementList) {
+                    if(rootElementToEdge.equals(element.getElementView().getFromEdge())) {
+                        rootElementToEdges = (String[]) ArrayUtils.removeElement(rootElementToEdges, rootElementToEdge);
+                }
+            }
+        }
+        // Arrays.to String return data format examples ["a", "b", "c"] -> replace "a","b","c"
+        practiceRootElementView.getElementView().setToEdge(Arrays.toString(rootElementToEdges).replace("[", "").replace("]", "").replace(" ", ""));
     }
 
     private void customNotDuplicatePracticeElement(ElementView canvasRootElementView, ElementView practiceRootElementView, PracticeDefinition practice) {
+        // hot place
         canvasRootElementView.setToEdge(canvasRootElementView.getToEdge() + "," + practiceRootElementView.getToEdge());
 
         String[] practiceRootElementViewsToEdges = findToEdge(practiceRootElementView);
@@ -358,11 +330,11 @@ public class MethodCanvas extends EssenciaCanvas {
         }
     }
 
-    private void replaceKernelChildElement(ElementView beforeElementView, List<ElementView> childElementViewList) {
-        String[] beforeChildToEdges = findToEdge(beforeElementView);
-        List<ElementView> canvasBeforeChildElementViewList = findCanvasChildElementViewList(beforeChildToEdges);
+    private void replaceKernelChildElement(ElementView beforeKernelElementView, List<ElementView> childElementViewList) {
+        String[] beforeKernelChildToEdges = findToEdge(beforeKernelElementView);
+        List<ElementView> canvasBeforeKernelChildElementViewList = findCanvasChildElementViewList(beforeKernelChildToEdges);
 
-        double beforeChildElementViewListLastY = canvasBeforeChildElementViewList.get(canvasBeforeChildElementViewList.size() - 1).getY();
+        double beforeChildElementViewListLastY = canvasBeforeKernelChildElementViewList.get(canvasBeforeKernelChildElementViewList.size() - 1).getY();
         if(beforeChildElementViewListLastY >= childElementViewList.get(0).getY()) {
             for(ElementView childElementView : childElementViewList) {
                 int currentIndex = childElementViewList.indexOf(childElementView);
@@ -382,25 +354,16 @@ public class MethodCanvas extends EssenciaCanvas {
 
     private List<ElementView> findCanvasChildElementViewList(String[] toEdges) {
         List<ElementView> canvasChildElementViewList = new ArrayList<>();
-        for(String toEdge : toEdges) {
-            for(ElementView elementView : getElementViewList()) {
-                if(elementView.getFromEdge() != null && elementView.getFromEdge().contains(toEdge)) {
-                    canvasChildElementViewList.add(elementView);
+        for(ElementView elementView : getElementViewList()) {
+            if(elementView.getFromEdge() != null) {
+                for (String toEdge : toEdges) {
+                    if (elementView.getFromEdge().contains(toEdge)) {
+                        canvasChildElementViewList.add(elementView);
+                    }
                 }
             }
         }
         return canvasChildElementViewList;
-    }
-
-    private List<ElementView> sortCanvasElementViewList(List<ElementView> elementViewList) {
-        // element sorting
-        Collections.sort(elementViewList, new Comparator<ElementView>() {
-            @Override
-            public int compare(ElementView before, ElementView after) {
-            return Double.compare(before.getY(), after.getY());
-            }
-        });
-        return elementViewList;
     }
 
     private List<IElement> findPracticeChildElementViewList(String[] toEdges, List<IElement> practiceElementList) {
@@ -436,86 +399,6 @@ public class MethodCanvas extends EssenciaCanvas {
         // add relation
         getRelationViewList().add(relation.getRelationView());
     }
-
-    private String createId() {
-        StringBuffer sb = new StringBuffer("OG_");
-        sb.append(findCanvasId());
-        sb.append("_");
-        sb.append(findHighestElementId());
-
-        return sb.toString();
-    }
-
-    private String findCanvasId() {
-        String canvasId = "";
-        for (ElementView view : getSafeElementViewList()) {
-            if (view instanceof PracticeView) {
-                canvasId = view.getId().split("_")[1];
-            }
-        }
-        return canvasId;
-    }
-
-    int highestId = 0;
-
-    private String findHighestElementId() {
-        for (ElementView view : getSafeElementViewList()) {
-            if (highestId < Integer.valueOf(view.getId().split("_")[2])) {
-                highestId = Integer.valueOf(view.getId().split("_")[2]);
-            }
-        }
-        for (RelationView view : getSafeRelationViewList()) {
-            if (highestId < Integer.valueOf(view.getId().split("_")[2])) {
-                highestId = Integer.valueOf(view.getId().split("_")[2]);
-            }
-        }
-        ++highestId;
-        return String.valueOf(highestId);
-    }
-
-    private void reissueId(PracticeDefinition p) {
-        String oldId = "";
-        String newId = "";
-        for (IElement e : p.getElementList()) {
-
-            oldId = e.getElementView().getId();
-            newId = createId();
-
-            e.getElementView().setId(newId);
-
-            List<IRelation> fromRelations = p.findFromRelations(e.getElementView());
-            if (fromRelations != null) {
-                for (IRelation r : fromRelations) {
-                    r.getRelationView().setTo(r.getRelationView().getTo().replace(oldId, newId));
-                }
-            }
-
-
-            List<IRelation> toRelations = p.findToRelation(e.getElementView());
-            if (toRelations.size() > 0) {
-                for (IRelation r : toRelations) {
-                    r.getRelationView().setFrom(r.getRelationView().getFrom().replace(oldId, newId));
-                }
-            }
-        }
-        for (IRelation r : p.getRelationList()) {
-            oldId = r.getRelationView().getId();
-            newId = createId();
-            r.getRelationView().setId(newId);
-
-            IElement to = p.pickElementByViewId(r.getRelationView().getTo());
-            if (to != null) {
-                to.getElementView().setFromEdge(to.getElementView().getFromEdge().replace(oldId, newId));
-            }
-
-            IElement from = p.pickElementByViewId(r.getRelationView().getFrom());
-            if (from != null) {
-                from.getElementView().setToEdge(from.getElementView().getToEdge().replace(oldId, newId));
-            }
-        }
-
-    }
-
 
     boolean joinEditing;
 
