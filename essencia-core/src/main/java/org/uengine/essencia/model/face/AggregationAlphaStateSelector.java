@@ -37,6 +37,7 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
        //  test if the FaceWrapper machanism is problematic.
 
         // end of test
+        setSelected(value);
 
         if (alpha == null || methodEditor == null) {
             getOptionNames().add("Right-click & 'amend from kernel'");

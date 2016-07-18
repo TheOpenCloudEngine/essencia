@@ -1,5 +1,6 @@
 package org.uengine.essencia.model;
 
+import java.beans.Transient;
 import java.io.File;
 import java.io.Serializable;
 import java.net.InetAddress;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.uengine.contexts.TextContext;
@@ -338,29 +340,37 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         //getting max width and apply it to all and rootRole
 
         if(newRootRole){
-            double maxWidth = 0;
-            for (Role role : returnProcessDefinition.getRoles()) {
 
-                if (role.getElementView().getWidth() > maxWidth)
-                    maxWidth = role.getElementView().getWidth();
+            if(returnProcessDefinition.getRoles().length == 1){ //means there's only one role (rootRole)
 
+                returnProcessDefinition.setRoles(null); //if there is only root role, remove it.
+
+            }else {
+
+                double maxWidth = 0;
+                for (Role role : returnProcessDefinition.getRoles()) {
+
+                    if (role.getElementView().getWidth() > maxWidth)
+                        maxWidth = role.getElementView().getWidth();
+
+                }
+
+                for (Role role : returnProcessDefinition.getRoles()) {
+                    ElementView roleView = role.getElementView();
+                    roleView.setWidth(maxWidth);
+                    roleView.setX(48 + (roleView.getWidth()) / 2);
+                }
+
+
+                ElementView rootRoleView = rootRole.getElementView();
+
+                rootRoleView.setHeight(128 * (returnProcessDefinition.getRoles().length - 1)); // -1 means except itself - rootRole
+
+                int labelSize = 20;
+                rootRoleView.setWidth(maxWidth + labelSize /*label size*/);
+                rootRoleView.setX(48 - labelSize + (rootRoleView.getWidth()) / 2);
+                rootRoleView.setY(40 + (rootRoleView.getHeight()) / 2);
             }
-
-            for (Role role : returnProcessDefinition.getRoles()) {
-                ElementView roleView = role.getElementView();
-                roleView.setWidth(maxWidth);
-                roleView.setX(48 + (roleView.getWidth()) / 2);
-            }
-
-
-            ElementView roleView = rootRole.getElementView();
-
-            roleView.setHeight(128 * (returnProcessDefinition.getRoles().length - 1));
-
-            int labelSize = 20;
-            roleView.setWidth(maxWidth + labelSize /*label size*/);
-            roleView.setX(48 - labelSize + (roleView.getWidth()) / 2);
-            roleView.setY(40 + (roleView.getHeight()) / 2 );
 
         }
 
@@ -383,6 +393,16 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
 
         overrideProcessVariablesTo(returnProcessDefinition);
+
+
+
+        //set the processdefinition's description by copying from practice's description.
+        List<Practice> practices = getElements(Practice.class);
+        if(practices!=null && practices.size() > 0){
+            Practice rootPractice = practices.get(0); // must finding logic needed e.g. getRootPractice()
+
+            returnProcessDefinition.setDescription(rootPractice.getBriefDescription());
+        }
 
 
         return returnProcessDefinition;
@@ -782,7 +802,11 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
     }
 
-    boolean arranged = false;
+
+    @XStreamOmitField
+    transient boolean arranged = false;
+
+
     public void arrangeRelations(){
 
         if(arranged) return;
@@ -840,6 +864,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
 
         // if there are danggling elements, make them connected to root practice.
+        if(rootPractice!=null)
         for(IElement element : getElementList()){
             if(element instanceof BasicElement
                     &&
@@ -851,7 +876,13 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
                 ((BasicElement) element).incomingRelations = new ArrayList<Relation>();
 
-                ((BasicElement) element).getIncomingRelations().add(relation);
+                ((BasicElement) element).getIncomingRelations().add(relation); //stitch to the target
+
+                if(rootPractice.outgoingRelations == null){
+                    rootPractice.outgoingRelations = new ArrayList<Relation>(); //stitch to the source
+                }
+
+                rootPractice.outgoingRelations.add(relation);
 
             }
         }
@@ -905,7 +936,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
     @Override
     public void afterDeserialization() {
-
+        arrangeRelations();
     }
 
     public void setBaseKernel(String baseKernel) {

@@ -76,7 +76,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
         if(alphaOrWP.getIncomingRelations()!=null){
 
             for(Relation relation : alphaOrWP.getIncomingRelations()){
-                if(relation.getSourceElement() instanceof Alpha){
+                if(relation.getSourceElement() instanceof Alpha){ //if the element has kernel, this mean if there's one or more kernel elements, the root can't be aggregated.
                     Alpha parentAlpha = (Alpha)relation.getSourceElement();
 
                     List<AlphaInstance> parentAlphaInstances = parentAlpha.getInstances(instance);

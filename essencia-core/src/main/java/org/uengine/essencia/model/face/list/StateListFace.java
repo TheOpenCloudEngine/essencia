@@ -27,7 +27,7 @@ public class StateListFace extends org.metaworks.widget.ListFace<State> {
         alpha = (Alpha) practiceDefinition.getElementByName(alpha.getName());
 
         if(alpha==null)
-            throw new RuntimeException("Please apply once before amending states from the kernel and try it after opening the properties dialog again.");
+            throw new RuntimeException("Please connect to any kernel before amending from the kernel. Or name your element and try it after opening the properties dialog again.");
 
         if(!(alpha instanceof Alpha) || alpha.getIncomingRelations()==null || alpha.getIncomingRelations().size() == 0){
             throw new RuntimeException("There is no parent alpha to amend state.");

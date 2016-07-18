@@ -48,7 +48,7 @@ public class Benchmark {
             "52, 73, 94",
     };
 
-    static String[] alphas = {"Stakeholders", "Opportunity", "Requirements", "System", "Team", "Work", "Way-of-working"};
+    static String[] alphas = {"Stakeholders", "Opportunity", "Requirements", "Software System", "Team", "Work", "Way of working"};
 
 
     SelectBox targetInstances;

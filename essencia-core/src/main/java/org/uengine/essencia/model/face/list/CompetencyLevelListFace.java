@@ -21,7 +21,7 @@ public class CompetencyLevelListFace extends org.metaworks.widget.ListFace<Compe
         competency = (Competency) practiceDefinition.getElementByName(competency.getName());
 
         if(competency==null)
-            throw new RuntimeException("Please apply once before amending states from the kernel and try it after opening the properties dialog again.");
+            throw new RuntimeException("Please connect to any kernel before amending from the kernel. Or name your element and try it after opening the properties dialog again.");
 
         if(!(competency instanceof Competency) || competency.getIncomingRelations()==null || competency.getIncomingRelations().size() == 0){
             throw new RuntimeException("There is no parent competency to amend state.");

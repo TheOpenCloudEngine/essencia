@@ -3,10 +3,12 @@ package org.uengine.essencia.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.metaworks.annotation.Face;
-import org.metaworks.annotation.Hidden;
-import org.metaworks.annotation.Order;
+import org.metaworks.MetaworksContext;
+import org.metaworks.Refresh;
+import org.metaworks.annotation.*;
 import org.metaworks.component.SelectBox;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.model.MetaworksElement;
 import org.uengine.essencia.component.EssenciaConcernSelectBox;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.card.ActivityCard;
@@ -17,6 +19,7 @@ import org.uengine.essencia.model.face.list.ActionListFace;
 import org.uengine.essencia.model.face.list.ApproachListFace;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.IElement;
+import org.uengine.modeling.resource.editor.MethodEditor;
 
 public class Activity extends AbstractActivity {
 
@@ -160,6 +163,35 @@ public class Activity extends AbstractActivity {
         result = prime * result + ((competency == null) ? 0 : competency.getName().hashCode());
         return result;
     }
+
+    @ServiceMethod(callByContent = true)
+    public void amendFromKernel(@Payload("name") String name, /*@AutowiredFromClient Activity activity, */@AutowiredFromClient MethodEditor methodEditor){
+
+        PracticeDefinition practiceDefinition = methodEditor.createPracticeDefinition();
+        practiceDefinition.arrangeRelations();
+
+        Activity activity = (Activity) practiceDefinition.getElementByName(name);
+
+        ActivitySpace kernel = (ActivitySpace) activity.getIncomingRelations().get(0).getSourceElement();
+        if(kernel!=null){
+
+            if(kernel.getCompetency()!=null)
+                setCompetency(kernel.getCompetency());
+
+            setDescription(kernel.getDescription());
+            setBriefDescription(kernel.getBriefDescription());
+
+            setEntryCriteria(kernel.getEntryCriteria());
+            setCompletionCriteria(kernel.getCompletionCriteria());
+
+        }
+
+
+
+        MetaworksRemoteService.wrapReturn(new Refresh(this));
+
+    }
+
 
     @Override
     public void setUpElement(List<IElement> elementList) {

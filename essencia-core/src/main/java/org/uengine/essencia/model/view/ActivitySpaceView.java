@@ -18,9 +18,6 @@ import org.uengine.modeling.Symbol;
 public class ActivitySpaceView extends ActivityView implements KernelLanguageViewable{
 	public final static String SHAPE_ID = "OG.shape.essencia.ActivitySpace";
 	
-	@AutowiredFromClient
-	public EssenciaCanvas essenciaCanvas;
-	
 	public ActivitySpaceView(){
 	}
 	
