@@ -59,21 +59,22 @@ public class MethodCanvas extends EssenciaCanvas {
      * Practice Merge
      */
     public void drop() {
-        ElementView elementView = null;
+        Object content;
+        ElementView elementView ;
 
         Object[] returnArr = initReturnArr();
 
-        Object content = null;
         if (clipboard == null || clipboard.getId() == null) {
             content = this.getSymbolContent();
+
         } else if (clipboard.getId().equals(CANVAS_DROP)) {
             content = this.getSymbolContent();
+
         } else {
             content = clipboard.getContent();
         }
 
         if (content instanceof EssenciaKernelSymbol) {
-
             elementView = makeElementViewFromEssenciaKernelSymbol((EssenciaKernelSymbol) content);
 
             try {
@@ -85,23 +86,23 @@ public class MethodCanvas extends EssenciaCanvas {
                 e.printStackTrace();
                 throw e;
             }
-
             wrapReturn(returnArr);
+
         } else if (content instanceof Symbol) {
             Symbol symbol = (Symbol) content;
-
 
             if ("EDGE".equals(symbol.getShapeType())) {
                 RelationView relationView = makeRelationViewFromSymbol((Symbol) content);
 
                 returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, relationView);
                 wrapReturn(returnArr);
+
             } else {
                 elementView = makeElementViewFromSymbol((Symbol) content);
 
                 returnArr[1] = new ToAppend(ServiceMethodContext.TARGET_SELF, elementView);
 
-                if (false) {  //turn on if you want to use broadcasting changes
+                if(false) {  //turn on if you want to use broadcasting changes
 
                     MethodCanvas lightMe = new MethodCanvas();
                     lightMe.setModelerType(getModelerType());
@@ -114,12 +115,9 @@ public class MethodCanvas extends EssenciaCanvas {
                         }
                     }, new Object[]{new ToAppend(lightMe, elementView)});
                 }
-
                 wrapReturn(returnArr);
-
                 return;
             }
-
 
         } else if (content instanceof MethodResource) {
             try {

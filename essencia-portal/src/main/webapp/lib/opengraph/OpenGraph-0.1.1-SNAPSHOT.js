@@ -22950,10 +22950,16 @@ OG.renderer.RaphaelRenderer.prototype.trimEdgeDirection = function (edge, fromSh
     var tLeft = toBoundary.getLeftCenter().x;
     var tRight = toBoundary.getRightCenter().x;
 
-    if (tRight < fLeft || tLeft > fRight) {
+    if (tLeft > fRight) {
         points.push([fromP.x, fromP.y]);
-        points.push([fromP.x + ((toP.x - fromP.x) / 2), fromP.y]);
-        points.push([fromP.x + ((toP.x - fromP.x) / 2), toP.y]);
+        points.push([fRight + ((tLeft - fRight) / 2), fromP.y]);
+        points.push([fRight + ((tLeft - fRight) / 2), toP.y]);
+        points.push([toP.x, toP.y]);
+
+    } else if(fRight < tLeft) {
+        points.push([fromP.x, fromP.y]);
+        points.push([fLeft + ((fLeft - tRight) / 2), fromP.y]);
+        points.push([fLeft + ((fLeft - tRight) / 2), toP.y]);
         points.push([toP.x, toP.y]);
 
     } else {

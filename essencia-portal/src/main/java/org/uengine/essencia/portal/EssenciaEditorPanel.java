@@ -40,9 +40,6 @@ public class EssenciaEditorPanel extends ProcessAdminEditorPanel{
     @ServiceMethod(callByContent = true)
     @Available(condition = "editor.__className=='org.uengine.modeling.resource.editor.MethodEditor_ProcessMode'")
     public void methodMode() throws Exception {
-
-        MethodEditor_ProcessMode methodEditor_processMode = (MethodEditor_ProcessMode) getEditor();
-
         EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition) getEditor().createEditedObject();
 
         setEditor(new MethodEditor());
