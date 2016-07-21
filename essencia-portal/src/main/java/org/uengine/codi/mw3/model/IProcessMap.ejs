@@ -3,6 +3,13 @@
 
 
 <%
+if(mw3.how == 'run'){
+%>
+	<div id="objDiv_<%=objectId%>">
+<%
+}
+
+
 if(mw3.when == 'filter'){
 %>
 <a href="#" onClick="<%=methods.processListFilter.caller()%>"><span class="icon-file3 left_menu_icon"></span><%=value.name%></a>
@@ -41,15 +48,24 @@ if(mw3.when == 'filter'){
 	<%
 	}
 	%>
+
 	<%=fields.roleMappingPanel.here()%>
 
 	<div id="btnline" style="border-top:1px solid #E3E8F2; padding-top:8px;">
 		<ul>
 			<%
 			if(mw3.how == 'run'){
+
+				if(mw3.where=='simulator'){
+			%>
+			<%=methods.runSimulation.here()%>
+			<%
+
+				}else{
 			%>
 			<%=methods.save.here()%>
 			<%
+				}
 			}else{
 			%>
 			<li><a id="wBtn" href="#" onClick="<%=methods.remove.caller()%>"><span><%=mw3.localize("$Delete")%></span></a></li>
@@ -117,5 +133,14 @@ if(mw3.when == 'filter'){
 	<%
 	}
 	}
+	}
+	%>
+
+
+<%
+if(mw3.how == 'run'){
+%>
+</div>
+	<%
 	}
 	%>
