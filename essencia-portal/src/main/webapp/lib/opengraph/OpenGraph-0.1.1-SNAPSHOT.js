@@ -17933,7 +17933,7 @@ OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style,
         return null;
     }
 
-    var me = this, _style = {}, fromShape, toShape, fromXY, toXY,
+    var me = this, _style = {}, fromShape, toShape, fromXY, toXY, fromAttr, toAttr,
         isSelf, beforeEvent,
         addAttrValues = function (element, name, value) {
             var attrValue = $(element).attr(name),
@@ -17952,7 +17952,6 @@ OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style,
 
     OG.Util.apply(_style, (style instanceof OG.geometry.Style) ? style.map : style || {}, me._CONFIG.DEFAULT_STYLE.EDGE);
 
-
     if (!from) {
         from = $(edge).attr("_from");
     }
@@ -17968,6 +17967,17 @@ OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style,
     if (to) {
         toShape = this._getShapeFromTerminal(to);
         toXY = this._getPositionFromTerminal(to);
+    }
+
+    //재연결 여부를 판단하여 이벤트 트리거 발생을 방지한다.
+    fromAttr = $(edge).attr("_from");
+    toAttr = $(edge).attr("_to");
+    if (fromShape && toShape && fromAttr && toAttr) {
+        var fromShapeId = fromAttr.substring(0, fromAttr.indexOf(OG.Constants.TERMINAL));
+        var toShapeId = toAttr.substring(0, toAttr.indexOf(OG.Constants.TERMINAL));
+        if ((fromShapeId == fromShape.id) && (toShapeId == toShape.id)) {
+            preventTrigger = true;
+        }
     }
 
     //셀프 커넥션 처리
@@ -17987,11 +17997,13 @@ OG.renderer.RaphaelRenderer.prototype.connect = function (from, to, edge, style,
             _style["arrow-end"] = "block-wide-long";
         }
 
-        beforeEvent = jQuery.Event("beforeConnectShape", {edge: edge, fromShape: fromShape, toShape: toShape});
-        $(this._PAPER.canvas).trigger(beforeEvent);
-        if (beforeEvent.isPropagationStopped()) {
-            this.remove(edge);
-            return null;
+        if (!preventTrigger) {
+            beforeEvent = jQuery.Event("beforeConnectShape", {edge: edge, fromShape: fromShape, toShape: toShape});
+            $(this._PAPER.canvas).trigger(beforeEvent);
+            if (beforeEvent.isPropagationStopped()) {
+                this.remove(edge);
+                return null;
+            }
         }
     }
 
@@ -24943,9 +24955,9 @@ OG.handler.EventHandler.prototype = {
                             var dr = newRp - rP;
 
                             //다른 selected 엘리먼트 리사이즈용 변수
-                            var stBoundary,stUp,stLwp,stLp,stRp,
-                                newStUp,newStLwp,newStLp,newStRp,
-                                stDu,stDlw,stDl,stDr;
+                            var stBoundary, stUp, stLwp, stLp, stRp,
+                                newStUp, newStLwp, newStLp, newStRp,
+                                stDu, stDlw, stDl, stDr;
 
                             $(this).css({"position": "absolute", "left": "0px", "top": "0px"});
                             if (element && element.shape.geom) {
@@ -24963,7 +24975,7 @@ OG.handler.EventHandler.prototype = {
 
                                 //선택된 다른 엘리먼트들의 리사이즈 처리
                                 $.each(me._getSelectedElement(), function (idx, selected) {
-                                    if(selected.id === element.id){
+                                    if (selected.id === element.id) {
                                         return;
                                     }
                                     if (renderer.isShape(selected) && !renderer.isEdge(selected)) {
@@ -25594,6 +25606,9 @@ OG.handler.EventHandler.prototype = {
         var renderer = me._RENDERER;
 
         $.contextMenu({
+            position: function (opt, x, y) {
+                opt.$menu.css({top: y + 10, left: x + 10});
+            },
             selector: '#' + me._RENDERER.getRootElement().id,
             build: function ($trigger, e) {
                 var root = me._RENDERER.getRootGroup(), copiedElement = $(root).data("copied");
@@ -27031,6 +27046,9 @@ OG.handler.EventHandler.prototype = {
     enableShapeContextMenu: function () {
         var me = this;
         $.contextMenu({
+            position: function (opt, x, y) {
+                opt.$menu.css({top: y + 10, left: x + 10});
+            },
             selector: '#' + me._RENDERER.getRootElement().id + ' [_type=SHAPE]',
             build: function ($trigger, event) {
                 $(me._RENDERER.getContainer()).focus();
