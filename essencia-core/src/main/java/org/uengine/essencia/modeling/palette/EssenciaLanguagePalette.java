@@ -10,7 +10,7 @@ import org.uengine.essencia.model.view.WorkProductView;
 import org.uengine.modeling.Palette;
 import org.uengine.modeling.PaletteWindow;
 
-public class EssenciaLanguagePalette extends PaletteWindow{
+public class EssenciaLanguagePalette extends Palette{
 		
 	public EssenciaLanguagePalette(){
 		super();
