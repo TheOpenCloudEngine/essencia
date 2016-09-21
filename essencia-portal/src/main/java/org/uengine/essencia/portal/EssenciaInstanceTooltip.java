@@ -22,15 +22,7 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
         super();
     }
 
-    @ServiceMethod(callByContent=true)
-    public InstanceViewDetail workItems() throws Exception{
 
-        InstanceView instanceView = new InstanceView();
-        instanceView.setInstanceId(String.valueOf(getInstanceId()));
-        MetaworksRemoteService.autowire(instanceView);
-
-        return instanceView.createInstanceViewDetail();
-    }
 
     @ServiceMethod(callByContent=true)//, target= ServiceMethodContext.TARGET_POPUP)
     public ModalWindow showDashBoard() throws Exception{
