@@ -152,7 +152,7 @@ public class AlphaProgressAggregationTest extends UEngineTest{
         });
 
 
-        ProcessInstance.USE_CLASS = DefaultProcessInstance.class;
+        AbstractProcessInstance.USE_CLASS = DefaultProcessInstance.class;
         ProcessInstance instance = processDefinition.createInstance();
 
         ProcessVariableValue pvvForSprint = new ProcessVariableValue();
