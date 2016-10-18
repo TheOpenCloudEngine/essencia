@@ -68,7 +68,8 @@ public class EssenciaRoleMappingPanel extends RoleMappingPanel{
     public void load(String defId_) throws Exception {
         super.load(defId_);
 
-        defId_ = VersionManager.getProductionResourcePath("codi", defId_);
+        VersionManager versionManager = org.metaworks.dwr.MetaworksRemoteService.getComponent(VersionManager.class);
+        defId_ = versionManager.getProductionResourcePath("codi", defId_);
 
         if(!defId_.endsWith(".method")) return;
 

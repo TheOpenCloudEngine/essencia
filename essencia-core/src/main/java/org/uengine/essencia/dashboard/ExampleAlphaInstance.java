@@ -120,7 +120,7 @@ public class ExampleAlphaInstance {
         });
 
 
-        ProcessInstance.USE_CLASS = DefaultProcessInstance.class;
+        AbstractProcessInstance.USE_CLASS = DefaultProcessInstance.class;
         processInstance = processDefinition.createInstance();
 
         ProcessVariableValue pvvForSprint = new ProcessVariableValue();

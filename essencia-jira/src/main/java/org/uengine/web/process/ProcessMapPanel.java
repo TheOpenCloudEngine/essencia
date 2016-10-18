@@ -79,7 +79,9 @@ public class ProcessMapPanel implements ContextAware {
 
         new TenantContext(this.getJiraTenant());
 
-        String defId = VersionManager.getProductionResourcePath("codi", this.getDefId());
+        VersionManager versionManager = org.metaworks.dwr.MetaworksRemoteService.getComponent(VersionManager.class);
+
+        String defId = versionManager.getProductionResourcePath("codi", this.getDefId());
 
         if (defId == null)
             throw new NoSuchProcessDefinitionException();

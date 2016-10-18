@@ -131,7 +131,9 @@ public class ProcessMapServiceImpl implements ProcessMapService {
             transactionAdvice.initiateTransaction();
             new TenantContext(comCode);
 
-            defId = VersionManager.getProductionResourcePath("codi", defId);
+            VersionManager versionManager = org.metaworks.dwr.MetaworksRemoteService.getComponent(VersionManager.class);
+
+            defId = versionManager.getProductionResourcePath("codi", defId);
 
             if (defId == null)
                 throw new NoSuchProcessDefinitionException();
@@ -223,7 +225,9 @@ public class ProcessMapServiceImpl implements ProcessMapService {
     private String initializeProcess(String defId) throws Exception {
         try {
             transactionAdvice.initiateTransaction();
-            String instId = processManager.initializeProcess(VersionManager.getProductionResourcePath("codi", defId));
+            VersionManager versionManager = org.metaworks.dwr.MetaworksRemoteService.getComponent(VersionManager.class);
+
+            String instId = processManager.initializeProcess(versionManager.getProductionResourcePath("codi", defId));
             transactionAdvice.commitTransaction();
             return instId;
 

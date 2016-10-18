@@ -19,6 +19,7 @@ import org.uengine.kernel.*;
 import org.uengine.modeling.Relation;
 import org.uengine.modeling.resource.VersionManager;
 import org.uengine.processmanager.ProcessManagerRemote;
+import org.metaworks.dwr.MetaworksRemoteService;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -258,7 +259,9 @@ public class Benchmark {
 
             coverageTables.add(coverageTable1);
 
-            org.uengine.kernel.ProcessDefinition processDefinition = processManagerRemote.getProcessDefinition(VersionManager.getProductionResourcePath("codi", definitionIds.get(i)));
+            VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
+
+            org.uengine.kernel.ProcessDefinition processDefinition = processManagerRemote.getProcessDefinition(versionManager.getProductionResourcePath("codi", definitionIds.get(i)));
             PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)processDefinition).getPracticeDefinition();
 
            // processDefinition.beforeSerialization();
