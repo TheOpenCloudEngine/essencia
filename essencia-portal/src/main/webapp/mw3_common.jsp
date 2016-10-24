@@ -21,7 +21,7 @@
 	<script type="text/javascript" src="lib/jquery-1.11.1/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="lib/jquery-ui-1.11.0.custom/jquery-ui.js"></script>
 	<script type="text/javascript" src="lib/jquery/jquery.layout-latest.js"></script>
-    <script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.js"></script>
+	<script type="text/javascript" src="assets/plugins/jquery-migrate-1.2.1.js"></script>
 
 	<!--<script type="text/javascript" src="scripts/jquery/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jquery-ui-1.8.23.custom.min.js"></script>
@@ -31,8 +31,8 @@
 	<script type="text/javascript" src="scripts/jquery/jqueryCycle/jquery.cycle2.carousel.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jqueryCycle/jquery.cycle2.center.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jquery.center.js"></script>
-    <script type="text/javascript" src="scripts/jquery/jquery.msg.js"></script>
-    <script type='text/javascript' src='scripts/jquery/jquery.textPlaceholder.js'></script>
+	<script type="text/javascript" src="scripts/jquery/jquery.msg.js"></script>
+	<script type='text/javascript' src='scripts/jquery/jquery.textPlaceholder.js'></script>
 	<script type="text/javascript" src="scripts/jquery/jquery.jqote2.js"></script>
 	<script type="text/javascript" src="scripts/jquery/jquery.smartTab.js"></script>
 
@@ -184,16 +184,20 @@
 	<!-- mw3 component -->
 	<!-- <link rel="stylesheet" type="text/css" href="style/uclipse.css" /> -->
 
-	<!-- for open presentation -->
-	<link rel="stylesheet" type="text/css" href="scripts/presentation/jmpressStyle.css" />
-	<script type="text/javascript" src="scripts/presentation/jmpress.all.js"></script>
-
 	<script src="scripts/ace-1.1.0/build/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 	<script src="scripts/ace-1.1.0/build/src-noconflict/ext-static_highlight.js"></script>
 
 	<!-- boostrap multi-select -->
 	<script type="text/javascript" src="assets/js/bootstrap-multiselect.js"></script>
 
+
+	<link rel="stylesheet" type="text/css" href="style/essencia.css">
+	<!-- datatables -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+
+	<!-- billing plan css -->
+	<link rel="stylesheet" type="text/css" href="style/plan/plan.css" />
 
 	<style>
 		html,
@@ -296,6 +300,9 @@
 		}
 
 		$(document).ready(function() {
+
+			mw3.checkUpdates();
+
 			document.body.addEventListener("DOMNodeInserted", function (ev) {
 				//console.log('DOMNodeInserted');
 				//console.log(ev);
@@ -475,6 +482,7 @@
 					alert(errorString);
 			});
 
+
 			loadMetaworksObject();
 
 			dwr.engine.setPollStatusHandler(function(newStatus, ex, maxRetriesReached){
@@ -491,11 +499,12 @@
 			};
 
 			mw3.onLoadFaceHelperScript();
+
 		});
 	</script>
 </head>
 
-<body onload="dwr.engine.setActiveReverseAjax(true);">
+<body onload="dwr.engine.setActiveReverseAjax(true);dwr.engine.setNotifyServerOnPageUnload(true);">
 <div class="error_div"></div>
 </body>
 </html>
