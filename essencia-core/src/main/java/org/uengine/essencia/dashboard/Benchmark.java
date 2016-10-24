@@ -260,8 +260,8 @@ public class Benchmark {
             coverageTables.add(coverageTable1);
 
             VersionManager versionManager = MetaworksRemoteService.getComponent(VersionManager.class);
-
-            org.uengine.kernel.ProcessDefinition processDefinition = processManagerRemote.getProcessDefinition(versionManager.getProductionResourcePath("codi", definitionIds.get(i)));
+            versionManager.setAppName("codi");
+            org.uengine.kernel.ProcessDefinition processDefinition = processManagerRemote.getProcessDefinition(versionManager.getProductionResourcePath(definitionIds.get(i)));
             PracticeDefinition practiceDefinition = ((EssenceProcessDefinition)processDefinition).getPracticeDefinition();
 
            // processDefinition.beforeSerialization();
