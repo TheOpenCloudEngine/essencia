@@ -40,7 +40,8 @@
         has = "hasOwnProperty",
         separator = /[\.\/]/,
         wildcard = "*",
-        fun = function () {},
+        fun = function () {
+        },
         numsort = function (a, b) {
             return a - b;
         },
@@ -240,7 +241,9 @@
     eve.toString = function () {
         return "You are running Eve " + version;
     };
-    (typeof module != "undefined" && module.exports) ? (module.exports = eve) : (typeof define != "undefined" ? (define("eve", [], function() { return eve; })) : (glob.eve = eve));
+    (typeof module != "undefined" && module.exports) ? (module.exports = eve) : (typeof define != "undefined" ? (define("eve", [], function () {
+        return eve;
+    })) : (glob.eve = eve));
 })(this);
 
 
@@ -270,6 +273,7 @@
             }
         }
     }
+
     R.version = "2.1.0";
     R.eve = eve;
     var loaded,
@@ -412,7 +416,8 @@
         sortByNumber = function (a, b) {
             return toFloat(a) - toFloat(b);
         },
-        fun = function () {},
+        fun = function () {
+        },
         pipe = function (x) {
             return x;
         },
@@ -514,7 +519,7 @@
         if (type == "array") {
             return o instanceof Array;
         }
-        return  (type == "null" && o === null) ||
+        return (type == "null" && o === null) ||
             (type == typeof o && o !== null) ||
             (type == "object" && o === Object(o)) ||
             (type == "array" && Array.isArray && Array.isArray(o)) ||
@@ -604,7 +609,7 @@
                     docum.write("<body>");
                     docum.close();
                     bod = docum.body;
-                } catch(e) {
+                } catch (e) {
                     bod = createPopup().document.body;
                 }
                 var range = bod.createTextRange();
@@ -614,7 +619,7 @@
                         var value = range.queryCommandValue("ForeColor");
                         value = ((value & 255) << 16) | (value & 65280) | ((value & 16711680) >>> 16);
                         return "#" + ("000000" + value.toString(16)).slice(-6);
-                    } catch(e) {
+                    } catch (e) {
                         return "none";
                     }
                 });
@@ -669,17 +674,6 @@
                 b: b,
                 hex: R.rgb(r, g, b),
                 toString: rgbtoString
-
-
-
-
-
-
-
-
-
-
-
 
 
             };
@@ -816,6 +810,7 @@
             return array.push(array.splice(i, 1)[0]);
         }
     }
+
     function cacher(f, scope, postprocessor) {
         function newf() {
             var arg = Array.prototype.slice.call(arguments, 0),
@@ -831,6 +826,7 @@
             cache[args] = f[apply](scope, arg);
             return postprocessor ? postprocessor(cache[args]) : cache[args];
         }
+
         return newf;
     }
 
@@ -960,7 +956,7 @@
         for (var i = 0, iLen = crp.length; iLen - 2 * !z > i; i += 2) {
             var p = [
                 {x: +crp[i - 2], y: +crp[i - 1]},
-                {x: +crp[i],     y: +crp[i + 1]},
+                {x: +crp[i], y: +crp[i + 1]},
                 {x: +crp[i + 2], y: +crp[i + 3]},
                 {x: +crp[i + 4], y: +crp[i + 5]}
             ];
@@ -984,7 +980,7 @@
                 (-p[0].x + 6 * p[1].x + p[2].x) / 6,
                 (-p[0].y + 6 * p[1].y + p[2].y) / 6,
                 (p[1].x + 6 * p[2].x - p[3].x) / 6,
-                (p[1].y + 6*p[2].y - p[3].y) / 6,
+                (p[1].y + 6 * p[2].y - p[3].y) / 6,
                 p[2].x,
                 p[2].y
             ]);
@@ -1141,6 +1137,7 @@
             t2 = t * t1 + 6 * p1 - 12 * p2 + 6 * p3;
         return t * t2 - 3 * p1 + 3 * p2;
     }
+
     function bezlen(x1, y1, x2, y2, x3, y3, x4, y4, z) {
         if (z == null) {
             z = 1;
@@ -1148,8 +1145,8 @@
         z = z > 1 ? 1 : z < 0 ? 0 : z;
         var z2 = z / 2,
             n = 12,
-            Tvalues = [-0.1252,0.1252,-0.3678,0.3678,-0.5873,0.5873,-0.7699,0.7699,-0.9041,0.9041,-0.9816,0.9816],
-            Cvalues = [0.2491,0.2491,0.2335,0.2335,0.2032,0.2032,0.1601,0.1601,0.1069,0.1069,0.0472,0.0472],
+            Tvalues = [-0.1252, 0.1252, -0.3678, 0.3678, -0.5873, 0.5873, -0.7699, 0.7699, -0.9041, 0.9041, -0.9816, 0.9816],
+            Cvalues = [0.2491, 0.2491, 0.2335, 0.2335, 0.2032, 0.2032, 0.1601, 0.1601, 0.1069, 0.1069, 0.0472, 0.0472],
             sum = 0;
         for (var i = 0; i < n; i++) {
             var ct = z2 * Tvalues[i] + z2,
@@ -1160,6 +1157,7 @@
         }
         return z2 * sum;
     }
+
     function getTatLen(x1, y1, x2, y2, x3, y3, x4, y4, ll) {
         if (ll < 0 || bezlen(x1, y1, x2, y2, x3, y3, x4, y4) < ll) {
             return;
@@ -1177,6 +1175,7 @@
         }
         return t2;
     }
+
     function intersect(x1, y1, x2, y2, x3, y3, x4, y4) {
         if (
             mmax(x1, x2) < mmin(x3, x4) ||
@@ -1211,12 +1210,15 @@
         }
         return {x: px, y: py};
     }
+
     function inter(bez1, bez2) {
         return interHelper(bez1, bez2);
     }
+
     function interCount(bez1, bez2) {
         return interHelper(bez1, bez2, 1);
     }
+
     function interHelper(bez1, bez2, justCount) {
         var bbox1 = R.bezierBBox(bez1),
             bbox2 = R.bezierBBox(bez2);
@@ -1737,7 +1739,7 @@
                     if (!path) {
                         return ["C", d.x, d.y, d.x, d.y, d.x, d.y];
                     }
-                    !(path[0] in {T:1, Q:1}) && (d.qx = d.qy = null);
+                    !(path[0] in {T: 1, Q: 1}) && (d.qx = d.qy = null);
                     switch (path[0]) {
                         case "M":
                             d.X = path[1];
@@ -2014,20 +2016,24 @@
         getEmpty = function (item) {
             var l = item[0];
             switch (l.toLowerCase()) {
-                case "t": return [l, 0, 0];
-                case "m": return [l, 1, 0, 0, 1, 0, 0];
-                case "r": if (item.length == 4) {
-                    return [l, 0, item[2], item[3]];
-                } else {
-                    return [l, 0];
-                }
-                case "s": if (item.length == 5) {
-                    return [l, 1, 1, item[3], item[4]];
-                } else if (item.length == 3) {
-                    return [l, 1, 1];
-                } else {
-                    return [l, 1];
-                }
+                case "t":
+                    return [l, 0, 0];
+                case "m":
+                    return [l, 1, 0, 0, 1, 0, 0];
+                case "r":
+                    if (item.length == 4) {
+                        return [l, 0, item[2], item[3]];
+                    } else {
+                        return [l, 0];
+                    }
+                case "s":
+                    if (item.length == 5) {
+                        return [l, 1, 1, item[3], item[4]];
+                    } else if (item.length == 3) {
+                        return [l, 1, 1];
+                    } else {
+                        return [l, 1];
+                    }
             }
         },
         equaliseTransform = R._equaliseTransform = function (t1, t2) {
@@ -2115,6 +2121,7 @@
             this.f = 0;
         }
     }
+
     (function (matrixproto) {
 
         matrixproto.add = function (a, b, c, d, e, f) {
@@ -2201,6 +2208,7 @@
         function norm(a) {
             return a[0] * a[0] + a[1] * a[1];
         }
+
         function normalize(a) {
             var mag = math.sqrt(norm(a));
             a[0] && (a[0] /= mag);
@@ -2249,7 +2257,7 @@
                 s.scalex = +s.scalex.toFixed(4);
                 s.scaley = +s.scaley.toFixed(4);
                 s.rotate = +s.rotate.toFixed(4);
-                return  (s.dx || s.dy ? "t" + [s.dx, s.dy] : E) +
+                return (s.dx || s.dy ? "t" + [s.dx, s.dy] : E) +
                     (s.scalex != 1 || s.scaley != 1 ? "s" + [s.scalex, s.scaley, 0, 0] : E) +
                     (s.rotate ? "r" + [s.rotate, 0, 0] : E);
             } else {
@@ -2265,7 +2273,9 @@
 
         paperproto.safari = function () {
             var rect = this.rect(-99, -99, this.width + 99, this.height + 99).attr({stroke: "none"});
-            setTimeout(function () {rect.remove();});
+            setTimeout(function () {
+                rect.remove();
+            });
         };
     } else {
         paperproto.safari = fun;
@@ -2290,32 +2300,6 @@
                         f = function (e) {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             var scrollY = g.doc.documentElement.scrollTop || g.doc.body.scrollTop,
                                 scrollX = g.doc.documentElement.scrollLeft || g.doc.body.scrollLeft,
                                 x = e.clientX + scrollX,
@@ -2330,27 +2314,6 @@
                                         e.stopPropagation = stopTouch;
                                         break;
                                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                                 }
@@ -2440,39 +2403,16 @@
         elproto = R.el = {};
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     for (var i = events.length; i--;) {
         (function (eventName) {
             R[eventName] = elproto[eventName] = function (fn, scope) {
                 if (R.is(fn, "function")) {
                     this.events = this.events || [];
-                    this.events.push({name: eventName, f: fn, unbind: addEvent(this.shape || this.node || g.doc, eventName, fn, scope || this)});
+                    this.events.push({
+                        name: eventName,
+                        f: fn,
+                        unbind: addEvent(this.shape || this.node || g.doc, eventName, fn, scope || this)
+                    });
                 }
                 return this;
             };
@@ -2541,6 +2481,7 @@
             onend && eve.on("raphael.drag.end." + this.id, onend);
             eve("raphael.drag.start." + this.id, start_scope || move_scope || this, e.clientX + scrollX, e.clientY + scrollY, e);
         }
+
         this._drag = {};
         draggable.push({el: this, start: start});
         this.mousedown(start);
@@ -2647,7 +2588,7 @@
             body = doc.body,
             docElem = doc.documentElement,
             clientTop = docElem.clientTop || body.clientTop || 0, clientLeft = docElem.clientLeft || body.clientLeft || 0,
-            top  = box.top  + (g.win.pageYOffset || docElem.scrollTop || body.scrollTop ) - clientTop,
+            top = box.top + (g.win.pageYOffset || docElem.scrollTop || body.scrollTop ) - clientTop,
             left = box.left + (g.win.pageXOffset || docElem.scrollLeft || body.scrollLeft) - clientLeft;
         return {
             y: top,
@@ -2715,6 +2656,7 @@
     function x_y() {
         return this.x + S + this.y;
     }
+
     function x_y_w_h() {
         return this.x + S + this.y + S + this.width + " \xd7 " + this.height;
     }
@@ -2813,16 +2755,15 @@
                             if (subpath && !subpaths.start) {
                                 point = getPointAtSegmentLength(x, y, p[1], p[2], p[3], p[4], p[5], p[6], length - len);
                                 sp += ["C" + point.start.x, point.start.y, point.m.x, point.m.y, point.x, point.y];
-                                if (onlystart) {return sp;}
+                                if (onlystart) {
+                                    return sp;
+                                }
                                 subpaths.start = sp;
                                 sp = ["M" + point.x, point.y + "C" + point.n.x, point.n.y, point.end.x, point.end.y, p[5], p[6]].join();
                                 len += l;
                                 x = +p[5];
                                 y = +p[6];
                                 continue;
-
-
-
 
 
                             }
@@ -2860,7 +2801,9 @@
     };
 
     elproto.getTotalLength = function () {
-        if (this.type != "path") {return;}
+        if (this.type != "path") {
+            return;
+        }
         if (this.node.getTotalLength) {
             return this.node.getTotalLength();
         }
@@ -2868,12 +2811,16 @@
     };
 
     elproto.getPointAtLength = function (length) {
-        if (this.type != "path") {return;}
+        if (this.type != "path") {
+            return;
+        }
         return getPointAtLength(this.attrs.path, length);
     };
 
     elproto.getSubpath = function (from, to) {
-        if (this.type != "path") {return;}
+        if (this.type != "path") {
+            return;
+        }
         return R.getSubpath(this.attrs.path, from, to);
     };
 
@@ -2942,11 +2889,11 @@
     ef["back-out"] = ef.backOut;
 
     var animationElements = [],
-        requestAnimFrame = window.requestAnimationFrame       ||
+        requestAnimFrame = window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            window.oRequestAnimationFrame      ||
-            window.msRequestAnimationFrame     ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
             function (callback) {
                 setTimeout(callback, 16);
             },
@@ -3050,8 +2997,8 @@
                         });
                     })(that.id, that, e.anim);
                 } else {
-                    (function(f, el, a) {
-                        setTimeout(function() {
+                    (function (f, el, a) {
+                        setTimeout(function () {
                             eve("raphael.anim.frame." + el.id, el, a);
                             eve("raphael.anim.finish." + el.id, el, a);
                             R.is(f, "function") && f.call(el);
@@ -3107,16 +3054,19 @@
             cy = 3 * p1y,
             by = 3 * (p2y - p1y) - cy,
             ay = 1 - cy - by;
+
         function sampleCurveX(t) {
             return ((ax * t + bx) * t + cx) * t;
         }
+
         function solve(x, epsilon) {
             var t = solveCurveX(x, epsilon);
             return ((ay * t + by) * t + cy) * t;
         }
+
         function solveCurveX(x, epsilon) {
             var t0, t1, t2, x2, d2, i;
-            for(t2 = x, i = 0; i < 8; i++) {
+            for (t2 = x, i = 0; i < 8; i++) {
                 x2 = sampleCurveX(t2) - x;
                 if (abs(x2) < epsilon) {
                     return t2;
@@ -3150,8 +3100,10 @@
             }
             return t2;
         }
+
         return solve(t, 1 / (200 * duration));
     }
+
     elproto.onAnimation = function (f) {
         f ? eve.on("raphael.anim.frame." + this.id, f) : eve.unbind("raphael.anim.frame." + this.id);
         return this;
@@ -3500,6 +3452,7 @@
             animationElements.splice(i--, 1);
         }
     }
+
     eve.on("raphael.remove", stopAnimation);
     eve.on("raphael.clear", stopAnimation);
     elproto.toString = function () {
@@ -3841,7 +3794,7 @@
     R.st = setproto;
     // Firefox <3.6 fix: http://webreflection.blogspot.com/2009/11/195-chars-to-help-lazy-loading.html
     (function (doc, loaded, f) {
-        if (doc.readyState == null && doc.addEventListener){
+        if (doc.readyState == null && doc.addEventListener) {
             doc.addEventListener(loaded, f = function () {
                 doc.removeEventListener(loaded, f, false);
                 doc.readyState = "complete";
@@ -3851,6 +3804,7 @@
         function isLoaded() {
             (/in/).test(doc.readyState) ? setTimeout(isLoaded, 9) : R.eve("raphael.DOMload");
         }
+
         isLoaded();
     })(document, "DOMContentLoaded");
 
@@ -3897,7 +3851,7 @@ window.Raphael.svg && function (R) {
         },
         markerCounter = {};
     R.toString = function () {
-        return  "Your browser supports SVG.\nYou are running Rapha\xebl " + this.version;
+        return "Your browser supports SVG.\nYou are running Rapha\xebl " + this.version;
     };
     var $ = function (el, attr) {
             if (attr) {
@@ -3952,55 +3906,6 @@ window.Raphael.svg && function (R) {
 
                     angle = -toFloat(angle);
                     if (isNaN(angle)) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         return null;
                     }
                     var vector = [0, 0, math.cos(R.rad(angle)), math.sin(R.rad(angle))],
@@ -4014,30 +3919,8 @@ window.Raphael.svg && function (R) {
                     if (vector[3] < 0) {
                         vector[1] = -vector[3];
                         vector[3] = 0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     }
                 }
-
-
-
                 var dots = R._parseDots(gradient);
 
                 if (!dots) {
@@ -4072,14 +3955,14 @@ window.Raphael.svg && function (R) {
                     }
                 }
 
-                if(element.attrs['fill-r']){
+                if (element.attrs['fill-r']) {
                     el.setAttribute('r', element.attrs['fill-r']);
                 }
-                if(element.attrs['fill-cx']){
+                if (element.attrs['fill-cx']) {
                     el.setAttribute('cx', element.attrs['fill-cx']);
                 }
 
-                if(element.attrs['fill-cy']){
+                if (element.attrs['fill-cy']) {
                     el.setAttribute('cy', element.attrs['fill-cy']);
                 }
             }
@@ -4112,7 +3995,7 @@ window.Raphael.svg && function (R) {
                     dx,
                     refX,
                     attr,
-                    marker_stroke_width = stroke / 2 ,
+                    marker_stroke_width = stroke / 2,
                     w = 7,
                     h = 7,
                     t = 5;
@@ -4129,36 +4012,44 @@ window.Raphael.svg && function (R) {
                         case "none":
                             type = values[i];
                             break;
-                        case "wide": h = 10; break;
-                        case "narrow": h = 5; break;
-                        case "long": w = 10; break;
-                        case "short": w = 5; break;
+                        case "wide":
+                            h = 10;
+                            break;
+                        case "narrow":
+                            h = 5;
+                            break;
+                        case "long":
+                            w = 10;
+                            break;
+                        case "short":
+                            w = 5;
+                            break;
                     }
                 }
-                if (type == "open")  {
+                if (type == "open") {
                     w += 2;
                     h += 2;
                     t += 2;
                     dx = 1;
-                    refX = isEnd ? w-2 : 1;
+                    refX = isEnd ? w - 2 : 1;
                     attr = {
                         fill: "none",
                         stroke: attrs.stroke,
                         'stroke-dasharray': 0
                     };
-                } else if(type == 'classic'){
+                } else if (type == 'classic') {
                     refX = dx = w / 2;
                     attr = {
                         fill: "none",
-                        'fill-opacity' : 1,
+                        'fill-opacity': 1,
                         stroke: attrs.stroke,
                         'stroke-dasharray': 0
                     };
-                } else if(type == 'open_block' || type == 'open_diamond' || type == 'open_oval') {
+                } else if (type == 'open_block' || type == 'open_diamond' || type == 'open_oval') {
                     refX = dx = w / 2;
                     attr = {
                         fill: 'white',
-                        'fill-opacity' : 1,
+                        'fill-opacity': 1,
                         stroke: attrs.stroke,
                         'stroke-dasharray': 0
                     };
@@ -4166,7 +4057,7 @@ window.Raphael.svg && function (R) {
                     refX = dx = w / 2;
                     attr = {
                         fill: attrs.stroke,
-                        'fill-opacity' : 1,
+                        'fill-opacity': 1,
                         stroke: "none"
                     };
                 }
@@ -4174,57 +4065,9 @@ window.Raphael.svg && function (R) {
                     if (isEnd) {
                         o._.arrows.endPath && markerCounter[o._.arrows.endPath]--;
                         o._.arrows.endMarker && markerCounter[o._.arrows.endMarker]--;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     } else {
                         o._.arrows.startPath && markerCounter[o._.arrows.startPath]--;
                         o._.arrows.startMarker && markerCounter[o._.arrows.startMarker]--;
-
-
-
-
                     }
                 } else {
                     o._.arrows = {};
@@ -4256,22 +4099,7 @@ window.Raphael.svg && function (R) {
                         use = $($("use"), {
                             "xlink:href": "#" + pathId,
                             transform: (isEnd ? "rotate(180 " + w / 2 + " " + h / 2 + ") " : E) + "scale(" + w / t + "," + h / t + ")",
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                        transform: (isEnd ? "rotate(180 " + (w-marker_stroke_width) / 2 + " " + (h-marker_stroke_width) / 2 + ") " : E) + "scale(" + (w-stroke*2) / t + "," + (h-stroke*2) / t + ")" + " translate(" + marker_stroke_width + "," + marker_stroke_width +")",
                             "stroke-width": (1 / ((w / t + h / t) / 2)).toFixed(4)
-//                        "stroke-width": marker_stroke_width
                         });
                         marker.appendChild(use);
                         p.defs.appendChild(marker);
@@ -4281,41 +4109,13 @@ window.Raphael.svg && function (R) {
                         use = marker.getElementsByTagName("use")[0];
                     }
                     $(use, attr);
-//                var delta = dx * (type != "diamond" && type != "oval" && type != "open_diamond" && type != "open_oval");
-//                var delta = dx * (type != "diamond" && type != "oval");
                     var delta = dx;
                     if (isEnd) {
                         from = o._.arrows.startdx * stroke || 0;
                         to = R.getTotalLength(attrs.path) - delta * stroke;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     } else {
                         from = delta * stroke;
                         to = R.getTotalLength(attrs.path) - (o._.arrows.enddx * stroke || 0);
-
-
-
-
-
-
-
-
-
-
-
                     }
                     attr = {};
                     attr["marker-" + se] = "url(#" + markerId + ")";
@@ -4335,18 +4135,6 @@ window.Raphael.svg && function (R) {
                     } else {
                         from = 0;
                         to = R.getTotalLength(attrs.path) - (o._.arrows.enddx * stroke || 0);
-
-
-
-
-
-
-
-
-
-
-
-
                     }
                     o._.arrows[se + "Path"] && $(node, {d: Raphael.getSubpath(attrs.path, from, to)});
                     delete o._.arrows[se + "Path"];
@@ -4380,7 +4168,11 @@ window.Raphael.svg && function (R) {
             value = dasharray[Str(value).toLowerCase()];
             if (value) {
                 var width = o.attrs["stroke-width"] || "1",
-                    butt = {round: width, square: width, butt: 0}[o.attrs["stroke-linecap"] || params["stroke-linecap"]] || 0,
+                    butt = {
+                            round: width,
+                            square: width,
+                            butt: 0
+                        }[o.attrs["stroke-linecap"] || params["stroke-linecap"]] || 0,
                     dashes = [],
                     i = value.length;
                 while (i--) {
@@ -4390,7 +4182,7 @@ window.Raphael.svg && function (R) {
             }
         },
         setFillAndStroke = function (o, params, size) {
-            if(!o.node.style){
+            if (!o.node.style) {
                 o.node.style = {};
             }
             var node = o.node,
@@ -4468,125 +4260,7 @@ window.Raphael.svg && function (R) {
                         case "path":
                             if (o.type == "path") {
                                 $(node, {d: value ? attrs.path = R._pathToAbsolute(value) : "M0,0"});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 o._.dirty = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 if (o._.arrows) {
                                     "startString" in o._.arrows && addArrow(o, o._.arrows.startString);
                                     "endString" in o._.arrows && addArrow(o, o._.arrows.endString, 1);
@@ -4600,126 +4274,6 @@ window.Raphael.svg && function (R) {
                                 att = "x";
                                 value = attrs.x;
                             } else {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 break;
                             }
                         case "x":
@@ -4899,25 +4453,54 @@ window.Raphael.svg && function (R) {
                     node.removeChild(node.firstChild);
                 }
                 var texts = Str(params.text).split("\n"),
-                    tspans = [], finaltspans = [],
+                    tspans = [], finaltspans = [], isWord = false,
                     tspan, temp;
 
                 //한 라인의 최대 글자 수. font size를 얻어와야 함.
                 var maxNum = parseInt(size[0] / 12);
 
-                for (var i = 0, ii = texts.length; i < ii; i++) {
-                    temp = texts[i];
 
-                    while(true){
-                        if(temp.length > maxNum){
-                            finaltspans.push(temp.substring(0, maxNum));
-                            temp = temp.substring(maxNum, temp.length);
-                        }else{
-                            finaltspans.push(temp);
-                            break;
+                function wordWrap(str, maxWidth) {
+                    var newLineStr = "\n", done = false, res = '';
+                    do {
+                        var found = false;
+                        // Inserts new line at first whitespace of the line
+                        for (i = maxWidth - 1; i >= 0; i--) {
+                            if (testWhite(str.charAt(i))) {
+                                res = res + [str.slice(0, i), newLineStr].join('');
+                                str = str.slice(i + 1);
+                                found = true;
+                                break;
+                            }
+                        }
+                        // Inserts new line at maxWidth position, the word is too long to wrap
+                        if (!found) {
+                            res += [str.slice(0, maxWidth), newLineStr].join('');
+                            str = str.slice(maxWidth);
+                        }
+
+                        if (str.length < maxWidth) {
+                            res += str;
+                            done = true;
+                        }
+                    } while (!done);
+
+                    var result = res.split("\n");
+                    var lines = [];
+                    for (var r = 0, lenr = result.length; r < lenr; r++) {
+                        if(result[r] && result[r].length > 0){
+                            lines.push(result[r]);
                         }
                     }
+                    return lines;
                 }
+
+                function testWhite(x) {
+                    var white = new RegExp(/^\s$/);
+                    return white.test(x.charAt(0));
+                }
+
+                finaltspans = wordWrap(params.text, maxNum)
                 for (var i = 0, ii = finaltspans.length; i < ii; i++) {
                     tspan = $("tspan");
                     i && $(tspan, {dy: fontSize * leading, x: a.x});
@@ -4972,11 +4555,6 @@ window.Raphael.svg && function (R) {
             this.next = null;
         },
         elproto = R.el;
-
-
-
-
-
     Element.prototype = elproto;
     elproto.constructor = Element;
 
@@ -4993,7 +4571,7 @@ window.Raphael.svg && function (R) {
         return p;
     };
 
-    elproto.setTooltip = function(title){
+    elproto.setTooltip = function (title) {
         if (this.removed) {
             return this;
         }
@@ -5116,7 +4694,7 @@ window.Raphael.svg && function (R) {
         var bbox = {};
         try {
             bbox = this.node.getBBox();
-        } catch(e) {
+        } catch (e) {
             // Firefox 3.0.x plays badly here
         } finally {
             bbox = bbox || {};
@@ -5367,8 +4945,8 @@ window.Raphael.svg && function (R) {
             var el = $("div");
             el.style.cssText = [
                     "position:absolute",
-                    "left:" + (x - w/2) + "px",
-                    "top:" + (y - h/2) + "px",
+                    "left:" + (x - w / 2) + "px",
+                    "top:" + (y - h / 2) + "px",
                     "width:" + w + "px",
                     "height:" + h + "px"
                 ].join(";") + ";";
@@ -5457,7 +5035,8 @@ window.Raphael.svg && function (R) {
         container.canvas = cnvs;
         container.clear();
         container._left = container._top = 0;
-        isFloating && (container.renderfix = function () {});
+        isFloating && (container.renderfix = function () {
+        });
         container.renderfix();
         return container;
     };
@@ -5581,7 +5160,7 @@ window.Raphael.vml && function (R) {
         pathTypes = {path: 1, rect: 1, image: 1},
         ovalTypes = {circle: 1, ellipse: 1},
         path2vml = function (path) {
-            var total =  /[ahqstv]/ig,
+            var total = /[ahqstv]/ig,
                 command = R._pathToAbsolute;
             Str(path).match(total) && (command = R._path2curve);
             total = /[clmz]/g;
@@ -5664,7 +5243,7 @@ window.Raphael.vml && function (R) {
             s.visibility = "visible";
         };
     R.toString = function () {
-        return  "Your browser doesn\u2019t support SVG. Falling down to VML.\nYou are running Rapha\xebl " + this.version;
+        return "Your browser doesn\u2019t support SVG. Falling down to VML.\nYou are running Rapha\xebl " + this.version;
     };
     var addArrow = function (o, value, isEnd) {
             var values = Str(value).toLowerCase().split("-"),
@@ -5693,9 +5272,13 @@ window.Raphael.vml && function (R) {
                         type = 'diamond';
                         break;
                     case "wide":
-                    case "narrow": h = values[i]; break;
+                    case "narrow":
+                        h = values[i];
+                        break;
                     case "long":
-                    case "short": w = values[i]; break;
+                    case "short":
+                        w = values[i];
+                        break;
                 }
             }
             var stroke = o.node.getElementsByTagName("stroke")[0];
@@ -5822,7 +5405,10 @@ window.Raphael.vml && function (R) {
                         fill.color = R.getRGB(params.fill).hex;
                         fill.src = E;
                         fill.type = "solid";
-                        if (R.getRGB(params.fill).error && (res.type in {circle: 1, ellipse: 1} || Str(params.fill).charAt() != "r") && addGradientFill(res, params.fill, fill)) {
+                        if (R.getRGB(params.fill).error && (res.type in {
+                                circle: 1,
+                                ellipse: 1
+                            } || Str(params.fill).charAt() != "r") && addGradientFill(res, params.fill, fill)) {
                             a.fill = "none";
                             a.gradient = params.fill;
                             fill.rotate = false;
@@ -6295,7 +5881,7 @@ window.Raphael.vml && function (R) {
     R._engine.group = function (vml, x, y) {
         var el = createNode("group");
         el.coordsize = zoom + S + zoom;
-        if(x && y) {
+        if (x && y) {
             el.coordorigin = x + " " + y;
         }
         var p = new Element(el, vml),
@@ -6443,8 +6029,8 @@ window.Raphael.vml && function (R) {
         var g = createNode("group");
         g.style.cssText = [
                 "position:absolute",
-                "left:" + (x - w/2) + "px",
-                "top:" + (y - h/2) + "px",
+                "left:" + (x - w / 2) + "px",
+                "top:" + (y - h / 2) + "px",
                 "width:" + w + "px",
                 "height:" + h + "px"
             ].join(";") + ";";
@@ -6563,7 +6149,8 @@ window.Raphael.vml && function (R) {
                 container.appendChild(c);
             }
         }
-        res.renderfix = function () {};
+        res.renderfix = function () {
+        };
         return res;
     };
     R.prototype.clear = function () {
@@ -6615,6 +6202,9 @@ OG.layout = {};
 
 /** @namespace */
 OG.renderer = {};
+
+/** @namespace */
+OG.marker = {};
 
 /** @namespace */
 OG.shape = {};
@@ -6816,6 +6406,19 @@ OG.common.Constants = {
 	 */
 	TERMINAL: "_TERMINAL",
 
+	/**
+	 * 마커 등록을 위한 임시 노드 아이디
+	 */
+	MARKER_TEMP_NODE: "MARKER_TEMP_NODE",
+
+	/**
+	 * 캔버스의 마커 데피니션 suffix 정의
+	 */
+	MARKER_DEFS_SUFFIX: "_MARKER",
+	/**
+	 * Shape 에서 마커가 그려질 경우 원본 노드 suffix 정의
+	 */
+	ORIGINAL_NODE: "ORIGINAL_NODE",
 	/**
 	 * Element 의 커넥트 가이드 이벤트 보정영역의 정의
 	 */
@@ -9017,17 +8620,6 @@ OG.geometry.Geometry.prototype = {
             return p.distance(A);
         }
 
-        // otherwise use comp.graphics.algorithms Frequently Asked Questions method
-        //	(1)				AC dot AB
-        //			   r = -----------
-        //					||AB||^2
-        //	r has the following meaning:
-        //	r=0 P = A
-        //	r=1 P = B
-        //	r<0 P is on the backward extension of AB
-        //	r>1 P is on the forward extension of AB
-        //	0<r<1 P is interior to AB
-
         r = ((p.x - A.x) * (B.x - A.x) + (p.y - A.y) * (B.y - A.y)) /
             ((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));
 
@@ -9037,13 +8629,6 @@ OG.geometry.Geometry.prototype = {
         if (r >= 1.0) {
             return p.distance(B);
         }
-
-        // (2)
-        //		 (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay)
-        //	s = -----------------------------
-        //					L^2
-        //
-        //	Then the distance from C to P = |s|*L.
 
         s = ((A.y - p.y) * (B.x - A.x) - (A.x - p.x) * (B.y - A.y)) /
             ((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));
@@ -9101,7 +8686,7 @@ OG.geometry.Geometry.prototype = {
     },
 
     /**
-     * 주어진 라인과 교차하는 좌표를 반환한다.
+     * 기하도형이 주어진 라인과 교차하는 좌표들을 반환한다.
      *
      * @param {OG.geometry.Coordinate[]} line 라인 시작좌표, 끝좌표 Array
      * @return {OG.geometry.Coordinate[]}
@@ -9129,7 +8714,7 @@ OG.geometry.Geometry.prototype = {
     },
 
     /**
-     * 주어진 라인과 교차하는 좌표중 시작좌표에 가장 가까운 좌표를 반환한다.
+     * 기하도형이 주어진 라인과 교차하는 좌표중 시작좌표에 가장 가까운 좌표를 반환한다.
      *
      * @param {OG.geometry.Coordinate[]} line 라인 시작좌표, 끝좌표 Array
      * @return {OG.geometry.Coordinate[]}
@@ -9156,13 +8741,14 @@ OG.geometry.Geometry.prototype = {
     },
 
     /**
-     * 라인1 로부터 라인2 의 교차점을 계산한다.
+     * 라인1 과 라인2 의 교차점을 계산한다.
      *
      * @param {OG.geometry.Coordinate[]} line1 line1 라인 시작좌표, 끝좌표 Array
      * @param {OG.geometry.Coordinate[]} line2 line2 라인 시작좌표, 끝좌표 Array
+     * @param {boolean} extension 라인을 연장하여 교차점을 계산하는 여부
      * @return {OG.geometry.Coordinate} 교차점
      */
-    intersectLineToLine: function (line1, line2) {
+    intersectLineToLine: function (line1, line2, extension) {
         var A = this.convertCoordinate(line1[0]),
             B = this.convertCoordinate(line1[1]),
             C = this.convertCoordinate(line2[0]),
@@ -9192,6 +8778,9 @@ OG.geometry.Geometry.prototype = {
                 result = new OG.Coordinate(OG.Util.round(A.x + r * (B.x - A.x)), OG.Util.round(A.y + r * (B.y - A.y)));
             } else {
                 resultText = "No Intersection";
+                if (extension) {
+                    result = new OG.Coordinate(OG.Util.round(A.x + r * (B.x - A.x)), OG.Util.round(A.y + r * (B.y - A.y)));
+                }
             }
         } else {
             if (r_top === 0 || s_top === 0) {
@@ -9205,7 +8794,7 @@ OG.geometry.Geometry.prototype = {
     },
 
     /**
-     * 라인1 로부터 라인2 의 교차점을 계산한다.
+     * 주어진 원과 주어진 라인의 교차점을 계산한다.
      *
      * @param {OG.geometry.Coordinate} center 중심점
      * @param {Number} radius 반경
@@ -9264,7 +8853,7 @@ OG.geometry.Geometry.prototype = {
     },
 
     /**
-     * 포인트 P 로부터 라인 AB의 교차점을 계산한다.
+     * 포인트 P 로부터 라인 AB 까지 수직인 가상선을 생각할때, 그 교차점을 계산한다.
      * Note: NON-ROBUST!
      *
      * @param {OG.geometry.Coordinate|Number[]} p 기준좌표
@@ -9299,7 +8888,7 @@ OG.geometry.Geometry.prototype = {
     },
 
     /**
-     * 주어진 좌표에 대해 공간기하객체의 퍼센테이지 비율을 구한다.
+     * 주어진 좌표에 대해 공간기하객체 바운더리 대비 가로,세로 위치 퍼센테이지 비율을 구한다.
      *
      * @param {OG.geometry.Coordinate} _coordinate 좌표
      * @return {Object} {px , py}
@@ -9377,6 +8966,174 @@ OG.geometry.Geometry.prototype = {
         }
 
         return _coordinate;
+    },
+
+    /**
+     * 주어진 선분과 일정 거리에 있는 평행한 선분을 반환한다.
+     * @param {OG.geometry.Coordinate} from 라인 시작좌표
+     * @param {OG.geometry.Coordinate} to 라인 끝좌표
+     * @param distance
+     * @return {OG.geometry.Coordinate[]} 평행선 시작좌표, 끝좌표 Array
+     */
+    getParallelLine: function (from, to, distance) {
+        var me = this;
+        var direction = 'plus';
+        var moveX = 0;
+        var moveY = 0;
+        var p1 = this.convertCoordinate(from);
+        var p2 = this.convertCoordinate(to);
+        //캔버스의 좌표계는 y 좌표가 위에서부터 0으로 시작하기 때문에 방정식 좌표계에 맞추기 위해, 두 점의 y 를 교환하고,
+        //방정식의 상수를 마추기 위해 첫번째 x,y 를 0 으로 맞추고 두번째 x,y 도 그 거리만큼 이동한다.
+        //계산 후의 두 좌표를 리턴할때 y 를 서로 교체하도록 한다.
+        var reverseY = function (p1, p2) {
+            p1.y = p1.y * -1;
+            p2.y = p2.y * -1;
+            moveX = 0 - p1.x;
+            moveY = 0 - p1.y;
+            p1.x = p1.x + moveX;
+            p2.x = p2.x + moveX;
+            p1.y = p1.y + moveY;
+            p2.y = p2.y + moveY;
+            return [p1, p2]
+        };
+
+        var revertY = function (p1, p2) {
+            p1 = me.convertCoordinate(p1);
+            p2 = me.convertCoordinate(p2);
+            p1.x = p1.x - moveX;
+            p2.x = p2.x - moveX;
+            p1.y = p1.y - moveY;
+            p2.y = p2.y - moveY;
+            p1.y = p1.y * -1;
+            p2.y = p2.y * -1;
+            return [p1, p2]
+        };
+
+        reverseY(p1, p2);
+
+        var x1 = p1.x;
+        var x2 = p2.x;
+        var y1 = p1.y;
+        var y2 = p2.y;
+
+        //distance 이 0 인 경우
+        if (y1 == y2 && x1 == x2) {
+            return revertY(p1, p2);
+        }
+
+        //두 점이 동일할 경우
+        if (y1 == y2 && x1 == x2) {
+            return revertY(p1, p2);
+        }
+
+        //distance 이 직선이 어느방향인가에 따라 틀려져야 한다.
+        //두 점이 y 축과 평행할 경우 선분이 위 방향이면 distance 은 - 값이다.
+        if (x1 == x2) {
+            if (y2 > y1) {
+                distance = distance * -1;
+                direction = 'minus';
+            }
+        }
+        //그 외의 경우 선분이 좌측방향이면 distance 은 - 값이다
+        else {
+            if (x2 < x1) {
+                distance = distance * -1;
+                direction = 'minus';
+            }
+        }
+
+        //두 점이 x 축과 평행할 경우
+        if (y1 == y2) {
+            return revertY([x1, y1 + distance], [x2, y2 + distance]);
+        }
+
+        //두 점이 y 축과 평행할 경우
+        if (x1 == x2) {
+            return revertY([x1 + distance, y1], [x2 + distance, y2]);
+        }
+
+        //두 점 사이에 기울기가 존재할 경우
+        var m = -1 / ((y2 - y1) / (x2 - x1));
+
+        //상수 c1 는 p1 과 수직인 선의 방정식 상수
+        var c1 = y1 - (m * x1);
+
+        //상수 c2 는 p2 과 수직인 선의 방정식 상수
+        var c2 = y2 - (m * x2);
+
+        //점x1 ,y1 을 지나는 원의 방정식: (x-x1)제곱 + (y-y1)제곱 = distance (반지름) 제곱
+        //근의 방정식: ax제곱 + bx + d = 0; ==> -b +- 루트(b제곱 - 4ad) / 2a
+        var getInjectPoint = function (x1, y1, m, c, distance) {
+            var x, y, meetX1, meetX2, meetY1, meetY2;
+            var a, b, d;
+            a = 1 + Math.pow(m, 2);
+            b = (-2 * x1) + (2 * m * c) - (2 * m * y1);
+            d = Math.pow(x1, 2) + Math.pow(c - y1, 2) - Math.pow(distance, 2);
+
+            meetX1 = (-b + Math.sqrt(Math.pow(b, 2) - (4 * a * d))) / (2 * a);
+            meetY1 = meetX1 * m + c;
+
+            meetX2 = (-b - Math.sqrt(Math.pow(b, 2) - (4 * a * d))) / (2 * a);
+            meetY2 = meetX2 * m + c;
+
+            //원 방정식으로 구한 두 접점을 벡터의 방향에 따라 한 접점을 선택한다.
+            //distance 이 음수값일 경우
+            if (distance < 0) {
+                if (meetY1 < meetY2) {
+                    x = meetX1;
+                    y = meetY1;
+                } else {
+                    x = meetX2;
+                    y = meetY2;
+                }
+            }
+            //distance 이 양수일 경우
+            else {
+                if (meetY1 > meetY2) {
+                    x = meetX1;
+                    y = meetY1;
+                } else {
+                    x = meetX2;
+                    y = meetY2;
+                }
+            }
+            return [x, y];
+        };
+        return revertY(getInjectPoint(x1, y1, m, c1, distance), getInjectPoint(x2, y2, m, c2, distance));
+    },
+
+    /**
+     * 주어진 라인과 일정 거리에 있는 평행한 라인을 반환한다.
+     * @param {OG.geometry.Coordinate[]} line 라인 좌표 Array
+     * @param distance
+     */
+    getParallelPath: function (line, distance) {
+        var me = this;
+        var lines = [];
+        var vertices = [];
+        for (var i = 0, leni = line.length; i < leni; i++) {
+            if (i < leni - 1) {
+                lines.push(me.getParallelLine(line[i], line[i + 1], distance));
+            }
+        }
+        for (var c = 0, lenc = lines.length; c < lenc; c++) {
+            if (c == 0) {
+                vertices[0] = lines[c][0];
+            }
+            if (c < lenc - 1) {
+                var inject = me.intersectLineToLine(lines[c], lines[c + 1], true);
+                //교점이 존재할 경우
+                if (inject) {
+                    vertices[c + 1] = inject;
+                } else {
+                    vertices[c + 1] = lines[c][1]
+                }
+            }
+            if (c == lenc - 1) {
+                vertices[c + 1] = lines[c][1]
+            }
+        }
+        return vertices;
     },
 
     /**
@@ -10596,16 +10353,10 @@ OG.shape.IShape = function () {
 	this.ENABLE_TO = true;
 
 	/**
-	 * TO 연결 가능여부
-	 * @type Boolean
-	 */
-	this.ENABLE_FROM = true;
-
-	/**
 	 * Self 연결 가능여부
 	 * @type Boolean
 	 */
-	this.SELF_CONNECTABLE = true;
+	this.SELF_CONNECTABLE = false;
 
 	/**
 	 * 가이드에 자기자신을 복사하는 컨트롤러 여부.
@@ -14981,6 +14732,24 @@ OG.renderer.IRenderer.prototype = {
     },
 
     /**
+     * ID에 해당하는 Element 를 앞으로 한단계 이동한다.
+     *
+     * @param {Element|String} element Element 또는 ID
+     */
+    bringForward: function(element){
+        throw new OG.NotImplementedException();
+    },
+
+    /**
+     * ID에 해당하는 Element 를 뒤로 한단계 이동한다.
+     *
+     * @param {Element|String} element Element 또는 ID
+     */
+    sendBackward: function(element){
+        throw new OG.NotImplementedException();
+    },
+
+    /**
      * 랜더러 캔버스의 사이즈(Width, Height)를 반환한다.
      *
      * @return {Number[]} Canvas Width, Height
@@ -15451,8 +15220,8 @@ OG.renderer.IRenderer.prototype = {
     /**
      * 부모 엘리먼트를 반환한다. 부모가 루트일때는 반환하지 않는다.
      *
-     * @param {Element} Element  엘리먼트
-     * @return {Element} Element  엘리먼트
+     * @param {Element} element  엘리먼트
+     * @return {Element} element  엘리먼트
      */
     getParent: function (element) {
         var parent = element.parentElement;
@@ -15471,8 +15240,8 @@ OG.renderer.IRenderer.prototype = {
     /**
      * 그룹의 하위 엘리먼트를 반환한다.
      *
-     * @param {Element} Element  엘리먼트
-     * @return {Element} Element  엘리먼트
+     * @param {Element} element  엘리먼트
+     * @returns {Array} Elements
      */
     getChilds: function (element) {
         var childShapes = [];
@@ -15490,7 +15259,7 @@ OG.renderer.IRenderer.prototype = {
     /**
      * 그룹의 Shape 인지 반환한다. RootGroup 일 경우는 제외.
      *
-     * @param {Element} Element  엘리먼트
+     * @param {Element} element  엘리먼트
      * @return {boolean} true false
      */
     isGroup: function (element) {
@@ -15534,7 +15303,7 @@ OG.renderer.IRenderer.prototype = {
             if ($(element).attr("_shape") === OG.Constants.SHAPE_TYPE.EDGE) {
                 edges.push(element);
             }
-        })
+        });
         return edges;
     },
     /**
@@ -15730,6 +15499,10 @@ OG.renderer.RaphaelRenderer.prototype._getREleById = function (id) {
     return this._ELE_MAP.get(id);
 };
 
+
+OG.renderer.RaphaelRenderer.prototype._drawMarker = function (groupElement, geometry, style, parentStyle) {
+
+};
 /**
  * Geometry 를 캔버스에 드로잉한다.(Recursive)
  *
@@ -15740,8 +15513,16 @@ OG.renderer.RaphaelRenderer.prototype._getREleById = function (id) {
  * @return {Element}
  * @private
  */
-OG.renderer.RaphaelRenderer.prototype._drawGeometry = function (groupElement, geometry, style, parentStyle) {
-    var me = this, i = 0, pathStr = "", vertices, element, geomObj, _style = {}, connectGuideElement
+OG.renderer.RaphaelRenderer.prototype._drawGeometry = function (groupElement, geometry, style, parentStyle, isEdge) {
+
+    //이곳에, 패턴에 관한 데이터를 추가해야 한다.
+    //패턴에 따라 주어진 vertices 를 따라 패턴을 추가해준다.
+    //패턴 두께. 패턴 내용물. 패턴 특이점. => 패턴의 일정거리까지는 무엇. 일정거리까지는 무엇. 디폴트는 무엇.
+    //패턴이 있다면 패턴 이외의 실제 라인은 투명처리.
+    //OG.Constants.ORIGINAL_NODE
+
+    var me = this, i = 0, pathStr = "", vertices, element, geomObj, _style = {}, connectGuideElement;
+    var svg = me.getRootElement();
     getRoundedPath = function (rectangle, radius) {
         var rectObj, rectVert, offset1, offset2, angle, array = [],
             getRoundedOffset = function (coord, dist, deg) {
@@ -15787,6 +15568,239 @@ OG.renderer.RaphaelRenderer.prototype._drawGeometry = function (groupElement, ge
             OG.Util.apply({}, geometry.style.map, me._CONFIG.DEFAULT_STYLE.GEOM));
     }
 
+    var multi = _style['multi'];
+    var rootMarker = _style['marker'];
+    var rootPattern = _style['pattern'];
+    var marker, pattern;
+
+
+    //기초 선분의 vertices 를 중심으로, top,from,to 에 따른 가상 선분을 그린다.
+    var drawMulti = function (vertices) {
+        var multiData, top, from, to, nodeId, multiStyle;
+
+        /**
+         * nodePath 스트링으로부터 distance 표현식 만큼의 거리를 반환한다.
+         * distance 는 start,center,end, percentage, number, end- 형태로 올 수 있다.
+         * @param nodePath 선분 노드 패스
+         * @param distance 거리 표현식
+         * @returns {Number} 선분 길이 대비 거리
+         */
+        var getSubDistance = function (nodePath, distance) {
+            var totalLenth = Raphael.getTotalLength(nodePath);
+            var length;
+            //넘버 형태일 경우
+            if (typeof distance == 'number') {
+                length = distance;
+            } else if (typeof distance == 'string') {
+                //퍼센테이지 일 경우
+                if (distance.indexOf('%') != -1) {
+                    distance = parseInt(distance.replace('%', ''));
+                    length = totalLenth * (distance / 100);
+                }
+                else if (distance == 'start') {
+                    length = 0;
+                }
+                else if (distance == 'center') {
+                    length = totalLenth / 2;
+                }
+                else if (distance == 'end') {
+                    length = totalLenth;
+                }
+                else if (distance.indexOf('end-') != -1) {
+                    distance = parseInt(distance.replace('end-', ''));
+                    length = totalLenth - distance;
+                } else {
+                    distance = parseInt(distance);
+                    length = distance;
+                }
+            }
+            return length;
+        };
+
+        for (var m = 0, lenm = multi.length; m < lenm; m++) {
+            multiData = multi[m];
+            top = multiData['top'];
+            from = multiData['from'];
+            to = multiData['to'];
+            multiStyle = OG.Util.apply(JSON.parse(JSON.stringify(_style)), multiData['style']);
+            if (!top || !from || !to) {
+                if (top != 0) {
+                    continue;
+                }
+            }
+            //노드 아이디는 도형아이디 + 멀티 선분의 인덱스이다.
+            nodeId = groupElement.id + m;
+
+            //top 만큼 평행한 라인을 구한다.
+            var pathStr;
+            var newVertices = geometry.getParallelPath(vertices, top);
+            for (var l = 0, lenl = newVertices.length; l < lenl; l++) {
+                if (l === 0) {
+                    pathStr = "M" + newVertices[l].x + " " + newVertices[l].y;
+                } else {
+                    pathStr += "L" + newVertices[l].x + " " + newVertices[l].y;
+                }
+            }
+
+            //getSubDistance
+            var subPath = Raphael.getSubpath(pathStr, getSubDistance(pathStr, from), getSubDistance(pathStr, to));
+            var path = me._PAPER.path(subPath);
+
+            //마커 정보가 있을 경우는 arrow 스타일을 제거해주도록 한다.
+            if (multiStyle['marker']) {
+                delete multiStyle['arrow-end'];
+                delete multiStyle['arrow-start'];
+                path.attr(multiStyle);
+                me._add(path);
+                groupElement.appendChild(path.node);
+                drawMarker(path, multiStyle, subPath, m);
+            } else {
+                path.attr(multiStyle);
+                me._add(path);
+                groupElement.appendChild(path.node);
+            }
+        }
+    };
+
+    /**
+     * Path 선분에 마커를 적용한다.
+     * @param rElement 라파엘 엘리먼트
+     * @param nodeStyle 패스 스타일
+     * @param nodePath 패스 스트링
+     * @param nodeIndex 그룹 엘리먼트(g) 내부의 엘리먼트 인덱스
+     */
+    var drawMarker = function (rElement, nodeStyle, nodePath, nodeIndex) {
+        var makerData = {};
+        for (var key in nodeStyle['marker']) {
+            if (key != 'start' && key != 'end' && key != 'mid') {
+                continue;
+            }
+            var markerShapeId = nodeStyle['marker'][key]['id'];
+            var size = nodeStyle['marker'][key]['size'];
+            var ref = nodeStyle['marker'][key]['ref'];
+            var makerStyle = nodeStyle['marker'][key]['style'] ? nodeStyle['marker'][key]['style'] : {};
+
+            //지정한 마커 shape 이 없다면 리턴한다.
+            var makerShape;
+            eval('makerShape = ' + markerShapeId);
+            if (!makerShape) {
+                continue;
+            }
+            //Def 에 들어갈 마커 id 를 구한다.
+            var split = markerShapeId.split('.');
+            var markerId = groupElement.id + nodeIndex + key + split[split.length - 1];
+
+            //기존 def 에 존재하는 마커 삭제
+            var existMarkerDef = $(svg).find('#' + markerId);
+            existMarkerDef.remove();
+
+            makerShape = eval('new ' + markerShapeId + '()');
+            var geometry = makerShape.createMarker();
+
+            // 좌상단으로 이동 및 크기 조정
+            geometry.moveCentroid([size[0] / 2, size[1] / 2]);
+            geometry.resizeBox(size[0], size[1]);
+
+            //ref 값이 없을 시 값 보정
+            if (!ref) {
+                ref = [0, 0];
+                if (key == 'start') {
+                    ref[0] = size[0];
+                    ref[1] = size[1] / 2;
+                } else if (key == 'end') {
+                    ref[0] = 0;
+                    ref[1] = size[1] / 2;
+                } else if (key == 'mid') {
+                    ref[0] = size[0] / 2;
+                    ref[1] = size[1] / 2;
+                }
+            }
+
+            //마커 스타일링. geometry < nodeOverrideStyle < makerStyle
+            var nodeOverrideStyle = {
+                'stroke': nodeStyle['stroke'],
+                'fill': nodeStyle['stroke']
+            };
+            OG.Util.apply(geometry.style.map, nodeOverrideStyle);
+            OG.Util.apply(geometry.style.map, makerStyle);
+
+            //노드 복사를 위한 가상의 그룹노드
+            var tempNode = me.drawGeom(geometry, null, OG.Constants.MARKER_TEMP_NODE);
+            var cloneNode = $(tempNode).clone().wrapAll("<div/>");
+
+            //가상의 그룹노드를 삭제한다.
+            me._remove(me._getREleById(tempNode.id));
+
+            //시작 키일때는 g 태그를 180도 회전시킨다.
+            if (key == 'start') {
+                cloneNode.attr('transform', 'rotate(180,' + size[0] / 2 + ',' + size[1] / 2 + ')');
+            }
+
+            cloneNode.removeAttr('_type');
+            cloneNode.removeAttr('_shape');
+            cloneNode.removeAttr('id');
+            cloneNode.children().each(function () {
+                $(this).removeAttr('_type');
+                $(this).removeAttr('_shape');
+                $(this).removeAttr('id');
+                $(this).removeAttr('marker-end');
+                $(this).removeAttr('marker-start');
+                $(this).removeAttr('marker-mid');
+            });
+
+            var data = {
+                id: markerId,
+                refX: ref[0],
+                refY: ref[1],
+                markerWidth: size[0],
+                markerHeight: size[1],
+                orient: 'auto'
+            };
+            var el = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+            el.appendChild(cloneNode.get(0));
+            for (var k in data) {
+                el.setAttribute(k, data[k]);
+            }
+
+            $(svg).find('defs').get(0).appendChild(el);
+            makerData[key] = data;
+        }
+
+        //기존 노드는 투명처리한다.
+        rElement.attr('stroke-opacity', '0');
+
+        //기존 노드의 패스를 마커의 영역만큼 뺀 새로운 패스를 생성한다.
+        var totalLenth = Raphael.getTotalLength(nodePath);
+        var from, to;
+        if (makerData['start'] && makerData['end']) {
+            from = makerData['start']['markerWidth'] * 1.5;
+            to = totalLenth - makerData['end']['markerWidth'] * 1.5;
+        }
+        else if (makerData['start'] && !makerData['end']) {
+            from = makerData['start']['markerWidth'] * 1.5;
+            to = totalLenth;
+        }
+        else if (!makerData['start'] && makerData['end']) {
+            from = 0;
+            to = totalLenth - makerData['end']['markerWidth'] * 1.5;
+        } else {
+            from = 0;
+            to = totalLenth;
+        }
+
+        var subPath = Raphael.getSubpath(nodePath, from, to);
+        var virtualNode = me._PAPER.path(subPath);
+        virtualNode.attr(nodeStyle);
+
+        //virtualNode 에 마커 스타일 적용
+        for (var key in makerData) {
+            $(virtualNode.node).attr('marker-' + key, 'url(#' + makerData[key].id + ')');
+        }
+
+        me._add(virtualNode);
+        groupElement.appendChild(virtualNode.node);
+    };
+
     geometry.style.map = _style;
 
     // 타입에 따라 드로잉
@@ -15811,8 +15825,34 @@ OG.renderer.RaphaelRenderer.prototype._drawGeometry = function (groupElement, ge
                     pathStr += "L" + vertices[i].x + " " + vertices[i].y;
                 }
             }
-            element = this._PAPER.path(pathStr);
-            element.attr(_style);
+
+            if (isEdge) {
+                //연결선이면서 마커정보가 있거나 멀티라인인 경우는 arrow 스타일을 제거하도록 한다.
+                if (rootMarker || multi) {
+                    delete _style['arrow-end'];
+                    delete _style['arrow-start'];
+                }
+                element = this._PAPER.path(pathStr);
+                element.attr(_style);
+
+                //멀티 라인 정보가 있을 경우
+                if (multi) {
+                    drawMulti(vertices);
+                    element.attr('stroke-opacity', '0');
+                }
+                //멀티 라인 정보가 없고, 마커정보가 있을 경우
+                else if (!multi && rootMarker) {
+                    drawMarker(element, _style, pathStr, 0);
+                }
+                //멀티 라인 정보가 없고, 패턴정보가 있을 경우
+                else if (!multi && rootPattern) {
+                    //drawPattern();
+                    //element.attr('stroke-opacity', '0');
+                }
+            } else {
+                element = this._PAPER.path(pathStr);
+                element.attr(_style);
+            }
 
             connectGuideElement = this._PAPER.path(pathStr);
             setConnectGuideAttr(connectGuideElement);
@@ -15932,6 +15972,7 @@ OG.renderer.RaphaelRenderer.prototype._drawGeometry = function (groupElement, ge
         this._add(element);
 
         groupElement.appendChild(element.node);
+        $(element.node).attr('name', OG.Constants.ORIGINAL_NODE);
         if (connectGuideElement) {
             this._add(connectGuideElement);
             groupElement.appendChild(connectGuideElement.node);
@@ -15983,35 +16024,24 @@ OG.renderer.RaphaelRenderer.prototype._drawLabel = function (position, text, siz
     text_anchor = _style["text-anchor"] || 'middle';
     _style["text-anchor"] = 'middle';
 
+    //라벨 width 스타일 적용
+    size[0] = style.map['label-width'] ? style.map['label-width'] : size[0];
+
     //라벨 최대,최소 적용
     if (me._CONFIG.LABEL_MIN_SIZE && size[0]) {
         if (size[0] < me._CONFIG.LABEL_MIN_SIZE) {
             size[0] = me._CONFIG.LABEL_MIN_SIZE;
         }
     }
-    if (me._CONFIG.LABEL_MAX_SIZE && size[1]) {
-        if (size[1] > me._CONFIG.LABEL_MAX_SIZE) {
-            size[1] = me._CONFIG.LABEL_MAX_SIZE;
+    if (me._CONFIG.LABEL_MAX_SIZE && size[0]) {
+        if (size[0] > me._CONFIG.LABEL_MAX_SIZE) {
+            size[0] = me._CONFIG.LABEL_MAX_SIZE;
         }
     }
 
-    //익스 일때
-    if (OG.Util.isIE()) {
-        element = this._PAPER.text(position[0], position[1], text, size);
-        element.attr(_style);
-    }
-    else {
-        if (text) {
-            text = text.replace(/\n/g, '<br />');
-        }
-
-        // Draw text
-        if (_style["label-direction"] === 'vertical') {
-            element = this._PAPER.foreignObject(text, position[0], position[1], height, size[1]);
-        } else {
-            element = this._PAPER.foreignObject(text, position[0], position[1], size[0], size[1]);
-        }
-    }
+    //라벨 draw
+    element = this._PAPER.text(position[0], position[1], text, size);
+    element.attr(_style);
 
     // real size
     bBox = element.getBBox();
@@ -16025,142 +16055,71 @@ OG.renderer.RaphaelRenderer.prototype._drawLabel = function (position, text, siz
     // Boundary Box
     geom = new OG.Rectangle([left, top], width, height);
 
-    if (!OG.Util.isIE()) {
-        if (_style["label-direction"] === 'vertical') {
-            // Text Horizontal Align
-            switch (text_anchor) {
-                case "start":
-                    y = geom.getBoundary().getLowerCenter().y;
-                    break;
-                case "end":
-                    y = geom.getBoundary().getUpperCenter().y - bBox.height;
-                    break;
-                case "middle":
-                    y = OG.Util.round(geom.getBoundary().getCentroid().y - bBox.height / 2);
-                    break;
-                default:
-                    y = OG.Util.round(geom.getBoundary().getCentroid().y - bBox.height / 2);
-                    break;
-            }
-
-            // Text Vertical Align
-            switch (_style["vertical-align"]) {
-                case "top":
-                    x = OG.Util.round(geom.getBoundary().getLeftCenter().x - bBox.width / 2) + 5;
-                    break;
-                case "bottom":
-                    x = geom.getBoundary().getRightCenter().x - bBox.width;
-                    break;
-                case "middle":
-                    x = geom.getBoundary().getCentroid().x - bBox.width;
-                    break;
-                default:
-                    x = geom.getBoundary().getCentroid().x - bBox.width;
-                    break;
-            }
-
-            angle = -90;
-        } else {
-            // Text Horizontal Align
-            switch (text_anchor) {
-                case "start":
-                    x = geom.getBoundary().getLeftCenter().x;
-                    break;
-                case "end":
-                    x = geom.getBoundary().getRightCenter().x - bBox.width;
-                    break;
-                case "middle":
-                    x = OG.Util.round(geom.getBoundary().getCentroid().x - bBox.width / 2);
-                    break;
-                default:
-                    x = OG.Util.round(geom.getBoundary().getCentroid().x - bBox.width / 2);
-                    break;
-            }
-
-            // Text Vertical Align
-            switch (_style["vertical-align"]) {
-                case "top":
-                    y = geom.getBoundary().getUpperCenter().y;
-                    break;
-                case "bottom":
-                    y = geom.getBoundary().getLowerCenter().y - bBox.height;
-                    break;
-                case "middle":
-                    y = OG.Util.round(geom.getBoundary().getCentroid().y - bBox.height / 2);
-                    break;
-                default:
-                    y = OG.Util.round(geom.getBoundary().getCentroid().y - bBox.height / 2);
-                    break;
-            }
+    if (_style["label-direction"] === 'vertical') {
+        // Text Horizontal Align
+        switch (text_anchor) {
+            case "start":
+                y = geom.getBoundary().getLowerCenter().y;
+                break;
+            case "end":
+                y = geom.getBoundary().getUpperCenter().y;
+                break;
+            case "middle":
+                y = geom.getBoundary().getCentroid().y;
+                break;
+            default:
+                y = geom.getBoundary().getCentroid().y;
+                break;
         }
-    }
-    else if (OG.Util.isIE()) {
-        if (_style["label-direction"] === 'vertical') {
-            // Text Horizontal Align
-            switch (text_anchor) {
-                case "start":
-                    y = geom.getBoundary().getLowerCenter().y;
-                    break;
-                case "end":
-                    y = geom.getBoundary().getUpperCenter().y;
-                    break;
-                case "middle":
-                    y = geom.getBoundary().getCentroid().y;
-                    break;
-                default:
-                    y = geom.getBoundary().getCentroid().y;
-                    break;
-            }
 
-            // Text Vertical Align
-            switch (_style["vertical-align"]) {
-                case "top":
-                    x = OG.Util.round(geom.getBoundary().getLeftCenter().x + bBox.height / 2);
-                    break;
-                case "bottom":
-                    x = OG.Util.round(geom.getBoundary().getRightCenter().x - bBox.height / 2);
-                    break;
-                case "middle":
-                    x = geom.getBoundary().getCentroid().x;
-                    break;
-                default:
-                    x = geom.getBoundary().getCentroid().x;
-                    break;
-            }
+        // Text Vertical Align
+        switch (_style["vertical-align"]) {
+            case "top":
+                x = OG.Util.round(geom.getBoundary().getLeftCenter().x + bBox.height / 2);
+                break;
+            case "bottom":
+                x = OG.Util.round(geom.getBoundary().getRightCenter().x - bBox.height / 2);
+                break;
+            case "middle":
+                x = geom.getBoundary().getCentroid().x;
+                break;
+            default:
+                x = geom.getBoundary().getCentroid().x;
+                break;
+        }
 
-            angle = -90;
-        } else {
-            // Text Horizontal Align
-            switch (text_anchor) {
-                case "start":
-                    x = geom.getBoundary().getLeftCenter().x;
-                    break;
-                case "end":
-                    x = geom.getBoundary().getRightCenter().x;
-                    break;
-                case "middle":
-                    x = geom.getBoundary().getCentroid().x;
-                    break;
-                default:
-                    x = geom.getBoundary().getCentroid().x;
-                    break;
-            }
+        angle = -90;
+    } else {
+        // Text Horizontal Align
+        switch (text_anchor) {
+            case "start":
+                x = geom.getBoundary().getLeftCenter().x;
+                break;
+            case "end":
+                x = geom.getBoundary().getRightCenter().x;
+                break;
+            case "middle":
+                x = geom.getBoundary().getCentroid().x;
+                break;
+            default:
+                x = geom.getBoundary().getCentroid().x;
+                break;
+        }
 
-            // Text Vertical Align
-            switch (_style["vertical-align"]) {
-                case "top":
-                    y = OG.Util.round(geom.getBoundary().getUpperCenter().y + bBox.height / 2);
-                    break;
-                case "bottom":
-                    y = OG.Util.round(geom.getBoundary().getLowerCenter().y - bBox.height / 2);
-                    break;
-                case "middle":
-                    y = geom.getBoundary().getCentroid().y;
-                    break;
-                default:
-                    y = geom.getBoundary().getCentroid().y;
-                    break;
-            }
+        // Text Vertical Align
+        switch (_style["vertical-align"]) {
+            case "top":
+                y = OG.Util.round(geom.getBoundary().getUpperCenter().y + bBox.height / 2);
+                break;
+            case "bottom":
+                y = OG.Util.round(geom.getBoundary().getLowerCenter().y - bBox.height / 2);
+                break;
+            case "middle":
+                y = geom.getBoundary().getCentroid().y;
+                break;
+            default:
+                y = geom.getBoundary().getCentroid().y;
+                break;
         }
     }
 
@@ -16854,7 +16813,6 @@ OG.renderer.RaphaelRenderer.prototype._getPointOfInflectionFromEdge = function (
  * @override
  */
 OG.renderer.RaphaelRenderer.prototype.drawEdge = function (line, style, id, isSelf, pointOfInflection) {
-
     var me = this, group, _style = {},
         vertices = line.getVertices(),
         from = vertices[0], to = vertices[vertices.length - 1],
@@ -16926,7 +16884,9 @@ OG.renderer.RaphaelRenderer.prototype.drawEdge = function (line, style, id, isSe
     }
 
     // draw Edge
-    this._drawGeometry(group.node, edge, _style);
+    this._drawGeometry(group.node, edge, _style, null, true);
+    //this._drawMarker(group.node, edge, _style);
+
     group.node.geom = edge;
     group.attr(me._CONFIG.DEFAULT_STYLE.SHAPE);
 
@@ -17882,12 +17842,9 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
     var _isResizable = rElement && me._CANVAS._HANDLER._isResizable(element.shape);
 
 
-    var createLinePath = function (x, y, idx) {
-        var marginTop = 0;
-        if (idx > 0) {
-            marginTop = 8;
-        }
-        var from = [x, (y + _ctrlSize - 8) + marginTop];
+    var createLinePath = function (x, y, marginTop, diff) {
+        var marginTop = marginTop ? marginTop : 0;
+        var from = [x, (y + _ctrlSize - diff) + marginTop];
         var to = [x + _ctrlSize, y + marginTop];
         var path = 'M' + from[0] + ' ' + from[1] + 'L' + to[0] + ' ' + to[1];
         return path;
@@ -18074,27 +18031,39 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
             return;
         }
         _line = me._PAPER.rect(_upperRight.x + _ctrlMargin, _upperRight.y, _ctrlSize, _ctrlSize);
-        _linePath1 = me._PAPER.path(createLinePath(0, 0, 0));
-        _linePath2 = me._PAPER.path(createLinePath(0, 0, 8));
+        if (me._CONFIG.GUIDE_CONTROL_LINE_NUM == 2) {
+            _linePath1 = me._PAPER.path(createLinePath(0, 0, 0, 8));
+            _linePath2 = me._PAPER.path(createLinePath(0, 0, 8, 8));
+        } else {
+            _linePath1 = me._PAPER.path(createLinePath(0, 0, 0, 4));
+        }
         _line.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_AREA);
 
         if (!isEssensia) {
             _linePath1.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE);
-            _linePath2.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE);
+            if (_linePath2) {
+                _linePath2.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE);
+            }
         }
         if (isEssensia) {
             _linePath1.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_ESSENSIA);
-            _linePath2.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_ESSENSIA);
+            if (_linePath2) {
+                _linePath2.attr(me._CONFIG.DEFAULT_STYLE.GUIDE_LINE_ESSENSIA);
+            }
         }
-        _linePath2.attr({'stroke-dasharray': '-'});
 
         group.appendChild(_linePath1);
-        group.appendChild(_linePath2);
         group.appendChild(_line);
 
         me._add(_line, rElement.id + OG.Constants.GUIDE_SUFFIX.LINE);
         me._add(_linePath1, rElement.id + OG.Constants.GUIDE_SUFFIX.LINE + '1');
-        me._add(_linePath2, rElement.id + OG.Constants.GUIDE_SUFFIX.LINE + '2');
+
+
+        if (_linePath2) {
+            _linePath2.attr({'stroke-dasharray': '-'});
+            group.appendChild(_linePath2);
+            me._add(_linePath2, rElement.id + OG.Constants.GUIDE_SUFFIX.LINE + '2');
+        }
 
         if (!guide.line) {
             guide.line = [];
@@ -18301,8 +18270,12 @@ OG.renderer.RaphaelRenderer.prototype.drawGuide = function (element) {
             controller.attr({x: x, y: y});
             //라인일경우 하위 라인까지 함께 재배치
             if (controller.id === rElement.id + OG.Constants.GUIDE_SUFFIX.LINE) {
-                me._getREleById(controller.id + '1').attr({'path': createLinePath(x, y, 0)});
-                me._getREleById(controller.id + '2').attr({'path': createLinePath(x, y, 8)});
+                if (me._CONFIG.GUIDE_CONTROL_LINE_NUM == 2) {
+                    me._getREleById(controller.id + '1').attr({'path': createLinePath(x, y, 0, 8)});
+                    me._getREleById(controller.id + '2').attr({'path': createLinePath(x, y, 8, 8)});
+                } else {
+                    me._getREleById(controller.id + '1').attr({'path': createLinePath(x, y, 0, 4)});
+                }
             }
 
             //텍스트 라인일경우 하위 라인까지 함께 재배치
@@ -19616,6 +19589,50 @@ OG.renderer.RaphaelRenderer.prototype.toBack = function (element) {
     if (rElement) {
         rElement.toBack();
     }
+};
+
+/**
+ * ID에 해당하는 Element 를 앞으로 한단계 이동한다.
+ *
+ * @param {Element|String} element Element 또는 ID
+ * @override
+ */
+OG.renderer.RaphaelRenderer.prototype.bringForward = function (element) {
+    var rElement = this._getREleById(OG.Util.isElement(element) ? element.id : element);
+    if (!rElement) {
+        return;
+    }
+    element = rElement.node;
+    var me = this, root = $(me.getRootGroup());
+    if (me.isLane(element)) {
+        element = me._RENDERER.getRootLane(element);
+    }
+    var length = $(element).prevAll().length;
+    root[0].insertBefore(element, OG.Util.isIE() ? root[0].childNodes[length + 1] : root[0].children[length + 1]);
+};
+
+/**
+ * ID에 해당하는 Element 를 뒤로 한단계 이동한다.
+ *
+ * @param {Element|String} element Element 또는 ID
+ * @override
+ */
+OG.renderer.RaphaelRenderer.prototype.sendBackward = function (element) {
+    var rElement = this._getREleById(OG.Util.isElement(element) ? element.id : element);
+    if (!rElement) {
+        return;
+    }
+    element = rElement.node;
+    var me = this, root = $(me.getRootGroup());
+    if (me.isLane(element)) {
+        element = me.getRootLane(element);
+    }
+    var length = $(element).prevAll().length;
+    var depth = length - 2;
+    if (depth < 0) {
+        depth = 0;
+    }
+    root[0].insertBefore(element, OG.Util.isIE() ? root[0].childNodes[depth] : root[0].children[depth]);
 };
 
 /**
@@ -21439,7 +21456,7 @@ OG.renderer.RaphaelRenderer.prototype.getExceptTitleLaneArea = function (element
  * Lane 을 분기한다.
  *
  * @param {Element|String} Element Element 또는 ID
- * @param {String} quarterOrder 분기 명령
+ * @param {String} quarterOrder 분기 명령 QUARTER_UPPER | QUARTER_LOW | QUARTER_BISECTOR | QUARTER_THIRDS
  */
 OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrder) {
     var divedLanes = [];
@@ -21639,6 +21656,8 @@ OG.renderer.RaphaelRenderer.prototype.divideLane = function (element, quarterOrd
     }
 
     me.offDropablePool();
+
+    return divedLanes;
 };
 
 /**
@@ -24697,7 +24716,10 @@ OG.handler.EventHandler.prototype = {
             // 마우스 클릭하여 선택 처리
             $(element).bind({
                 click: function (event, param) {
-                    $(me._RENDERER.getContainer()).focus();
+                    if(me._CONFIG.FOCUS_CANVAS_ONSELECT){
+                        $(me._RENDERER.getContainer()).focus();
+                    }
+                    //$(me._RENDERER.getContainer()).focus();
 
                     if (element.shape) {
                         me._RENDERER.removeAllVirtualEdge();
@@ -25115,7 +25137,13 @@ OG.handler.EventHandler.prototype = {
         var renderer = me._RENDERER;
         if (isEnableHotKey === true) {
             // delete, ctrl+A
-            $(renderer.getContainer()).bind("keydown", function (event) {
+            var _container;
+            if(me._CONFIG.FOCUS_CANVAS_ONSELECT){
+                _container = $(renderer.getContainer());
+            }else{
+                _container = $(document);
+            }
+            _container.bind("keydown", function (event) {
                 // 라벨수정중엔 keydown 이벤트무시
                 if (!/^textarea$/i.test(event.target.tagName) && !/^input$/i.test(event.target.tagName)) {
                     // Undo Redo
@@ -25130,7 +25158,7 @@ OG.handler.EventHandler.prototype = {
                     }
 
                     // Delete : 삭제
-                    if (me._CONFIG.ENABLE_HOTKEY_DELETE && event.keyCode === KeyEvent.DOM_VK_DELETE) {
+                    if (me._CONFIG.ENABLE_HOTKEY_DELETE && (event.keyCode === KeyEvent.DOM_VK_DELETE || event.keyCode === KeyEvent.DOM_VK_BACK_SPACE)) {
                         event.preventDefault();
                         me.deleteSelectedShape();
                     }
@@ -25248,7 +25276,9 @@ OG.handler.EventHandler.prototype = {
             selector: '#' + me._RENDERER.getRootElement().id,
             build: function ($trigger, e) {
                 var root = me._RENDERER.getRootGroup(), copiedElement = $(root).data("copied");
-                $(me._RENDERER.getContainer()).focus();
+                if(me._CONFIG.FOCUS_CANVAS_ONSELECT){
+                    $(me._RENDERER.getContainer()).focus();
+                }
                 return {
                     items: {
                         'selectAll': {
@@ -26687,7 +26717,9 @@ OG.handler.EventHandler.prototype = {
             },
             selector: '#' + me._RENDERER.getRootElement().id + ' [_type=SHAPE]',
             build: function ($trigger, event) {
-                $(me._RENDERER.getContainer()).focus();
+                if(me._CONFIG.FOCUS_CANVAS_ONSELECT){
+                    $(me._RENDERER.getContainer()).focus();
+                }
                 var items;
 
                 if (me._getSelectedElement().length == 1) {
@@ -26813,7 +26845,9 @@ OG.handler.EventHandler.prototype = {
         var me = this;
 
         var dragBox = $(this).data("dragBox");
-        $(me._RENDERER.getContainer()).focus();
+        if(me._CONFIG.FOCUS_CANVAS_ONSELECT){
+            $(me._RENDERER.getContainer()).focus();
+        }
         if (!dragBox || (dragBox && dragBox.width < 1 && dragBox.height < 1)) {
             $(me._RENDERER.getRootElement())
                 .find("[_type=" + OG.Constants.NODE_TYPE.SHAPE + "][_selected=true]").each(
@@ -29232,6 +29266,10 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
 
     this._CONFIG = {
         /**
+         * 도형 선택시 캔버스 포거싱 여부
+         */
+        FOCUS_CANVAS_ONSELECT: true,
+        /**
          * 연결된 두 오브젝트의 소속에 따른 연결선 스타일 변화 여부
          */
         CHECK_BRIDGE_EDGE: true,
@@ -29511,6 +29549,11 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
         GUIDE_MIN_SIZE: 18,
 
         /**
+         * 도형 컨트롤러 아이콘 커넥트 라인 표시 개수
+         */
+        GUIDE_CONTROL_LINE_NUM: 2,
+
+        /**
          * Collapse & Expand 용 가이드 Rect 사이즈
          */
         COLLAPSE_SIZE: 10,
@@ -29595,7 +29638,7 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
         /**
          * 라벨 최소 크기(IE)
          */
-        LABEL_MIN_SIZE: 100,
+        LABEL_MIN_SIZE: 0,
 
         /**
          * 라벨 최대 크기(IE)
@@ -29799,7 +29842,7 @@ OG.graph.Canvas = function (container, containerSize, backgroundColor, backgroun
             },
             RUBBER_BAND: {stroke: "#0000FF", opacity: 0.2, fill: "#0077FF"},
             DROP_OVER_BBOX: {stroke: "#0077FF", fill: "none", opacity: 0.3, "shape-rendering": "crispEdges"},
-            LABEL: {"font-size": 12, "font-color": "black", "fill": "white"},
+            LABEL: {"font-size": 12, "font-color": "black", "fill": "none"},
             LABEL_EDITOR: {
                 position: "absolute",
                 overflow: "visible",
@@ -30081,7 +30124,7 @@ OG.graph.Canvas.prototype = {
             'overflow-x': 'hidden',
             'overflow-y': 'auto'
         });
-        sliderImage = $('<img class="sliderImage" src=""/>');
+        sliderImage = $('<canvas class="sliderImage"></canvas>');
         sliderImage.css({
             position: 'absolute',
             top: '0px',
@@ -30102,7 +30145,7 @@ OG.graph.Canvas.prototype = {
             background: 'transparent'
         });
 
-//네비게이터가 이동되었을경우의 이벤트
+        //네비게이터가 이동되었을경우의 이벤트
         onNavigatorMove = function () {
             var svg, svgW, svgH, imgW, imgH, xRate, yRate, xOffset, yOffset, sliderX, sliderY;
             svg = me._RENDERER.getRootElement();
@@ -30188,20 +30231,20 @@ OG.graph.Canvas.prototype = {
         sliderImageWrapper.append(sliderImage);
         sliderImageWrapper.append(sliderNavigator);
 
-//캔버스 삭제시 슬라이더도 삭제
+        //캔버스 삭제시 슬라이더도 삭제
         $(container).on("remove", function () {
             me.removeSlider();
         });
 
-//기존에 등록된 슬라이더 삭제
+        //기존에 등록된 슬라이더 삭제
         if (this._CONFIG.SLIDER) {
             me.removeSlider();
         }
 
-//슬라이더를 캔버스에 등록
+        //슬라이더를 캔버스에 등록
         this._CONFIG.SLIDER = slider;
 
-//슬라이더 업데이트
+        //슬라이더 업데이트
         this.updateSlider(this._CONFIG.SCALE * 100);
     },
     updateNavigatior: function () {
@@ -30250,6 +30293,7 @@ OG.graph.Canvas.prototype = {
         var sliderBar = slider.find('.scaleSlider');
         var sliderImage = slider.find('.sliderImage');
         var sliderNavigator = slider.find('.sliderNavigator');
+        var sliderImageWrapper = slider.find('.sliderImageWrapper');
 
         sliderText.html(val);
         sliderBar.val(val);
@@ -30257,10 +30301,28 @@ OG.graph.Canvas.prototype = {
 
         var svg = me._RENDERER.getRootElement();
         var svgData = new XMLSerializer().serializeToString(svg);
-        var srcURL = "data:image/svg+xml;utf-8," + svgData;
-        sliderImage.attr('src', srcURL);
 
+        var image = new Image();
+        image.src = 'data:image/svg+xml;utf-8,' + svgData;
+        image.onload = function () {
+            var canvas = document.getElementById(sliderImage.attr('id'));
+            canvas.width = sliderImageWrapper.width();
+            canvas.height = sliderImageWrapper.width() * image.height / image.width;
+            var context = canvas.getContext('2d');
+            context.drawImage(image, 0, 0, sliderImageWrapper.width(), sliderImageWrapper.width() * image.height / image.width);
+            $(image).remove();
+        };
         me.updateNavigatior();
+
+        //$('#testImg').remove();
+        //$('body').append('<img id="testImg"/>');
+        //$('#testImg').attr('src','data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svgData).replace(/'/g,"%27").replace(/"/g,"%22"));
+        //$('#testImg').css({
+        //   'z-index': '19999',
+        //    'position': 'absolute',
+        //    'left': '0px', 'top': '0px',
+        //    'width': '300px','height':'300px'
+        //});
     }
     ,
     /**
@@ -30440,8 +30502,8 @@ OG.graph.Canvas.prototype = {
      * @return {Element} DOM Element
      * @override
      */
-    drawLabel: function (shapeElement, text, style, position) {
-        return this._RENDERER.drawLabel(shapeElement, text, style, position);
+    drawLabel: function (shapeElement, text, style) {
+        return this._RENDERER.drawLabel(shapeElement, text, style);
     }
     ,
 
@@ -30474,8 +30536,8 @@ OG.graph.Canvas.prototype = {
      * @param {Element} toElement to Shape Element
      * @param {OG.geometry.Style|Object} style 스타일
      * @param {String} label Label
-     * @param fromP fromElement 와 연결될 터미널 좌표(optional)
-     * @param toP toElement 와 연결될 터미널 좌표(optional)
+     * @param fromP fromElement 와 연결될 터미널 좌표 [x,y](optional)
+     * @param toP toElement 와 연결될 터미널 좌표 [x,y](optional)
      * @param preventTrigger 참 일 경우 이벤트 발생을 방지
      * @param id 연결선의 아이디
      * @returns {*|Element}
@@ -30784,6 +30846,24 @@ OG.graph.Canvas.prototype = {
     ,
 
     /**
+     * ID에 해당하는 Element 를 앞으로 한단계 이동한다.
+     *
+     * @param {Element|String} element Element 또는 ID
+     */
+    bringForward: function (element) {
+        this._RENDERER.bringForward(element);
+    },
+
+    /**
+     * ID에 해당하는 Element 를 뒤로 한단계 이동한다.
+     *
+     * @param {Element|String} element Element 또는 ID
+     */
+    sendBackward: function (element) {
+        this._RENDERER.sendBackward(element);
+    },
+
+    /**
      * 랜더러 캔버스의 사이즈(Width, Height)를 반환한다.
      *
      * @return {Number[]} Canvas Width, Height
@@ -30974,6 +31054,16 @@ OG.graph.Canvas.prototype = {
     ,
 
     /**
+     * ID에 해당하는 Element 의 바운더리 영역을 리턴한다.
+     *
+     * @param {Element|String} element Element 또는 ID
+     * @return {OG.geometry.Envelope} Envelope 영역
+     */
+    getBoundary: function (element) {
+        return this._RENDERER.getBoundary(element);
+    },
+
+    /**
      * ID로 Node Element 를 반환한다.
      *
      * @param {String} id
@@ -31039,6 +31129,43 @@ OG.graph.Canvas.prototype = {
         }
     }
     ,
+    /**
+     * 부모 엘리먼트를 반환한다. 부모가 루트일때는 반환하지 않는다.
+     *
+     * @param {Element} Element  엘리먼트
+     * @return {Element} Element  엘리먼트
+     */
+    getParent: function (element) {
+        return this._RENDERER.getParent(element);
+    },
+
+    /**
+     * 그룹의 하위 엘리먼트를 반환한다.
+     *
+     * @param {Element} element  엘리먼트
+     * @returns {Array} Elements
+     */
+    getChilds: function (element) {
+        return this._RENDERER.getChilds(element);
+    },
+
+    /**
+     * 캔버스의 모든 Shape 들을 리턴
+     *
+     * @return {Array} Elements
+     */
+    getAllShapes: function () {
+        return this._RENDERER.getAllShapes();
+    },
+
+    /**
+     * 캔버스의 모든 Edge를 리턴
+     *
+     * @return {Array} Edge Elements
+     */
+    getAllEdges: function () {
+        return this._RENDERER.getAllEdges();
+    },
 
     /**
      * 해당 엘리먼트의 BoundingBox 영역 정보를 반환한다.
@@ -31605,7 +31732,7 @@ OG.graph.Canvas.prototype = {
     ,
 
     /**
-     * Undo 되었을때의 이벤트 리스너
+     * Redo 되었을때의 이벤트 리스너
      *
      * @param {Function} callbackFunc 콜백함수(event)
      */
@@ -31619,11 +31746,11 @@ OG.graph.Canvas.prototype = {
     /**
      * Lane 이 divide 되었을 때의 이벤트 리스너
      *
-     * @param {Function} callbackFunc 콜백함수(event, shapeElement)
+     * @param {Function} callbackFunc 콜백함수(event, dividedLane)
      */
     onDivideLane: function (callbackFunc) {
-        $(this.getRootElement()).bind('divideLane', function (event, divideLanes) {
-            callbackFunc(event, divideLanes);
+        $(this.getRootElement()).bind('divideLane', function (event, dividedLane) {
+            callbackFunc(event, dividedLane);
         });
     }
     ,
