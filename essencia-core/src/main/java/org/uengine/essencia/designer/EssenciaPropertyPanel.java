@@ -9,10 +9,12 @@ import org.metaworks.Refresh;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.ToEvent;
 import org.metaworks.annotation.*;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.context.EssenciaContext;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.card.Card;
+import org.uengine.essencia.modeling.canvas.MethodCanvas;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.modeling.ElementView;
 import org.uengine.modeling.IElement;
@@ -112,5 +114,24 @@ public class EssenciaPropertyPanel implements ContextAware {
 
         return new ModalWindow();
     }
+
+    @ServiceMethod
+    //@Available(condition = "elementView.fromEdge")
+    public void amendFromKernel(
+        @AutowiredFromClient(
+            payload = "elementViewList[value.elementView.fromEdge.indexOf(toEdge) > -1 || toEdge.indexOf(value.elementView.fromEdge) > -1].element")
+        MethodCanvas methodCanvas
+    ){
+
+        if(methodCanvas.getElementViewList().size() > 0) {
+            IElement kernel = methodCanvas.getElementViewList().get(0).getElement();
+
+
+
+        }
+
+    }
+
+
 
 }

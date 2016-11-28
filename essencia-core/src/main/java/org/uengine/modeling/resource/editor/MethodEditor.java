@@ -94,19 +94,7 @@ public class MethodEditor extends MethodComposer implements IEditor<EssenceProce
     
     @Override
     public Object simulator(IResource resource) {
-
-        ProcessManagerRemote processManager = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
-
-        ProcessMap processMap = new ProcessMap();
-        processMap.setName("[Test] " + resource.getName());
-        processMap.setDefId(resource.getPath().substring(resource.getPath().indexOf("/") + 1));
-        MetaworksRemoteService.autowire(processMap);
-
-        try {
-            return processMap.simulate();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return ProcessEditor.simulator_(resource);
     }
 
 

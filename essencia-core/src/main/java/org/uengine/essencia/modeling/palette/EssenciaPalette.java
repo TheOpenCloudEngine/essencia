@@ -24,21 +24,23 @@ public class EssenciaPalette extends CompositePalette {
         super();
         setName("Essencia Palette");
 
-        Palette LanguagePallet = new EssenciaLanguagePalette();
-        addPalette(LanguagePallet);
+        Palette languagePallet = new EssenciaLanguagePalette();
+        PaletteWindow languagePaletteWindow = new PaletteWindow();
+        languagePaletteWindow.addPalette(languagePallet);
+        addPalette(languagePaletteWindow);
 
 
         /**
          * adding kernel elements
          */
 
-        PaletteWindow customerPalette = new PaletteWindow();
+        Palette customerPalette = new Palette();
         customerPalette.setName("Kernel - Customer");
 
-        PaletteWindow solutionPalette = new PaletteWindow();
+        Palette solutionPalette = new Palette();
         solutionPalette.setName("Kernel - Solution");
 
-        PaletteWindow endeavorPalette = new PaletteWindow();
+        Palette endeavorPalette = new Palette();
         endeavorPalette.setName("Kernel - Endeavor");
 
 
@@ -82,9 +84,13 @@ public class EssenciaPalette extends CompositePalette {
 
         }
 
-        addPalette(customerPalette);
-        addPalette(solutionPalette);
-        addPalette(endeavorPalette);
+        PaletteWindow customerPaletteWindow = new PaletteWindow();  customerPaletteWindow.addPalette(customerPalette);
+        PaletteWindow solutionPaletteWindow = new PaletteWindow();  solutionPaletteWindow.addPalette(solutionPalette);
+        PaletteWindow endeavorPaletteWindow = new PaletteWindow();  endeavorPaletteWindow.addPalette(endeavorPalette);
+
+        addPalette(customerPaletteWindow);
+        addPalette(solutionPaletteWindow);
+        addPalette(endeavorPaletteWindow);
 
     }
 
