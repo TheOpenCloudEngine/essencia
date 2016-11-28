@@ -90,7 +90,8 @@
 	<!-- metaworks3 engine -->
 	<script type="text/javascript" src="dwr/metaworks/scripts/metaworks.js"></script>
 
-	<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1.1-SNAPSHOT.js"></script>
+	<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1.2-SNAPSHOT.js"></script>
+	<%--<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1.1-SNAPSHOT.js"></script>--%>
 	<!--<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1-SNAPSHOT.js"></script>-->
 
 	<!-- init -->
