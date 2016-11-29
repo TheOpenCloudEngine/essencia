@@ -693,3 +693,10 @@ OG.shape.essencia.ActivityArrow.prototype.createShape = function () {
 
     return this.geom;
 };
+
+
+var concernColors ={
+    Customer: '#16a085',
+    Solution: '#f1c40f',
+    Endeavor: '#2980b9'
+};
