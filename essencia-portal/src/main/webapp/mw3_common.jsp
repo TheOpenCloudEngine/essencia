@@ -200,6 +200,10 @@
 	<!-- billing plan css -->
 	<link rel="stylesheet" type="text/css" href="style/plan/plan.css" />
 
+	<!-- essencia custom -->
+	<script type="text/javascript" src="lib/opengraph/essencia-shapes.js"></script>
+
+
 	<style>
 		html,
 		body {
@@ -300,6 +304,8 @@
 			}
 		}
 
+		var request = new Request();
+
 		$(document).ready(function() {
 
 			mw3.checkUpdates();
@@ -311,7 +317,6 @@
 
 			$.fn.cycle.defaults.autoSelector = '.slideshow';
 
-			var request = new Request();
 
 			if (navigator.appVersion.indexOf("Win")!=-1){
 				/*$('body').css('font-family', "'맑은 고딕', Malgun gothic, Arial");*/
