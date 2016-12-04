@@ -143,7 +143,13 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
 
         ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
 
-        DefaultResource classDefinitionResource = new DefaultResource( processResourceNameAndLanguageElementName[0]);
+        String resourcePath = processResourceNameAndLanguageElementName[0];
+
+        //TODO: temporal 
+        if(resourcePath.startsWith("codi/codi/"))
+            resourcePath = resourcePath.substring("codi/".length(), resourcePath.length());
+
+        DefaultResource classDefinitionResource = new DefaultResource( );
         EssenceProcessDefinition definition = (EssenceProcessDefinition) resourceManager.getStorage().getObject(classDefinitionResource);
 
         LanguageElement languageElement = (LanguageElement) definition.getPracticeDefinition().getElementByName(processResourceNameAndLanguageElementName[1]);

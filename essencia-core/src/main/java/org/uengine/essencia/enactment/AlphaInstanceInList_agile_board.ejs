@@ -1,13 +1,24 @@
 
 <% if (value && !value.deleted && value.languageElementInstance && value.languageElementInstance.classDefinition) {
 
+    var concern = value.languageElementInstance.classDefinition.concern;
+    var concernColor = concernColors[concern];
+
+    if(!concernColor) concernColor = "#428bca"
 
 
        %>
 
-<div class="well well-sm">
+<div class="well well-sm" style="background-color: <%=concernColor%>; color: white; cursor: pointer;text-overflow:ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+    height: 100px;
+    max-width:100px;">
     <%=value.languageElementInstance.valueMap["Id"]%>
 </div>
+
+
 
 
 <%}%>
