@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import org.metaworks.ContextAware;
-import org.metaworks.MetaworksContext;
-import org.metaworks.ServiceMethodContext;
+import org.metaworks.*;
+import org.metaworks.component.MetaWorksComponentCenter;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.i18n.MultilingualBundle;
 import org.metaworks.i18n.MultilingualSupport;
 import org.metaworks.annotation.*;
@@ -353,5 +354,46 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		}
 	}
 
+	public LanguageElement shallowCopy(){
+		try {
+			LanguageElement copy = getClass().newInstance();
+
+
+			WebObjectType wot = MetaworksRemoteService.getInstance().getMetaworksType(getClass().getName());
+
+			org.metaworks.ObjectInstance objInst = (org.metaworks.ObjectInstance) wot.metaworks2Type().createInstance();
+			objInst.setObject(copy);
+
+			org.metaworks.ObjectInstance fromObjInst = (org.metaworks.ObjectInstance) wot.metaworks2Type().createInstance();
+			fromObjInst.setObject(this);
+
+			setMetaworksContext(getMetaworksContext());
+
+			Set<String> reduceList = reduceProperties();
+
+			for(int i=0; i<wot.metaworks2Type().getFieldDescriptors().length; i++){
+				FieldDescriptor fd = wot.metaworks2Type().getFieldDescriptors()[i];
+
+				if(reduceList.contains(fd.getName())) continue;
+
+				objInst.setFieldValue(fd.getName(), fromObjInst.getFieldValue(fd.getName()));
+			}
+
+			return (LanguageElement) objInst.getObject();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	public Set<String> reduceProperties(){
+		return null;
+	}
 
 }

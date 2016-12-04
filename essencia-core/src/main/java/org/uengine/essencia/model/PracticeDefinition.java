@@ -946,4 +946,26 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
     public String getBaseKernel() {
         return baseKernel;
     }
+
+    public PracticeDefinition shallowCopy(){
+        PracticeDefinition practiceDefinition = new PracticeDefinition();
+        practiceDefinition.setMetaworksContext(getMetaworksContext());
+        practiceDefinition.setDescription(getDescription());
+        practiceDefinition.setBaseKernel(getBaseKernel());
+        practiceDefinition.setId(getId());
+        practiceDefinition.setName(getName());
+        practiceDefinition.setRelationList(getRelationList());
+
+        List<IElement> copies = new ArrayList<IElement>();
+        for(IElement element : practiceDefinition.getElementList()){
+            if(element instanceof LanguageElement){
+                copies.add((IElement) ((LanguageElement) element).shallowCopy());
+            }else
+                copies.add(element);
+        }
+
+        practiceDefinition.setElementList(copies);
+
+        return practiceDefinition;
+    }
 }

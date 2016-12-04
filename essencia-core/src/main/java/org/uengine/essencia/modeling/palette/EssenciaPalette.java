@@ -21,6 +21,7 @@ public class EssenciaPalette extends CompositePalette {
     public EssenciaPalette() {this(null);}
 
     public EssenciaPalette(String kernel) {
+
         super();
         setName("Essencia Palette");
 

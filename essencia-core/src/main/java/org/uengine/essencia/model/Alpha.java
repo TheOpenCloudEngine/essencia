@@ -2,6 +2,7 @@ package org.uengine.essencia.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import Essence.AlphaAndWorkProduct.AlphaAndWorkProductFactory;
 import org.metaworks.annotation.Face;
@@ -269,5 +270,14 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
         state.setName(stateName);
 
         return indexOfState(state);
+    }
+
+    @Override
+    public Set<String> reduceProperties() {
+        Set set = super.reduceProperties();
+
+        set.add("states");
+
+        return set;
     }
 }
