@@ -2,6 +2,7 @@ package org.uengine.essencia.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.Refresh;
@@ -392,4 +393,22 @@ public class Activity extends AbstractActivity {
         return activity;
     }
 
+    @Override
+    public Set<String> reduceProperties() {
+        Set set = super.reduceProperties();
+
+        set.add("Competency");
+        set.add("ActionPanel");
+        set.add("ApproachPanel");
+        set.add("EntryCriteria");
+        set.add("EntryCriteriaPanel");
+        set.add("RequiredCompetencyLevel");
+        set.add("RequiredCompetencyLevelFace");
+        set.add("WorkProductFace");
+        set.add("EntryCriteriaPanel");
+        set.add("CompletionCriteria");
+        set.add("CompletionCriterionFace");
+
+        return set;
+    }
 }

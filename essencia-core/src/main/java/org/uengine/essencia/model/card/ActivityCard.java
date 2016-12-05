@@ -128,6 +128,8 @@ public class ActivityCard extends BasicCard {
         {
             Competency competency= ((Activity) element).getCompetency();
             setSymbol(new CompetencyView().createSymbol());
+
+            if(competency==null) competency = new Competency();
             setView(competency.createView());
 
             getView().fill(getSymbol());

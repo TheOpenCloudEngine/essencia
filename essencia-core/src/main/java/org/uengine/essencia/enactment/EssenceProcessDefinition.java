@@ -55,6 +55,7 @@ public class EssenceProcessDefinition extends ProcessDefinition{
 
 
             practiceDefinition.afterDeserialization();
+            practiceDefinition.setId(getId());
         }
 
         super.afterDeserialization();

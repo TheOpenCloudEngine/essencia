@@ -57,8 +57,11 @@ public class PracticeDefiner extends DefaultModeler {
 
             getCanvas().setElementViewList(elementViewList);
             getCanvas().setRelationViewList(relationViewList);
+            getCanvas().setId(((PracticeDefinition) model).getId());
 
             setBaseKernel(practice.getBaseKernel());
+
+
         }
     }
 

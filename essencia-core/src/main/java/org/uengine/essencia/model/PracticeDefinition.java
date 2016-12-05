@@ -957,7 +957,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
         practiceDefinition.setRelationList(getRelationList());
 
         List<IElement> copies = new ArrayList<IElement>();
-        for(IElement element : practiceDefinition.getElementList()){
+        for(IElement element : getElementList()){
             if(element instanceof LanguageElement){
                 copies.add((IElement) ((LanguageElement) element).shallowCopy());
             }else

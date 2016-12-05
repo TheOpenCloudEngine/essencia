@@ -102,10 +102,10 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
         return card;
     }
 
-    @Override
-    public String getDescription() {
-        return description.getText();
-    }
+//    @Override
+//    public String getDescription() {
+//        return description.getText();
+//    }
 
     public String getName() {
         return name.getText();
@@ -276,7 +276,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
     public Set<String> reduceProperties() {
         Set set = super.reduceProperties();
 
-        set.add("states");
+        set.add("States");
 
         return set;
     }
