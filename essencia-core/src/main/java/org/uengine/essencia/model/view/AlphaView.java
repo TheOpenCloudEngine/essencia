@@ -14,8 +14,8 @@ public class AlphaView extends LanguageElementView implements KernelLanguageView
 
 public final static String SHAPE_ID = "OG.shape.essencia.Alpha";
 
-	@AutowiredFromClient
-	public Canvas canvas;
+//	@AutowiredFromClient
+//	public Canvas canvas;
 
 	public AlphaView(){
 		

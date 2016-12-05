@@ -513,32 +513,5 @@ public abstract class BasicElement extends LanguageElement implements IElement {
 			return incomingRelations;
 		}
 
-	@Override
-	public Set<String> reduceProperties() {
 
-		Set reducingProps = new HashSet();
-
-		reducingProps.add("extensionFrom");
-		reducingProps.add("fieldDescriptors");
-		reducingProps.add("briefDescription");
-		reducingProps.add("incomingRelations");
-		reducingProps.add("outgoingRelations");
-		reducingProps.add("parentElementId");
-		reducingProps.add("displayName");
-		reducingProps.add("owner");
-		reducingProps.add("multilingualBundle");
-		reducingProps.add("resourceList");
-		reducingProps.add("resourceListFace");
-		reducingProps.add("tagList");
-		reducingProps.add("tagListFace");
-		reducingProps.add("autowiredFields");
-		reducingProps.add("faceComponentPath");
-		reducingProps.add("faceOptions");
-		reducingProps.add("keyFieldDescriptor");
-		reducingProps.add("onDropTypes");
-		reducingProps.add("serviceMethodContexts");
-		reducingProps.add("superClasses");
-
-		return reducingProps;
-	}
 }

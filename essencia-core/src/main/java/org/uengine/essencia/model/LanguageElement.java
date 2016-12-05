@@ -1,10 +1,7 @@
 package org.uengine.essencia.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.metaworks.*;
 import org.metaworks.component.MetaWorksComponentCenter;
@@ -393,7 +390,32 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 	}
 
 	public Set<String> reduceProperties(){
-		return null;
+		Set reducingProps = new HashSet();
+
+		reducingProps.add("Description");
+		reducingProps.add("ExtensionFrom");
+		reducingProps.add("FieldDescriptors");
+		reducingProps.add("BriefDescription");
+		reducingProps.add("IncomingRelations");
+		reducingProps.add("OutgoingRelations");
+		reducingProps.add("ParentElementId");
+		reducingProps.add("DisplayName");
+		reducingProps.add("Owner");
+		reducingProps.add("MultilingualBundle");
+		reducingProps.add("ResourceList");
+		reducingProps.add("ResourceListFace");
+		reducingProps.add("TagList");
+		reducingProps.add("TagListFace");
+		reducingProps.add("AutowiredFields");
+		reducingProps.add("FaceComponentPath");
+		reducingProps.add("FaceOptions");
+		reducingProps.add("KeyFieldDescriptor");
+		reducingProps.add("OnDropTypes");
+		reducingProps.add("ServiceMethodContexts");
+		reducingProps.add("SuperClasses");
+
+
+		return reducingProps;
 	}
 
 }
