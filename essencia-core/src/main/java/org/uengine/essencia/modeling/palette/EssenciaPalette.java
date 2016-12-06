@@ -85,9 +85,9 @@ public class EssenciaPalette extends CompositePalette {
 
         }
 
-        PaletteWindow customerPaletteWindow = new PaletteWindow();  customerPaletteWindow.addPalette(customerPalette);
-        PaletteWindow solutionPaletteWindow = new PaletteWindow();  solutionPaletteWindow.addPalette(solutionPalette);
-        PaletteWindow endeavorPaletteWindow = new PaletteWindow();  endeavorPaletteWindow.addPalette(endeavorPalette);
+        PaletteWindow customerPaletteWindow = new PaletteWindow();  customerPaletteWindow.addPalette(customerPalette); customerPaletteWindow.setName(customerPalette.getName());
+        PaletteWindow solutionPaletteWindow = new PaletteWindow();  solutionPaletteWindow.addPalette(solutionPalette); solutionPaletteWindow.setName(solutionPalette.getName());
+        PaletteWindow endeavorPaletteWindow = new PaletteWindow();  endeavorPaletteWindow.addPalette(endeavorPalette); endeavorPaletteWindow.setName(endeavorPalette.getName());
 
         addPalette(customerPaletteWindow);
         addPalette(solutionPaletteWindow);
