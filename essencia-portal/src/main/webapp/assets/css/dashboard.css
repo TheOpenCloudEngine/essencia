@@ -79,3 +79,51 @@
     font-style: italic;
     font-size: 10px;
 }
+
+.brace-div
+{
+    margin-left: 17%;
+    margin-top: -20px;
+    position: relative;
+    width: 102%;
+}
+
+.brace
+{
+    border-bottom: 1px solid;
+    margin: 0;
+    width: 30%;
+    height: 20px;
+    float: left;
+    border-color: silver;
+
+}
+
+.brace:before,
+.brace:after
+{
+    content: "";
+    width: 7%;
+    height: 50px;
+    position: absolute;
+    display: block;
+}
+
+#brace-left:before
+{
+    border-top: 1px solid;
+    border-top-left-radius: 10px;
+    margin-left: -5%;
+    margin-top: 19px;
+    border-color: silver;
+}
+
+
+#brace-right:after
+{
+    border-top: 1px solid;
+    border-top-right-radius: 10px;
+    margin-left: 30%;
+    margin-top: 19px;
+    border-color: silver;
+}

@@ -62,7 +62,14 @@
 
                                 <center>
 
-                                <h6><font color="<%=concernColors[concern]%>">&lt;&lt; <%=concern%> &gt;&gt;</font></h6></center>
+                                <h6><font color="<%=concernColors[concern]%>">&lt;&lt; <%=concern%> &gt;&gt;</font></h6>
+
+                                <div class="brace-div">
+                                    <div id="brace-left" class="brace"></div>
+                                    <div id="brace-right" class="brace"></div>
+                                </div>
+
+                                </center>
                             </th>
                         <%
                         }
@@ -72,11 +79,12 @@
 
                     for (var i=0; i<value.alphaGameBoards.length; i++){
                         var alphaName = value.alphaGameBoards[i].alpha.name;
+                        var concern = value.alphaGameBoards[i].alpha.concern;
 
                     %>
                         <th align="center"><center>
 
-                            <h5><u><font color="<%=concernColors[concern]%>"><a href="#<%=alphaName%>" style="color:black"><%=alphaName%></a></font></u></h5></center></th>
+                            <h5><u><a href="#<%=alphaName%>" style="color:<%=concernColors[concern]%>"><%=alphaName%></a></u></h5></center></th>
                     <%
                     }
                 }
@@ -166,7 +174,7 @@
                     var alphaName = alphaGameBoard.alpha.name;
 
                 %>
-                <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                <td align="center" style="background-image: url('images/essencia/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
                     <div style="padding:10px">
                     <%
                     if(alphaGameBoard){
@@ -186,9 +194,9 @@
                                 concernColoredBtnCSS = "btn-success";
                             }else if(alphaGameBoard.alpha.concern == "Solution"){
                                 concernColoredBtnCSS = "btn-warning";
-                                style=" style='background: #f1c40f'";
-
                             }
+
+                            style=" style='background: "+ concernColors[alphaGameBoard.alpha.concern] +"'";
 
                             if(alphaInstance.currentStateName != state.name && (nextOfCurrent || running)){
                                 %><button type="button" <%=style%> class="btn <%=concernColoredBtnCSS%> tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>">
@@ -253,7 +261,7 @@
                     var alphaName = alphaGameBoard.alpha.name;
 
                 %>
-                    <td align="center" style="background-image: url('http://demandware.edgesuite.net/aakn_prd/on/demandware.static/-/Sites-bdel/default/dw05008c96/swatches/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
+                    <td align="center" style="background-image: url('images/essencia/black.png'); background-position:center; background-size: 3px; background-repeat: repeat-y">
                         <div style="padding:10px">
                     <%
                     if(alphaGameBoard){

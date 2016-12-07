@@ -202,6 +202,7 @@
 
 	<!-- essencia custom -->
 	<script type="text/javascript" src="lib/opengraph/essencia-shapes.js"></script>
+	<link rel="stylesheet" href="assets/css/dashboard.css">
 
 
 	<style>
