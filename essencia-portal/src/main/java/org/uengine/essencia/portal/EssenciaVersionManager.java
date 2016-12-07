@@ -8,6 +8,7 @@ import org.uengine.modeling.resource.PackageVersionManager;
  * Created by jangjinyoung on 2016. 11. 26..
  */
 
+@Component
 @Scope("prototype")
 public class EssenciaVersionManager extends PackageVersionManager {
 }

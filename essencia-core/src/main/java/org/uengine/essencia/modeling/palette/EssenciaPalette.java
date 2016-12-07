@@ -27,6 +27,7 @@ public class EssenciaPalette extends CompositePalette {
 
         Palette languagePallet = new EssenciaLanguagePalette();
         PaletteWindow languagePaletteWindow = new PaletteWindow();
+        languagePaletteWindow.setName(languagePallet.getName());
         languagePaletteWindow.addPalette(languagePallet);
         addPalette(languagePaletteWindow);
 
