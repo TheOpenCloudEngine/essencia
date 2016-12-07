@@ -149,7 +149,7 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
         if(resourcePath.startsWith("codi/codi/"))
             resourcePath = resourcePath.substring("codi/".length(), resourcePath.length());
 
-        DefaultResource classDefinitionResource = new DefaultResource( );
+        DefaultResource classDefinitionResource = new DefaultResource( resourcePath );
         EssenceProcessDefinition definition = (EssenceProcessDefinition) resourceManager.getStorage().getObject(classDefinitionResource);
 
         LanguageElement languageElement = (LanguageElement) definition.getPracticeDefinition().getElementByName(processResourceNameAndLanguageElementName[1]);
