@@ -28,6 +28,15 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
 
     public GameBoard(){}
 
+    Abacus abacus;
+        public Abacus getAbacus() {
+            return abacus;
+        }
+        public void setAbacus(Abacus abacus) {
+            this.abacus = abacus;
+        }
+
+
     List<AlphaGameBoard> alphaGameBoards;
         public List<AlphaGameBoard> getAlphaGameBoards() {
             return alphaGameBoards;
@@ -168,6 +177,8 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
                 case "Way-of-working": setWayOfWorking(alphaGameBoard);
             }
         }
+
+        setAbacus(new Abacus(this));
 
     }
 

@@ -72,7 +72,7 @@ public class AlphaInstanceInList implements ContextAware{
     @Autowired
     public ProcessManagerRemote processManagerRemote;
 
-    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true, mouseBinding = "double-click")
+    @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true/*, mouseBinding = "double-click"*/)
     @Available(when=MetaworksContext.WHEN_EDIT)
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
 

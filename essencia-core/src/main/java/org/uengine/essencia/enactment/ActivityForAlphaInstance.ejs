@@ -1,0 +1,32 @@
+<!--replace-->
+<tr id="objDiv_<%=objectId%>">
+
+
+<%
+    var alpha = value.alpha;
+
+    var fill = (value.entryStateName == null && value.completionStateName != null); //fill the block if entryStateName is null
+    var colspan = 0;
+    if(alpha.states)
+    for(var j in alpha.states){
+
+        var state = alpha.states[j];
+
+        if(state.name==value.entryStateName) fill = true;
+
+        if(fill) colspan ++;
+
+        if(state.name==value.completionStateName) fill = false;
+
+        if(colspan > 0 && !fill){
+            %><td colspan="<%=colspan%>"><div class="tag" style="width:100%"><%=value.name%></div></td><%
+            colspan = 0;
+        }else
+        if(!fill){
+            %><td></td><%
+        }
+
+    }
+
+%>
+</tr>

@@ -2,12 +2,16 @@ package org.uengine.essencia.enactment.face;
 
 import org.metaworks.Face;
 import org.metaworks.annotation.Group;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.beans.BeanUtils;
 import org.uengine.essencia.enactment.AlphaInstance;
 import org.uengine.essencia.enactment.CheckPointInstance;
 import org.uengine.essencia.enactment.CheckPointInstanceGroup;
+import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.CheckPoint;
 import org.uengine.essencia.model.State;
+import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.modeling.resource.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,17 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
             this.alphaPlanningPanel = alphaPlanningPanel;
         }
 
+    AlphaActivityPanel alphaActivityPanel;
+        public AlphaActivityPanel getAlphaActivityPanel() {
+            return alphaActivityPanel;
+        }
+
+        public void setAlphaActivityPanel(AlphaActivityPanel alphaActivityPanel) {
+            this.alphaActivityPanel = alphaActivityPanel;
+        }
+
+
+
 
 
     @Override
@@ -54,6 +69,8 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
         setCheckPointInstanceGroups(new ArrayList<CheckPointInstanceGroup>());
 
         fillStates();
+
+//        value.calculateState();
 
         if(getAlpha()!=null && getAlpha().getStates()!=null)
         for(State state : getAlpha().getStates()){
@@ -83,6 +100,28 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
         }
 
         setAlphaPlanningPanel(new AlphaPlanningPanel(value));
+
+// to set the activity list
+        String[] processResourceNameAndLanguageElementName = getClassName().split("\\#");
+
+        ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
+
+        String resourcePath = processResourceNameAndLanguageElementName[0];
+
+        //TODO: temporal
+        if(resourcePath.startsWith("codi/codi/"))
+            resourcePath = resourcePath.substring("codi/".length(), resourcePath.length());
+
+        DefaultResource classDefinitionResource = new DefaultResource( resourcePath );
+        try {
+            EssenceProcessDefinition definition = (EssenceProcessDefinition) resourceManager.getObject(classDefinitionResource);
+
+            setAlphaActivityPanel(new AlphaActivityPanel(value, definition.getPracticeDefinition()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
 
     }

@@ -17,7 +17,7 @@
         <property name="localBasePath" value="${codebase}"/>
     </bean>
 
-    <bean class="org.uengine.modeling.resource.ResourceManager" scope="singleton">
+    <bean class="org.uengine.modeling.resource.CachedResourceManager" scope="singleton">
         <property name="storage" ref="storage"/>
     </bean>
 

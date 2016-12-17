@@ -50,7 +50,17 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
     @AutowiredFromClient
     public Session session;
 
-    @ServiceMethod(callByContent = true, target=ServiceMethod.TARGET_POPUP)
+    @ServiceMethod(
+            payload = {
+                    "instanceId",
+                    "variablePointer",
+                    "languageElementInstance.className",
+                    "languageElementInstance.currentStateName",
+                    "languageElementInstance._face_",
+                    "languageElementInstance.valueMap"
+                },
+        target=ServiceMethod.TARGET_POPUP
+    )
     public void save() throws Exception {
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
 
@@ -58,10 +68,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
             AlphaInstance alphaInstance = ((AlphaInstance) getLanguageElementInstance());
             alphaInstance.fillStates();
             alphaInstance.calculateState();
-
-
         }
-
 
         variablePointer.setValue(instance, getLanguageElementInstance());
 
@@ -113,7 +120,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
         }
 
-
+        getLanguageElementInstance().setId((String) getLanguageElementInstance().getAttribute("Id"));
 
         AlphaInstanceInList alphaInstanceInList = new AlphaInstanceInList();
         BeanUtils.copyProperties(this, alphaInstanceInList);
@@ -121,14 +128,14 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
         alphaInstanceInList.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
         alphaInstanceInList.getMetaworksContext().setHow("agile");
 
-        if(true) { //if agile mode
+        if(false) { //if agile mode
             MetaworksRemoteService.wrapReturn(new ToEvent(new GameBoard(), "refresh"), new Remover(new ModalWindow()));
 
             return;
         }
 
         if(alphaInstanceListToRefresh!=null){
-            MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh), new Remover(new ModalWindow()));
+            MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh), new Remover(new ModalWindow()), new ToEvent(new Abacus(), "refresh"));
 
 //            HashMap<String, String> pushUserMap = new HashMap<String, String>();
 //            pushUserMap.put("3","3");

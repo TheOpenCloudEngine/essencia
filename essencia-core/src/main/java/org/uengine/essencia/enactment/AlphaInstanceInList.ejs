@@ -18,8 +18,12 @@
             var rowSpan = "";
 
             if(mw3.when != 'edit') {
-                if (!value.rowSpanMap) continue;
-                rowSpan = value.rowSpanMap[fd.name];
+                rowSpan = null;
+
+                if (value.rowSpanMap)
+                    rowSpan = value.rowSpanMap[fd.name];
+                else
+                    rowSpan = 1;
 
                 if (!rowSpan || rowSpan == 0) continue;
                 if (rowSpan > 1) {
@@ -62,7 +66,6 @@
         if(alphaInstance.targetStateName == state.name){
             %><i class="glyphicon glyphicon-flag workitem_btn current"></i><%
         }
-
 
         if(alphaInstance.subAlphaInstanceCount>1){
             var stateDetails = alphaInstance.stateDetailsByStateName[state.name];

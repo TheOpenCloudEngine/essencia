@@ -1,0 +1,70 @@
+
+
+<%
+
+if(value){
+
+
+
+    var alpha = value.alpha;%>
+
+
+    <table class="table table-bordered active">
+
+        <tr>
+
+
+            <%
+
+            if(alpha.states){
+
+                var firstState = true;
+
+                for(var i in alpha.states){
+                    var state = alpha.states[i];
+            %><th>
+                <center>
+
+                    <% if(state.name == value.currentStateName){%>
+                    <div class="tooltip fade top in" style="position: relative"><div class="tooltip-arrow"></div><div class="tooltip-inner">Current</div></div>
+                    <%}else if(state.name == value.targetStateName){%>
+                    <div class="tooltip fade top in" style="position: relative"><div class="tooltip-arrow"></div><div class="tooltip-inner">Target</div></div>
+                    <%}%>
+                <%=state.name%>
+                </center>
+            </th>
+            <%
+                firstState = false;
+
+                }
+            }
+            %>
+        </tr>
+
+        <tr>
+            <%
+
+            if(alpha.states){
+
+                //var firstState = true;
+            %>
+            <td>
+                <%
+
+                for(var index in value.runnableActivityList){
+                    var runnableActivity = value.runnableActivityList[index];
+                    runnableActivity.alpha = alpha; //give a link to it's alpha
+
+                %><%=mw3.locateObject(runnableActivity)%><%
+                }
+            }
+
+                %>
+            </td>
+        </tr>
+
+
+    </table>
+
+
+<%}%>
