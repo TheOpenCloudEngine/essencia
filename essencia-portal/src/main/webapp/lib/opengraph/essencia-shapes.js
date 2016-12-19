@@ -697,6 +697,6 @@ OG.shape.essencia.ActivityArrow.prototype.createShape = function () {
 
 var concernColors ={
     Customer: '#16a085',
-    Solution: '#f1c40f',
+    Solution: '#EB8B37',
     Endeavor: '#2980b9'
 };

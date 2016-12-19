@@ -11,14 +11,18 @@ if(value){
 
 <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading"><H1> <a name="<%=alpha.name%>" style="color:black"><%=alpha.name%></a> <%=methods.contextMenus.here()%></h1>
+    <div class="panel-heading"><H1> <a name="<%=alpha.name%>" style="color:black"><%=alpha.name%></a></h1>
     </div>
 
     <%if(alpha.description && alpha.description.trim().length > 0){%>
     <div class="panel-body">
         <p><%=alpha.description%></p>
     </div>
-    <%}%>
+    <%}
+
+    if(false){ //disabled for kernel
+
+    %>
 
 
 
@@ -27,65 +31,64 @@ if(value){
     <tr>
 <%
 
-    if(!mw3.uengineUML){
-        mw3.uengineUML = {classDefinitions:{}};
-    }
-
-    mw3.uengineUML.classDefinitions[alpha.name] = alpha;
-
-
-
-
-    if(alpha.fieldDescriptors){
-
-        for (var i=0; i<alpha.fieldDescriptors.length; i++) {
-
-            var fd = alpha.fieldDescriptors[i];
-
-            if (fd.name == 'metaworksContext') continue;
-
-            %><th><%=fd.displayName ? fd.displayName : fd.name%></th><%
+        if(!mw3.uengineUML){
+            mw3.uengineUML = {classDefinitions:{}};
         }
-    }else{
-        %><th>ID</th><%
-    }
 
-    var lengthOfLevels = 0;
+        mw3.uengineUML.classDefinitions[alpha.name] = alpha;
 
-    if(alpha.states){
-        lengthOfLevels = alpha.states.length;
-    }else if(alpha.levelOfDetails){
-        lengthOfLevels = alpha.levelOfDetails.length;
-    }
+        if(alpha.fieldDescriptors){
+
+            for (var i=0; i<alpha.fieldDescriptors.length; i++) {
+
+                var fd = alpha.fieldDescriptors[i];
+
+                if (fd.name == 'metaworksContext') continue;
+
+                %><th><%=fd.displayName ? fd.displayName : fd.name%></th><%
+            }
+        }else{
+            %><th>ID</th><%
+        }
+
+        var lengthOfLevels = 0;
+
+        if(alpha.states){
+            lengthOfLevels = alpha.states.length;
+        }else if(alpha.levelOfDetails){
+            lengthOfLevels = alpha.levelOfDetails.length;
+        }
 
 %>
 
 
 <%
 
-    if(alpha.states){
-        for(var i in alpha.states){
-            var state = alpha.states[i];
-            %><th><%=state.name%><%=(state.aggregationAlphaState && state.aggregationAlphaState!=state.name ? "(" + state.aggregationAlphaState + ")" : "")%></th><%
+        if(alpha.states){
+            for(var i in alpha.states){
+                var state = alpha.states[i];
+                %><th><%=state.name%><%=(state.aggregationAlphaState && state.aggregationAlphaState!=state.name ? "(" + state.aggregationAlphaState + ")" : "")%></th><%
 
-        }
-    }else if(alpha.levelOfDetails){
-        for(var i in alpha.levelOfDetails){
-            var levelOfDetail = alpha.levelOfDetails[i];
-            %><th><%=levelOfDetail.name%></th><%
+            }
+        }else if(alpha.levelOfDetails){
+            for(var i in alpha.levelOfDetails){
+                var levelOfDetail = alpha.levelOfDetails[i];
+                %><th><%=levelOfDetail.name%></th><%
 
+            }
         }
-    }
     %>
         <th></th>
 
     </tr>
 
-    <%=fields.alphaInstances.here()%>
+        <%=fields.alphaInstances.here()%>
 
 </table>
 
     <%
+    }
+
 
     if(alpha.outgoingRelations){
 

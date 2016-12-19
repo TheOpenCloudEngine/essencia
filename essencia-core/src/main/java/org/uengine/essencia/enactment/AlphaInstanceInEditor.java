@@ -135,7 +135,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
         }
 
         if(alphaInstanceListToRefresh!=null){
-            MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList), new Refresh(alphaInstanceListToRefresh), new Remover(new ModalWindow()), new ToEvent(new Abacus(), "refresh"));
+            MetaworksRemoteService.wrapReturn(new ToOpener(alphaInstanceInList)/*, new Refresh(alphaInstanceListToRefresh)*/, new Remover(new ModalWindow()), new ToEvent(new Abacus(), "refresh"));
 
 //            HashMap<String, String> pushUserMap = new HashMap<String, String>();
 //            pushUserMap.put("3","3");
