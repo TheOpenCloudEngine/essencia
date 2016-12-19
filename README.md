@@ -1,34 +1,8 @@
-# Essencia Development Environment
+# Installing Essencia
 
-* [Design goals](#design-goals)
-* [Installation](#installation)
-  * [Clone Essencia Development Environment repository](#clone-essencia-development-environment-repository)
-  * [Different installation types](#different-installation-types)
-    * [Native installation](#native-installation)
-    * [Vagrant with Virtualbox](#vagrant-with-virtualbox)
-    * [Vagrant with Docker](#vagrant-with-docker)
-* [Post installation](#post-installation)
-  * [Prepare Database](#prepare-database)
-  * [Prepare Directory](#prepare-directory)
-  * [Configuration File](#configuration-file)
-  * [Run Application](#run-application)
-  * [Jira Plugin Development](#jira-plugin-development)
-    * [SDK Prerequisites](#sdk-prerequisites)
-    * [Install the SDK](#install-the-sdk)
-    * [Explore the installed SDK](explore-the-installed-sdk)
-    * [Install Essencia Jira Plugin](install-essencia-jira-plugin)
-  
+## Installation for Developer
 
-## Design goals
-
-- Get the user started, do not try to take care of everything
-- Run everything as your 'desktop' user on your development machine
-- It is OK to leave some things to the user (e.g. installing Mysql)
-
-
-## Installation
-
-### Clone Essencia Development Environment repository
+### Clone Essencia Source Code
 
 ```
 git clone https://github.com/TheOpenCloudEngine/metaworks.git metaworks
@@ -36,24 +10,7 @@ git clone https://github.com/TheOpenCloudEngine/process-codi.git process-codi
 git clone https://github.com/TheOpenCloudEngine/uengine-bpm.git uengine-bpm
 git clone https://github.com/TheOpenCloudEngine/essencia.git essencia
 ```
-
-### Different installation types
-
-We strongly recommend the native install since it is much faster than a virtualized one.
-
-If you want to use [Bluemix](https://console.ng.bluemix.net/) on Linux
-please see [the instructions for our (experimental) Bluemix setup](#bluemix-setup).
-
-If you want to use [Vagrant](https://www.vagrantup.com/) instead (e.g. need to do development from Windows)
-please see [the instructions for our (experimental) Vagrant with Virtualbox setup](#vagrant-with-virtualbox).
-
-If you want to use [Vagrant](https://www.vagrantup.com/) with [Docker](https://www.docker.com/) on Linux
-please see [the instuctions for our (experimental) Vagrant with Docker setup](#vagrant-with-docker).
-
-
-#### Native installation
-
-##### Prerequisites for all platforms
+### Prerequisites
 
 If you do not have the dependencies below you will experience strange errors during installation.
 
@@ -63,7 +20,7 @@ If you do not have the dependencies below you will experience strange errors dur
 4. Mysql version more than 5.1 required.
 
 
-##### Build Essencia
+### Build Essencia
 
 Please build in the following order.
 
@@ -81,47 +38,7 @@ cd essencia
 mvn clean install -Dmaven.test.skip=true
 ```
 
-The following command can be built offline.
-
-```
-cd metaworks
-mvn -o clean install -Dmaven.test.skip=true
-
-cd process-codi
-mvn -o clean install -Dmaven.test.skip=true
-
-cd uengine-bpm
-mvn -o clean install -Dmaven.test.skip=true
-
-cd essencia
-mvn -o clean install -Dmaven.test.skip=true
-```
-
-
-#### Vagrant with Virtualbox
-
-It is being prepared.
-
-##### Install
-
-##### Development details
-
-##### Exit
-
-##### Troubleshooting
-
-
-#### Vagrant with Docker
-
-It is being prepared.
-
-##### Install
-
-
-## Post installation
-
-
-### Prepare Database
+### Database
 
 Import Process codi sql file.
 In process-codi folder, find src/main/webapp/resources/mysql/processcodi.sql
@@ -139,7 +56,7 @@ cd essencia
 mysql -uroot < essencia-jira/src/main/resources/jira/import-jira.sql
 ```
 
-### Prepare Directory
+### File System
 
 Create Directories.
 
@@ -161,7 +78,7 @@ chown -R <run-time user>:<run-time group> /oce/repository/essencia/codebase
 ```
 
 
-### Configuration File
+### Configuration
 
 In essencia folder, find essencia-portal/src/main/resources/org/uengine/uengine.properties.
 
