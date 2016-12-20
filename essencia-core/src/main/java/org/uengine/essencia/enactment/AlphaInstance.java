@@ -2,10 +2,13 @@ package org.uengine.essencia.enactment;
 
 import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.annotation.Face;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace2;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.modeling.Relation;
+import org.uengine.modeling.resource.DefaultResource;
+import org.uengine.modeling.resource.ResourceManager;
 import org.uengine.util.UEngineUtil;
 
 import java.util.*;
@@ -102,7 +105,7 @@ public class AlphaInstance extends LanguageElementInstance {
     }
 
 
-    public void calculateState(){
+    public void calculateState(ProcessInstance instance){
 
         Alpha alpha = getAlpha();
 
@@ -126,11 +129,57 @@ public class AlphaInstance extends LanguageElementInstance {
         java.util.Date today = new java.util.Date();
 
 
-        if(alpha.getStates()!=null)
-        for(State state : alpha.getStates()){
-            java.util.Date dueDate = (Date) getStateDetails(state.getName(), STATE_PROP_KEY_DueDate);
-            if(dueDate!=null && today.after(dueDate)){
-                setTargetStateName(state.getName());
+        if(alpha.getStates()!=null) {
+            for (State state : alpha.getStates()) {
+                java.util.Date dueDate = (Date) getStateDetails(state.getName(), STATE_PROP_KEY_DueDate);
+
+                //amend the due date from kernel if there is.
+                if (dueDate == null && state.getAggregationAlphaState()!=null) {
+
+                    String[] processResourceNameAndLanguageElementName = getClassName().split("\\#");
+
+                    ResourceManager resourceManager = MetaworksRemoteService.getComponent(ResourceManager.class);
+
+                    String resourcePath = processResourceNameAndLanguageElementName[0];
+
+                    if (resourcePath.startsWith("codi/codi/"))
+                        resourcePath = resourcePath.substring("codi/".length(), resourcePath.length());
+
+                    DefaultResource classDefinitionResource = new DefaultResource(resourcePath);
+                    try {
+                        EssenceProcessDefinition definition = (EssenceProcessDefinition) resourceManager.getObject(classDefinitionResource);
+                        BasicElement element = (BasicElement) definition.getPracticeDefinition().getElementByName(getAlpha().getName());
+                        BasicElement kernel = (BasicElement) element.getIncomingRelations().get(0).getSourceElement();
+
+                        if(kernel!=null && kernel instanceof Alpha){
+
+                            Alpha kernelAlpha = (Alpha)kernel;
+                            for(State kernelState : kernelAlpha.getStates()){
+                                if(kernelState.getName().equals(state.getAggregationAlphaState())){
+                                    List<LanguageElementInstance> kernelInstances = (List<LanguageElementInstance>) kernel.getInstances(instance);
+                                    if(kernelInstances.size() > 0){
+                                        AlphaInstance kernelAlphaInstance = (AlphaInstance) kernelInstances.get(0);
+                                        Date dueDateFromKernel = (Date) kernelAlphaInstance.getStateDetails(kernelState.getName(), AlphaInstance.STATE_PROP_KEY_DueDate);
+
+                                        if(dueDateFromKernel!=null)
+                                            dueDate = dueDateFromKernel;
+
+                                        break;
+                                    }
+
+                                }
+                            }
+
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (dueDate != null && today.after(dueDate)) {
+                    setTargetStateName(state.getName());
+                }
             }
         }
 

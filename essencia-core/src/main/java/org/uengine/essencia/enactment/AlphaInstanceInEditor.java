@@ -67,7 +67,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
         if(getLanguageElementInstance() instanceof AlphaInstance){
             AlphaInstance alphaInstance = ((AlphaInstance) getLanguageElementInstance());
             alphaInstance.fillStates();
-            alphaInstance.calculateState();
+            alphaInstance.calculateState(instance);
         }
 
         variablePointer.setValue(instance, getLanguageElementInstance());

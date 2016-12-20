@@ -27,7 +27,7 @@ public class AlphaInstanceInNewEditor extends AlphaInstanceInEditor{
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
 
         if(getLanguageElementInstance() instanceof AlphaInstance){
-            ((AlphaInstance) getLanguageElementInstance()).calculateState();
+            ((AlphaInstance) getLanguageElementInstance()).calculateState(instance);
         }
 
         instance.add("",  variablePointer.getKey(), getLanguageElementInstance(),0);

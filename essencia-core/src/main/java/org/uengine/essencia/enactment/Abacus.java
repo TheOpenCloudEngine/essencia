@@ -1,13 +1,11 @@
 package org.uengine.essencia.enactment;
 
-import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.Id;
 import org.metaworks.annotation.Payload;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.codi.mw3.model.Popup;
-import org.uengine.kernel.ProcessInstance;
 
 /**
  * Created by uengine on 2016. 12. 17..
@@ -61,7 +59,7 @@ public class Abacus{
     public void editStateInstance(@Payload("instanceId") String instanceId, @Payload("stateInstanceEditor") StateInstanceEditor stateInstanceEditor) throws Exception {
         stateInstanceEditor.setInstanceId(instanceId);
         final Popup popup = new Popup(stateInstanceEditor.load());
-        popup.setName("Due date : " + stateInstanceEditor.getTargetStateName());
+        popup.setName("Due Date : " + stateInstanceEditor.getTargetStateName());
         popup.setMetaworksContext(new MetaworksContext());
         popup.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 

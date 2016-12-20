@@ -77,7 +77,7 @@ public class StateInstanceEditor {
 
         AlphaInstance alphaInstance = (AlphaInstance) instance.get("", getTargetAlphaName());
         alphaInstance.setStateDetails(getTargetStateName(), AlphaInstance.STATE_PROP_KEY_DueDate, getDueDate());
-        alphaInstance.calculateState();
+        alphaInstance.calculateState(instance);
 
         instance.set("", getTargetAlphaName(), alphaInstance);
 

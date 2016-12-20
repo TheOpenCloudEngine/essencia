@@ -136,7 +136,7 @@
                     var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
                     var description = state.description;
                     if(stateDetails["Due"])
-                        description = description + "\n Due date: " +  stateDetails["Due"];
+                        description = description + "\n [ Due date: " +  stateDetails["Due"] + " ]";
                 %>
 
                     <button type="button" <%=style%> class="btn <%=concernColoredBtnCSS%> tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=description %>"  onclick="mw3.getFaceHelper(<%=objectId%>).editStateInstance('<%=alphaName%>', '<%=state.name%>')">
@@ -214,7 +214,7 @@
                         var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
                         var description = state.description;
                         if(stateDetails["Due"])
-                            description = description + "\n Due date: " +  stateDetails["Due"];
+                            description = description + "\n [ Due date: " +  stateDetails["Due"] + " ]";
 
                         if(alphaInstance.currentStateName == state.name || running){
                         %><button type="button" <%=style%> class="btn <%=concernColoredBtnCSS%> tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=description%>" onclick="mw3.getFaceHelper(<%=objectId%>).editStateInstance('<%=alphaName%>', '<%=state.name%>')">
@@ -307,7 +307,7 @@
                         var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
                         var description = state.description;
                         if(stateDetails["Due"])
-                            description = description + "\n Due date: " +  stateDetails["Due"];
+                            description = description + "\n [ Due date: " +  stateDetails["Due"] + " ]";
 
 
                         if(!beforeCurrent && !nextOfCurrent && !running){

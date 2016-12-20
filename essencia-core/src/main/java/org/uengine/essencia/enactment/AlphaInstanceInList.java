@@ -83,6 +83,10 @@ public class AlphaInstanceInList implements ContextAware{
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
         LanguageElementInstance leInstance = (LanguageElementInstance) variablePointer.getValue(instance);
 
+        if(leInstance instanceof AlphaInstance){
+            ((AlphaInstance) leInstance).calculateState(instance);
+        }
+
         alphaInstanceInEditor.setLanguageElementInstance(leInstance);
 
         //set the languageElement edit context.

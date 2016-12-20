@@ -102,7 +102,7 @@ public class Criterion extends LanguageElement {
                 for (AlphaInstance alphaInstance : alphaInstances) {
                     if(alphaInstance!=null) {
                         alphaInstance.setLanguageElement(alpha); //alpha in the alphaInstance will be empty since it is heavy, so it should be re-assigned.
-                        alphaInstance.calculateState();
+                        alphaInstance.calculateState(instance);
 
                         if(!isMet(alphaInstance)){
                             throw new NotCompletableException("State of Alpha ["+ alpha.getName() + "] is not reached to [" + getState().getName() + "]");
