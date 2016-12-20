@@ -1,3 +1,8 @@
+<%
+    if(value && value.gameBoard){
+
+ %>
+
 <table width="95%">
 
 
@@ -128,7 +133,13 @@
                     if(alphaInstance.currentStateName == state.name)
                         break;
 
-                %><button type="button" <%=style%> class="btn <%=concernColoredBtnCSS%> tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>">
+                    var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
+                    var description = state.description;
+                    if(stateDetails["Due"])
+                        description = description + "\n Due date: " +  stateDetails["Due"];
+                %>
+
+                    <button type="button" <%=style%> class="btn <%=concernColoredBtnCSS%> tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=description %>"  onclick="mw3.getFaceHelper(<%=objectId%>).editStateInstance('<%=alphaName%>', '<%=state.name%>')">
                     <%
                     if(alphaInstance.targetStateName == state.name){
                     %><span class="glyphicon glyphicon-flag" aria-hidden="true"></span><%
@@ -200,9 +211,13 @@
                             style=" style='background: #f1c40f'";
                         }
 
+                        var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
+                        var description = state.description;
+                        if(stateDetails["Due"])
+                            description = description + "\n Due date: " +  stateDetails["Due"];
 
                         if(alphaInstance.currentStateName == state.name || running){
-                        %><button type="button" <%=style%> class="btn <%=concernColoredBtnCSS%> tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>">
+                        %><button type="button" <%=style%> class="btn <%=concernColoredBtnCSS%> tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=description%>" onclick="mw3.getFaceHelper(<%=objectId%>).editStateInstance('<%=alphaName%>', '<%=state.name%>')">
                             <%
                             if(alphaInstance.targetStateName == state.name){
                             %><span class="glyphicon glyphicon-flag" aria-hidden="true"></span><%
@@ -286,41 +301,45 @@
                     var beforeCurrent = alphaInstance.currentStateName;
                     var total = alphaInstance.subAlphaInstanceCount;
 
-                for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
-                    var state = alphaGameBoard.alpha.states[j];
+                    for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
+                        var state = alphaGameBoard.alpha.states[j];
+
+                        var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
+                        var description = state.description;
+                        if(stateDetails["Due"])
+                            description = description + "\n Due date: " +  stateDetails["Due"];
 
 
+                        if(!beforeCurrent && !nextOfCurrent && !running){
+                        %><button type="button" class="btn btn-default tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=description%>" onclick="mw3.getFaceHelper(<%=objectId%>).editStateInstance('<%=alphaName%>', '<%=state.name%>')">
 
-                if(!beforeCurrent && !nextOfCurrent && !running){
-                %><button type="button" class="btn btn-default tooltip-top" data-placement="right" data-toggle="tooltip" data-original-title="<%=state.description%>">
+                            <%
+                            if(alphaInstance.targetStateName == state.name){
+                            %><span class="glyphicon glyphicon-flag" aria-hidden="true"></span><%
 
-                    <%
-                    if(alphaInstance.targetStateName == state.name){
-                    %><span class="glyphicon glyphicon-flag" aria-hidden="true"></span><%
+                            }
 
-                    }
+                            %>
 
-                    %>
+                            <%=state.name%> </button><br><%
+                        }
 
-                    <%=state.name%> </button><br><%
-                }
+                        if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"] > 0){
+                            total = total - alphaInstance.stateDetailsByStateName[state.name]["WIPCount"];
 
-                    if(alphaInstance.stateDetailsByStateName[state.name] && alphaInstance.stateDetailsByStateName[state.name]["WIPCount"] > 0){
-                        total = total - alphaInstance.stateDetailsByStateName[state.name]["WIPCount"];
-
-                        running = (total > 0);
-                    }
+                            running = (total > 0);
+                        }
 
 
-                    if(alphaInstance.currentStateName == state.name){
-                        nextOfCurrent = true;
-                        beforeCurrent = false;
-                    }else {
-                        if (nextOfCurrent){
-                            nextOfCurrent = false;
+                        if(alphaInstance.currentStateName == state.name){
+                            nextOfCurrent = true;
+                            beforeCurrent = false;
+                        }else {
+                            if (nextOfCurrent){
+                                nextOfCurrent = false;
+                            }
                         }
                     }
-                }
                 }
 
                 %>
@@ -334,3 +353,4 @@
 
 <hr>
 
+<%}%>

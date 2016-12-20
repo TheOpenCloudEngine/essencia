@@ -99,7 +99,8 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
             i++;
         }
 
-        setAlphaPlanningPanel(new AlphaPlanningPanel(value));
+        //TODO planning panel must be restored someday.
+        //setAlphaPlanningPanel(new AlphaPlanningPanel(value));
 
 // to set the activity list
         String[] processResourceNameAndLanguageElementName = getClassName().split("\\#");
