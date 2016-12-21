@@ -7,6 +7,8 @@
 
     var fill = (value.entryStateName == null && value.completionStateName != null); //fill the block if entryStateName is null
     var colspan = 0;
+    var colSize = alpha.states.length;
+
     if(alpha.states)
     for(var j in alpha.states){
 
@@ -30,3 +32,17 @@
 
 %>
 </tr>
+
+<%if(value.activityInstanceRunPanel){%>
+
+<tr>
+    <td colspan="<%=colSize%>">
+
+        <%=here("activityInstanceRunPanel")%>
+
+    </td>
+
+
+</tr>
+
+<%}%>

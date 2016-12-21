@@ -1,10 +1,13 @@
 package org.uengine.essencia.enactment;
 
+import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.Criterion;
+import org.uengine.essencia.model.card.ActivityCard;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.processmanager.ProcessManagerBean;
@@ -67,6 +70,7 @@ public class ActivityForAlphaInstance {
 
     public ActivityForAlphaInstance(Activity activity, Alpha alpha){
 
+        setInstanceId(instanceId);
         setName(activity.getName());
 
         if(activity.getEntryCriteria()!=null)
@@ -82,21 +86,55 @@ public class ActivityForAlphaInstance {
                 setCompletionStateName(criterion.getStateOrLevelOfDetail().getName());
             }
         }
+
+        setActivityInstanceRunPanel(new ActivityInstanceRunPanel()); //empty
     }
 
     public ActivityForAlphaInstance(){}
 
 
 
-    @ServiceMethod(callByContent = true)
-    public void run() throws Exception {
-        ProcessInstance instance = processManager.getProcessInstance(getInstanceId());
-        ProcessDefinition definition = instance.getProcessDefinition();
+    @ServiceMethod(mouseBinding = "left", payload = {"instanceId", "name", "activityInstanceRunPanel.filled"})
+    public void run(@AutowiredFromClient(payload={"instanceId"}) Abacus abacus) throws Exception {
 
-        EssenceActivity activity = (EssenceActivity) definition.getActivity(getTracingTag());
+        //toggle
+        if(getActivityInstanceRunPanel()!=null && getActivityInstanceRunPanel().isFilled()){
+            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel();
+            MetaworksRemoteService.wrapReturn(activityInstanceRunPanel);
+        }else {
 
+            setInstanceId(abacus.getInstanceId());
 
+            ProcessInstance instance = processManager.getProcessInstance(getInstanceId());
+            EssenceProcessDefinition definition = (EssenceProcessDefinition) instance.getProcessDefinition();
+
+            //EssenceActivity activity = (EssenceActivity) definition.getActivity(getTracingTag());
+            Activity activity = (Activity) definition.getPracticeDefinition().getElementByName(getName());
+
+            ActivityCard activityCard = new ActivityCard(activity);
+            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel();
+            activityInstanceRunPanel.setActivityCard(activityCard);
+            activityInstanceRunPanel.setFilled(true);
+            MetaworksRemoteService.wrapReturn(activityInstanceRunPanel);
+        }
     }
+
+    ActivityInstanceRunPanel activityInstanceRunPanel;
+        public ActivityInstanceRunPanel getActivityInstanceRunPanel() {
+            return activityInstanceRunPanel;
+        }
+        public void setActivityInstanceRunPanel(ActivityInstanceRunPanel activityInstanceRunPanel) {
+            this.activityInstanceRunPanel = activityInstanceRunPanel;
+        }
+
+//    ActivityCard activityCard;
+//        public ActivityCard getActivityCard() {
+//            return activityCard;
+//        }
+//        public void setActivityCard(ActivityCard activityCard) {
+//            this.activityCard = activityCard;
+//        }
+
 
     @Autowired
     public ProcessManagerRemote processManager;
