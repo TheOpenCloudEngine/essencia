@@ -22,6 +22,7 @@ import org.uengine.essencia.model.card.Card;
 import org.uengine.essencia.portal.ElementViewActionDelegateForCardView;
 import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.HumanActivity;
+import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.modeling.ElementViewActionDelegate;
 import org.uengine.modeling.modeler.DefaultElementViewActionDelegate;
@@ -72,7 +73,8 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
         String tracingTag = getTracingTag();
 
 
-        EssenceActivity essenceActivity = (EssenceActivity) processManager.getProcessInstance(getInstanceId()).getProcessDefinition().getActivity(tracingTag);
+        ProcessInstance instance = processManager.getProcessInstance(getInstanceId());
+        EssenceActivity essenceActivity = (EssenceActivity) instance.getProcessDefinition().getActivity(tracingTag);
 
         activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
 
@@ -87,33 +89,53 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
 
 
         //set target states when the output parameter value is an alphaInstance.
-        if (getOutputParameters() != null)
-            for (ParameterValue parameterValue : getOutputParameters()) {
+        if (getOutputParameters() != null) {
 
+            for (int i=0; i<getOutputParameters().size(); i++) {
+                ParameterValue parameterValue = getOutputParameters().get(i);
+                Alpha alpha = null;
 
-                Object parameterValueValue = parameterValue.getValue();
+                if (parameterValue.getValue() instanceof AlphaInstance) {
+                    alpha = ((AlphaInstance) parameterValue.getValue()).getAlpha();
 
-                if (parameterValue.getProcessVariableValueList() != null) {
-
-                    parameterValueValue = parameterValue.getProcessVariableValueList().getDefaultValue();
-
-                    for (MetaworksElement metaworksElement : parameterValue.getProcessVariableValueList().getElements()) {
-                        alphaInstanceList.add((AlphaInstance) metaworksElement.getValue());
-                    }
+                } else if (parameterValue.getProcessVariableValueList().getDefaultValue() instanceof AlphaInstance) {
+                    alpha = ((AlphaInstance) parameterValue.getProcessVariableValueList().getDefaultValue()).getAlpha();
 
                 }
 
-                if (parameterValueValue instanceof AlphaInstance)
-                    alphaInstanceList.add((AlphaInstance) parameterValueValue);
+                if (alpha != null) {
 
-                for (AlphaInstance alphaInstance : alphaInstanceList) {
-                    if (criterionByElementName.containsKey(alphaInstance.getAlpha().getName())) {
-                        Criterion criterion = criterionByElementName.get(alphaInstance.getAlpha().getName());
+                    parameterValue = new AlphaInstanceParameterValue(instance, alpha);
+                    getOutputParameters().set(i, parameterValue);
 
-                        alphaInstance.setTargetStateName(criterion.getStateOrLevelOfDetail().getName());
-                    }
                 }
+
+
+//                Object parameterValueValue = parameterValue.getValue();
+//
+//                if (parameterValue.getProcessVariableValueList() != null) {
+//
+//                    parameterValueValue = parameterValue.getProcessVariableValueList().getDefaultValue();
+//
+//                    for (MetaworksElement metaworksElement : parameterValue.getProcessVariableValueList().getElements()) {
+//                        alphaInstanceList.add((AlphaInstance) metaworksElement.getValue());
+//                    }
+//
+//                }
+//
+//                if (parameterValueValue instanceof AlphaInstance)
+//                    alphaInstanceList.add((AlphaInstance) parameterValueValue);
+//
+//                //setting the target state name for the alphaInstances to show the target of this activity
+//                for (AlphaInstance alphaInstance : alphaInstanceList) {
+//                    if (criterionByElementName.containsKey(alphaInstance.getAlpha().getName())) {
+//                        Criterion criterion = criterionByElementName.get(alphaInstance.getAlpha().getName());
+//
+//                        alphaInstance.setTargetStateName(criterion.getStateOrLevelOfDetail().getName());
+//                    }
+//                }
             }
+        }
     }
 
 
