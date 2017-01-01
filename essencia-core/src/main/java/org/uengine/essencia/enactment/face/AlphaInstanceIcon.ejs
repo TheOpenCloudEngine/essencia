@@ -1,0 +1,15 @@
+<%
+var concern = value.concern;
+var concernColor = concernColors[concern];
+
+if(!concernColor) concernColor = "#428bca"
+%>
+
+<div class="well well-sm" style="background-color: <%=concernColor%>; color: white; cursor: pointer;text-overflow:ellipsis;
+        display: inline-block;
+        overflow: hidden;
+        height: 50px;
+        width:100%;">
+    <%=value.name%>
+</div>
+

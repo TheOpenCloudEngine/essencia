@@ -24,6 +24,7 @@ import org.uengine.essencia.util.ContextUtil;
 import org.uengine.kernel.HumanActivity;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
+import org.uengine.kernel.VariablePointer;
 import org.uengine.modeling.ElementViewActionDelegate;
 import org.uengine.modeling.modeler.DefaultElementViewActionDelegate;
 import org.uengine.social.SocialBPMWorkItemHandler;
@@ -73,7 +74,7 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
         String tracingTag = getTracingTag();
 
 
-        ProcessInstance instance = processManager.getProcessInstance(getInstanceId());
+        ProcessInstance instance = getProcessInstance();
         EssenceActivity essenceActivity = (EssenceActivity) instance.getProcessDefinition().getActivity(tracingTag);
 
         activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
@@ -94,6 +95,10 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
             for (int i=0; i<getOutputParameters().size(); i++) {
                 ParameterValue parameterValue = getOutputParameters().get(i);
                 Alpha alpha = null;
+
+                if(parameterValue.getValue() instanceof VariablePointer){
+                    parameterValue.setValue(((VariablePointer) parameterValue.getValue()).getValue(instance));
+                }
 
                 if (parameterValue.getValue() instanceof AlphaInstance) {
                     alpha = ((AlphaInstance) parameterValue.getValue()).getAlpha();

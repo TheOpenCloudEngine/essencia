@@ -3,7 +3,9 @@ package org.uengine.essencia.enactment;
 import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.annotation.Face;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.model.IconViewable;
 import org.uengine.essencia.enactment.face.AlphaInstanceFace2;
+import org.uengine.essencia.enactment.face.AlphaInstanceIcon;
 import org.uengine.essencia.model.*;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.modeling.Relation;
@@ -14,7 +16,7 @@ import org.uengine.util.UEngineUtil;
 import java.util.*;
 
 @Face(faceClass= AlphaInstanceFace2.class)
-public class AlphaInstance extends LanguageElementInstance {
+public class AlphaInstance extends LanguageElementInstance implements IconViewable{
 
     public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
     public static String STATE_PROP_KEY_DueDate = "Due";
@@ -363,6 +365,13 @@ public class AlphaInstance extends LanguageElementInstance {
 //                throw new RuntimeException("failed to fill up alpha definition", e);
             }
         }
+    }
+
+    @Override
+    public Object createIcon() {
+
+        return new AlphaInstanceIcon(this);
+
     }
 
     /** Rather use Criteria.isReachedToState() instead. **/
