@@ -230,6 +230,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
             setFieldDescriptors(new Attribute[]{attribute});
         }else{
+
             for(Attribute attribute : getFieldDescriptors()){
                 if(attribute.getName().equals("Id")) return;
             }

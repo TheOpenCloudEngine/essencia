@@ -1,3 +1,22 @@
 <%if (value.activityCard){%>
 <%=here("activityCard")%>
+
+<div class="panel panel-default">
+
+<div class="panel-body">
+
+    <label>Assignee</label>
+    <div class="input-group">
+        <%=here("assignee")%>
+    </div>
+
+    <label>Due date</label>
+    <div class="input-group">
+        <%=here("dueDate")%>
+    </div>
+
+    <%=here("runThisActivity")%>
+</div>
+
+</div>
 <%}%>

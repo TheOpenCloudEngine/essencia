@@ -112,9 +112,7 @@ public class ActivityForAlphaInstance {
             Activity activity = (Activity) definition.getPracticeDefinition().getElementByName(getName());
 
             ActivityCard activityCard = new ActivityCard(activity);
-            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel();
-            activityInstanceRunPanel.setActivityCard(activityCard);
-            activityInstanceRunPanel.setFilled(true);
+            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel(activityCard);
             MetaworksRemoteService.wrapReturn(activityInstanceRunPanel);
         }
     }
@@ -129,7 +127,7 @@ public class ActivityForAlphaInstance {
 
 //    ActivityCard activityCard;
 //        public ActivityCard getActivityCard() {
-//            return activityCard;
+    //            return activityCard;
 //        }
 //        public void setActivityCard(ActivityCard activityCard) {
 //            this.activityCard = activityCard;
