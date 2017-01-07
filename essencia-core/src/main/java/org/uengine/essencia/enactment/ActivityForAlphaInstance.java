@@ -111,8 +111,7 @@ public class ActivityForAlphaInstance {
             //EssenceActivity activity = (EssenceActivity) definition.getActivity(getTracingTag());
             Activity activity = (Activity) definition.getPracticeDefinition().getElementByName(getName());
 
-            ActivityCard activityCard = new ActivityCard(activity);
-            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel(activityCard);
+            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel(activity, instance);
             MetaworksRemoteService.wrapReturn(activityInstanceRunPanel);
         }
     }
