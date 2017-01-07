@@ -6,17 +6,22 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.uengine.codi.mw3.model.IWorkItem;
+import org.uengine.codi.mw3.model.WorkItem;
+import org.uengine.codi.mw3.model.WorkItemHandler;
 import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.model.Criterion;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.model.card.ActivityCard;
 import org.uengine.kernel.ExecutionScopeContext;
+import org.uengine.kernel.HumanActivity;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.kernel.handler.SubParamaterValueSelector;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.social.RoleUser;
 import org.uengine.util.ActivityFor;
+import org.uengine.webservices.worklist.DefaultWorkList;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -31,7 +36,27 @@ public class ActivityInstanceRunPanel implements ContextAware{
 
     public ActivityInstanceRunPanel(){}
 
-    public ActivityInstanceRunPanel(Activity activity, ProcessInstance instance) throws Exception {
+    public ActivityInstanceRunPanel(Activity activity, ProcessInstance instance, AlphaInstanceInEditor alphaInstanceInEditor) throws Exception {
+        setActivityName(activity.getName());
+
+        //check if any task is linked to this alphaInstance, if then, just show the work-item-handler rather.
+        AlphaInstance alphaInstance = (AlphaInstance) alphaInstanceInEditor.getVariablePointer().getValue(instance);
+        String taskId = (String) alphaInstance.getValueMap().get("__taskIdFor_" + getActivityName());
+
+        if(taskId!=null){
+            IWorkItem workItem = WorkItem.findByTaskId(taskId);
+            if(DefaultWorkList.WORKITEM_STATUS_NEW.equals(workItem.getStatus()) || DefaultWorkList.WORKITEM_STATUS_CONFIRMED.equals(workItem.getStatus())) {
+                WorkItem contentWorkItem = new WorkItem();
+                contentWorkItem.setTaskId(workItem.getTaskId());
+
+                MetaworksRemoteService.autowire(contentWorkItem);
+                contentWorkItem.detail();
+                setWorkItemHandler(contentWorkItem.getWorkItemHandler());
+
+                return;
+            }
+        }
+        //
 
         ActivityCard activityCard = new ActivityCard();
 
@@ -41,7 +66,6 @@ public class ActivityInstanceRunPanel implements ContextAware{
         getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
         setFilled(true);
 
-        setActivityName(activity.getName());
 
         setSubParamaterValueSelectors(new ArrayList<SubParamaterValueSelector>());
 
@@ -54,6 +78,15 @@ public class ActivityInstanceRunPanel implements ContextAware{
             getSubParamaterValueSelectors().add(subParamaterValueSelector);
         }
     }
+
+
+    WorkItemHandler workItemHandler;
+        public WorkItemHandler getWorkItemHandler() {
+            return workItemHandler;
+        }
+        public void setWorkItemHandler(WorkItemHandler workItemHandler) {
+            this.workItemHandler = workItemHandler;
+        }
 
     ActivityCard activityCard;
         public ActivityCard getActivityCard() {
@@ -114,7 +147,7 @@ public class ActivityInstanceRunPanel implements ContextAware{
 
 
     @ServiceMethod(except = "activityCard", callByContent = true)
-    public void runThisActivity(@AutowiredFromClient AlphaInstanceInEditor alphaInstanceInEditor) throws Exception {
+    public void runThisActivity(@AutowiredFromClient(payload = {"instanceId", "variablePointer"}) AlphaInstanceInEditor alphaInstanceInEditor) throws Exception {
         String instanceId = alphaInstanceInEditor.getInstanceId();
 
         ProcessInstance instance = processManager.getProcessInstance(instanceId);
@@ -135,7 +168,7 @@ public class ActivityInstanceRunPanel implements ContextAware{
 
 
         findBPMActivity.run(essenceProcessDefinition);
-        org.uengine.kernel.Activity bpmActivity = (org.uengine.kernel.Activity) findBPMActivity.getReturnValue();
+        HumanActivity bpmActivity = (HumanActivity) findBPMActivity.getReturnValue();
 
         ExecutionScopeContext oldEsc = instance.getExecutionScopeContext();
         AlphaInstance alphaInstance = (AlphaInstance) alphaInstanceInEditor.getVariablePointer().getValue(instance);
@@ -151,6 +184,12 @@ public class ActivityInstanceRunPanel implements ContextAware{
         }
 
         instance.execute(bpmActivity.getTracingTag());
+
+        // link the task with the alphaInstance
+        String taskId = bpmActivity.getTaskIds(instance)[0];
+        alphaInstance.getValueMap().put("__taskIdFor_" + getActivityName(), taskId );
+        alphaInstanceInEditor.getVariablePointer().setValue(instance, alphaInstance);
+        // end
 
         processManager.setChanged();
 

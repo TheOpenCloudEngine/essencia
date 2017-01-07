@@ -193,6 +193,8 @@ public class EssenceActivity extends HumanActivity {
                 if (alphaInstances != null)
                     for (AlphaInstance alphaInstance : alphaInstances) {
 
+                        if(alphaInstance==null) continue;
+
                         alphaInstance.calculateState(instance);
                         if (!criterion.isMet(alphaInstance)) {
                             throw new IllegalStateException("Not reached to entry state '" + criterion.getState().getParentAlpha().getName() + " : " + criterion.getState().getName() + "' to begin this activity '" + getName() + "'");

@@ -95,7 +95,8 @@ public class ActivityForAlphaInstance {
 
 
     @ServiceMethod(mouseBinding = "left", payload = {"instanceId", "name", "activityInstanceRunPanel.filled"})
-    public void run(@AutowiredFromClient(payload={"instanceId"}) Abacus abacus) throws Exception {
+    public void run(@AutowiredFromClient(payload={"instanceId"}) Abacus abacus,
+                    @AutowiredFromClient(payload = {"instanceId", "variablePointer"}) AlphaInstanceInEditor alphaInstanceInEditor) throws Exception {
 
         //toggle
         if(getActivityInstanceRunPanel()!=null && getActivityInstanceRunPanel().isFilled()){
@@ -111,7 +112,7 @@ public class ActivityForAlphaInstance {
             //EssenceActivity activity = (EssenceActivity) definition.getActivity(getTracingTag());
             Activity activity = (Activity) definition.getPracticeDefinition().getElementByName(getName());
 
-            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel(activity, instance);
+            ActivityInstanceRunPanel activityInstanceRunPanel = new ActivityInstanceRunPanel(activity, instance, alphaInstanceInEditor);
             MetaworksRemoteService.wrapReturn(activityInstanceRunPanel);
         }
     }
