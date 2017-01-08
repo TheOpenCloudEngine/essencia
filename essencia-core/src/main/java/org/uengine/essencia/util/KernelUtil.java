@@ -49,8 +49,8 @@ public final class KernelUtil {
     public PracticeDefinition getPracticeDefinition(String kernel) {
         PracticeDefinition returnDefinition = null;
         try {
-            if(kernel==null)
-                return (PracticeDefinition) deepCopy(this.practiceDefinition);
+            if(kernel==null || DEFAULT_KERNEL.equals(kernel))
+                return this.practiceDefinition;//(PracticeDefinition) deepCopy(this.practiceDefinition);
 
             return (PracticeDefinition) Serializer.deserialize(Thread.currentThread().getContextClassLoader().getResourceAsStream("org/uengine/essencia/model/kernel/" + kernel + ".kernel"));
         } catch (Exception e) {

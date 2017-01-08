@@ -134,6 +134,35 @@ public class Benchmark {
         getChart().setHeight(400);
         getChart().setRadarData(new ArrayList<RadarData>());
 
+        //gathering kernel alphas which will be the each axis of radar.
+
+        List<String> gatheredAlphas = new ArrayList<String>();
+        Map kernelLoaded = new HashMap<String, String>();
+        for(String instanceId : instanceIds){
+
+            ProcessInstance instance = processManagerRemote.getProcessInstance(instanceId);
+
+            org.uengine.kernel.ProcessDefinition processDefinition = instance.getProcessDefinition();
+
+            if(!(processDefinition instanceof EssenceProcessDefinition)) continue;
+
+            String baseKernelName = ((EssenceProcessDefinition) processDefinition).getPracticeDefinition().getBaseKernel();
+
+            if(kernelLoaded.containsKey(baseKernelName)) continue; //skip if the kernel is already gathered one with its alpha.
+            kernelLoaded.put(baseKernelName, baseKernelName);
+
+            PracticeDefinition theKernel = KernelUtil.getInstance().getPracticeDefinition(baseKernelName);
+            List<Alpha> kernelAlphas = theKernel.getElements(Alpha.class);
+
+            for(Alpha alpha : kernelAlphas){
+                if(!gatheredAlphas.contains(alpha.getName())){
+                    gatheredAlphas.add(alpha.getName());
+                }
+            }
+        }
+
+        //end of gathering alphas from different kernels
+
 
         int i=0;
         for(String instanceId : instanceIds){
@@ -156,7 +185,7 @@ public class Benchmark {
             pointOfEachAlphas.setColor(colors[i++]);
             getChart().getRadarData().add(pointOfEachAlphas);
 
-            for(String alpha : alphas) {
+            for(String alpha : gatheredAlphas) {
                 List<AlphaInstanceInList> alphaInstances = gameBoard.getAlphaInstancesMap().get(alpha);
 
                 double point = 0;
