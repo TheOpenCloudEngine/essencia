@@ -1,9 +1,6 @@
 package org.uengine.codi.mw3.model;
 
-import org.metaworks.EventContext;
-import org.metaworks.Refresh;
-import org.metaworks.ServiceMethodContext;
-import org.metaworks.ToEvent;
+import org.metaworks.*;
 import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
@@ -64,6 +61,8 @@ public class EssenciaAllAppList extends SocialBPMAppList {
         popup.setAnimate(true);
 
         MetaworksRemoteService.wrapReturn(popup);
+
+        //MetaworksRemoteService.wrapReturn(new ToPrepend(new InstanceList(), benchmark));
     }
 
     @ServiceMethod(target= ServiceMethodContext.TARGET_APPEND)

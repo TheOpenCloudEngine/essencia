@@ -40,12 +40,15 @@ public class ExplorerPersonalPerspective extends PersonalPerspective {
         ListWindow listWindow = SNS.createInstanceListWindow(session);
         InstanceList instanceList = ((ListPanel)listWindow.getPanel()).getInstanceListPanel().getInstanceList();
 
+        ProjectsPanel projectsPanel = new ProjectsPanel();
+        projectsPanel.setPanel(listWindow.getPanel());
+
         if(instanceList.getMetaworksContext()==null)
             instanceList.setMetaworksContext(new MetaworksContext());
 
         instanceList.getMetaworksContext().setWhere("pinterest");
 
-        MetaworksRemoteService.wrapReturn(listWindow);
+        MetaworksRemoteService.wrapReturn(projectsPanel);
     }
 
     @ServiceMethod

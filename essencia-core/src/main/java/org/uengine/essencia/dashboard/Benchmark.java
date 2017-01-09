@@ -33,7 +33,7 @@ import java.util.Map;
 //@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class Benchmark {
 
-    private static final int DEFAULT_LOAD_INSTANCE_CNT = 0;
+   // private static final int DEFAULT_LOAD_INSTANCE_CNT = 0;
     static String[] colors = {
             "192, 57, 43",
             "41, 128, 185",
@@ -76,6 +76,15 @@ public class Benchmark {
             this.coverageTable = coverageTable;
         }
 
+    int defaultLoadingInstanceCount;
+        public int getDefaultLoadingInstanceCount() {
+            return defaultLoadingInstanceCount;
+        }
+        public void setDefaultLoadingInstanceCount(int defaultLoadingInstanceCount) {
+            this.defaultLoadingInstanceCount = defaultLoadingInstanceCount;
+        }
+
+
 
     @AutowiredFromClient
     public Session session;
@@ -106,24 +115,27 @@ public class Benchmark {
 
             //Load default
 
-            IInstance instances = Instance.load(navigation, 0, 50);
-            List instanceIdList = new ArrayList<String>();
+            if(getDefaultLoadingInstanceCount() > 0){
+                IInstance instances = Instance.load(navigation, 0, 50);
+                List instanceIdList = new ArrayList<String>();
 
-            while(instances.next()){
+                while(instances.next()){
 
-                if(instances.getDefVerId()!=null && instances.getDefVerId().endsWith(".method")){
-                    if(instanceIdList.size() < DEFAULT_LOAD_INSTANCE_CNT ) {
-                        instanceIdList.add(instances.getInstId().toString());
+                    if(instances.getDefVerId()!=null && instances.getDefVerId().endsWith(".method")){
+                        if(instanceIdList.size() < getDefaultLoadingInstanceCount() ) {
+                            instanceIdList.add(instances.getInstId().toString());
+                        }
+
+                        getTargetInstances().getOptionValues().add(instances.getInstId().toString());
+                        getTargetInstances().getOptionNames().add(instances.getName());
                     }
 
-                    getTargetInstances().getOptionValues().add(instances.getInstId().toString());
-                    getTargetInstances().getOptionNames().add(instances.getName());
                 }
 
+                instanceIds = new String[instanceIdList.size()];
+                instanceIdList.toArray(instanceIds);
             }
 
-            instanceIds = new String[instanceIdList.size()];
-            instanceIdList.toArray(instanceIds);
 
         }
 
