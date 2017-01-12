@@ -2,21 +2,16 @@ package org.uengine.essencia.enactment;
 
 import org.metaworks.ContextAware;
 import org.metaworks.MetaworksContext;
-import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.uengine.codi.mw3.model.CommentWorkItem;
-import org.uengine.codi.mw3.model.IWorkItem;
-import org.uengine.codi.mw3.model.Session;
-import org.uengine.codi.mw3.model.User;
+import org.uengine.codi.mw3.model.*;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.processmanager.ProcessManagerRemote;
 
-import javax.naming.Context;
 import java.util.Map;
 
 
@@ -102,8 +97,9 @@ public class AlphaInstanceInList implements ContextAware{
         }
 
         //set the comment part
-        {
-            CommentWorkItem newComment = new CommentWorkItem();
+        String commentInstanceId = (String) alphaInstanceInEditor.getLanguageElementInstance().getValueMap().get("__commentInstId");
+        if(commentInstanceId==null) {
+            CommentWorkItem newComment = new AlphaInstanceCommentWorkItem();
             User writer = new User();
             writer.copyFrom(session.getUser());
             writer.setMetaworksContext(new MetaworksContext());
@@ -112,6 +108,13 @@ public class AlphaInstanceInList implements ContextAware{
             newComment.setWriter(writer);
 
             alphaInstanceInEditor.setNewComment(newComment);
+        }else{
+
+            InstanceViewThreadPanel instanceViewThreadPanel = MetaworksRemoteService.getComponent(InstanceViewThreadPanel.class);
+            instanceViewThreadPanel.load(commentInstanceId);
+            instanceViewThreadPanel.getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
+            alphaInstanceInEditor.setInstanceViewThreadPanel(instanceViewThreadPanel);
+
         }
 
 

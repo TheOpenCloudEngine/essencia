@@ -9,10 +9,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.mw3.filter.OtherSessionFilter;
 import org.uengine.codi.mw3.model.IWorkItem;
+import org.uengine.codi.mw3.model.InstanceViewThreadPanel;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.BasicElement;
 import org.uengine.essencia.model.PracticeDefinition;
+import org.uengine.kernel.AwareProcessInstanceId;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.modeling.Relation;
@@ -29,7 +31,7 @@ import java.util.Map;
  * Created by jjy on 2015. 12. 23..
  */
 @Face(ejsPath="genericfaces/CleanObjectFace.ejs")
-public class AlphaInstanceInEditor extends AlphaInstanceInList{
+public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareProcessInstanceId {
 
     @Hidden
     @Available(when="NONE")
@@ -39,6 +41,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
     @Override
     @Hidden(on = false)
+    @Order(1)
     public LanguageElementInstance getLanguageElementInstance() {
         return super.getLanguageElementInstance();
     }
@@ -165,10 +168,27 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
 
     IWorkItem newComment;
+    @Order(30)
         public IWorkItem getNewComment() {
             return newComment;
         }
         public void setNewComment(IWorkItem newComment) {
             this.newComment = newComment;
         }
+
+    @Override
+    public String getProcessInstanceId() {
+        return getInstanceId();
+    }
+
+
+    InstanceViewThreadPanel instanceViewThreadPanel;
+        @Order(31)
+        public InstanceViewThreadPanel getInstanceViewThreadPanel() {
+            return instanceViewThreadPanel;
+        }
+        public void setInstanceViewThreadPanel(InstanceViewThreadPanel instanceViewThreadPanel) {
+            this.instanceViewThreadPanel = instanceViewThreadPanel;
+        }
+
 }
