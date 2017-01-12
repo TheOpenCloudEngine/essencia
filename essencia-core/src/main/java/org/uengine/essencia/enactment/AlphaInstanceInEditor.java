@@ -8,6 +8,7 @@ import org.metaworks.widget.ModalWindow;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.mw3.filter.OtherSessionFilter;
+import org.uengine.codi.mw3.model.IWorkItem;
 import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.BasicElement;
@@ -30,7 +31,6 @@ import java.util.Map;
 @Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class AlphaInstanceInEditor extends AlphaInstanceInList{
 
-    @Override
     @Hidden
     @Available(when="NONE")
     public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
@@ -163,4 +163,12 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList{
     }
 
 
+
+    IWorkItem newComment;
+        public IWorkItem getNewComment() {
+            return newComment;
+        }
+        public void setNewComment(IWorkItem newComment) {
+            this.newComment = newComment;
+        }
 }

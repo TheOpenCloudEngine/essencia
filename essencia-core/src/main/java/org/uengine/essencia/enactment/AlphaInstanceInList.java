@@ -7,6 +7,10 @@ import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.uengine.codi.mw3.model.CommentWorkItem;
+import org.uengine.codi.mw3.model.IWorkItem;
+import org.uengine.codi.mw3.model.Session;
+import org.uengine.codi.mw3.model.User;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.ProcessVariableValue;
 import org.uengine.kernel.VariablePointer;
@@ -74,7 +78,7 @@ public class AlphaInstanceInList implements ContextAware{
 
     @ServiceMethod(target=ServiceMethod.TARGET_POPUP, inContextMenu = true/*, mouseBinding = "double-click"*/)
     @Available(when=MetaworksContext.WHEN_EDIT)
-    public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer) throws Exception {
+    public void edit(@Payload("instanceId") String instanceId, @Payload("variablePointer") VariablePointer variablePointer, @AutowiredFromClient Session session) throws Exception {
 
         AlphaInstanceInEditor alphaInstanceInEditor = new AlphaInstanceInEditor();
         alphaInstanceInEditor.setInstanceId(instanceId);
@@ -96,6 +100,20 @@ public class AlphaInstanceInList implements ContextAware{
 
             alphaInstanceInEditor.getLanguageElementInstance().getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
         }
+
+        //set the comment part
+        {
+            CommentWorkItem newComment = new CommentWorkItem();
+            User writer = new User();
+            writer.copyFrom(session.getUser());
+            writer.setMetaworksContext(new MetaworksContext());
+
+            newComment.session = session;
+            newComment.setWriter(writer);
+
+            alphaInstanceInEditor.setNewComment(newComment);
+        }
+
 
 
         if(leInstance==null) throw new Exception("There's no alpha value. It maybe removed by other people. Please refresh your screen.");
