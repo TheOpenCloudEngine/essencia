@@ -3,16 +3,20 @@
 <script>
 
     function loadMetaworksObject(){
+        <%
+            String resourcePath = new String(org.uengine.util.Base64Util.decode(request.getParameter("resourcePath")), "UTF-8");
+        %>
 
-        var resourcePath = request.getParameter('resourcePath');
         var accessToken = request.getParameter('accessToken');
+        var userId = request.getParameter('userId');
 
         new MetaworksObject({
-            __className : "com.abc.portal.ABCStarter",
+            __className : "org.uengine.processadmin.ProcessAdminStarter",
             key : 'loader',
-            resourcePath: resourcePath,
+            resourcePath: "<%=resourcePath%>",
             accessToken: accessToken,
-            defaultLoadingResourcePath: resourcePath
+            userId: userId,
+            defaultLoadingResourcePath: "<%=resourcePath%>"
         }, 'body');
 
     }
