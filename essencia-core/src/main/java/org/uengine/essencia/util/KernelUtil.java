@@ -50,9 +50,10 @@ public final class KernelUtil {
         PracticeDefinition returnDefinition = null;
         try {
             if(kernel==null || DEFAULT_KERNEL.equals(kernel))
-                return this.practiceDefinition;//(PracticeDefinition) deepCopy(this.practiceDefinition);
+                //return this.practiceDefinition;//(PracticeDefinition) deepCopy(this.practiceDefinition);
+                return (PracticeDefinition) deepCopy(this.practiceDefinition); //TODO: if we don't copy the practice deeply, the elementView properties are removed
 
-            return (PracticeDefinition) Serializer.deserialize(Thread.currentThread().getContextClassLoader().getResourceAsStream("org/uengine/essencia/model/kernel/" + kernel + ".kernel"));
+            return (PracticeDefinition) Serializer.deserialize(Thread.currentThread().getContextClassLoader().getResourceAsStream("org/uengine/essencia/model/kernel/" + kernel + ".kernel"));//TODO: must be cached.
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
