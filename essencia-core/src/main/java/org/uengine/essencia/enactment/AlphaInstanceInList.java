@@ -31,8 +31,9 @@ public class AlphaInstanceInList implements ContextAware{
         setVariablePointer(new VariablePointer());
         getVariablePointer().setKey(objectInstance.getLanguageElement().getName());
         getVariablePointer().setIndex(index);
+        getVariablePointer().setExecutionScope(instance.getExecutionScopeContext()!=null ? instance.getExecutionScopeContext().getExecutionScope() : null);
 
-        setInstanceId(instance.getInstanceId());
+        setInstanceId(instance.getFullInstanceId());
 
     }
 

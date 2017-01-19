@@ -47,7 +47,7 @@ public class ActivityInstanceRunPanel implements ContextAware{
             IWorkItem workItem = WorkItem.findByTaskId(taskId);
             if(DefaultWorkList.WORKITEM_STATUS_NEW.equals(workItem.getStatus()) || DefaultWorkList.WORKITEM_STATUS_CONFIRMED.equals(workItem.getStatus())) {
                 WorkItem contentWorkItem = new WorkItem();
-                contentWorkItem.setTaskId(workItem.getTaskId());
+                contentWorkItem.copyFrom(workItem);
 
                 MetaworksRemoteService.autowire(contentWorkItem);
                 contentWorkItem.detail();
