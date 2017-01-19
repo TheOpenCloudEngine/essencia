@@ -58,7 +58,7 @@ public class ActivityInstanceRunPanel implements ContextAware{
         }
         //
 
-        ActivityCard activityCard = new ActivityCard();
+        ActivityCard activityCard = (ActivityCard) activity.createCardView();//new ActivityCard();
 
         setActivityCard(activityCard);
         setAssignee(new RoleUser());
