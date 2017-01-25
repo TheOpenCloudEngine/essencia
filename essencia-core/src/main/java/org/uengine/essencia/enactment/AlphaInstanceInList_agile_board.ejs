@@ -6,6 +6,7 @@
 
     if(!concernColor) concernColor = "#428bca"
 
+        var tilt = Math.random() * 30 - 1.5;
 
        %>
 
@@ -14,6 +15,8 @@
     overflow: hidden;
     float: left;
     height: 100px;
+        -ms-transform: rotate(<%=tilt%>deg); /* IE 9 */
+        -webkit-transform: rotate(<%=tilt%>deg); /* Chrome, Safari, Opera */
     max-width:100px;">
     <%=value.languageElementInstance.valueMap["Id"]%>
 </div>
