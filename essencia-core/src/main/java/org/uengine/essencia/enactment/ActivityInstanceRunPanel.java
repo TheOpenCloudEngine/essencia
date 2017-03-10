@@ -5,6 +5,7 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.model.SortableElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.mw3.model.IWorkItem;
 import org.uengine.codi.mw3.model.WorkItem;
@@ -13,18 +14,13 @@ import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.model.Criterion;
 import org.uengine.essencia.model.PracticeDefinition;
 import org.uengine.essencia.model.card.ActivityCard;
-import org.uengine.kernel.ExecutionScopeContext;
-import org.uengine.kernel.HumanActivity;
-import org.uengine.kernel.ProcessInstance;
-import org.uengine.kernel.VariablePointer;
-import org.uengine.kernel.handler.SubParamaterValueSelector;
+import org.uengine.kernel.*;
+import org.uengine.kernel.handler.SubParameterValueSelector;
 import org.uengine.processmanager.ProcessManagerRemote;
 import org.uengine.social.RoleUser;
 import org.uengine.util.ActivityFor;
 import org.uengine.webservices.worklist.DefaultWorkList;
 
-import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,15 +63,21 @@ public class ActivityInstanceRunPanel implements ContextAware{
         setFilled(true);
 
 
-        setSubParamaterValueSelectors(new ArrayList<SubParamaterValueSelector>());
+        setSubParameterValueSelectors(new ArrayList<SubParameterValueSelector>());
 
         if(activity.getEntryCriteria()!=null)
         for(Criterion criterion : activity.getEntryCriteria()){
-            SubParamaterValueSelector subParamaterValueSelector = new SubParamaterValueSelector();
-            MetaworksRemoteService.autowire(subParamaterValueSelector);
-            subParamaterValueSelector.load(instance, criterion.getElement().getName());
 
-            getSubParamaterValueSelectors().add(subParamaterValueSelector);
+            //selected alpha instance would not be showed for selection
+            if(!alphaInstance.getAlpha().getName().equals(criterion.getElement().getName())){
+
+                SubParameterValueSelector subParameterValueSelector = new SubParameterValueSelector();
+                MetaworksRemoteService.autowire(subParameterValueSelector);
+                subParameterValueSelector.load(instance, criterion.getElement().getName());
+
+                getSubParameterValueSelectors().add(subParameterValueSelector);
+
+            }
         }
     }
 
@@ -137,12 +139,12 @@ public class ActivityInstanceRunPanel implements ContextAware{
             this.activityName = activityName;
         }
 
-    List<SubParamaterValueSelector> subParamaterValueSelectors;
-        public List<SubParamaterValueSelector> getSubParamaterValueSelectors() {
-            return subParamaterValueSelectors;
+    List<SubParameterValueSelector> subParameterValueSelectors;
+        public List<SubParameterValueSelector> getSubParameterValueSelectors() {
+            return subParameterValueSelectors;
         }
-        public void setSubParamaterValueSelectors(List<SubParamaterValueSelector> subParamaterValueSelectors) {
-            this.subParamaterValueSelectors = subParamaterValueSelectors;
+        public void setSubParameterValueSelectors(List<SubParameterValueSelector> subParameterValueSelectors) {
+            this.subParameterValueSelectors = subParameterValueSelectors;
         }
 
 
@@ -176,11 +178,17 @@ public class ActivityInstanceRunPanel implements ContextAware{
         ExecutionScopeContext esc = instance.issueNewExecutionScope(bpmActivity, bpmActivity, (alphaInstance.getValueMap().get("Id")!=null ? alphaInstance.getValueMap().get("Id").toString() : "<No name>"));
         instance.setExecutionScopeContext(esc);
 
-        if(getSubParamaterValueSelectors()!=null)
-        for(SubParamaterValueSelector subParamaterValueSelector : getSubParamaterValueSelectors()){
-            MetaworksRemoteService.autowire(subParamaterValueSelector);
-            subParamaterValueSelector.setInstanceId(instance.getFullInstanceId());
-            subParamaterValueSelector.narrowValue();
+        //set the alphaInstance as sub process variable first
+
+        instance.set("", alphaInstanceInEditor.getVariablePointer().getKey(), alphaInstanceInEditor.getVariablePointer());
+
+        //set the selected input values as sub process variables.
+
+        if(getSubParameterValueSelectors()!=null)
+        for(SubParameterValueSelector subParameterValueSelector : getSubParameterValueSelectors()){
+            MetaworksRemoteService.autowire(subParameterValueSelector);
+            subParameterValueSelector.setInstanceId(instance.getFullInstanceId());
+            subParameterValueSelector.narrowValue();
         }
 
         instance.execute(bpmActivity.getTracingTag());
