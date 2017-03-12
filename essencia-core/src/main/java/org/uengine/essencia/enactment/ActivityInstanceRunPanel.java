@@ -22,6 +22,7 @@ import org.uengine.util.ActivityFor;
 import org.uengine.webservices.worklist.DefaultWorkList;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -191,6 +192,10 @@ public class ActivityInstanceRunPanel implements ContextAware{
             subParameterValueSelector.narrowValue();
         }
 
+        if(getAssignee()!=null)
+            instance.putRoleMapping(bpmActivity.getRole().getName(), getAssignee().getEndpoint()); //may be problematic
+
+        instance.setProperty("","__adhoc", true); // don't continue to execute the followed activities after.
         instance.execute(bpmActivity.getTracingTag());
 
         // link the task with the alphaInstance
@@ -198,6 +203,12 @@ public class ActivityInstanceRunPanel implements ContextAware{
         alphaInstance.getValueMap().put("__taskIdFor_" + getActivityName(), taskId );
         alphaInstanceInEditor.getVariablePointer().setValue(instance, alphaInstance);
         // end
+
+        if(getDueDate()!=null) {
+            Calendar dueDate = Calendar.getInstance();
+            dueDate.setTime(getDueDate());
+            bpmActivity.setDueDate(instance, dueDate);
+        }
 
         processManager.setChanged();
 
