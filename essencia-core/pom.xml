@@ -5,7 +5,7 @@
     <parent>
         <artifactId>essencia</artifactId>
         <groupId>org.uengine</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,9 +22,9 @@
         <cglib.version>2.2</cglib.version>
         <aspectj.version>1.7.4</aspectj.version>
 
-            <uengine.processcodi.version>1.1.1-SNAPSHOT</uengine.processcodi.version>
-            <uengine.metaworks3.version>1.2.1-SNAPSHOT</uengine.metaworks3.version>
-            <uengine.uengine-bpm.version>4.0.1-SNAPSHOT</uengine.uengine-bpm.version>
+            <uengine.processcodi.version>1.2.0-SNAPSHOT</uengine.processcodi.version>
+            <uengine.metaworks3.version>1.3.0-SNAPSHOT</uengine.metaworks3.version>
+            <uengine.uengine-bpm.version>4.1.0-SNAPSHOT</uengine.uengine-bpm.version>
 
 
     </properties>

@@ -24,8 +24,8 @@ public abstract class LanguageElementView extends ElementView {
         super(element);
     }
 
-    @AutowiredFromClient(payload = "id")
-    public Canvas canvas;
+//    @AutowiredFromClient(payload = "id")
+//    public Canvas canvas;
 
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_STICK)
     public Object showProperty() throws Exception {
