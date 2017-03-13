@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
+<application generated-by="intellij" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
-		<dir name="/java/essencia-github/essencia-portal/target/classes">
+		<dir name="/Users/jangjinyoung/essencia/essencia-portal/target/classes">
 		</dir>
 	</classpath>
 
 	<web>
 		<link target="/">
-			<dir name="/java/essencia-github/essencia-portal/src/main/webapp">
+			<dir name="/Users/jangjinyoung/essencia/essencia-portal/src/main/webapp">
 			</dir>
 		</link>
 	</web>

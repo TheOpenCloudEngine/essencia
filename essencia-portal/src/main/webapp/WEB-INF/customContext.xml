@@ -27,7 +27,7 @@
     <!-- ========================= FILEUPLOAD DEFINITION ========================= -->
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="${fileupload.max.size}"/>
+        <property name="maxUploadSize" value="1024"/>
         <property name="defaultEncoding" value="${fileupload.default.encoding}"/>
     </bean>
 
