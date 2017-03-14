@@ -33,7 +33,21 @@ public class ElementUtil {
 		}
 		return list;
 	}
-	
+
+	/**
+	 * List<ElementView> convert to List<IElement>
+	 * @param elementViewList
+	 * @return
+	 */
+	public static List<IElement> asElementList(List<ElementView> elementViewList){
+		List<IElement> list = new ArrayList<IElement>();
+		for(ElementView view : elementViewList){
+			list.add(view.getElement());
+		}
+		return list;
+	}
+
+
 	/**
 	 * List<Relation> conver to List<RelationView>
 	 * @param relationList

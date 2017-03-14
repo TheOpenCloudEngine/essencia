@@ -135,7 +135,7 @@
 
                     var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
                     var description = state.description;
-                    if(stateDetails["Due"])
+                    if(stateDetails && stateDetails["Due"])
                         description = description + "\n [ Due date: " +  stateDetails["Due"] + " ]";
                 %>
 
@@ -213,7 +213,7 @@
 
                         var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
                         var description = state.description;
-                        if(stateDetails["Due"])
+                        if(stateDetails && stateDetails["Due"])
                             description = description + "\n [ Due date: " +  stateDetails["Due"] + " ]";
 
                         if(alphaInstance.currentStateName == state.name || running){
@@ -306,7 +306,7 @@
 
                         var stateDetails = alphaInstance.stateDetailsByStateName[state.name];
                         var description = state.description;
-                        if(stateDetails["Due"])
+                        if(stateDetails && stateDetails["Due"])
                             description = description + "\n [ Due date: " +  stateDetails["Due"] + " ]";
 
 

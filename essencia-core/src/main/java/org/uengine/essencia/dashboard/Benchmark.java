@@ -150,6 +150,7 @@ public class Benchmark {
 
         List<String> gatheredAlphas = new ArrayList<String>();
         Map kernelLoaded = new HashMap<String, String>();
+        boolean essenceKernelEverLoaded = false;
         for(String instanceId : instanceIds){
 
             ProcessInstance instance = processManagerRemote.getProcessInstance(instanceId);
@@ -160,7 +161,8 @@ public class Benchmark {
 
             String baseKernelName = ((EssenceProcessDefinition) processDefinition).getPracticeDefinition().getBaseKernel();
 
-            if(kernelLoaded.containsKey(baseKernelName)) continue; //skip if the kernel is already gathered one with its alpha.
+
+            if(kernelLoaded.containsKey(baseKernelName) || ((baseKernelName==null || baseKernelName.startsWith("essence_")) && essenceKernelEverLoaded)) continue; //skip if the kernel is already gathered one with its alpha.
             kernelLoaded.put(baseKernelName, baseKernelName);
 
             PracticeDefinition theKernel = KernelUtil.getInstance().getPracticeDefinition(baseKernelName);
@@ -171,6 +173,9 @@ public class Benchmark {
                     gatheredAlphas.add(alpha.getName());
                 }
             }
+
+            if(baseKernelName==null || baseKernelName.startsWith("essence_")) essenceKernelEverLoaded = true;
+
         }
 
         //end of gathering alphas from different kernels
@@ -229,7 +234,7 @@ public class Benchmark {
 
         getChart().setPerspectives(new ArrayList<String>());
 
-        for(String label : alphas)
+        for(String label : gatheredAlphas)
             getChart().getPerspectives().add(label);
 
     }

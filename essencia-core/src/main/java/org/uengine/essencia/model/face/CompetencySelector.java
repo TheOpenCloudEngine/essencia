@@ -27,7 +27,7 @@ public class CompetencySelector extends SelectBox implements Face<Competency> {
         if(essenciaCanvas!=null)
         for (ElementView e : essenciaCanvas.getElementViewList()) {
             if (e instanceof CompetencyView) {
-                options.add(e.getLabel());
+                options.add(e.getElement().getName());
             }
         }
 

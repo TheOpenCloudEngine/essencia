@@ -25,22 +25,20 @@ public class EssenciaInstanceTooltip extends SocialBPMInstanceTooltip{
 
 
     @ServiceMethod(callByContent=true)//, target= ServiceMethodContext.TARGET_POPUP)
-    public ModalWindow showDashBoard() throws Exception{
+    public InstanceViewDetail showDashBoard() throws Exception{
 
         ProcessInstance instance = processManager.getProcessInstance(""+getInstanceId());
 
         if(!(instance.getProcessDefinition() instanceof EssenceProcessDefinition))
             throw new RuntimeException("This instance is not an EssenceProcessDefinition's instance");
 
-        ModalWindow modal = new ModalWindow(new GameBoard(instance, false), 900, 700);
+        //ModalWindow modal = new ModalWindow(new GameBoard(instance, false), 900, 700);
 
-        modal.setTitle("Alpha Dashboard");
+        //modal.setTitle("Alpha Dashboard");
 
-        //Gam application = new Application();
+        //MetaworksRemoteService.wrapReturn(modal.getPanel());
 
-        MetaworksRemoteService.wrapReturn(modal.getPanel());
-
-        return modal;
+        return new GameBoard(instance, false);
     }
 
     @ServiceMethod(callByContent=true, target= ServiceMethodContext.TARGET_POPUP)

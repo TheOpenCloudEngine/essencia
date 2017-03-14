@@ -61,7 +61,7 @@ public class ActivityView extends LanguageElementView {
     }
 
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_STICK)
-    public Object showProperty(@AutowiredFromClient(payload = {"id", "elementViewList[true].element.name"})
+    public Object showProperty(@AutowiredFromClient(payload = {"id", "elementViewList[true].element.name"/*, "elementViewList[true].label" --> TODO: enable after fixing : https://github.com/TheOpenCloudEngine/metaworks/issues/5 */})
                                    Canvas canvas
     ) throws Exception {
 
@@ -104,7 +104,7 @@ public class ActivityView extends LanguageElementView {
 
 //        return super.showProperty();
 
-        ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.convertToElementList(list));
+        ActivitySpaceAndActivityPropertyPanel panel = new ActivitySpaceAndActivityPropertyPanel(this, ElementUtil.asElementList(list));
         ContextUtil.setHow(panel, "dynamicSize");
         return new ModalWindow(panel, 900, 800, "Essencia Element Properties Editor [ " + getLabel() + "]");
     }

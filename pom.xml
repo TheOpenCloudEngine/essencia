@@ -12,7 +12,6 @@
         <module>essencia-jira</module>
         <module>essencia-portal</module>
         <module>essencia-marketplace</module>
-    <module>vaadin-app</module>
   </modules>
 
     <properties>
