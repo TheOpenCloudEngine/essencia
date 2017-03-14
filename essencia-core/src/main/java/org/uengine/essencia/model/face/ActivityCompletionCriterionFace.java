@@ -51,7 +51,13 @@ public class ActivityCompletionCriterionFace extends CriterionFace {
     public void fillElements(List<? extends LanguageElement> list) {
         for (int i = 0; i < list.size(); i++) {
             add();
-            getAbstractSelectBoxFaceList().get(i).getMainSelectBox().setSelected(((Criterion) list.get(i)).getState().getParentAlpha().getName());
+
+            State state = ((Criterion) list.get(i)).getState();
+            Alpha alpha = state.getParentAlpha();
+
+            if(alpha==null) throw new RuntimeException("There's no alpha of the state [" + state.getName() + "]");
+            String selected = alpha.getName();
+            getAbstractSelectBoxFaceList().get(i).getMainSelectBox().setSelected(selected);
             ((CriterionSelectBoxFace) getAbstractSelectBoxFaceList().get(i)).setSubSelectBox(new EssenciaSelectBox());
 
             for (LanguageElement e : list) {

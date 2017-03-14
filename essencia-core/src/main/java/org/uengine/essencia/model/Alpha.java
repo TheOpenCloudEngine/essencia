@@ -204,7 +204,7 @@ public class Alpha extends BasicElement implements Concernable, ContextTransform
 
         if(getStates()!=null)
         for(State state : getStates()){
-            if(stateName.equals(state.getName())){
+            if(stateName.trim().equals(state.getName().trim())){
                 return state;
             }
         }

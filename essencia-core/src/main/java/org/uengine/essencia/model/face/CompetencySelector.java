@@ -31,6 +31,11 @@ public class CompetencySelector extends SelectBox implements Face<Competency> {
             }
         }
 
+        if(options==null || options.size()==0 && value!=null){
+            options = new ArrayList<String>();
+            options.add(value.getName());
+        }
+
         setOptionNames(options);
         setOptionValues(options);
 

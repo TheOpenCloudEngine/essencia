@@ -1,5 +1,6 @@
 package org.uengine.essencia.util;
 
+import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.*;
 import org.uengine.essencia.model.view.KernelLanguageViewable;
 import org.uengine.essencia.modeling.EssenciaKernelSymbol;
@@ -53,7 +54,13 @@ public final class KernelUtil {
                 //return this.practiceDefinition;//(PracticeDefinition) deepCopy(this.practiceDefinition);
                 return (PracticeDefinition) deepCopy(this.practiceDefinition); //TODO: if we don't copy the practice deeply, the elementView properties are removed
 
-            return (PracticeDefinition) Serializer.deserialize(Thread.currentThread().getContextClassLoader().getResourceAsStream("org/uengine/essencia/model/kernel/" + kernel + ".kernel"));//TODO: must be cached.
+            Object practiceOrProcess =  Serializer.deserialize(Thread.currentThread().getContextClassLoader().getResourceAsStream("org/uengine/essencia/model/kernel/" + kernel + ".kernel"));//TODO: must be cached.
+
+            if(practiceOrProcess instanceof EssenceProcessDefinition)
+                return ((EssenceProcessDefinition) practiceOrProcess).getPracticeDefinition();
+            else
+                return (PracticeDefinition) practiceOrProcess;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -904,12 +904,20 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
             if(activityInPracticeDefinition.getEntryCriteria()!=null)
             for(EntryCriterion criterion : activityInPracticeDefinition.getEntryCriteria()){
-                refreshActivityCriteria(criterion);
+                try {
+                    refreshActivityCriteria(criterion);
+                }catch (Exception e){
+                    throw new RuntimeException("Error when to define the entry criterion of activity ["+ activityInPracticeDefinition.getName() + "] because " + e.getMessage());
+                }
             }
 
             if(activityInPracticeDefinition.getCompletionCriteria()!=null)
             for(CompletionCriterion criterion : activityInPracticeDefinition.getCompletionCriteria()){
-                refreshActivityCriteria(criterion);
+                try{
+                    refreshActivityCriteria(criterion);
+                }catch (Exception e){
+                    throw new RuntimeException("Error when to define the completion criterion of activity ["+ activityInPracticeDefinition.getName() + "] because " + e.getMessage());
+                }
             }
         }
 
@@ -925,12 +933,24 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
     private void refreshActivityCriteria(Criterion criterion) {
         if(criterion.getState()!=null && criterion.getState().getParentAlpha()!=null) {
             Alpha realAlpha = getElement(criterion.getState().getParentAlpha().getName(), Alpha.class);
-            criterion.getState().setParentAlpha(realAlpha);
+            State realState = realAlpha.findState(criterion.getState().getName());
+
+            if(realState==null){
+                throw new RuntimeException("There's no state named [" + criterion.getState().getName() + "]"); //TODO: must be moved to some log file and messages must be presented to users.
+                //criterion.setState(null);
+            }
+            else {
+                realState.setParentAlpha(realAlpha);
+                criterion.setState(realState);
+            }
         }
 
         if(criterion.getLevelOfDetail()!=null){
             WorkProduct realWorkProduct = getElement(criterion.getLevelOfDetail().getParentWorkProduct().getName(), WorkProduct.class);
-            criterion.getLevelOfDetail().setParentWorkProduct(realWorkProduct);
+            LevelOfDetail realLevelOfDetail = realWorkProduct.findLevelOfDetail(criterion.getLevelOfDetail().getName());
+            realLevelOfDetail.setParentAlpha(realWorkProduct);
+
+            criterion.setLevelOfDetail(realLevelOfDetail);
         }
     }
 

@@ -61,6 +61,8 @@ public class EssenciaPalette extends CompositePalette {
         List<IElement> elementList = practice.getElementList();
 
         for (IElement element : elementList) {
+            if(!(element.getElementView() instanceof KernelLanguageViewable)) continue;
+
             view = (KernelLanguageViewable) element.getElementView();
 
             symbol = view.createKernelSymbol();

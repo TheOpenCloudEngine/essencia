@@ -19,6 +19,7 @@ import org.uengine.essencia.model.face.*;
 import org.uengine.essencia.model.face.list.ActionListFace;
 import org.uengine.essencia.model.face.list.ApproachListFace;
 import org.uengine.essencia.util.ContextUtil;
+import org.uengine.essencia.util.ElementUtil;
 import org.uengine.modeling.IElement;
 import org.uengine.modeling.resource.editor.MethodEditor;
 
@@ -168,6 +169,9 @@ public class Activity extends AbstractActivity {
     @ServiceMethod(callByContent = true)
     public void amendFromKernel(@Payload("name") String name, /*@AutowiredFromClient Activity activity, */@AutowiredFromClient MethodEditor methodEditor){
 
+
+        List elementList = ElementUtil.asElementList(methodEditor.getCanvas().getElementViewList());
+
         PracticeDefinition practiceDefinition = methodEditor.createPracticeDefinition();
         practiceDefinition.arrangeRelations();
 
@@ -179,6 +183,9 @@ public class Activity extends AbstractActivity {
             if(kernel.getCompetency()!=null)
                 setCompetency(kernel.getCompetency());
 
+            if(kernel.getConcern()!=null)
+                setConcern(kernel.getConcern());
+
             setDescription(kernel.getDescription());
             setBriefDescription(kernel.getBriefDescription());
 
@@ -187,9 +194,10 @@ public class Activity extends AbstractActivity {
 
         }
 
+        setUpElement(elementList);
 
 
-        MetaworksRemoteService.wrapReturn(new Refresh(this));
+        MetaworksRemoteService.wrapReturn(this);//new Refresh(this));
 
     }
 
@@ -250,7 +258,11 @@ public class Activity extends AbstractActivity {
                     levelOfDetailCriteria.add(l);
                 }
             }
-            getCompletionCriterionFace().fillElements(stateCriteria);
+            try {
+                getCompletionCriterionFace().fillElements(stateCriteria);
+            }catch (Exception e){
+                e.printStackTrace(); //TODO: should present this messages to the user (success with warning)
+            }
             getWorkProductFace().fillElements(levelOfDetailCriteria);
             getCompletionCriteria().clear();
         }
@@ -411,4 +423,6 @@ public class Activity extends AbstractActivity {
 
         return set;
     }
+
+
 }
