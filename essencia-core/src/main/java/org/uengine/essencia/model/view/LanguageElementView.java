@@ -28,7 +28,7 @@ public abstract class LanguageElementView extends ElementView {
 //    public Canvas canvas;
 
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_STICK)
-    public Object showProperty() throws Exception {
+    public Object showProperty(@AutowiredFromClient(payload = "id") Canvas canvas) throws Exception {
 
         if(elementViewActionDelegate!=null){
             MetaworksRemoteService.autowire(elementViewActionDelegate);
