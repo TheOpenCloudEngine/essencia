@@ -170,8 +170,10 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
         EssenceProcessDefinition returnProcessDefinition = existingProcessDefinition;
 
-        if(returnProcessDefinition==null)
+        if(returnProcessDefinition==null) {
             returnProcessDefinition = new EssenceProcessDefinition();
+            returnProcessDefinition.setRunAllStartableActivities(false);
+        }
 
         ((EssenceProcessDefinition) returnProcessDefinition).setPracticeDefinition(this);
 
@@ -227,6 +229,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             Competency competency = getElement(activityInPracticeDefinition.getCompetency().getName(), Competency.class);
 
             if(competency==null) continue;
+            if(activityInPracticeDefinition instanceof ActivitySpace) continue;
 
             //finding role from the existing process definition first.
             if(returnProcessDefinition.getRoles()!=null)

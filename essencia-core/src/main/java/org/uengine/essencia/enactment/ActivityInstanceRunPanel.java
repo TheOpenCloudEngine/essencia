@@ -173,6 +173,8 @@ public class ActivityInstanceRunPanel implements ContextAware{
         findBPMActivity.run(essenceProcessDefinition);
         HumanActivity bpmActivity = (HumanActivity) findBPMActivity.getReturnValue();
 
+        if(bpmActivity==null) throw new Exception("Could'nt find the defined actionable BPM activity for the Essence Activity named [" + getActivityName() + "]");
+
         ExecutionScopeContext oldEsc = instance.getExecutionScopeContext();
         AlphaInstance alphaInstance = (AlphaInstance) alphaInstanceInEditor.getVariablePointer().getValue(instance);
 
