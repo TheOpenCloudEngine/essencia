@@ -1,7 +1,7 @@
 # Introducing Essencia
 
 - [Introduction Slide](https://www.slideshare.net/pongsor/essencia-2017)
-- [Online Service](www.essencia.live)
+- [Online Service](http://www.essencia.live)
 
 
 # Installing Essencia
