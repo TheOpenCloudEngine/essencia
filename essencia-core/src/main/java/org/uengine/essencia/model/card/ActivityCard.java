@@ -86,7 +86,7 @@ public class ActivityCard extends BasicCard {
                 getView().setElement(criterion.getState().getParentAlpha());
                 getView().setId(String.valueOf(trcTag++));
 
-                ((BasicElement) getView().getElement()).setName(criterion.getState().getParentAlpha().getName());// + "(" + criterion.getState().getName()+ ")");
+                getView().setLabel(criterion.getState().getParentAlpha().getName());// + "(" + criterion.getState().getName()+ ")");
 
                 getCanvas().getElementViewList().add(getView());
                 elementIndex++;
@@ -184,7 +184,7 @@ public class ActivityCard extends BasicCard {
 
                 setSymbol(getView().createSymbol());
 
-                ((BasicElement) getView().getElement()).setName(theElementForCriteria.getName() + "("
+                getView().setLabel(theElementForCriteria.getName() + "("
                         + (theElementForCriteria instanceof Alpha ? criterion.getState().getName() : criterion.getLevelOfDetail().getName()) //TODO: must be criterion.getLevelElement()
                         + ")");
                 getView().fill(getSymbol());
