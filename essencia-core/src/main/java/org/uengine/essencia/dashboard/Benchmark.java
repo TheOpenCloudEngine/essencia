@@ -153,28 +153,33 @@ public class Benchmark {
         boolean essenceKernelEverLoaded = false;
         for(String instanceId : instanceIds){
 
-            ProcessInstance instance = processManagerRemote.getProcessInstance(instanceId);
+            try {
+                ProcessInstance instance = processManagerRemote.getProcessInstance(instanceId);
 
-            org.uengine.kernel.ProcessDefinition processDefinition = instance.getProcessDefinition();
+                org.uengine.kernel.ProcessDefinition processDefinition = instance.getProcessDefinition();
 
-            if(!(processDefinition instanceof EssenceProcessDefinition)) continue;
+                if(!(processDefinition instanceof EssenceProcessDefinition)) continue;
 
-            String baseKernelName = ((EssenceProcessDefinition) processDefinition).getPracticeDefinition().getBaseKernel();
+                String baseKernelName = ((EssenceProcessDefinition) processDefinition).getPracticeDefinition().getBaseKernel();
 
 
-            if(kernelLoaded.containsKey(baseKernelName) || ((baseKernelName==null || baseKernelName.startsWith("essence_")) && essenceKernelEverLoaded)) continue; //skip if the kernel is already gathered one with its alpha.
-            kernelLoaded.put(baseKernelName, baseKernelName);
+                if(kernelLoaded.containsKey(baseKernelName) || ((baseKernelName==null || baseKernelName.startsWith("essence_")) && essenceKernelEverLoaded)) continue; //skip if the kernel is already gathered one with its alpha.
+                kernelLoaded.put(baseKernelName, baseKernelName);
 
-            PracticeDefinition theKernel = KernelUtil.getInstance().getPracticeDefinition(baseKernelName);
-            List<Alpha> kernelAlphas = theKernel.getElements(Alpha.class);
+                PracticeDefinition theKernel = KernelUtil.getInstance().getPracticeDefinition(baseKernelName);
+                List<Alpha> kernelAlphas = theKernel.getElements(Alpha.class);
 
-            for(Alpha alpha : kernelAlphas){
-                if(!gatheredAlphas.contains(alpha.getName())){
-                    gatheredAlphas.add(alpha.getName());
+                for(Alpha alpha : kernelAlphas){
+                    if(!gatheredAlphas.contains(alpha.getName())){
+                        gatheredAlphas.add(alpha.getName());
+                    }
                 }
-            }
 
-            if(baseKernelName==null || baseKernelName.startsWith("essence_")) essenceKernelEverLoaded = true;
+                if(baseKernelName==null || baseKernelName.startsWith("essence_")) essenceKernelEverLoaded = true;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
         }
 
@@ -186,7 +191,15 @@ public class Benchmark {
 
             ProcessInstance instance = processManagerRemote.getProcessInstance(instanceId);
 
-            org.uengine.kernel.ProcessDefinition processDefinition = instance.getProcessDefinition();
+            org.uengine.kernel.ProcessDefinition processDefinition = null;
+
+            try {
+                processDefinition = instance.getProcessDefinition();
+            }catch (Exception e){
+
+
+                continue; //if there's no definition file, skip the instance
+            }
 
             if(!(processDefinition instanceof EssenceProcessDefinition)) continue;
 
