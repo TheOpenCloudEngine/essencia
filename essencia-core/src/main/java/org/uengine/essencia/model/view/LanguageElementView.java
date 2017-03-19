@@ -5,6 +5,7 @@ import org.metaworks.MetaworksContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.designer.EssenciaPropertyPanel;
@@ -29,6 +30,8 @@ public abstract class LanguageElementView extends ElementView {
 
     @ServiceMethod(callByContent = true, eventBinding = EventContext.EVENT_DBLCLICK, target = ServiceMethodContext.TARGET_STICK)
     public Object showProperty(@AutowiredFromClient(payload = "id") Canvas canvas) throws Exception {
+
+        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(true);
 
         if(elementViewActionDelegate!=null){
             MetaworksRemoteService.autowire(elementViewActionDelegate);

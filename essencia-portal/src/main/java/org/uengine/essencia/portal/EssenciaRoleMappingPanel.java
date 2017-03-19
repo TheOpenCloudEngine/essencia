@@ -2,12 +2,14 @@ package org.uengine.essencia.portal;
 
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.uengine.codi.mw3.model.RoleMappingPanel;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.Practice;
+import org.uengine.essencia.modeling.canvas.MethodCanvas;
 import org.uengine.essencia.modeling.modeler.MethodComposer;
 import org.uengine.kernel.ProcessDefinition;
 import org.uengine.modeling.modeler.ProcessCanvas;
@@ -97,6 +99,8 @@ public class EssenciaRoleMappingPanel extends RoleMappingPanel{
             setPracticeName(essenceProcessDefinition.getName());
             setPracticeBriefDescription(essenceProcessDefinition.getShortDescription());
         }
+
+        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
     }
 
     @Override

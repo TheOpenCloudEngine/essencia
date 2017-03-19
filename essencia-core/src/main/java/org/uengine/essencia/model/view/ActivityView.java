@@ -7,6 +7,7 @@ import org.metaworks.EventContext;
 import org.metaworks.ServiceMethodContext;
 import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.uengine.essencia.designer.ActivitySpaceAndActivityPropertyPanel;
@@ -64,6 +65,8 @@ public class ActivityView extends LanguageElementView {
     public Object showProperty(@AutowiredFromClient(payload = {"id", "elementViewList[true].element.name"/*, "elementViewList[true].label" --> TODO: enable after fixing : https://github.com/TheOpenCloudEngine/metaworks/issues/5 */})
                                    Canvas canvas
     ) throws Exception {
+
+        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(true);
 
         //TODO: the below logics must be moved to EssenciaPropertyPopup and remove  class - ActivitySpaceAndActivityPropertyPanel
         if(elementViewActionDelegate!=null && !(elementViewActionDelegate instanceof EssenciaDefaultElementViewActionDelegate)){

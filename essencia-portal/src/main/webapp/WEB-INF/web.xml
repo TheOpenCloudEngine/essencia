@@ -60,7 +60,7 @@
         </init-param>
         <init-param>
             <param-name>accessLogLevel</param-name>
-            <param-value>runtimeexception</param-value>
+            <param-value>ERROR</param-value>
         </init-param>
         <init-param>
             <param-name>debug</param-name>
