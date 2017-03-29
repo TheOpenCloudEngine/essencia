@@ -68,6 +68,12 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.2.0.Final</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.uengine</groupId>
+            <artifactId>uengine-persistence-couchbase</artifactId>
+            <version>${uengine.uengine-bpm.version}</version>
+        </dependency>
         <!-- ====== -->
         <!--  JSON  -->
         <!-- ====== -->

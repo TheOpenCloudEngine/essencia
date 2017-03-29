@@ -4,6 +4,7 @@ import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.Instance;
 import org.metaworks.MetaworksContext;
 import org.metaworks.annotation.*;
+import org.metaworks.dao.TransactionAdvice;
 import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.uengine.essencia.model.Alpha;
@@ -169,6 +170,8 @@ public class AlphaGameBoard extends MetaworksContext {
     @Available(when="edit")
     public AlphaGameBoard addAlphaInstance(@Payload("instanceId") String instanceId, @Payload("alpha") Alpha alpha) throws Exception {
 
+        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
+
         //TODO: [tunning] find why there is no proper className firstly
         if(alpha.getFieldDescriptors()==null){
             LanguageElementInstance alphaInstance = alpha.createObjectInstance();
@@ -178,7 +181,7 @@ public class AlphaGameBoard extends MetaworksContext {
 
             alphaInstance.setClassName("codi/" + instance.getProcessDefinition().getId() + "#" + alphaInstance.getClassDefinition().getName());
 
-            alphaInstance.fillClassDefinition(alphaInstance.getClassName());
+            alphaInstance.fillClassDefinition(alphaInstance.getClassName());  ////
             alpha = (Alpha) alphaInstance.getLanguageElement();
         }
 
@@ -190,7 +193,7 @@ public class AlphaGameBoard extends MetaworksContext {
 
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
 
-        ProcessVariableValue processVariableValue = instance.getMultiple("", alpha.getName());
+        ProcessVariableValue processVariableValue = instance.getMultiple("", alpha.getName());  //
 
         if(processVariableValue==null){
             processVariableValue = new ProcessVariableValue();
@@ -201,12 +204,12 @@ public class AlphaGameBoard extends MetaworksContext {
 
         instance.set("",  processVariableValue);
 
-        processManagerRemote.applyChanges();
+        processManagerRemote.applyChanges(); ///
 
 
         EssenceProcessDefinition essenceProcessDefinition = (EssenceProcessDefinition) instance.getProcessDefinition();
         PracticeDefinition practiceDefinition = essenceProcessDefinition.getPracticeDefinition();
-        GameBoard gameBoard = new GameBoard(instance, true);
+        GameBoard gameBoard = new GameBoard(instance, true);  //
 
         AlphaGameBoard alphaGameBoard = new AlphaGameBoard(getInstanceId(), (Alpha) practiceDefinition.getElementByName(alpha.getName()), gameBoard.getAlphaInstancesMap());
         alphaGameBoard.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);

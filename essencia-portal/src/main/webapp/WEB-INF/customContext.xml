@@ -13,12 +13,24 @@
 
     <import resource="applicationContext.xml"/>
 
-    <bean id="storage" class="org.uengine.modeling.resource.LocalFileStorage">
-        <property name="localBasePath" value="${codebase}"/>
+    <bean id="storage" class="org.uengine.persistence.couchbase.CouchbaseStorage">
+        <property name="basePath" value="/"/>
+        <property name="bucketName" value="default"/>
+        <property name="serverIp" value="localhost"/>
     </bean>
+
+    <!--<bean id="storage" class="org.uengine.modeling.resource.LocalFileStorage">-->
+        <!--<property name="basePath" value="${codebase}"/>-->
+    <!--</bean>-->
+
+
+    <!--<bean class="org.uengine.modeling.resource.ResourceManager" scope="singleton">-->
+        <!--<property name="storage" ref="storage"/>-->
+    <!--</bean>-->
 
     <bean class="org.uengine.modeling.resource.CachedResourceManager" scope="singleton">
         <property name="storage" ref="storage"/>
+        <property name="perTransaction" value="true"/>
     </bean>
 
     <util:properties id="config" location="classpath:org/uengine/uengine.properties"/>
