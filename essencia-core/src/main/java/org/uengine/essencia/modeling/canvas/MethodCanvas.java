@@ -53,7 +53,13 @@ public class MethodCanvas extends EssenciaCanvas {
     }
 
     @Available(when = {MetaworksContext.WHEN_NEW, MetaworksContext.WHEN_EDIT})
-    @ServiceMethod(payload = {"symbolContent", "clipboard", "modelerType", "elementViewList", "relationViewList"}, target = ServiceMethodContext.TARGET_APPEND, eventBinding = CANVAS_DROP)
+    @ServiceMethod(
+            payload = {"symbolContent", "clipboard", "modelerType",
+                     "elementViewList[mw3.getAutowiredObject('org.metaworks.widget.Clipboard').content.__className.indexOf('MethodResource') > 0]",
+                    "relationViewList[mw3.getAutowiredObject('org.metaworks.widget.Clipboard').content.__className.indexOf('MethodResource') > 0]"},
+            target = ServiceMethodContext.TARGET_APPEND,
+            eventBinding = CANVAS_DROP
+    )
     @Override
     /**
      * Practice Merge
