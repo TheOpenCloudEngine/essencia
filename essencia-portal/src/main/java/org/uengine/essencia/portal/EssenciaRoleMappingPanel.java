@@ -1,6 +1,8 @@
 package org.uengine.essencia.portal;
 
+import org.metaworks.AllChildFacesAreIgnored;
 import org.metaworks.MetaworksContext;
+import org.metaworks.annotation.Face;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
@@ -58,6 +60,7 @@ public class EssenciaRoleMappingPanel extends RoleMappingPanel{
 
 
     MethodComposer methodView;
+    @Face(faceClass= AllChildFacesAreIgnored.class)
         public MethodComposer getMethodView() {
             return methodView;
         }
@@ -100,7 +103,7 @@ public class EssenciaRoleMappingPanel extends RoleMappingPanel{
             setPracticeBriefDescription(essenceProcessDefinition.getShortDescription());
         }
 
-        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
+        //TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
     }
 
     @Override
