@@ -91,15 +91,15 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
     }
 
 
-    @ServiceMethod(callByContent = true, /*onLoad = true,*/ inContextMenu = true, bindingFor = "this", eventBinding = "change", how="unloaded", target=ServiceMethod.TARGET_SELF)
+    @ServiceMethod(callByContent = true, onLoad = true, inContextMenu = true, bindingFor = "this", eventBinding = "change", how="unloaded", target=ServiceMethod.TARGET_SELF, clientSide = true)
     @Order(100)
     public void amendFromKernel(@AutowiredFromClient(payload = "canvas.elementViewList[element.name == value.parentAlphaName].element.states") MethodEditor methodEditor) {
 
-        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
-
-        this.methodEditor = methodEditor;
-
-        setValueToFace(getSelected());
+//        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
+//
+//        this.methodEditor = methodEditor;
+//
+//        setValueToFace(getSelected());
     }
 
 
