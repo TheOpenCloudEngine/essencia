@@ -200,6 +200,11 @@ public abstract class LanguageElement extends ClassDefinition implements Context
 		this.owner = owner;
 	}
 
+	@Hidden
+	public boolean isAlwaysSubmitted() {
+		return super.isAlwaysSubmitted();
+	}
+
 	public LanguageElement() {
 		setSuppressable(true);
 		this.name = new TextContext();

@@ -197,6 +197,9 @@
                     var nextOfCurrent = false;
                     var running = false;
                     var total = alphaInstance.subAlphaInstanceCount;
+                    if(alphaInstance.stateDetailsByStateName["no-state"] && alphaInstance.stateDetailsByStateName["no-state"]["WIPCount"]){
+                        total = total - alphaInstance.stateDetailsByStateName["no-state"]["WIPCount"];
+                    }
 
                     for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
                         var state = alphaGameBoard.alpha.states[j];
@@ -300,6 +303,9 @@
                     var running = false;
                     var beforeCurrent = alphaInstance.currentStateName;
                     var total = alphaInstance.subAlphaInstanceCount;
+                    if(alphaInstance.stateDetailsByStateName["no-state"] && alphaInstance.stateDetailsByStateName["no-state"]["WIPCount"]){
+                        total = total - alphaInstance.stateDetailsByStateName["no-state"]["WIPCount"];
+                    }
 
                     for(var j=0; j<alphaGameBoard.alpha.states.length; j++){
                         var state = alphaGameBoard.alpha.states[j];

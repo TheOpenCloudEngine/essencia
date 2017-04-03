@@ -7,6 +7,7 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.component.SelectBox;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.model.MetaworksElement;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -18,13 +19,24 @@ import java.util.ArrayList;
 /**
  * Created by jjy on 2016. 5. 28..
  */
-public class AggregationAlphaStateSelector extends SelectBox implements Face<String> {
+public class AggregationAlphaStateSelector extends SelectBox implements Face<String>, FieldFace<State> {
 
     @AutowiredFromClient
     public MethodEditor methodEditor;
 
-    @AutowiredFromClient
-    public Alpha alpha;
+//    @AutowiredFromClient
+//    public Alpha alpha;
+
+
+    String parentAlphaName;
+        public String getParentAlphaName() {
+            return parentAlphaName;
+        }
+        public void setParentAlphaName(String parentAlphaName) {
+            this.parentAlphaName = parentAlphaName;
+        }
+
+
 
     public AggregationAlphaStateSelector(){
         super();
@@ -39,9 +51,8 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
         // end of test
         setSelected(value);
 
-        if (alpha == null || methodEditor == null) {
+        if (/*alpha == null ||*/ methodEditor == null || methodEditor.getCanvas()==null || methodEditor.getCanvas().getElementViewList()==null || methodEditor.getCanvas().getElementViewList().size() < 2) {
             getOptionNames().add("Right-click & 'amend from kernel'");
-            //getOptionNames().add("reference from kernel");
             getMetaworksContext().setHow("unloaded");
             getOptionValues().add("");
 
@@ -51,24 +62,8 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
             return;
         }
 
-        PracticeDefinition practiceDefinition = methodEditor.createPracticeDefinition();
-        practiceDefinition.arrangeRelations();
-        alpha = (Alpha) practiceDefinition.getElementByName(alpha.getName());
 
-        if (alpha == null) return;
-        //throw new RuntimeException("Please apply once before amending states from the kernel and try it after opening the properties dialog again.");
-
-        if (!(alpha instanceof Alpha) || alpha.getIncomingRelations() == null || alpha.getIncomingRelations().size() == 0) {
-            return; //throw new RuntimeException("There is no parent alpha to amend state.");
-        }
-
-
-        if (!(alpha.getIncomingRelations().get(0).getSourceElement() instanceof Alpha)) {
-            return; //throw new RuntimeException("There is no parent alpha to amend state.");
-        }
-
-
-        Alpha kernel = (Alpha) alpha.getIncomingRelations().get(0).getSourceElement();
+        Alpha kernel = (Alpha) methodEditor.getCanvas().getElementViewList().get(0).getElement();
         if (kernel != null) {
 
             setOptionNames(new ArrayList<String>());
@@ -96,12 +91,20 @@ public class AggregationAlphaStateSelector extends SelectBox implements Face<Str
     }
 
 
-    @ServiceMethod(callByContent = true, onLoad = true, inContextMenu = true, bindingFor = "this", eventBinding = "change", how="unloaded", target=ServiceMethod.TARGET_SELF)
+    @ServiceMethod(callByContent = true, /*onLoad = true,*/ inContextMenu = true, bindingFor = "this", eventBinding = "change", how="unloaded", target=ServiceMethod.TARGET_SELF)
     @Order(100)
-    public void amendFromKernel(@AutowiredFromClient Alpha alpha, @AutowiredFromClient MethodEditor methodEditor) {
-        this.alpha = (alpha);
+    public void amendFromKernel(@AutowiredFromClient(payload = "canvas.elementViewList[element.name == value.parentAlphaName].element.states") MethodEditor methodEditor) {
+
+        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
+
         this.methodEditor = methodEditor;
 
         setValueToFace(getSelected());
+    }
+
+
+    @Override
+    public void visitHolderObjectOfField(State holderObject) {
+        setParentAlphaName(holderObject.getParentAlpha() !=null ? holderObject.getParentAlpha().getParentElementId() : null);
     }
 }

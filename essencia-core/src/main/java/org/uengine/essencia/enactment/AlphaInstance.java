@@ -294,8 +294,9 @@ public class AlphaInstance extends LanguageElementInstance implements IconViewab
 
                             //don't validate. sometimes there is nothing related between super and sub alpha
                             //getAlpha().findState(aggregationAlphaStateName);
-                            if (!UEngineUtil.isNotEmpty(aggregationAlphaStateName))
-                                continue;
+                            if (!UEngineUtil.isNotEmpty(aggregationAlphaStateName)){
+                                aggregationAlphaStateName = "no-state";
+                            }
 
                             subAlphaIsConnectedWithAggregation = true;
 

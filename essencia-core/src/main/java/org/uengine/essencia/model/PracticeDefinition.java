@@ -825,7 +825,6 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             }
         }
 
-
         for(IRelation relation : getRelationList()){
 
             String from = relation.getRelationView().getFrom();
@@ -841,6 +840,9 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
 
             BasicElement sourceElem = (BasicElement) elementMap.get(from);
             BasicElement targetElem = (BasicElement) elementMap.get(to);
+
+            //stitch String Link
+            targetElem.setParentElementId(sourceElem.getName());
 
             Relation _relation = (Relation) relation;
 
@@ -931,6 +933,16 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             }
 
         }
+
+        for(IRelation relation : getRelationList()){
+
+            BasicElement sourceElem = (BasicElement) relation.getSourceElement();
+            BasicElement targetElem = (BasicElement) relation.getTargetElement();
+
+            //stitch String Link
+            targetElem.setParentElementId(sourceElem.getName());
+        }
+
     }
 
     private void refreshActivityCriteria(Criterion criterion) {

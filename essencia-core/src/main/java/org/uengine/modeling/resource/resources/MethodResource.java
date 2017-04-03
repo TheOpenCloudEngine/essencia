@@ -7,6 +7,7 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Available;
 import org.metaworks.annotation.Hidden;
 import org.metaworks.annotation.ServiceMethod;
+import org.metaworks.dao.TransactionContext;
 import org.metaworks.widget.Clipboard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.uengine.codi.CodiProcessDefinitionFactory;
@@ -56,6 +57,9 @@ public class MethodResource extends DefaultResource {
 
     @Override
     public EditorPanel _newAndOpen(boolean isNew) throws Exception {
+
+        TransactionContext.getThreadLocalInstance().setMW3FaceOptionEnabled(false);
+
         EditorPanel editorPanel = super._newAndOpen(isNew);
 
         if (this.isJoin() && editorPanel instanceof ProcessAdminEditorPanel) {
