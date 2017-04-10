@@ -89,6 +89,7 @@ public class EssenciaRoleMappingPanel extends RoleMappingPanel{
 
         methodView.setModel(essenceProcessDefinition.getPracticeDefinition().shallowCopy());
         methodView.setElementViewActionDelegate(MetaworksRemoteService.getComponent(ElementViewActionDelegateForInstanceMonitoring.class));
+        methodView.getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
 
 
         List<Practice> practices = essenceProcessDefinition.getPracticeDefinition().getElements(Practice.class);

@@ -58,13 +58,6 @@ public class ElementViewActionDelegateForCardView extends ElementViewActionDeleg
             EssenceActivity essenceActivity = (EssenceActivity) ((ActivityView) elementView).getElement();
             ActivityCard activityCard = (ActivityCard) essenceActivity.getActivityInEssenceDefinition().createCardView();
 
-//            Popup popup = new Popup();
-//            popup.setPanel(activityCard);
-//            popup.setWidth(1000);
-//            popup.setHeight(600);
-//
-//            MetaworksRemoteService.wrapReturn(popup);
-
             MetaworksRemoteService.wrapReturn(new ModalWindow(activityCard, 800, 500, "Card View"));
 
         }else if(elementView instanceof StateView) {
@@ -74,22 +67,12 @@ public class ElementViewActionDelegateForCardView extends ElementViewActionDeleg
 
             MetaworksRemoteService.wrapReturn(new Refresh(stateDetail));
         }else if(elementView instanceof LanguageElementView) {
-            LanguageElementView languageElementView = (LanguageElementView) elementView;
-            BasicElement languageElement = (BasicElement) languageElementView.getElement();
+            BasicElement languageElement = (BasicElement) elementView.getElement();
             if(languageElement instanceof CardViewable){
-                languageElement.setElementView(languageElementView);
+//                languageElement.setElementView(languageElementView); //this effects to the memory cache
 
 
                 Card card = ((CardViewable) languageElement).createCardView();
-
-//                Popup popup = new Popup();
-//                popup.setPanel(card);
-//                popup.setWidth(1000);
-//                popup.setHeight(600);
-//                popup.setName("Card View");
-//                popup.setSticky(false);
-//                MetaworksRemoteService.wrapReturn(popup);
-
 
                 MetaworksRemoteService.wrapReturn(new ModalWindow(card, 800, 500, "Card View"));
 

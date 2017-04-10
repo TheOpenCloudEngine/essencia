@@ -842,7 +842,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             BasicElement targetElem = (BasicElement) elementMap.get(to);
 
             //stitch String Link
-            targetElem.setParentElementId(sourceElem.getName());
+            if(targetElem!=null && sourceElem!=null)
+                targetElem.setParentElementId(sourceElem.getName());
 
             Relation _relation = (Relation) relation;
 
@@ -940,7 +941,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             BasicElement targetElem = (BasicElement) relation.getTargetElement();
 
             //stitch String Link
-            targetElem.setParentElementId(sourceElem.getName());
+            if(targetElem!=null && sourceElem!=null)
+                targetElem.setParentElementId(sourceElem.getName());
         }
 
     }
