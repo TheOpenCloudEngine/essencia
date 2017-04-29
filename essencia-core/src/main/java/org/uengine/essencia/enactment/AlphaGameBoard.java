@@ -27,6 +27,15 @@ import java.util.Map;
 @Face(ejsPathMappingByContext = {"{how:'agile', face:'dwr/metaworks/org/uengine/essencia/enactment/AlphaGameBoard_agile_board.ejs'}"})
 public class AlphaGameBoard extends MetaworksContext {
 
+    boolean topLevel;
+        public boolean isTopLevel() {
+            return topLevel;
+        }
+        public void setTopLevel(boolean topLevel) {
+            this.topLevel = topLevel;
+        }
+
+
     public AlphaGameBoard(String instanceId, Alpha alpha, Map<String, List<AlphaInstanceInList>> alphaInstancesMap) {
         setAlpha(alpha);
         setAlphaInstancesMap(alphaInstancesMap);

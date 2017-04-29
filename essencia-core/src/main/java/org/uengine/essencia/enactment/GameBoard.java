@@ -165,6 +165,9 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
         }
 
         for(AlphaGameBoard alphaGameBoard : getAlphaGameBoards()){
+
+            alphaGameBoard.setTopLevel(true);
+
             String alphaName = alphaGameBoard.getAlpha().getName();
 
             switch (alphaName){

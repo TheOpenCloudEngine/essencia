@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       ">
+
+    <context:annotation-config/>
+    <bean id="targetStorage" class="org.uengine.persistence.couchbase.CouchbaseStorage">
+        <property name="basePath" value="/"/>
+        <property name="bucketName" value="default"/>
+        <property name="serverIp" value="ec2-54-215-214-244.us-west-1.compute.amazonaws.com"/>
+    </bean>
+
+    <bean id="sourceStorage" class="org.uengine.modeling.resource.LocalFileStorage">
+        <property name="basePath" value="/oce/repository/codebase"/>
+    </bean>
+
+
+    <bean id="sourceResourceManager" class="org.uengine.modeling.resource.ResourceManager" scope="singleton">
+        <property name="storage" ref="sourceStorage"/>
+    </bean>
+
+    <bean id="targetResourceManager" class="org.uengine.modeling.resource.ResourceManager" scope="singleton">
+        <property name="storage" ref="targetStorage"/>
+    </bean>
+
+    <bean class="org.uengine.modeling.resource.migrator.Migrator">
+        <property name="sourceResourceManager" ref="sourceResourceManager"/>
+        <property name="targetResourceManager" ref="targetResourceManager"/>
+    </bean>
+</beans>

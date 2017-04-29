@@ -41,7 +41,7 @@ org_uengine_essencia_model_face_AggregationAlphaStateSelector.prototype = {
             stateNames.push(fromAlphaView.element.states[idx].name);
         }
 
-        console.log(stateNames);
+       // console.log(stateNames);
 
         var object = mw3.objects[this.objectId];
         object.optionNames = stateNames;

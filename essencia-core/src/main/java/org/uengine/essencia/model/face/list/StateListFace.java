@@ -5,6 +5,7 @@ import org.metaworks.annotation.AutowiredFromClient;
 import org.metaworks.annotation.Order;
 import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.model.MetaworksElement;
+import org.metaworks.model.SortableElement;
 import org.uengine.essencia.enactment.EssenceProcessDefinition;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.EssenciaElement;
@@ -15,7 +16,7 @@ import org.uengine.modeling.resource.editor.MethodEditor;
 
 import java.util.ArrayList;
 
-public class StateListFace extends org.metaworks.widget.ListFace<State> {
+public class StateListFace extends org.metaworks.widget.SortableListFace<State> {
 
 
     @ServiceMethod(callByContent = true)
@@ -43,11 +44,11 @@ public class StateListFace extends org.metaworks.widget.ListFace<State> {
         Alpha kernel = (Alpha) alpha.getIncomingRelations().get(0).getSourceElement();
         if(kernel!=null){
 
-            setElements(new ArrayList<MetaworksElement>());
+            setElements(new ArrayList<SortableElement>());
 
 
             for(State state : kernel.getStates()){
-                MetaworksElement essenciaElement = new MetaworksElement();
+                SortableElement essenciaElement = new SortableElement();
                 essenciaElement.setValue(state);
                 essenciaElement.setMetaworksContext(new MetaworksContext());
                 essenciaElement.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
