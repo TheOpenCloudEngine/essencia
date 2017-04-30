@@ -88,6 +88,11 @@ public class EssenciaPropertyPanel implements ContextAware {
         }
         getElementView().setElement(getElement());
 
+        if(getElementView().getMetaworksContext()==null)
+            getElementView().setMetaworksContext(new MetaworksContext());
+
+        getElementView().getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
+
         return new Object[]{new ToEvent(ServiceMethodContext.TARGET_SELF, EventContext.EVENT_CLOSE), new Refresh(getElementView(), true)};
     }
 
