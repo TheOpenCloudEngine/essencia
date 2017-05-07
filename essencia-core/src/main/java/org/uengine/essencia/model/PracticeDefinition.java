@@ -226,6 +226,8 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
             ElementView humanView = null;
 
             Activity activityInPracticeDefinition = (Activity) element;
+
+            if(activityInPracticeDefinition.getCompetency()==null) continue; // ignore the activity spaces or the activities which is not set its competency.
             Competency competency = getElement(activityInPracticeDefinition.getCompetency().getName(), Competency.class);
 
             if(competency==null) continue;
