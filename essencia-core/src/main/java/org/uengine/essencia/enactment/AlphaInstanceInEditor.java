@@ -7,22 +7,17 @@ import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.widget.ModalWindow;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.uengine.codi.mw3.filter.OtherSessionFilter;
 import org.uengine.codi.mw3.model.IWorkItem;
 import org.uengine.codi.mw3.model.InstanceViewThreadPanel;
 import org.uengine.codi.mw3.model.Session;
-import org.uengine.essencia.model.Alpha;
-import org.uengine.essencia.model.BasicElement;
-import org.uengine.essencia.model.PracticeDefinition;
+import org.uengine.essencia.model.*;
 import org.uengine.kernel.AwareProcessInstanceId;
 import org.uengine.kernel.ProcessInstance;
 import org.uengine.kernel.VariablePointer;
 import org.uengine.modeling.Relation;
 import org.uengine.processmanager.ProcessManagerRemote;
-import org.uengine.uml.model.Attribute;
 import org.uengine.uml.model.ClassDefinition;
 
-import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +67,10 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
             alphaInstance.fillStates();
             alphaInstance.calculateState(instance);
         }
+
+        AlphaInstance beforeAlphaInstance = (AlphaInstance) variablePointer.getValue(instance);
+
+        signalBeforeAfter(beforeAlphaInstance, (AlphaInstance) getLanguageElementInstance(), instance);
 
         variablePointer.setValue(instance, getLanguageElementInstance());
 
@@ -156,6 +155,55 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
 //            MetaworksRemoteService.pushClientObjectsFiltered(
 //                    new OtherSessionFilter(pushUserMap, session.getUser().getUserId().toUpperCase()),
 //                    new Object[]{new Refresh(alphaInstanceInList)});
+        }
+    }
+
+    private void signalBeforeAfter(AlphaInstance beforeAlphaInstance, AlphaInstance afterAlphaInstance, ProcessInstance instance) {
+        beforeAlphaInstance.aggregateStateDetails(instance);
+        State beforeState = beforeAlphaInstance.getCurrentState();
+        State afterState = afterAlphaInstance.getCurrentState();
+
+
+        int indexOfBeforeState = beforeAlphaInstance.getAlpha().getStates().indexOf(beforeState);
+        int indexOfAfterState = afterAlphaInstance.getAlpha().getStates().indexOf(afterState);
+
+        int proceed = (indexOfAfterState - indexOfBeforeState);
+
+        String json = "{proceed: " + proceed
+                +", beforeState: '" + (beforeState!=null ? beforeState.getName() : "none") + "', afterState: '" + (afterState != null ? afterState.getName() : "none") + "'"
+                +", changedCheckpoints: [";
+
+
+        for(State state : beforeAlphaInstance.getAlpha().getStates()){ //for all states
+            for(CheckPoint checkpoint: state.getCheckPoints()){
+
+                boolean beforeChecked = beforeAlphaInstance.isChecked(checkpoint.getName());
+                boolean afterChecked = afterAlphaInstance.isChecked(checkpoint.getName());
+                int mark = 0;
+
+                if(!beforeChecked && afterChecked) mark = 1;
+                else if(beforeChecked && !afterChecked) mark = -1;
+
+                if(beforeChecked != afterChecked){
+                    json = json + "{mark: " + mark + ", state: '" + state.getName() + "', name:'" + checkpoint.getName() + "'},";
+                }
+            }
+        }
+
+        json = json + "]}";
+
+        StateDiffCommentWorkItem commentWorkItem = new StateDiffCommentWorkItem();
+        commentWorkItem.setTitle("Changed project states.");
+        commentWorkItem.setWriter(session.getUser());
+        commentWorkItem.setContent(json);
+        commentWorkItem.setInstId(Long.valueOf(instance.getInstanceId()));
+
+        MetaworksRemoteService.autowire(commentWorkItem);
+
+        try {
+            commentWorkItem.add();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
