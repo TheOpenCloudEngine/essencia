@@ -101,6 +101,12 @@ public class LanguageElementInstance extends ObjectInstance implements Serializa
     @Override
     public void afterDeserialization() {
 
+
+        if(getValueMap()!=null && getValueMap().get("Id")!=null)
+            setId((String) getValueMap().get("Id"));
+
+
+
         for(Object fieldValue : getValueMap().values()){
             if(fieldValue instanceof AbstractMetaworksFile){
                 AbstractMetaworksFile metaworksFile = ((AbstractMetaworksFile) fieldValue);

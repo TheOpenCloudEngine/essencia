@@ -15,7 +15,7 @@
 <%=include('dwr/metaworks/org/uengine/codi/mw3/model/IWorkItem_header.ejs')%>
 
 <div style="padding:10px">
-<h4>The state <%=proceedMsg%> from <%=stateChange.beforeState%> to <%=stateChange.afterState%></h4>
+<h4>The state of <%=stateChange.for%> <%=proceedMsg%> from <%=stateChange.beforeState%> to <%=stateChange.afterState%></h4>
 
 <ul>
     <%for(var changeIdx in stateChange.changedCheckpoints){

@@ -169,7 +169,13 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
 
         int proceed = (indexOfAfterState - indexOfBeforeState);
 
-        String json = "{proceed: " + proceed
+        boolean everChanged = false;
+
+        afterAlphaInstance.afterDeserialization();//not good
+
+        String json =
+                "{for: '" + beforeAlphaInstance.getAlpha().getName() + ":" + afterAlphaInstance.getId() + "'"
+                + ", proceed: " + proceed
                 +", beforeState: '" + (beforeState!=null ? beforeState.getName() : "none") + "', afterState: '" + (afterState != null ? afterState.getName() : "none") + "'"
                 +", changedCheckpoints: [";
 
@@ -185,6 +191,7 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
                 else if(beforeChecked && !afterChecked) mark = -1;
 
                 if(beforeChecked != afterChecked){
+                    everChanged = true;
                     json = json + "{mark: " + mark + ", state: '" + state.getName() + "', name:'" + checkpoint.getName() + "'},";
                 }
             }
@@ -192,18 +199,20 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
 
         json = json + "]}";
 
-        StateDiffCommentWorkItem commentWorkItem = new StateDiffCommentWorkItem();
-        commentWorkItem.setTitle("Changed project states.");
-        commentWorkItem.setWriter(session.getUser());
-        commentWorkItem.setContent(json);
-        commentWorkItem.setInstId(Long.valueOf(instance.getInstanceId()));
+        if(everChanged){
+            StateDiffCommentWorkItem commentWorkItem = new StateDiffCommentWorkItem();
+            commentWorkItem.setTitle("Changed project states.");
+            commentWorkItem.setWriter(session.getUser());
+            commentWorkItem.setContent(json);
+            commentWorkItem.setInstId(Long.valueOf(instance.getInstanceId()));
 
-        MetaworksRemoteService.autowire(commentWorkItem);
+            MetaworksRemoteService.autowire(commentWorkItem);
 
-        try {
-            commentWorkItem.add();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            try {
+                commentWorkItem.add();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
