@@ -1,0 +1,40 @@
+<%if(value){
+
+    eval("var stateChange = " + value.content);
+
+    var proceedMsg = mw3.localize('$stay');
+
+    if(stateChange.proceed == 1){
+        proceedMsg = mw3.localize('$proceed');
+    }else if(stateChange.proceed == -1){
+        proceedMsg = mw3.localize('$recede');
+    }
+
+%>
+
+<%=include('dwr/metaworks/org/uengine/codi/mw3/model/IWorkItem_header.ejs')%>
+
+<div style="padding:10px">
+<h4>The state <%=proceedMsg%> from <%=stateChange.beforeState%> to <%=stateChange.afterState%></h4>
+
+<ul>
+    <%for(var changeIdx in stateChange.changedCheckpoints){
+        var changedCheckpoint = stateChange.changedCheckpoints[changeIdx];
+
+        var markMsg = changedCheckpoint.mark == 1 ? '+' : '-';
+
+        %><li>
+        <%if(changedCheckpoint.mark == -1){%><strike><del><%}%>
+        <%=markMsg%> [<%=changedCheckpoint.state%>] <%=changedCheckpoint.name%>
+
+                <%if(changedCheckpoint.mark == -1){%></del></strike><%}%>
+        </li>
+    <%}%>
+</ul>
+</div>
+
+<hr>
+
+<%}%>
+
+
