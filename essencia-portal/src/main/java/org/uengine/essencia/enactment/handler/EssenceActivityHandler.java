@@ -89,6 +89,8 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
         List<AlphaInstance> alphaInstanceList = new ArrayList<AlphaInstance>();
 
 
+        HashMap<Alpha, Alpha> alphaDupCheck = new HashMap<Alpha, Alpha>();
+
         //set target states when the output parameter value is an alphaInstance.
         if (getOutputParameters() != null) {
 
@@ -108,10 +110,16 @@ public class EssenceActivityHandler extends SocialBPMWorkItemHandler {
 
                 }
 
-                if (alpha != null) {
+                if (alpha != null){
+                    if(!alphaDupCheck.containsKey(alpha)) {
 
-                    parameterValue = new AlphaInstanceParameterValue(instance, alpha);
-                    getOutputParameters().set(i, parameterValue);
+                        parameterValue = new AlphaInstanceParameterValue(instance, alpha);
+                        getOutputParameters().set(i, parameterValue);
+
+                        alphaDupCheck.put(alpha, alpha);
+                    }else{
+                        getOutputParameters().set(i, null);
+                    }
 
                 }
 
