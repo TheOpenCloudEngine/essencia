@@ -23,7 +23,7 @@ if(value){
 
 
 
-<table class="table table-bordered active">
+<table class="table table-bordered active" style="width:100%">
 
     <tr>
 
@@ -37,7 +37,7 @@ if(value){
                 for(var i in alpha.states){
             var state = alpha.states[i];
         %><th>
-                    <%=state.name%><%=(state.aggregationAlphaState ? "(" + state.aggregationAlphaState + ")" : "")%>
+                    <%=state.name%><%=(state.aggregationAlphaState && state.aggregationAlphaState!=state.name ? "(" + state.aggregationAlphaState + ")" : "")%>
              </th>
             <%
                 firstState = false;
@@ -99,7 +99,7 @@ if(value){
 
     if(alpha.outgoingRelations){
 
-    %><table height='10px'><td width=20px><div onclick="$(event.target).closest('table').css('height', '100%')"></div></td><td>
+    %><table style="width:100%"><td width=20px></td><td>
 
         <%=fields.childAlphaGameBoards.here()%>
 
