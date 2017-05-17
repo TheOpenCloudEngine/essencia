@@ -7,9 +7,7 @@ import org.metaworks.annotation.ServiceMethod;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.model.SortableElement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.uengine.codi.mw3.model.IWorkItem;
-import org.uengine.codi.mw3.model.WorkItem;
-import org.uengine.codi.mw3.model.WorkItemHandler;
+import org.uengine.codi.mw3.model.*;
 import org.uengine.essencia.model.Activity;
 import org.uengine.essencia.model.Criterion;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -194,8 +192,10 @@ public class ActivityInstanceRunPanel implements ContextAware{
             subParameterValueSelector.narrowValue();
         }
 
-        if(getAssignee()!=null)
+        if(getAssignee()!=null) {
             instance.putRoleMapping(bpmActivity.getRole().getName(), getAssignee().getEndpoint()); //may be problematic
+            sendNoti(instance, bpmActivity);
+        }
 
         instance.setProperty("","__adhoc", true); // don't continue to execute the followed activities after.
         instance.execute(bpmActivity.getTracingTag());
@@ -212,7 +212,27 @@ public class ActivityInstanceRunPanel implements ContextAware{
             bpmActivity.setDueDate(instance, dueDate);
         }
 
+
+
         processManager.setChanged();
+
+    }
+
+    private void sendNoti(ProcessInstance instance, HumanActivity bpmActivity) throws Exception {
+
+            Notification noti = new Notification();
+            noti.setNotiId(System.currentTimeMillis()); //TODO: why generated is hard to use
+            noti.setUserId(getAssignee().getEndpoint());
+            noti.setActorId(getAssignee().getEndpoint());
+            noti.setConfirm(false);
+            noti.setInputDate(Calendar.getInstance().getTime());
+            noti.setInstId(Long.valueOf(instance.getInstanceId()));
+            noti.setActAbstract(bpmActivity.getName() + " 업무가 부여되었습니다.");
+
+
+        IInstance instance1 = new Instance();
+        instance1.setInstId(Long.valueOf(instance.getInstanceId()));
+        noti.add(instance1);
 
     }
 
