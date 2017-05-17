@@ -113,17 +113,19 @@ public class AlphaInstanceFace2 extends AlphaInstance implements Face<AlphaInsta
         if(resourcePath.startsWith("codi/codi/"))
             resourcePath = resourcePath.substring("codi/".length(), resourcePath.length());
 
-        DefaultResource classDefinitionResource = new DefaultResource( resourcePath );
-        try {
-            EssenceProcessDefinition definition = (EssenceProcessDefinition) resourceManager.getObject(classDefinitionResource);
+        if(resourcePath.indexOf("/") > -1) {
 
-            setAlphaActivityPanel(new AlphaActivityPanel(value, definition.getPracticeDefinition()));
+            DefaultResource classDefinitionResource = new DefaultResource(resourcePath);
+            try {
+                EssenceProcessDefinition definition = (EssenceProcessDefinition) resourceManager.getObject(classDefinitionResource);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+                setAlphaActivityPanel(new AlphaActivityPanel(value, definition.getPracticeDefinition()));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
-
-
 
     }
 

@@ -924,7 +924,7 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
                 try{
                     refreshActivityCriteria(criterion);
                 }catch (Exception e){
-                    throw new RuntimeException("Error when to define the completion criterion of activity ["+ activityInPracticeDefinition.getName() + "] because " + e.getMessage());
+                    throw new RuntimeException("Error when to define the completion criterion of activity ["+ activityInPracticeDefinition.getName() + "] because " + e.getMessage(), e);
                 }
             }
         }
@@ -952,6 +952,11 @@ public class PracticeDefinition implements Serializable, IModel, ContextAware, N
     private void refreshActivityCriteria(Criterion criterion) {
         if(criterion.getState()!=null && criterion.getState().getParentAlpha()!=null) {
             Alpha realAlpha = getElement(criterion.getState().getParentAlpha().getName(), Alpha.class);
+
+            if(realAlpha==null){
+                throw new RuntimeException("There's no alpha named [" + criterion.getState().getParentAlpha().getName() + "]"); //TODO: must be moved to some log file and messages must be presented to users.
+            }
+
             State realState = realAlpha.findState(criterion.getState().getName());
 
             if(realState==null){
