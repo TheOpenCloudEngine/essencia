@@ -18,6 +18,7 @@ import java.util.*;
 @Face(faceClass= AlphaInstanceFace2.class)
 public class AlphaInstance extends LanguageElementInstance implements IconViewable{
 
+    public static final String VALUEMAP_KEY_COMMENT_INST_ID = "__commentInstId";
     public static String STATE_PROP_KEY_WorkInProgressCount = "WIPCount";
     public static String STATE_PROP_KEY_DueDate = "Due";
 

@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Created by jjy on 2015. 12. 23..
  */
-@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
+//@Face(ejsPath="genericfaces/CleanObjectFace.ejs")
 public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareProcessInstanceId {
 
     @Hidden
@@ -158,7 +158,9 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
         }
     }
 
-    private void signalBeforeAfter(AlphaInstance beforeAlphaInstance, AlphaInstance afterAlphaInstance, ProcessInstance instance) {
+    private void signalBeforeAfter(AlphaInstance beforeAlphaInstance, AlphaInstance afterAlphaInstance, ProcessInstance instance) throws Exception {
+
+
         beforeAlphaInstance.aggregateStateDetails(instance);
         State beforeState = beforeAlphaInstance.getCurrentState();
         State afterState = afterAlphaInstance.getCurrentState();
@@ -200,16 +202,40 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
         json = json + "]}";
 
         if(everChanged){
+
+            String commentSubInstanceId = null;
+            boolean newlyStartedCommentInstance = true;
+
+            AlphaInstance existingAlphaInstance = (AlphaInstance) getVariablePointer().getValue(instance);//get the value from database again.
+
+            if(existingAlphaInstance.getValueMap().containsKey(AlphaInstance.VALUEMAP_KEY_COMMENT_INST_ID)){
+                commentSubInstanceId = (String) existingAlphaInstance.getValueMap().get(AlphaInstance.VALUEMAP_KEY_COMMENT_INST_ID);
+                afterAlphaInstance.getValueMap().put(AlphaInstance.VALUEMAP_KEY_COMMENT_INST_ID, commentSubInstanceId);
+                newlyStartedCommentInstance = false;
+            }
+
+
             StateDiffCommentWorkItem commentWorkItem = new StateDiffCommentWorkItem();
             commentWorkItem.setTitle("Changed project states.");
             commentWorkItem.setWriter(session.getUser());
             commentWorkItem.setContent(json);
-            commentWorkItem.setInstId(Long.valueOf(instance.getInstanceId()));
+            commentWorkItem.setInstId(commentSubInstanceId!=null ? Long.valueOf(commentSubInstanceId): null);
+            commentWorkItem.setRootInstId(Long.valueOf(instance.getRootProcessInstanceId()));
 
             MetaworksRemoteService.autowire(commentWorkItem);
 
             try {
                 commentWorkItem.add();
+
+                if(newlyStartedCommentInstance){
+                    Long subInstanceId = commentWorkItem.getInstId();
+                    afterAlphaInstance.getValueMap().put(AlphaInstance.VALUEMAP_KEY_COMMENT_INST_ID, ""+subInstanceId);
+                   // getVariablePointer().setValue(instance, afterAlphaInstance);
+
+                    ProcessInstance theSubProcessContainingComments = processManagerRemote.getProcessInstance(""+subInstanceId);
+                    theSubProcessContainingComments.setMainProcessInstanceId(instance.getInstanceId());
+
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -234,8 +260,13 @@ public class AlphaInstanceInEditor extends AlphaInstanceInList implements AwareP
         }
 
     @Override
+    @Hidden
     public String getProcessInstanceId() {
         return getInstanceId();
+    }
+
+    //just for DWR serialization/deser.
+    public void setProcessInstanceId(String processInstanceId) {
     }
 
 

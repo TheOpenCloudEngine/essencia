@@ -98,7 +98,7 @@ public class AlphaInstanceInList implements ContextAware{
         }
 
         //set the comment part
-        String commentInstanceId = (String) alphaInstanceInEditor.getLanguageElementInstance().getValueMap().get("__commentInstId");
+        String commentInstanceId = (String) alphaInstanceInEditor.getLanguageElementInstance().getValueMap().get(AlphaInstance.VALUEMAP_KEY_COMMENT_INST_ID);
         if(commentInstanceId==null) {
             CommentWorkItem newComment = new AlphaInstanceCommentWorkItem();
             User writer = new User();
@@ -109,6 +109,11 @@ public class AlphaInstanceInList implements ContextAware{
             newComment.setWriter(writer);
 
             alphaInstanceInEditor.setNewComment(newComment);
+
+            InstanceViewThreadPanel instanceViewThreadPanel = MetaworksRemoteService.getComponent(InstanceViewThreadPanel.class);
+            instanceViewThreadPanel.getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
+            alphaInstanceInEditor.setInstanceViewThreadPanel(instanceViewThreadPanel);
+
         }else{
 
             InstanceViewThreadPanel instanceViewThreadPanel = MetaworksRemoteService.getComponent(InstanceViewThreadPanel.class);
