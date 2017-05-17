@@ -48,8 +48,10 @@ public class EssenceProcessDefinition extends ProcessDefinition{
                     if(processVariable.getDefaultValue() instanceof LanguageElementInstance){
                         LanguageElementInstance languageElementInstance = (LanguageElementInstance)processVariable.getDefaultValue();
 
-                        languageElementInstance.setLanguageElement((BasicElement) getPracticeDefinition().getElementByName(languageElementInstance.getLanguageElement().getName()));
-                        languageElementInstance.afterDeserialization();
+                        try {
+                            languageElementInstance.setLanguageElement((BasicElement) getPracticeDefinition().getElementByName(languageElementInstance.getLanguageElement().getName()));
+                            languageElementInstance.afterDeserialization();
+                        }catch (NullPointerException npe){}//TODO validate this later
                     }
                 }
 
