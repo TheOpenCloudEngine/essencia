@@ -7,6 +7,8 @@ import org.metaworks.annotation.*;
 import org.metaworks.dao.TransactionAdvice;
 import org.metaworks.dao.TransactionContext;
 import org.metaworks.dwr.MetaworksRemoteService;
+import org.uengine.codi.mw3.model.CommentWorkItem;
+import org.uengine.codi.mw3.model.Session;
 import org.uengine.essencia.model.Alpha;
 import org.uengine.essencia.model.LanguageElement;
 import org.uengine.essencia.model.PracticeDefinition;
@@ -175,6 +177,9 @@ public class AlphaGameBoard extends MetaworksContext {
         }
 
 
+    @AutowiredFromClient
+    public Session session;
+
     @ServiceMethod(inContextMenu = true, target = ServiceMethod.TARGET_SELF)
     @Available(when="edit")
     public AlphaGameBoard addAlphaInstance(@Payload("instanceId") String instanceId, @Payload("alpha") Alpha alpha) throws Exception {
@@ -198,6 +203,7 @@ public class AlphaGameBoard extends MetaworksContext {
         alphaInstance.setBeanProperty("Id", "New " + alpha.getName());
         alphaInstance.setId("New " + alpha.getName());
 
+
         ProcessManagerRemote processManagerRemote = MetaworksRemoteService.getComponent(ProcessManagerRemote.class);
 
         ProcessInstance instance = processManagerRemote.getProcessInstance(getInstanceId());
@@ -210,6 +216,31 @@ public class AlphaGameBoard extends MetaworksContext {
         }
         processVariableValue.moveToAdd();
         processVariableValue.setValue(alphaInstance);
+
+        {//add register log
+            CommentWorkItem commentWorkItem = new CommentWorkItem();
+            commentWorkItem.setTitle("Registered this alpha instance.");
+            commentWorkItem.setWriter(session.getUser());
+            commentWorkItem.setInstId(null);
+            commentWorkItem.setRootInstId(Long.valueOf(instance.getRootProcessInstanceId()));
+
+            MetaworksRemoteService.autowire(commentWorkItem);
+
+            try {
+                commentWorkItem.add(); // inside this, there's a applyChanges method will be invoked that problematic
+
+                Long subInstanceId = commentWorkItem.getInstId();
+                alphaInstance.getValueMap().put(AlphaInstance.VALUEMAP_KEY_COMMENT_INST_ID, ""+subInstanceId);
+
+                ProcessInstance theSubProcessContainingComments = processManagerRemote.getProcessInstance(""+subInstanceId);
+                theSubProcessContainingComments.setMainProcessInstanceId(instance.getRootProcessInstanceId());
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
 
         instance.set("",  processVariableValue);
 
@@ -224,6 +255,7 @@ public class AlphaGameBoard extends MetaworksContext {
         alphaGameBoard.getMetaworksContext().setWhen(MetaworksContext.WHEN_EDIT);
 
         //MetaworksRemoteService.wrapReturn(alphaGameBoard);
+
 
         return alphaGameBoard;
     }
