@@ -106,7 +106,13 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
                 List<AlphaInstanceInList> alphaInstanceInLists = alpha.getInstanceInLists(instance, !editable /*means not sorted*/);
 
                 //In case of kernel alpha (root alpha), if there are no existing alpha instance at all, add empty new instance for placeholder.
-                if(alphaInstanceInLists==null || alphaInstanceInLists.size()==0){
+                if((alpha.getParentElementId()==null ||
+                        (practiceDefinition.getElementByName(alpha.getParentElementId())!=null && practiceDefinition.getElementByName(alpha.getParentElementId()).getClass() == Practice.class)
+                    )
+                        &&
+                        (alphaInstanceInLists==null || alphaInstanceInLists.size()==0)
+
+                        ){
                     alphaInstanceInLists = new ArrayList<AlphaInstanceInList>();
 
                     AlphaInstance alphaInstance = alpha.createObjectInstance();
@@ -118,26 +124,28 @@ public class GameBoard extends InstanceViewDetail implements ContextAware{
                     alphaInstanceInList.getMetaworksContext().setWhen(MetaworksContext.WHEN_VIEW);
                     alphaInstanceInLists.add(alphaInstanceInList);
 
-                    {//store the generated one
-                        ProcessVariableValue processVariableValue;
+                    //don't add default one.
+//                    {//store the generated one
+//                        ProcessVariableValue processVariableValue;
+//
+//                        processVariableValue = new ProcessVariableValue();
+//                        processVariableValue.setName(alpha.getName());
+//
+//                        processVariableValue.moveToAdd();
+//                        processVariableValue.setValue(alphaInstance);
+//
+//                        instance.set("", processVariableValue);
+//                    }
 
-                        processVariableValue = new ProcessVariableValue();
-                        processVariableValue.setName(alpha.getName());
+                }
 
-                        processVariableValue.moveToAdd();
-                        processVariableValue.setValue(alphaInstance);
-
-                        instance.set("", processVariableValue);
+                if(alphaInstanceInLists!=null) {
+                    for (AlphaInstanceInList alphaInstanceInList : alphaInstanceInLists) {
+                        ((AlphaInstance) alphaInstanceInList.getLanguageElementInstance()).aggregateStateDetails(instance);
                     }
 
+                    alphaInstancesMap.put(alpha.getName(), alphaInstanceInLists);
                 }
-
-                for(AlphaInstanceInList alphaInstanceInList : alphaInstanceInLists){
-                    ((AlphaInstance)alphaInstanceInList.getLanguageElementInstance()).aggregateStateDetails(instance);
-                }
-
-
-                alphaInstancesMap.put(alpha.getName(), alphaInstanceInLists);
 
             }
 
