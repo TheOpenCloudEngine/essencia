@@ -1,5 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" xml:lang="en" lang="en">
+<%--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">--%>
+<%--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" xml:lang="en" lang="en">--%>
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org"
+	  lang="en">
+<!--<![endif]-->
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -90,10 +101,7 @@
 	<!-- metaworks3 engine -->
 	<script type="text/javascript" src="dwr/metaworks/scripts/metaworks.js"></script>
 
-	<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1.2-SNAPSHOT.js"></script>
-	<%--<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1.1-SNAPSHOT.js"></script>--%>
-	<!--<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1-SNAPSHOT.js"></script>-->
-
+	<script type="text/javascript" src="lib/opengraph/OpenGraph-0.1.3-SNAPSHOT.js"></script>
 	<!-- init -->
 	<link rel="stylesheet" type="text/css" href="style/tree.css" />
 	<link rel="stylesheet" type="text/css" href="style/palette.css" />
@@ -202,6 +210,7 @@
 
 	<!-- essencia custom -->
 	<script type="text/javascript" src="lib/opengraph/essencia-shapes.js"></script>
+	<script type="text/javascript" src="lib/opengraph/mapper.js"></script>
 	<link rel="stylesheet" href="assets/css/dashboard.css">
 
 
